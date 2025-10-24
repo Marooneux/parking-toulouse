@@ -36,7 +36,6 @@ public class loginpage extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
 	}
 
 }
