@@ -3,7 +3,6 @@ package MODELE;
 public class Parking {
 	private int id;
 	private String nom;
-	private String prenom;
 	private String adresse;
 	private double tarifHoraire;
 	private int nombrePlaces;
@@ -11,7 +10,6 @@ public class Parking {
 	public Parking(int id, String nom, String adresse, double tarifHoraire, int nombrePlaces) {
 		this.id = id;
 		this.nom = nom;
-		this.prenom = this.prenom;
 		this.adresse = adresse;
 		this.tarifHoraire = tarifHoraire;
 		this.nombrePlaces = nombrePlaces;
@@ -31,14 +29,6 @@ public class Parking {
 
 	public void setNom(String nom) {
 		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return this.prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
 	}
 
 	public String getAdresse() {

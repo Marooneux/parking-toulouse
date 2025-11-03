@@ -4,8 +4,6 @@ import java.util.List;
 
 public class AdministrateurParking extends Utilisateur {
 
-	private Parking parkingGeres;
-
 	public AdministrateurParking(int id, String nom, String prenom, String email, String motDePasse, String role) {
 		super(id, nom, prenom, email, motDePasse, role);
 
@@ -19,10 +17,9 @@ public class AdministrateurParking extends Utilisateur {
 		return p.removeIf(u -> u.getId() == idParking);
 	}
 
-	public void modifierInfoParking(Parking p, String nouveauNom, String nouveauPrenom, String nouvelleAdresse,
-			double nouveauTarif, int nouvellesPlaces) {
+	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
+			int nouvellesPlaces) {
 		p.setNom(nouveauNom);
-		p.setPrenom(nouveauPrenom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarifHoraire(nouveauTarif);
 		p.setNombrePlaces(nouvellesPlaces);

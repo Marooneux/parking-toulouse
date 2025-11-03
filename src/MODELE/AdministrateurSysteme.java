@@ -47,10 +47,9 @@ public class AdministrateurSysteme extends Utilisateur {
 		return resultats;
 	}
 
-	public void modifierInfoParking(Parking p, String nouveauNom, String nouveauPrenom, String nouvelleAdresse,
-			double nouveauTarif, int nouvellesPlaces) {
+	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
+			int nouvellesPlaces) {
 		p.setNom(nouveauNom);
-		p.setPrenom(nouveauPrenom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarifHoraire(nouveauTarif);
 		p.setNombrePlaces(nouvellesPlaces);
