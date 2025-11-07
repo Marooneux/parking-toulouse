@@ -60,9 +60,7 @@ public class Parking {
 		this.nombrePlaces = nombrePlaces;
 	}
 
-	public double calculerPrix(int dureeHeures) {
-		return this.tarifHoraire * dureeHeures;
-	}
+
 
 	public boolean correspond(String critere) {
 		return this.nom.toLowerCase().contains(critere.toLowerCase())
