@@ -2,13 +2,13 @@ package MODELE;
 
 import java.util.List;
 
-public class AdministrateurParking extends Utilisateur {
+public class AdministrateurParking extends Compte {
 
-	public AdministrateurParking(int id, String nom, String prenom, String email, String motDePasse, String role) {
-		super(id, nom, prenom, email, motDePasse, role);
-
+	public AdministrateurParking(String nom, String prenom, String email, String mdp) {
+		super(nom, prenom, email, mdp);
 	}
 
+	
 	public boolean ajouterParking(List<Parking> p, Parking nouveauParking) {
 		return p.add(nouveauParking);
 	}
