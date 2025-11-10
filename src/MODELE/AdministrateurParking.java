@@ -1,35 +1,24 @@
 package MODELE;
 
-import java.util.List;
-
 public class AdministrateurParking extends Compte {
 
 	public AdministrateurParking(String nom, String prenom, String email, String mdp) {
 		super(nom, prenom, email, mdp);
 	}
 
-	
-	public boolean ajouterParking(List<Parking> p, Parking nouveauParking) {
-		return p.add(nouveauParking);
-	}
-
-	public boolean supprimerParking(List<Parking> p, int idParking) {
-		return p.removeIf(u -> u.getId() == idParking);
-	}
-
 	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
-			int nouvellesPlaces) {
+			int nouveauNbPlacesDisponibles) {
 		p.setNom(nouveauNom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarifHoraire(nouveauTarif);
-		p.setNombrePlaces(nouvellesPlaces);
+		p.setNbPlacesDisponibles(nouveauNbPlacesDisponibles);
 	}
 
-	public void afficherParkings(List<Parking> parkings) {
-		for (Parking p : parkings) {
-			System.out.println(
-					"ID: " + p.getId() + "| Nom: " + p.getNom() + "| Tarif: " + p.getTarifHoraire() + "euro/h");
-		}
+	@Override
+	public String toString() {
+		return "AdministrateurParking [nom =" + this.getNom() + ", prenom ="
+				+ this.getPrenom()
+				+ ", email =" + this.getEmail() + "]";
 	}
 
 }

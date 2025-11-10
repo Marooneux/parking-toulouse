@@ -6,18 +6,10 @@ public class Utilisateur extends Compte {
 		super(nom, prenom, email, mdp);
 	}
 
-	public void consulterProfil() {
-		System.out.println("Nom : " + getNom());
-		System.out.println("Prénom : " + getPrenom());
-		System.out.println("Email : " + getEmail());
+	public void modifierProfil(String nouveauNom, String nouveauprenom, String nouvelEmail, String nouveauMdp) {
+		this.setNom(nouveauNom);
+		this.setPrenom(nouveauprenom);
+		this.setEmail(nouvelEmail);
 	}
-
-	public void modifierProfil(String nouveauNom, String nouveauprenom, String nouvelEmail, String nouveaumotDepasse) {
-		setNom(nouveauNom);
-		setPrenom(nouveauprenom);
-		setEmail(nouvelEmail);
-		setMdp(nouveaumotDepasse);
-	}
-
 
 }

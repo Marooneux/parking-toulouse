@@ -1,86 +1,80 @@
 package MODELE;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Parking {
-	private int id;
 	private String nom;
 	private String adresse;
 	private double tarifHoraire;
-	private int nombrePlaces;
-	private List<Voiture> listeVoitures;
+	private int nbPlacesDisponibles;
+	private boolean ouvert;
+	private List<Voiture> vehicules;
 
-	public Parking(int id, String nom, String adresse, double tarifHoraire, int nombrePlaces) {
-		this.id = id;
+	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesDisponibles) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.tarifHoraire = tarifHoraire;
-		this.nombrePlaces = nombrePlaces;
-		this.listeVoitures = new LinkedList<>();
+		this.nbPlacesDisponibles = nbPlacesDisponibles;
+		this.ouvert = false;
+		this.vehicules = new LinkedList<>();
 	}
 
-	
-	// Getters & setters
-	public int getId() {
-		return this.id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	
 	public String getNom() {
 		return this.nom;
 	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-	
 	public String getAdresse() {
 		return this.adresse;
 	}
+
 	public void setAdresse(String localisation) {
 		this.adresse = localisation;
 	}
 
-	
 	public double getTarifHoraire() {
 		return this.tarifHoraire;
 	}
+
 	public void setTarifHoraire(double tarifHoraire) {
 		this.tarifHoraire = tarifHoraire;
 	}
 
-	
-	public int getNombrePlaces() {
-		return this.nombrePlaces;
-	}
-	public void setNombrePlaces(int nombrePlaces) {
-		this.nombrePlaces = nombrePlaces;
+	public int getNbPlacesDisponibles() {
+		return this.nbPlacesDisponibles;
 	}
 
-
-
-	public boolean correspond(String critere) {
-		return this.nom.toLowerCase().contains(critere.toLowerCase())
-				|| this.adresse.toLowerCase().contains(critere.toLowerCase());
+	public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
+		this.nbPlacesDisponibles = nbPlacesDisponibles;
 	}
 
-	public void afficherInfos() {
-		System.out.println("Parking :" + this.nom);
-		System.out.println("Adresse :" + this.adresse);
-		System.out.println("Tarif :" + this.tarifHoraire + "euro/h");
-		System.out.println("Places disponibles :" + this.nombrePlaces);
+	public boolean getOuvert() {
+		return this.ouvert;
 	}
 
-	// Il faut pouvoir ajouter et supprimer des voitures du parking
+	public void setOuvert(boolean etat) {
+		this.ouvert = etat;
+	}
+
+	public Vehicule getVehicule(String immatriculation) {
+		for (Vehicule v : this.vehicules) {
+			if (v.getImmatriculation() == immatriculation) {
+				return v;
+			}
+		}
+		return null;
+	}
+
 	public void ajouterVoiture(Voiture voiture) {
-		this.listeVoitures.add(voiture);
+		this.vehicules.add(voiture);
 	}
 
 	public void enleverVoiture(Voiture voiture) {
-		this.listeVoitures.remove(voiture);
+		this.vehicules.remove(voiture);
 	}
+
 }
