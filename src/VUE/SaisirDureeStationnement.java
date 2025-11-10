@@ -109,7 +109,7 @@ public class SaisirDureeStationnement extends JFrame {
 		detailsHeureArrivé.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JLabel lblHeureArrive = new JLabel("Sélectionnez votre heure d'arrivé");
+		JLabel lblHeureArrive = new JLabel("Saisissez la durée de stationnement");
 		panel.add(lblHeureArrive);
 		
 		JPanel heureArrive = new JPanel();
