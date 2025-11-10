@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Dimension;
 
-public class SaisirDureeStationnement extends JFrame {
+public class SaisirDureeParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -26,7 +26,7 @@ public class SaisirDureeStationnement extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SaisirDureeStationnement frame = new SaisirDureeStationnement();
+					SaisirDureeParking frame = new SaisirDureeParking();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class SaisirDureeStationnement extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SaisirDureeStationnement() {
+	public SaisirDureeParking() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -127,14 +127,17 @@ public class SaisirDureeStationnement extends JFrame {
 		JLabel lblInfoHeureArrive = new JLabel("Vous pourrez quitter l'application et revenir plus tard pour enregistrer votre départ");
 		panel.add(lblInfoHeureArrive);
 		
+		JPanel informationProcedure = new JPanel();
+		body.add(informationProcedure);
+		
 		JPanel aside = new JPanel();
 		contentPane.add(aside, BorderLayout.EAST);
 		
 		JPanel button = new JPanel();
 		contentPane.add(button, BorderLayout.SOUTH);
 		
-		JButton btnPayment = new JButton("Payer");
-		button.add(btnPayment);
+		JButton btnNewButton_2 = new JButton("Démarrer le Stationnement");
+		button.add(btnNewButton_2);
 
 	}
 
