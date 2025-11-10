@@ -3,9 +3,13 @@ package MODELE;
 import java.time.LocalDateTime;
 
 public class Paiement {
+	private enum OptionsPaiement {
+		CB, VIREMENT
+	};
+
 	private int id;
 	private Reservation reservation;
-	private String moyenPaiement; // "CB", "PayPal", "ApplePay", etc.
+	private OptionsPaiement moyenPaiement;
 	private double montant;
 	private LocalDateTime datePaiement;
 	private boolean estValide;
@@ -13,13 +17,13 @@ public class Paiement {
 	public Paiement(int id, Reservation reservation, String moyenPaiement) {
 		this.id = id;
 		this.reservation = reservation;
-		this.moyenPaiement = moyenPaiement;
+		this.moyenPaiement = OptionsPaiement.CB;
 		this.montant = reservation.calculerPrixTotal();
 		this.datePaiement = LocalDateTime.now();
 		this.estValide = false;
 	}
 
-	// 📤 Getters
+	// Getters
 	public int getId() {
 		return this.id;
 	}
@@ -28,7 +32,7 @@ public class Paiement {
 		return this.reservation;
 	}
 
-	public String getMoyenPaiement() {
+	public OptionsPaiement getMoyenPaiement() {
 		return this.moyenPaiement;
 	}
 
@@ -45,7 +49,7 @@ public class Paiement {
 	}
 
 	public boolean effectuerPaiement() {
-		if (this.montant > 0 && this.moyenPaiement != null && !this.moyenPaiement.isEmpty()) {
+		if (this.montant > 0) {
 			this.estValide = true;
 			this.reservation.setEstPayee(true);
 			System.out.println("Paiement effectué avec succès : " + this.montant + " € via " + this.moyenPaiement);
