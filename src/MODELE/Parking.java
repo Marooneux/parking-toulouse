@@ -1,6 +1,7 @@
 package MODELE;
 
-import java.awt.List;
+import java.util.List;
+import java.util.LinkedList;
 
 public class Parking {
 	private int id;
@@ -8,7 +9,7 @@ public class Parking {
 	private String adresse;
 	private double tarifHoraire;
 	private int nombrePlaces;
-	private Voiture[] listeVoitures;
+	private List<Voiture> listeVoitures;
 
 	public Parking(int id, String nom, String adresse, double tarifHoraire, int nombrePlaces) {
 		this.id = id;
@@ -16,7 +17,7 @@ public class Parking {
 		this.adresse = adresse;
 		this.tarifHoraire = tarifHoraire;
 		this.nombrePlaces = nombrePlaces;
-		
+		this.listeVoitures = new LinkedList<>();
 	}
 
 	
@@ -72,5 +73,14 @@ public class Parking {
 		System.out.println("Adresse :" + this.adresse);
 		System.out.println("Tarif :" + this.tarifHoraire + "euro/h");
 		System.out.println("Places disponibles :" + this.nombrePlaces);
+	}
+
+	// Il faut pouvoir ajouter et supprimer des voitures du parking
+	public void ajouterVoiture(Voiture voiture) {
+		this.listeVoitures.add(voiture);
+	}
+
+	public void enleverVoiture(Voiture voiture) {
+		this.listeVoitures.remove(voiture);
 	}
 }
