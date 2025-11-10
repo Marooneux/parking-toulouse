@@ -38,6 +38,4 @@ public abstract class Vehicule {
 	public void setElectrique(Boolean electrique) {
 		this.electrique = electrique;
 	}
-	
-	
 }
