@@ -1,163 +1,133 @@
+// Redesign visuel moderne pour l'écran Paiement
+// Même style graphique utilisé nas outras telas (cards brancos, espaçamento, fonte Segoe UI, botões modernos)
+
 package VUE;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Insets;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class Paiement extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textFieldNom;
-	private JTextField textFieldNumCarte;
-	private JTextField textFieldExpiration;
-	private JTextField textFieldCVC;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textFieldNom;
+    private JTextField textFieldNumCarte;
+    private JTextField textFieldExpiration;
+    private JTextField textFieldCVC;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Paiement frame = new Paiement();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                Paiement frame = new Paiement();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public Paiement() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 450, 300);
-		this.contentPane = new JPanel();
-		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BorderLayout(0, 0));
+    public Paiement() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(520, 430);
+        setLocationRelativeTo(null);
 
-		JLabel lblTitre = new JLabel("Paiement");
-		lblTitre.setFont(new Font("Dialog", Font.BOLD, 20));
-		this.contentPane.add(lblTitre, BorderLayout.NORTH);
+        contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout(20, 20));
+        contentPane.setBackground(Color.WHITE);
+        contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+        setContentPane(contentPane);
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(216, 221, 226));
-		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(4, 1, 0, 0));
+        // HEADER
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        header.setBackground(Color.WHITE);
 
-		JPanel panel_nom = new JPanel();
-		panel_nom.setBackground(new Color(216, 221, 226));
-		panel.add(panel_nom);
-		panel_nom.setLayout(new GridLayout(0, 1, 0, 0));
+        JLabel icon = new JLabel("💳");
+        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        header.add(icon);
 
-		JLabel lblNom = new JLabel("Nom");
-		panel_nom.add(lblNom);
+        JPanel titreZone = new JPanel();
+        titreZone.setBackground(Color.WHITE);
+        titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
-		JPanel panel_textFieldNom = new JPanel();
-		panel_textFieldNom.setBackground(new Color(216, 221, 226));
-		panel_nom.add(panel_textFieldNom);
-		panel_textFieldNom.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JLabel lblTitre = new JLabel("Paiement");
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitre.setForeground(new Color(40, 40, 40));
+        titreZone.add(lblTitre);
 
-		this.textFieldNom = new JTextField();
-		this.textFieldNom.setForeground(new Color(179, 179, 179));
-		this.textFieldNom.setText("Nom Prénom");
-		panel_textFieldNom.add(this.textFieldNom);
-		this.textFieldNom.setColumns(30);
+        JLabel lblSousTitre = new JLabel("Entrez les informations de votre carte");
+        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSousTitre.setForeground(new Color(100, 100, 100));
+        titreZone.add(lblSousTitre);
 
-		JPanel panel_numCarte = new JPanel();
-		panel_numCarte.setBackground(new Color(216, 221, 226));
-		panel.add(panel_numCarte);
-		panel_numCarte.setLayout(new GridLayout(0, 1, 0, 0));
+        header.add(titreZone);
+        contentPane.add(header, BorderLayout.NORTH);
 
-		JLabel lblNumCarte = new JLabel("Numéro de carte");
-		panel_numCarte.add(lblNumCarte);
+        // CARD CENTRAL
+        JPanel card = new JPanel();
+        card.setBackground(Color.WHITE);
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220)),
+                new EmptyBorder(20, 20, 20, 20)
+        ));
+        card.setLayout(new GridLayout(4, 1, 15, 15));
+        contentPane.add(card, BorderLayout.CENTER);
 
-		JPanel panel_textFieldNumCarte = new JPanel();
-		panel_textFieldNumCarte.setBackground(new Color(216, 221, 226));
-		panel_numCarte.add(panel_textFieldNumCarte);
-		panel_textFieldNumCarte.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        // --- CHAMP NOM ---
+        JPanel blocNom = criarBlocChamp("Nom", textFieldNom = new JTextField("Nom Prénom"));
+        card.add(blocNom);
 
-		this.textFieldNumCarte = new JTextField();
-		this.textFieldNumCarte.setForeground(new Color(179, 179, 179));
-		this.textFieldNumCarte.setText("1234 5678 9012 3456");
-		panel_textFieldNumCarte.add(this.textFieldNumCarte);
-		this.textFieldNumCarte.setColumns(30);
+        // --- NUMÉRO DE CARTE ---
+        JPanel blocCarte = criarBlocChamp("Numéro de carte", textFieldNumCarte = new JTextField("1234 5678 9012 3456"));
+        card.add(blocCarte);
 
-		JPanel panel_dateExp_CVC = new JPanel();
-		panel_dateExp_CVC.setBackground(new Color(216, 221, 226));
-		panel.add(panel_dateExp_CVC);
-		panel_dateExp_CVC.setLayout(new GridLayout(0, 2, 0, 0));
+        // --- CHAINE EXPIRATION + CVC ---
+        JPanel row = new JPanel(new GridLayout(1, 2, 20, 0));
+        row.setOpaque(false);
 
-		JPanel panel_dateExp = new JPanel();
-		panel_dateExp.setBackground(new Color(216, 221, 226));
-		panel_dateExp_CVC.add(panel_dateExp);
-		panel_dateExp.setLayout(new GridLayout(2, 1, 0, 0));
+        JPanel blocExp = criarBlocChamp("Date d'expiration", textFieldExpiration = new JTextField("MM/YY"));
+        JPanel blocCVC = criarBlocChamp("CVC", textFieldCVC = new JTextField("123"));
 
-		JLabel lblExpiration = new JLabel("Date d'expiration");
-		panel_dateExp.add(lblExpiration);
+        row.add(blocExp);
+        row.add(blocCVC);
+        card.add(row);
 
-		JPanel panel_textFieldExpiration = new JPanel();
-		panel_textFieldExpiration.setBackground(new Color(216, 221, 226));
-		FlowLayout fl_panel_textFieldExpiration = (FlowLayout) panel_textFieldExpiration.getLayout();
-		fl_panel_textFieldExpiration.setAlignment(FlowLayout.LEFT);
-		panel_dateExp.add(panel_textFieldExpiration);
+        // --- BOUTON ---
+        JPanel panelBtn = new JPanel();
+        panelBtn.setBackground(Color.WHITE);
 
-		this.textFieldExpiration = new JTextField();
-		this.textFieldExpiration.setForeground(new Color(179, 179, 179));
-		this.textFieldExpiration.setText("MM/YY");
-		panel_textFieldExpiration.add(this.textFieldExpiration);
-		this.textFieldExpiration.setColumns(15);
+        JButton btnPayer = new JButton("Payer");
+        btnPayer.setBackground(new Color(0, 128, 255));
+        btnPayer.setForeground(Color.WHITE);
+        btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        btnPayer.setFocusPainted(false);
+        btnPayer.setPreferredSize(new Dimension(160, 40));
+        panelBtn.add(btnPayer);
 
-		JPanel panel_dateExpiration = new JPanel();
-		panel_dateExpiration.setBackground(new Color(216, 221, 226));
-		panel_dateExp_CVC.add(panel_dateExpiration);
-		panel_dateExpiration.setLayout(new GridLayout(0, 1, 0, 0));
+        card.add(panelBtn);
+    }
 
-		JLabel lblCVC = new JLabel("CVC");
-		panel_dateExpiration.add(lblCVC);
+    private JPanel criarBlocChamp(String labelText, JTextField textField) {
+        JPanel bloc = new JPanel();
+        bloc.setOpaque(false);
+        bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
 
-		JPanel panel_textFieldCVC = new JPanel();
-		panel_textFieldCVC.setBackground(new Color(216, 221, 226));
-		FlowLayout flowLayout = (FlowLayout) panel_textFieldCVC.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_dateExpiration.add(panel_textFieldCVC);
+        JLabel lbl = new JLabel(labelText);
+        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		this.textFieldCVC = new JTextField();
-		this.textFieldCVC.setForeground(new Color(179, 179, 179));
-		this.textFieldCVC.setText("123");
-		panel_textFieldCVC.add(this.textFieldCVC);
-		this.textFieldCVC.setColumns(15);
+        JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        champPanel.setOpaque(false);
 
-		JPanel panel_payer = new JPanel();
-		panel_payer.setBackground(new Color(216, 221, 226));
-		panel.add(panel_payer);
-		panel_payer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        textField.setPreferredSize(new Dimension(250, 28));
+        textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        textField.setForeground(new Color(120, 120, 120));
 
-		JButton btnPayer = new JButton("Payer");
-		btnPayer.setMargin(new Insets(2, 50, 2, 50));
-		btnPayer.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_payer.add(btnPayer);
-		btnPayer.setForeground(new Color(255, 255, 255));
-		btnPayer.setBackground(new Color(0, 128, 255));
+        champPanel.add(textField);
 
-	}
+        bloc.add(lbl);
+        bloc.add(champPanel);
 
+        return bloc;
+    }
 }
