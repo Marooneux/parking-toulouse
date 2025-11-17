@@ -1,12 +1,11 @@
 package MODELE;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AdministrateurSysteme extends Compte {
+	private EnsembleParking parkings;
 
 	public AdministrateurSysteme(String nom, String prenom, String email, String mdp) {
 		super(nom, prenom, email, mdp);
+		this.parkings = new EnsembleParking();
 	}
 
 	public AdministrateurParking creerCompteAdminParking(String nom, String prenom, String email,
@@ -14,14 +13,12 @@ public class AdministrateurSysteme extends Compte {
 		return new AdministrateurParking(nom, prenom, email, motDePasse);
 	}
 
+	public void ajouterParking(Parking nouveauParking) {
+		this.parkings.ajouterParking(nouveauParking);
+	}
 
-
-	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
-			int nouvellesPlaces) {
-		p.setNom(nouveauNom);
-		p.setAdresse(nouvelleAdresse);
-		p.setTarifHoraire(nouveauTarif);
-		p.setNombrePlaces(nouvellesPlaces);
+	public void supprimerParking(Parking parking) {
+		this.parkings.retirerParking(parking);
 	}
 
 }
