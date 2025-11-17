@@ -1,6 +1,3 @@
-// Código redesenhado com o mesmo design gráfico do primeiro arquivo, sem refatoração estrutural
-// Apenas estilização visual aplicada
-
 package VUE;
 
 import java.awt.EventQueue;
@@ -78,7 +75,7 @@ public class ChoixPlaceStationnement extends JFrame {
         listeParkings.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
         contentPane.add(listeParkings, BorderLayout.CENTER);
 
-        // Geração de uma carta (sem mudar o código interno original)
+        // Geração de uma carta
         placeParking(listeParkings);
     }
 
