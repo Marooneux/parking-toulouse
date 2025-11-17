@@ -29,13 +29,13 @@ public class Reservation {
 		} else {
 			nbQuartsHeures = (int) (minutes / 15);
 		}
-		return nbQuartsHeures * this.parking.getTarifHoraire();
+		return nbQuartsHeures * this.parking.getTarif();
 	}
 
 	@Override
 	public String toString() {
 		return "Réservation confirmée au parking " + this.parking.getNom() +
-				". Arrivée : " + this.dateArrivee + ". Prix horaire : " + this.parking.getTarifHoraire() + "€";
+				". Arrivée : " + this.dateArrivee + ". Prix horaire : " + this.parking.getTarif() + "€";
 	}
 
 	public String getImmatriculation() {
