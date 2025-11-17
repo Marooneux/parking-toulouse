@@ -28,7 +28,7 @@ public class ChoixTypeStationnement extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				ChoixTypeStationnement frame = new ChoixTypeStationnement();
-				new CONTROLEUR.ChoixTypeStationnementControleur(frame);
+				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();

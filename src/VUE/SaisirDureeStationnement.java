@@ -29,7 +29,7 @@ public class SaisirDureeStationnement extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				SaisirDureeStationnement frame = new SaisirDureeStationnement();
-				new CONTROLEUR.SaisirDureeStationnementControleur(frame);
+				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
