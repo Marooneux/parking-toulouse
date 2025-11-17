@@ -48,7 +48,29 @@ public class ChoixTypeStationnement extends JFrame {
         setContentPane(contentPane);
 
         // HEADER
-        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel header = EnteteDeLaFenetre();
+
+        contentPane.add(header, BorderLayout.NORTH);
+
+        // Partie central
+        JPanel centre = new JPanel();
+        centre.setBackground(Color.WHITE);
+        centre.setLayout(new GridLayout(1, 2, 20, 0));
+        contentPane.add(centre, BorderLayout.CENTER);
+
+        // Card 1 - Parking
+        JButton btnParking = cardParking(centre);
+
+        // Card 2 Voirie
+        JButton btnVoirie = cardVoirie(centre);
+
+        // Listeners
+        btnParking.addActionListener(e -> {});
+        btnVoirie.addActionListener(e -> {});
+    }
+
+	private JPanel EnteteDeLaFenetre() {
+		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
         header.setBackground(Color.WHITE);
 
         JLabel lblIcon = new JLabel("🅿️");
@@ -70,17 +92,11 @@ public class ChoixTypeStationnement extends JFrame {
         texte.add(lblTitre);
         texte.add(lblSousTitre);
         header.add(texte);
+		return header;
+	}
 
-        contentPane.add(header, BorderLayout.NORTH);
-
-        // Partie central
-        JPanel centre = new JPanel();
-        centre.setBackground(Color.WHITE);
-        centre.setLayout(new GridLayout(1, 2, 20, 0));
-        contentPane.add(centre, BorderLayout.CENTER);
-
-        // Card 1 - Parking
-        JPanel cardParking = crerCard();
+	private JButton cardParking(JPanel centre) {
+		JPanel cardParking = crerCard();
         centre.add(cardParking);
 
         JLabel lblParkingTitre = new JLabel("Stationnement Parking");
@@ -96,9 +112,11 @@ public class ChoixTypeStationnement extends JFrame {
         cardParking.add(lblParkingInfo);
         cardParking.add(Box.createRigidArea(new Dimension(0, 10)));
         cardParking.add(btnParking);
+		return btnParking;
+	}
 
-        // Card 2 Voirie
-        JPanel cardVoirie = crerCard();
+	private JButton cardVoirie(JPanel centre) {
+		JPanel cardVoirie = crerCard();
         centre.add(cardVoirie);
 
         JLabel lblVoirieTitre = new JLabel("Stationnement en Voirie");
@@ -114,11 +132,8 @@ public class ChoixTypeStationnement extends JFrame {
         cardVoirie.add(lblVoirieInfo);
         cardVoirie.add(Box.createRigidArea(new Dimension(0, 10)));
         cardVoirie.add(btnVoirie);
-
-        // Listeners
-        btnParking.addActionListener(e -> {});
-        btnVoirie.addActionListener(e -> {});
-    }
+		return btnVoirie;
+	}
 
     // Metodes utilitaires pour controleur
 

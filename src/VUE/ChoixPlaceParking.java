@@ -16,7 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
-public class ChoixPlaceStationnement extends JFrame {
+public class ChoixPlaceParking extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -24,7 +24,7 @@ public class ChoixPlaceStationnement extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                ChoixPlaceStationnement frame = new ChoixPlaceStationnement();
+                ChoixPlaceParking frame = new ChoixPlaceParking();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -32,8 +32,8 @@ public class ChoixPlaceStationnement extends JFrame {
         });
     }
 
-    public ChoixPlaceStationnement() {
-        setTitle("Stationnement en Voirie");
+    public ChoixPlaceParking() {
+        setTitle("Stationnement dans un Parking");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
         setLocationRelativeTo(null);
@@ -55,11 +55,11 @@ public class ChoixPlaceStationnement extends JFrame {
         texte.setBackground(new Color(250, 250, 250));
         texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
-        JLabel lblTitre = new JLabel("Stationnement en Voirie");
+        JLabel lblTitre = new JLabel("Stationnement dans un Parking");
         lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitre.setForeground(new Color(40, 40, 40));
 
-        JLabel lblSousTitre = new JLabel("Choisissez une place de stationnement disponible");
+        JLabel lblSousTitre = new JLabel("Choisissez une place de parking disponible");
         lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSousTitre.setForeground(new Color(100, 100, 100));
 
@@ -109,7 +109,20 @@ public class ChoixPlaceStationnement extends JFrame {
         place1.add(body, BorderLayout.CENTER);
 
         // Localisation
-        JPanel localisation = new JPanel();
+        localisationField(body);
+
+        // Horaire
+        horairesField(body);
+
+        // Nb Places
+        placesField(body);
+
+        // Tarif
+        tarifField(body);
+    }
+
+	private void localisationField(JPanel body) {
+		JPanel localisation = new JPanel();
         localisation.setOpaque(false);
         localisation.setLayout(new BoxLayout(localisation, BoxLayout.Y_AXIS));
 
@@ -124,9 +137,10 @@ public class ChoixPlaceStationnement extends JFrame {
         localisation.add(lblNomLocalisation);
         localisation.add(Box.createRigidArea(new Dimension(0, 8)));
         body.add(localisation);
+	}
 
-        // Horaire
-        JPanel horaire = new JPanel();
+	private void horairesField(JPanel body) {
+		JPanel horaire = new JPanel();
         horaire.setOpaque(false);
         horaire.setLayout(new BoxLayout(horaire, BoxLayout.Y_AXIS));
 
@@ -146,9 +160,10 @@ public class ChoixPlaceStationnement extends JFrame {
         horaire.add(lblStatus);
         horaire.add(Box.createRigidArea(new Dimension(0, 8)));
         body.add(horaire);
+	}
 
-        // Nb Places
-        JPanel nbPlaces = new JPanel();
+	private void placesField(JPanel body) {
+		JPanel nbPlaces = new JPanel();
         nbPlaces.setOpaque(false);
         nbPlaces.setLayout(new BoxLayout(nbPlaces, BoxLayout.Y_AXIS));
 
@@ -163,9 +178,10 @@ public class ChoixPlaceStationnement extends JFrame {
         nbPlaces.add(lblPlacesDisponibles);
         nbPlaces.add(Box.createRigidArea(new Dimension(0, 8)));
         body.add(nbPlaces);
+	}
 
-        // Tarif
-        JPanel tarif = new JPanel();
+	private void tarifField(JPanel body) {
+		JPanel tarif = new JPanel();
         tarif.setOpaque(false);
         tarif.setLayout(new BoxLayout(tarif, BoxLayout.Y_AXIS));
 
@@ -173,11 +189,11 @@ public class ChoixPlaceStationnement extends JFrame {
         lblTarif.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
         JLabel lblPrix = new JLabel("2.5€/H");
-        lblPrix.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblPrix.setForeground(new Color(70, 70, 70));
+        lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        //lblPrix.setForeground(new Color(70, 70, 70));
 
         tarif.add(lblTarif);
         tarif.add(lblPrix);
         body.add(tarif);
-    }
+	}
 }
