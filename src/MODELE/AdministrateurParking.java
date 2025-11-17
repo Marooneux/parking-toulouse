@@ -10,7 +10,7 @@ public class AdministrateurParking extends Compte {
 			int nouveauNbPlacesDisponibles) {
 		p.setNom(nouveauNom);
 		p.setAdresse(nouvelleAdresse);
-		p.setTarifHoraire(nouveauTarif);
+		p.setTarif(nouveauTarif);
 		p.setNbPlacesDisponibles(nouveauNbPlacesDisponibles);
 	}
 
