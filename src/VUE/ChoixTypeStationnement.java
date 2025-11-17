@@ -28,6 +28,7 @@ public class ChoixTypeStationnement extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				ChoixTypeStationnement frame = new ChoixTypeStationnement();
+				new CONTROLEUR.ChoixTypeStationnementControleur(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -46,37 +47,36 @@ public class ChoixTypeStationnement extends JFrame {
 		this.contentPane.setLayout(new BorderLayout(20, 20));
 		this.setContentPane(this.contentPane);
 
-<<<<<<< HEAD
 		// HEADER
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(Color.WHITE);
-=======
-        // HEADER
-        JPanel header = EnteteDeLaFenetre();
+		JPanel header = this.EnteteDeLaFenetre();
 
-        contentPane.add(header, BorderLayout.NORTH);
+		this.contentPane.add(header, BorderLayout.NORTH);
 
-        // Partie central
-        JPanel centre = new JPanel();
-        centre.setBackground(Color.WHITE);
-        centre.setLayout(new GridLayout(1, 2, 20, 0));
-        contentPane.add(centre, BorderLayout.CENTER);
+		// Partie central
+		JPanel centre = new JPanel();
+		centre.setBackground(Color.WHITE);
+		centre.setLayout(new GridLayout(1, 2, 20, 0));
+		this.contentPane.add(centre, BorderLayout.CENTER);
 
-        // Card 1 - Parking
-        JButton btnParking = cardParking(centre);
+		this.btnParking = this.crerButton("Trouver un parking");
+		this.btnVoirie = this.crerButton("Trouver un emplacement");
 
-        // Card 2 Voirie
-        JButton btnVoirie = cardVoirie(centre);
+		// Card 1 - Parking
+		JButton btnParking = this.cardParking(centre);
 
-        // Listeners
-        btnParking.addActionListener(e -> {});
-        btnVoirie.addActionListener(e -> {});
-    }
+		// Card 2 Voirie
+		JButton btnVoirie = this.cardVoirie(centre);
+
+		// Listeners
+		btnParking.addActionListener(e -> {
+		});
+		btnVoirie.addActionListener(e -> {
+		});
+	}
 
 	private JPanel EnteteDeLaFenetre() {
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        header.setBackground(Color.WHITE);
->>>>>>> 332788dd11eed0735aa60ac5669e238295b97afd
+		header.setBackground(Color.WHITE);
 
 		JLabel lblIcon = new JLabel("🅿️");
 		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
@@ -94,33 +94,15 @@ public class ChoixTypeStationnement extends JFrame {
 		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 
-<<<<<<< HEAD
 		texte.add(lblTitre);
 		texte.add(lblSousTitre);
 		header.add(texte);
-
-		this.contentPane.add(header, BorderLayout.NORTH);
-
-		// Partie central
-		JPanel centre = new JPanel();
-		centre.setBackground(Color.WHITE);
-		centre.setLayout(new GridLayout(1, 2, 20, 0));
-		this.contentPane.add(centre, BorderLayout.CENTER);
-
-		// Card 1 - Parking
-		JPanel cardParking = this.crerCard();
-		centre.add(cardParking);
-=======
-        texte.add(lblTitre);
-        texte.add(lblSousTitre);
-        header.add(texte);
 		return header;
 	}
 
 	private JButton cardParking(JPanel centre) {
-		JPanel cardParking = crerCard();
-        centre.add(cardParking);
->>>>>>> 332788dd11eed0735aa60ac5669e238295b97afd
+		JPanel cardParking = this.crerCard();
+		centre.add(cardParking);
 
 		JLabel lblParkingTitre = new JLabel("Stationnement Parking");
 		lblParkingTitre.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -129,29 +111,16 @@ public class ChoixTypeStationnement extends JFrame {
 		lblParkingInfo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblParkingInfo.setForeground(new Color(80, 80, 80));
 
-		JButton btnParking = this.crerButton("Trouver un parking");
-
-<<<<<<< HEAD
 		cardParking.add(lblParkingTitre);
 		cardParking.add(lblParkingInfo);
 		cardParking.add(Box.createRigidArea(new Dimension(0, 10)));
-		cardParking.add(btnParking);
-
-		// Card 2 Voirie
-		JPanel cardVoirie = this.crerCard();
-		centre.add(cardVoirie);
-=======
-        cardParking.add(lblParkingTitre);
-        cardParking.add(lblParkingInfo);
-        cardParking.add(Box.createRigidArea(new Dimension(0, 10)));
-        cardParking.add(btnParking);
-		return btnParking;
+		cardParking.add(this.btnParking);
+		return this.btnParking;
 	}
 
 	private JButton cardVoirie(JPanel centre) {
-		JPanel cardVoirie = crerCard();
-        centre.add(cardVoirie);
->>>>>>> 332788dd11eed0735aa60ac5669e238295b97afd
+		JPanel cardVoirie = this.crerCard();
+		centre.add(cardVoirie);
 
 		JLabel lblVoirieTitre = new JLabel("Stationnement en Voirie");
 		lblVoirieTitre.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -160,26 +129,11 @@ public class ChoixTypeStationnement extends JFrame {
 		lblVoirieInfo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblVoirieInfo.setForeground(new Color(80, 80, 80));
 
-		JButton btnVoirie = this.crerButton("Trouver un emplacement");
-
-<<<<<<< HEAD
 		cardVoirie.add(lblVoirieTitre);
 		cardVoirie.add(lblVoirieInfo);
 		cardVoirie.add(Box.createRigidArea(new Dimension(0, 10)));
-		cardVoirie.add(btnVoirie);
-
-		// Listeners
-		btnParking.addActionListener(e -> {
-		});
-		btnVoirie.addActionListener(e -> {
-		});
-=======
-        cardVoirie.add(lblVoirieTitre);
-        cardVoirie.add(lblVoirieInfo);
-        cardVoirie.add(Box.createRigidArea(new Dimension(0, 10)));
-        cardVoirie.add(btnVoirie);
-		return btnVoirie;
->>>>>>> 332788dd11eed0735aa60ac5669e238295b97afd
+		cardVoirie.add(this.btnVoirie);
+		return this.btnVoirie;
 	}
 
 	// Metodes utilitaires pour controleur
@@ -204,8 +158,6 @@ public class ChoixTypeStationnement extends JFrame {
 		return btn;
 	}
 
-	// methode pour controleur
-	// Ajoute en bas de la classe
 	public JButton getBtnParking() {
 		return this.btnParking;
 	}
