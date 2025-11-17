@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -72,11 +74,29 @@ public class ChoixPlaceParking extends JFrame {
         contentPane.add(header, BorderLayout.NORTH);
 
         // LISTA DE PLACES
-        PlaceParking place1 = new PlaceParking();
+        PlaceParking place1 = new PlaceParking("Place Capitle", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Ouvert");
+        PlaceParking place2 = new PlaceParking("Place Capitle", "Centre Ville, oulouse", "09 - 10", "59/100", "10", "Fermé");
+        
         List<PlaceParking> p = new ArrayList<PlaceParking>();
         p.add(place1);
+        p.add(place2);
         ListePlacesParking listeParkings = new ListePlacesParking(p);
         contentPane.add(listeParkings, BorderLayout.CENTER);
+        
+        JPanel panel = new JPanel();
+        contentPane.add(panel, BorderLayout.SOUTH);
+        
+        JPanel panelBtn = new JPanel();
+        panelBtn.setBackground(Color.WHITE);
+
+        JButton btnPayer = new JButton("Choisir Parking");
+        btnPayer.setBackground(new Color(0, 128, 255));
+        btnPayer.setForeground(Color.WHITE);
+        btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        btnPayer.setFocusPainted(false);
+        btnPayer.setPreferredSize(new Dimension(160, 40));
+        panelBtn.add(btnPayer);
+        panel.add(btnPayer);
         
         
     }
