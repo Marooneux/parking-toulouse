@@ -29,7 +29,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				SaisirHeureArriveParking frame = new SaisirHeureArriveParking();
-				new CONTROLEUR.SaisirHeureArriveParkingControleur(frame);
+				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
