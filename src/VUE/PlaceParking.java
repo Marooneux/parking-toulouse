@@ -14,58 +14,111 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class PlaceParking extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private String nomPlace;
 	private String nomLocalisation;
 	private String horaires;
 	private String placesDisponibles;
 	private String tarif;
+	private String status;
 
-    public PlaceParking() {
-        JPanel place1 = new JPanel();
-        place1.setBackground(Color.WHITE);
-        place1.setPreferredSize(new Dimension(260, 260));
-        place1.setBorder(BorderFactory.createCompoundBorder(
+	
+    public PlaceParking(String nomPlace, String nomLocalisation, String horaires, String placesDisponibles, String tarif, String status) {
+        JPanel place = new JPanel();
+        place.setBackground(Color.WHITE);
+        place.setPreferredSize(new Dimension(260, 260));
+        place.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true),
                 new EmptyBorder(15, 15, 15, 15)
         ));
-        place1.setLayout(new BorderLayout());
+        place.setLayout(new BorderLayout());
 
         // TITRE CARD
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
         header.setOpaque(false);
 
-        JLabel lblNomPlace = new JLabel("Place du Capitole");
+        JLabel lblNomPlace = new JLabel(nomPlace);
         lblNomPlace.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
         header.add(lblNomPlace);
-        place1.add(header, BorderLayout.NORTH);
+        place.add(header, BorderLayout.NORTH);
 
         // CORP CARD
         JPanel body = new JPanel();
         body.setOpaque(false);
         body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
         body.setBorder(new EmptyBorder(10, 0, 0, 0));
-        place1.add(body, BorderLayout.CENTER);
+        place.add(body, BorderLayout.CENTER);
 
         // Localisation
-        localisationField(body);
+        JPanel localisation = localisationField(nomLocalisation);
+        body.add(localisation);
 
         // Horaire
-        horairesField(body);
+        JPanel horaire = horairesField(horaires, status);
+        body.add(horaire);
 
         // Nb Places
-        placesField(body);
-
-        // Tarif
-        tarifField(body);
+        JPanel nbPlaces = placesField(placesDisponibles);
+        body.add(nbPlaces);
         
-        this.add(place1, BorderLayout.CENTER);
-    }
+        // Tarif
+        JPanel tarifField = tarifField(tarif);
+        body.add(tarifField);
+        
+        
+        this.add(place, BorderLayout.CENTER);
+    }    
 
-	private void localisationField(JPanel body) {
+	public String getNomPlace() {
+		return nomPlace;
+	}
+
+	public void setNomPlace(String nomPlace) {
+		this.nomPlace = nomPlace;
+	}
+
+	public String getNomLocalisation() {
+		return nomLocalisation;
+	}
+
+	public void setNomLocalisation(String nomLocalisation) {
+		this.nomLocalisation = nomLocalisation;
+	}
+
+	public String getHoraires() {
+		return horaires;
+	}
+
+	public void setHoraires(String horaires) {
+		this.horaires = horaires;
+	}
+
+	public String getPlacesDisponibles() {
+		return placesDisponibles;
+	}
+
+	public void setPlacesDisponibles(String placesDisponibles) {
+		this.placesDisponibles = placesDisponibles;
+	}
+
+	public String getTarif() {
+		return tarif;
+	}
+
+	public void setTarif(String tarif) {
+		this.tarif = tarif;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	private JPanel localisationField(String Nomlocalisation) {
 		JPanel localisation = new JPanel();
         localisation.setOpaque(false);
         localisation.setLayout(new BoxLayout(localisation, BoxLayout.Y_AXIS));
@@ -73,17 +126,18 @@ public class PlaceParking extends JPanel {
         JLabel lblLocalisation = new JLabel("Localisation");
         lblLocalisation.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        JLabel lblNomLocalisation = new JLabel("Centre Ville, Toulouse");
+        JLabel lblNomLocalisation = new JLabel(Nomlocalisation);
         lblNomLocalisation.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblNomLocalisation.setForeground(new Color(70, 70, 70));
 
         localisation.add(lblLocalisation);
         localisation.add(lblNomLocalisation);
         localisation.add(Box.createRigidArea(new Dimension(0, 8)));
-        body.add(localisation);
+        
+        return localisation;
 	}
 
-	private void horairesField(JPanel body) {
+	private JPanel horairesField(String horaires, String status) {
 		JPanel horaire = new JPanel();
         horaire.setOpaque(false);
         horaire.setLayout(new BoxLayout(horaire, BoxLayout.Y_AXIS));
@@ -91,11 +145,11 @@ public class PlaceParking extends JPanel {
         JLabel lblHoraires = new JLabel("Horaires");
         lblHoraires.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        JLabel lblHeure = new JLabel("09H00 - 19H00");
+        JLabel lblHeure = new JLabel(horaires);
         lblHeure.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblHeure.setForeground(new Color(70, 70, 70));
 
-        JLabel lblStatus = new JLabel("Ouvert");
+        JLabel lblStatus = new JLabel(status);
         lblStatus.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         lblStatus.setForeground(new Color(0, 130, 0));
 
@@ -103,10 +157,11 @@ public class PlaceParking extends JPanel {
         horaire.add(lblHeure);
         horaire.add(lblStatus);
         horaire.add(Box.createRigidArea(new Dimension(0, 8)));
-        body.add(horaire);
+        
+        return horaire;
 	}
 
-	private void placesField(JPanel body) {
+	private JPanel placesField(String places) {
 		JPanel nbPlaces = new JPanel();
         nbPlaces.setOpaque(false);
         nbPlaces.setLayout(new BoxLayout(nbPlaces, BoxLayout.Y_AXIS));
@@ -114,17 +169,18 @@ public class PlaceParking extends JPanel {
         JLabel lblNbPlaces = new JLabel("Places Disponibles");
         lblNbPlaces.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        JLabel lblPlacesDisponibles = new JLabel("54 / 130");
+        JLabel lblPlacesDisponibles = new JLabel(places);
         lblPlacesDisponibles.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblPlacesDisponibles.setForeground(new Color(70, 70, 70));
 
         nbPlaces.add(lblNbPlaces);
         nbPlaces.add(lblPlacesDisponibles);
         nbPlaces.add(Box.createRigidArea(new Dimension(0, 8)));
-        body.add(nbPlaces);
+        
+        return nbPlaces;
 	}
 
-	private void tarifField(JPanel body) {
+	private JPanel tarifField(String tarification) {
 		JPanel tarif = new JPanel();
         tarif.setOpaque(false);
         tarif.setLayout(new BoxLayout(tarif, BoxLayout.Y_AXIS));
@@ -132,12 +188,13 @@ public class PlaceParking extends JPanel {
         JLabel lblTarif = new JLabel("Tarif");
         lblTarif.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        JLabel lblPrix = new JLabel("2.5€/H");
+        JLabel lblPrix = new JLabel(tarification);
         lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblPrix.setForeground(new Color(70, 70, 70));
 
         tarif.add(lblTarif);
         tarif.add(lblPrix);
-        body.add(tarif);
+        
+        return tarif;
 	}
 }
