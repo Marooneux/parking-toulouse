@@ -23,5 +23,10 @@
 hs_err_pid*
 replay_pid*
 /MODELE/
+<<<<<<< HEAD
 /TEST/
 /VUE/
+=======
+/VUE/
+/TEST/
+>>>>>>> 40c97900df07f207f885988bf585a199a2185813
