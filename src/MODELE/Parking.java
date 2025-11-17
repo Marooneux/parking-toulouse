@@ -1,5 +1,6 @@
 package MODELE;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,19 +9,27 @@ public class Parking {
 	private String adresse;
 	private double tarif; // prix pour 15mins de stationnement
 	private int nbPlacesDisponibles;
+	private int nbPlacesTotales;
 	private double hauteur; // hauteur max en cm
-	private boolean ouvert;
+	private LocalDateTime heureOuverture;
+	private LocalDateTime heureFermeture;
 	private List<Voiture> vehicules;
 
-	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesDisponibles, double hauteur) {
+	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesTotales, double hauteur, 
+			LocalDateTime heureOuverture, LocalDateTime heureFermeture) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.tarif = tarifHoraire;
-		this.nbPlacesDisponibles = nbPlacesDisponibles;
+		this.nbPlacesDisponibles = nbPlacesTotales;
+		this.nbPlacesTotales= nbPlacesTotales;
 		this.hauteur = hauteur;
-		this.ouvert = false;
+		this.heureOuverture = heureOuverture;
+		this.heureFermeture = heureFermeture;
 		this.vehicules = new LinkedList<>();
 	}
+	
+	
+	
 
 	public String getNom() {
 		return this.nom;
@@ -62,13 +71,26 @@ public class Parking {
 		this.hauteur = hauteur;
 	}
 
-	public boolean getOuvert() {
-		return this.ouvert;
+	public LocalDateTime getHeureOuverture() {
+		return this.heureOuverture;
+	}
+	
+	public void setHeureOuverture(LocalDateTime heureOuverture) {
+		this.heureOuverture = heureOuverture;
+	}
+	
+	public LocalDateTime getHeureFermeture() {
+		return this.heureFermeture;
+	}
+	
+	public void setHeureFermeture(LocalDateTime heureFermeture) {
+		this.heureFermeture = heureFermeture;
+	}
+	
+	public Boolean estOuvert(LocalDateTime heure) {
+		return (heure.isAfter(heureOuverture) && heure.isBefore(heureFermeture));
 	}
 
-	public void setOuvert(boolean etat) {
-		this.ouvert = etat;
-	}
 
 	public Vehicule getVehicule(String immatriculation) {
 		for (Vehicule v : this.vehicules) {
