@@ -1,6 +1,3 @@
-// Redesign visuel moderne pour l'écran Paiement
-// Même style graphique utilisé nas outras telas (cards brancos, espaçamento, fonte Segoe UI, botões modernos)
-
 package VUE;
 
 import java.awt.*;
