@@ -15,44 +15,41 @@ public class testReservation {
 	
 	@Test
 	public void testGetters() {		
-		Parking p = new Parking(1, "Parking Capitole", "1 rue du Capitole", 1.5, 150);
-		Reservation r = new Reservation(1, "AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
+		Parking p = new Parking("Parking Capitole", "1 rue du Capitole", 1.5, 150);
+		Reservation r = new Reservation("AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
 		
-		assertEquals(1, r.getId());
 		assertEquals("AA-000-AA", r.getImmatriculation());
 		assertEquals(p, r.getParking());
 		assertEquals(LocalDateTime.of(2025, 11, 10, 12, 32, 35), r.getDateArrivee());
 		assertEquals(null, r.getDateDepart());
-		assertFalse(r.getEstPayee());
+		assertFalse(r.estPayee());
 	}
 	
 	
 	@Test
 	public void testSetters() {
-		Parking p = new Parking(1, "Parking Capitole", "1 rue du Capitole", 1.5, 150);
-		Parking p2 = new Parking(2, "Parking Capitole 2", "2 rue du Capitole", 2, 100);
-		Reservation r = new Reservation(1, "AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
+		Parking p = new Parking("Parking Capitole", "1 rue du Capitole", 1.5, 150);
+		Parking p2 = new Parking("Parking Capitole 2", "2 rue du Capitole", 2, 100);
+		Reservation r = new Reservation("AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
 		
-		r.setId(2);
 		r.setImmatriculation("BB-001-BB");
 		r.setParking(p2);
 		r.setDateArrivee(LocalDateTime.of(2025, 11, 10, 13, 00, 01));
 		r.setDateDepart(LocalDateTime.of(2025, 11, 10, 14, 14, 57));
 		r.setEstPayee(true);
 		
-		assertEquals(2, r.getId());
 		assertEquals("BB-001-BB", r.getImmatriculation());
 		assertEquals(p2, r.getParking());
 		assertEquals(LocalDateTime.of(2025, 11, 10, 13, 00, 01), r.getDateArrivee());
 		assertEquals(LocalDateTime.of(2025, 11, 10, 14, 14, 57), r.getDateDepart());
-		assertTrue(r.getEstPayee());
+		assertTrue(r.estPayee());
 	}
 	
 	
 	@Test
 	public void testExceptionsDateDepart() {
-		Parking p = new Parking(1, "Parking Capitole", "1 rue du Capitole", 1.5, 150);
-		Reservation r = new Reservation(1, "AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
+		Parking p = new Parking("Parking Capitole", "1 rue du Capitole", 1.5, 150);
+		Reservation r = new Reservation("AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
 		
 		// Vérification pour dateDepart = null
 		IllegalArgumentException e1 = assertThrows (
@@ -71,18 +68,18 @@ public class testReservation {
 	
 	@Test
 	public void testConfirmerReservation() {
-		Parking p = new Parking(1, "Parking Capitole", "1 rue du Capitole", 1.5, 150);
-		Reservation r = new Reservation(1, "AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
+		Parking p = new Parking("Parking Capitole", "1 rue du Capitole", 1.5, 150);
+		Reservation r = new Reservation("AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
 		
-		assertEquals(r.confirmerReservation(), "Réservation confirmée au parking Parking Capitole. "
+		assertEquals(r.toString(), "Réservation confirmée au parking Parking Capitole. "
 				+ "Arrivée : 2025-11-10T12:32:35. Prix horaire : 1.5€");
 	}
 	
 	
 	@Test
 	public void testCalculerPrixHoraire() {
-		Parking p = new Parking(1, "Parking Capitole", "1 rue du Capitole", 1.5, 150);
-		Reservation r = new Reservation(1, "AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
+		Parking p = new Parking("Parking Capitole", "1 rue du Capitole", 1.5, 150);
+		Reservation r = new Reservation("AA-000-AA", p, LocalDateTime.of(2025, 11, 10, 12, 32, 35));
 		
 		r.setDateDepart(LocalDateTime.of(2025, 11, 10, 14, 44, 37));
 		assertEquals(13.5, r.calculerPrixTotal(), 0.01);

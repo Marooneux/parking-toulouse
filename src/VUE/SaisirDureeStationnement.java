@@ -51,18 +51,14 @@ public class SaisirDureeStationnement extends JFrame {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		contentPane.add(header, BorderLayout.NORTH);
 		
-		JLabel lblIcon = new JLabel("Icon");
-		header.add(lblIcon);
 		
 		JPanel texte = new JPanel();
 		header.add(texte);
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 		
-		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
+		JLabel lblTitre = new JLabel("Stationnement en voirie");
 		texte.add(lblTitre);
 		
-		JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
-		texte.add(lblSousTitre);
 		
 		JPanel body = new JPanel();
 		contentPane.add(body, BorderLayout.CENTER);
@@ -72,37 +68,28 @@ public class SaisirDureeStationnement extends JFrame {
 		body.add(detailsParking);
 		detailsParking.setLayout(new BoxLayout(detailsParking, BoxLayout.Y_AXIS));
 		
-		JLabel lblParking = new JLabel("Parking Sélectionné");
+		JLabel lblParking = new JLabel("Zone actuelle : XXXXX");
 		detailsParking.add(lblParking);
 		
-		JLabel lblNomParking = new JLabel("Parking Capitole");
-		detailsParking.add(lblNomParking);
 		
 		JPanel detailsVoiture = new JPanel();
 		body.add(detailsVoiture);
 		detailsVoiture.setLayout(new BoxLayout(detailsVoiture, BoxLayout.Y_AXIS));
 		
-		JLabel lblInfoVehicule = new JLabel("Informations du Véhicule");
-		detailsVoiture.add(lblInfoVehicule);
 		
 		JPanel detailsVehicule = new JPanel();
 		detailsVoiture.add(detailsVehicule);
 		detailsVehicule.setLayout(new BoxLayout(detailsVehicule, BoxLayout.Y_AXIS));
 		
-		JLabel lblNbImatricule = new JLabel("Numéro de Plaque d'Immatriculation");
+		JLabel lblNbImatricule = new JLabel("Numéro de Plaque d'Immatriculation : AB-123-CD");
 		detailsVehicule.add(lblNbImatricule);
 		
-		JLabel NbImatriculation = new JLabel("AB-123-CD");
-		detailsVehicule.add(NbImatriculation);
-		
-		JLabel lblInfoImatricule = new JLabel("Nécessaire pour l'entrée et la sortie automatisées");
-		detailsVehicule.add(lblInfoImatricule);
 		
 		JPanel detailsHeureArrivé = new JPanel();
 		body.add(detailsHeureArrivé);
 		detailsHeureArrivé.setLayout(new BoxLayout(detailsHeureArrivé, BoxLayout.Y_AXIS));
 		
-		JLabel lblTitreHeureArrive = new JLabel("Heure d'Arrivée");
+		JLabel lblTitreHeureArrive = new JLabel("Durée maximum du stationnement : xxHxxM");
 		detailsHeureArrivé.add(lblTitreHeureArrive);
 		
 		JPanel panel = new JPanel();

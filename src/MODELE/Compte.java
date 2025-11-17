@@ -40,6 +40,10 @@ public abstract class Compte {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getMdp() {
+		return this.mdp;
+	}
 
 	public void setMdp(String ancienMdp, String nouveauMdp) {
 		if (this.mdp == ancienMdp) {
