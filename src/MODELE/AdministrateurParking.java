@@ -1,5 +1,7 @@
 package MODELE;
 
+import java.time.LocalTime;
+
 public class AdministrateurParking extends Compte {
 
 	public AdministrateurParking(String nom, String prenom, String email, String mdp) {
@@ -7,11 +9,14 @@ public class AdministrateurParking extends Compte {
 	}
 
 	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
-			int nouveauNbPlacesDisponibles) {
+			int nouveauNbPlacesTotales, double nouvelleHauteur, LocalTime nouvelleHeureOuverture, LocalTime nouvelleHeureFermeture) {
 		p.setNom(nouveauNom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarif(nouveauTarif);
-		p.setNbPlacesDisponibles(nouveauNbPlacesDisponibles);
+		p.setNbPlacesTotales(nouveauNbPlacesTotales);
+		p.setHauteur(nouvelleHauteur);
+		p.setHeureOuverture(nouvelleHeureOuverture);
+		p.setHeureFermeture(nouvelleHeureFermeture);
 	}
 
 	@Override

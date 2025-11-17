@@ -3,6 +3,8 @@ package TEST;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalTime;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +19,7 @@ public class AdministrateurParkingTest {
 	@Before
 	public void setUp() {
 		this.admin = new AdministrateurParking("Bold", "Bat", "Bold.bat@example.com", "secret");
-		this.parking = new Parking("Parking Central", "Rue de Paris", 2.5, 100);
+		this.parking = new Parking("Parking Central", "Rue de Paris", 2.5, 100, 1.8, LocalTime.of(9, 0), LocalTime.of(21, 0));
 	}
 
 	@Test
@@ -30,12 +32,15 @@ public class AdministrateurParkingTest {
 
 	@Test
 	public void testModifierInfoParking() {
-		this.admin.modifierInfoParking(this.parking, "Parking Sud", "Avenue Toulouse", 3.0, 80);
+		this.admin.modifierInfoParking(this.parking, "Parking Sud", "Avenue Toulouse", 3.0, 80, 1.75, LocalTime.of(6, 30), LocalTime.of(23, 0));
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Avenue Toulouse", this.parking.getAdresse());
 		assertEquals(3.0, this.parking.getTarif(), 0.001);
-		assertEquals(80, this.parking.getNbPlacesDisponibles());
+		assertEquals(80, this.parking.getNbPlacesTotales());
+		assertEquals(1.75, this.parking.getHauteur(), 0.01);
+		assertEquals(LocalTime.of(6, 30), this.parking.getHeureOuverture());
+		assertEquals(LocalTime.of(23, 0), this.parking.getHeureFermeture());
 	}
 
 	@Test
