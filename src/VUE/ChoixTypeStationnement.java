@@ -2,6 +2,7 @@ package VUE;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,6 +10,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,134 +22,125 @@ import javax.swing.border.EmptyBorder;
 
 public class ChoixTypeStationnement extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					ChoixTypeStationnement frame = new ChoixTypeStationnement();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                ChoixTypeStationnement frame = new ChoixTypeStationnement();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public ChoixTypeStationnement() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 450, 300);
-		this.contentPane = new JPanel();
-		this.contentPane.setBackground(new Color(255, 255, 255));
-		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BorderLayout(0, 0));
+    public ChoixTypeStationnement() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 450);
+        setLocationRelativeTo(null);
 
-		JLabel lblTitre = new JLabel("Bienvenue");
-		lblTitre.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		this.contentPane.add(lblTitre, BorderLayout.NORTH);
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
+        contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPane.setLayout(new BorderLayout(20, 20));
+        setContentPane(contentPane);
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		this.contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(0, 2, 10, 0));
+        // HEADER
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        header.setBackground(Color.WHITE);
 
-		JPanel panel_parking = new JPanel();
-		panel.add(panel_parking);
-		panel_parking.setLayout(new GridLayout(0, 1, 5, 0));
+        JLabel lblIcon = new JLabel("🅿️");
+        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        header.add(lblIcon);
 
-		JPanel panel_lblChoisirParking = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_lblChoisirParking.getLayout();
-		flowLayout.setVgap(10);
-		flowLayout.setHgap(10);
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel_parking.add(panel_lblChoisirParking);
+        JPanel texte = new JPanel();
+        texte.setBackground(Color.WHITE);
+        texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
-		JLabel lblChoisirParking = new JLabel("Stationnement parking");
-		lblChoisirParking.setHorizontalAlignment(SwingConstants.LEFT);
-		panel_lblChoisirParking.add(lblChoisirParking);
-		lblChoisirParking.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        JLabel lblTitre = new JLabel("Choisissez votre type de stationnement");
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitre.setForeground(new Color(40, 40, 40));
 
-		JPanel panel_lblInfoParking = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_lblInfoParking.getLayout();
-		flowLayout_1.setVgap(10);
-		flowLayout_1.setHgap(10);
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel_parking.add(panel_lblInfoParking);
+        JLabel lblSousTitre = new JLabel("Sélectionnez une option pour continuer");
+        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSousTitre.setForeground(new Color(100, 100, 100));
 
-		JLabel lblInfoParking = new JLabel("Stationner dans un parking au choix");
-		panel_lblInfoParking.add(lblInfoParking);
-		lblInfoParking.setFont(new Font("Dialog", Font.PLAIN, 12));
+        texte.add(lblTitre);
+        texte.add(lblSousTitre);
+        header.add(texte);
 
-		JPanel panel_btnChoisirParking = new JPanel();
-		panel_parking.add(panel_btnChoisirParking);
-		panel_btnChoisirParking.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
+        contentPane.add(header, BorderLayout.NORTH);
 
-		JButton btnChoisirParking = new JButton("Trouver un parking");
-		btnChoisirParking.setHorizontalAlignment(SwingConstants.LEFT);
-		panel_btnChoisirParking.add(btnChoisirParking);
-		btnChoisirParking.setForeground(new Color(255, 255, 255));
-		btnChoisirParking.setBackground(new Color(0, 128, 255));
-		btnChoisirParking.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnChoisirParking.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+        // Partie central
+        JPanel centre = new JPanel();
+        centre.setBackground(Color.WHITE);
+        centre.setLayout(new GridLayout(1, 2, 20, 0));
+        contentPane.add(centre, BorderLayout.CENTER);
 
-		JPanel panel_voirie = new JPanel();
-		panel.add(panel_voirie);
-		panel_voirie.setLayout(new GridLayout(3, 1, 0, 0));
+        // Card 1 - Parking
+        JPanel cardParking = crerCard();
+        centre.add(cardParking);
 
-		JPanel panel_lblChoisirVoirie = new JPanel();
-		FlowLayout flowLayout_3 = (FlowLayout) panel_lblChoisirVoirie.getLayout();
-		flowLayout_3.setVgap(10);
-		flowLayout_3.setHgap(10);
-		flowLayout_3.setAlignment(FlowLayout.LEFT);
-		panel_voirie.add(panel_lblChoisirVoirie);
+        JLabel lblParkingTitre = new JLabel("Stationnement Parking");
+        lblParkingTitre.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-		JLabel lblChoisirVoirie = new JLabel("Stationnement en voirie");
-		panel_lblChoisirVoirie.add(lblChoisirVoirie);
-		lblChoisirVoirie.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        JLabel lblParkingInfo = new JLabel("Stationner dans un parking au choix");
+        lblParkingInfo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblParkingInfo.setForeground(new Color(80, 80, 80));
 
-		JPanel panel_lblInfoVoirie = new JPanel();
-		FlowLayout fl_panel_lblInfoVoirie = (FlowLayout) panel_lblInfoVoirie.getLayout();
-		fl_panel_lblInfoVoirie.setHgap(10);
-		fl_panel_lblInfoVoirie.setAlignment(FlowLayout.LEFT);
-		fl_panel_lblInfoVoirie.setVgap(10);
-		panel_voirie.add(panel_lblInfoVoirie);
+        JButton btnParking = crerButton("Trouver un parking");
 
-		JLabel lblInfoVoirie = new JLabel("Stationner en voirie dans une zone au choix");
-		panel_lblInfoVoirie.add(lblInfoVoirie);
-		lblInfoVoirie.setFont(new Font("Dialog", Font.PLAIN, 12));
+        cardParking.add(lblParkingTitre);
+        cardParking.add(lblParkingInfo);
+        cardParking.add(Box.createRigidArea(new Dimension(0, 10)));
+        cardParking.add(btnParking);
 
-		JPanel panel_btnChoisirVoirie = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_btnChoisirVoirie.getLayout();
-		flowLayout_2.setVgap(10);
-		flowLayout_2.setHgap(10);
-		panel_voirie.add(panel_btnChoisirVoirie);
+        // Card 2 Voirie
+        JPanel cardVoirie = crerCard();
+        centre.add(cardVoirie);
 
-		JButton btnChoisirVoirie = new JButton("Trouver un emplacement");
-		btnChoisirVoirie.setHorizontalAlignment(SwingConstants.LEFT);
-		panel_btnChoisirVoirie.add(btnChoisirVoirie);
-		btnChoisirVoirie.setForeground(new Color(255, 255, 255));
-		btnChoisirVoirie.setBackground(new Color(0, 128, 255));
-		btnChoisirVoirie.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnChoisirVoirie.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+        JLabel lblVoirieTitre = new JLabel("Stationnement en Voirie");
+        lblVoirieTitre.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-	}
+        JLabel lblVoirieInfo = new JLabel("Stationner en voirie dans une zone au choix");
+        lblVoirieInfo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblVoirieInfo.setForeground(new Color(80, 80, 80));
 
+        JButton btnVoirie = crerButton("Trouver un emplacement");
+
+        cardVoirie.add(lblVoirieTitre);
+        cardVoirie.add(lblVoirieInfo);
+        cardVoirie.add(Box.createRigidArea(new Dimension(0, 10)));
+        cardVoirie.add(btnVoirie);
+
+        // Listeners
+        btnParking.addActionListener(e -> {});
+        btnVoirie.addActionListener(e -> {});
+    }
+
+    // Metodes utilitaires pour controleur
+
+    private JPanel crerCard() {
+        JPanel card = new JPanel();
+        card.setBackground(Color.WHITE);
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true),
+                new EmptyBorder(20, 20, 20, 20)
+        ));
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        return card;
+    }
+
+    private JButton crerButton(String texte) {
+        JButton btn = new JButton(texte);
+        btn.setForeground(Color.WHITE);
+        btn.setBackground(new Color(0, 128, 255));
+        btn.setFocusPainted(false);
+        btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        btn.setAlignmentX(CENTER_ALIGNMENT);
+        btn.setPreferredSize(new Dimension(180, 40));
+        return btn;
+    }
 }
