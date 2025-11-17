@@ -1,6 +1,6 @@
 package MODELE;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,19 +8,19 @@ public class Parking {
 	private String nom;
 	private String adresse;
 	private double tarif; // prix pour 15mins de stationnement
-	private int nbPlacesDisponibles;
+	private int nbPlacesOccupees;
 	private int nbPlacesTotales;
 	private double hauteur; // hauteur max en cm
-	private LocalDateTime heureOuverture;
-	private LocalDateTime heureFermeture;
+	private LocalTime heureOuverture;
+	private LocalTime heureFermeture;
 	private List<Voiture> vehicules;
 
 	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesTotales, double hauteur, 
-			LocalDateTime heureOuverture, LocalDateTime heureFermeture) {
+			LocalTime heureOuverture, LocalTime heureFermeture) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.tarif = tarifHoraire;
-		this.nbPlacesDisponibles = nbPlacesTotales;
+		this.nbPlacesOccupees = 0;
 		this.nbPlacesTotales= nbPlacesTotales;
 		this.hauteur = hauteur;
 		this.heureOuverture = heureOuverture;
@@ -31,63 +31,94 @@ public class Parking {
 	
 	
 
+
+	
 	public String getNom() {
-		return this.nom;
+		return nom;
 	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+
 	public String getAdresse() {
-		return this.adresse;
+		return adresse;
 	}
 
-	public void setAdresse(String localisation) {
-		this.adresse = localisation;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
+
 
 	public double getTarif() {
-		return this.tarif;
+		return tarif;
 	}
 
-	public void setTarif(double tarifHoraire) {
-		this.tarif = tarifHoraire;
+	public void setTarif(double tarif) {
+		this.tarif = tarif;
 	}
 
-	public int getNbPlacesDisponibles() {
-		return this.nbPlacesDisponibles;
+
+	public int getNbPlacesOccupees() {
+		return nbPlacesOccupees;
 	}
 
-	public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
-		this.nbPlacesDisponibles = nbPlacesDisponibles;
+	public void setNbPlacesOccupees(int nbPlacesOccupees) {
+		this.nbPlacesOccupees = nbPlacesOccupees;
 	}
-	
+
+
+	public int getNbPlacesTotales() {
+		return nbPlacesTotales;
+	}
+
+	public void setNbPlacesTotales(int nbPlacesTotales) {
+		this.nbPlacesTotales = nbPlacesTotales;
+	}
+
+
 	public double getHauteur() {
-		return this.hauteur;
+		return hauteur;
 	}
-	
+
 	public void setHauteur(double hauteur) {
 		this.hauteur = hauteur;
 	}
 
-	public LocalDateTime getHeureOuverture() {
-		return this.heureOuverture;
+
+	public LocalTime getHeureOuverture() {
+		return heureOuverture;
 	}
-	
-	public void setHeureOuverture(LocalDateTime heureOuverture) {
+
+	public void setHeureOuverture(LocalTime heureOuverture) {
 		this.heureOuverture = heureOuverture;
 	}
-	
-	public LocalDateTime getHeureFermeture() {
-		return this.heureFermeture;
+
+
+	public LocalTime getHeureFermeture() {
+		return heureFermeture;
 	}
-	
-	public void setHeureFermeture(LocalDateTime heureFermeture) {
+
+	public void setHeureFermeture(LocalTime heureFermeture) {
 		this.heureFermeture = heureFermeture;
 	}
-	
-	public Boolean estOuvert(LocalDateTime heure) {
+
+
+	public List<Voiture> getVehicules() {
+		return vehicules;
+	}
+
+	public void setVehicules(List<Voiture> vehicules) {
+		this.vehicules = vehicules;
+	}
+
+
+
+
+
+
+	public Boolean estOuvert(LocalTime heure) {
 		return (heure.isAfter(heureOuverture) && heure.isBefore(heureFermeture));
 	}
 
