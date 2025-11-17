@@ -13,6 +13,10 @@ import VUE.SaisirHeureArriveParking;
 public class ControleurParking {
 	private JFrame vue;
 
+	private enum TypeStationnement {
+		CONNECTION, CHOIXPARKING, CHOIXVOIRIE, HEURE, PAIEMENT
+	}
+
 	public ControleurParking(JFrame vue) {
 		this.vue = vue;
 
