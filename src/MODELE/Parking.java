@@ -1,64 +1,127 @@
 package MODELE;
 
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Parking {
 	private String nom;
 	private String adresse;
-	private double tarifHoraire;
-	private int nbPlacesDisponibles;
-	private boolean ouvert;
+	private double tarif; // prix pour 15mins de stationnement
+	private int nbPlacesOccupees;
+	private int nbPlacesTotales;
+	private double hauteur; // hauteur max en cm
+	private LocalTime heureOuverture;
+	private LocalTime heureFermeture;
 	private List<Voiture> vehicules;
 
-	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesDisponibles) {
+	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesTotales, double hauteur, 
+			LocalTime heureOuverture, LocalTime heureFermeture) {
 		this.nom = nom;
 		this.adresse = adresse;
-		this.tarifHoraire = tarifHoraire;
-		this.nbPlacesDisponibles = nbPlacesDisponibles;
-		this.ouvert = false;
+		this.tarif = tarifHoraire;
+		this.nbPlacesOccupees = 0;
+		this.nbPlacesTotales= nbPlacesTotales;
+		this.hauteur = hauteur;
+		this.heureOuverture = heureOuverture;
+		this.heureFermeture = heureFermeture;
 		this.vehicules = new LinkedList<>();
 	}
+	
+	
+	
 
+
+	
 	public String getNom() {
-		return this.nom;
+		return nom;
 	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+
 	public String getAdresse() {
-		return this.adresse;
+		return adresse;
 	}
 
-	public void setAdresse(String localisation) {
-		this.adresse = localisation;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
-	public double getTarifHoraire() {
-		return this.tarifHoraire;
+
+	public double getTarif() {
+		return tarif;
 	}
 
-	public void setTarifHoraire(double tarifHoraire) {
-		this.tarifHoraire = tarifHoraire;
+	public void setTarif(double tarif) {
+		this.tarif = tarif;
 	}
 
-	public int getNbPlacesDisponibles() {
-		return this.nbPlacesDisponibles;
+
+	public int getNbPlacesOccupees() {
+		return nbPlacesOccupees;
 	}
 
-	public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
-		this.nbPlacesDisponibles = nbPlacesDisponibles;
+	public void setNbPlacesOccupees(int nbPlacesOccupees) {
+		this.nbPlacesOccupees = nbPlacesOccupees;
 	}
 
-	public boolean getOuvert() {
-		return this.ouvert;
+
+	public int getNbPlacesTotales() {
+		return nbPlacesTotales;
 	}
 
-	public void setOuvert(boolean etat) {
-		this.ouvert = etat;
+	public void setNbPlacesTotales(int nbPlacesTotales) {
+		this.nbPlacesTotales = nbPlacesTotales;
 	}
+
+
+	public double getHauteur() {
+		return hauteur;
+	}
+
+	public void setHauteur(double hauteur) {
+		this.hauteur = hauteur;
+	}
+
+
+	public LocalTime getHeureOuverture() {
+		return heureOuverture;
+	}
+
+	public void setHeureOuverture(LocalTime heureOuverture) {
+		this.heureOuverture = heureOuverture;
+	}
+
+
+	public LocalTime getHeureFermeture() {
+		return heureFermeture;
+	}
+
+	public void setHeureFermeture(LocalTime heureFermeture) {
+		this.heureFermeture = heureFermeture;
+	}
+
+
+	public List<Voiture> getVehicules() {
+		return vehicules;
+	}
+
+	public void setVehicules(List<Voiture> vehicules) {
+		this.vehicules = vehicules;
+	}
+
+
+
+
+
+
+	public Boolean estOuvert(LocalTime heure) {
+		return (heure.isAfter(heureOuverture) && heure.isBefore(heureFermeture));
+	}
+
 
 	public Vehicule getVehicule(String immatriculation) {
 		for (Vehicule v : this.vehicules) {

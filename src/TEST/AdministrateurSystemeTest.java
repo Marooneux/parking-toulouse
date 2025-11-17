@@ -3,6 +3,8 @@ package TEST;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalTime;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,8 +21,8 @@ public class AdministrateurSystemeTest {
 	@Before
 	public void setUp() {
 		this.adminSysteme = new AdministrateurSysteme("Martin", "Paul", "paul.martin@example.com", "admin123");
-		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 2.0, 50);
-		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 3.0, 80);
+		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 2.0, 50, 1.8, LocalTime.of(9, 0), LocalTime.of(21, 0));
+		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 3.0, 80, 1.75, LocalTime.of(6, 30), LocalTime.of(23, 0));
 	}
 
 	@Test
