@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,7 +42,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	public SaisirHeureArriveParking() {
 		this.setTitle("Démarrer le Stationnement");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600, 600);
+		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
 		this.btnStart = new JButton("Démarrer le Stationnement");
 
@@ -99,6 +101,17 @@ public class SaisirHeureArriveParking extends JFrame {
 		this.btnStart.setOpaque(true);
 		buttonPanel.add(this.btnStart);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        this.btnStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    TicketParking framePaiement = new TicketParking("Parking Capitole", "AB-123-CD", "14:30", "Carte Bancaire");
+                    framePaiement.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 	}
 
 	private JPanel detailsDuParking() {
@@ -199,6 +212,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		JLabel lblTitle = new JLabel(title);
 		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		lblTitle.setForeground(new Color(70, 70, 70));
+		lblTitle.setPreferredSize(new Dimension(340, 40));
 		header.add(lblTitle);
 
 		card.add(header, BorderLayout.NORTH);

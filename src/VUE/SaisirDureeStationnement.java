@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -22,7 +24,7 @@ public class SaisirDureeStationnement extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnPayment;
+	private JButton btnConfirmer;
 	private JTextField textField;
 
 	public static void main(String[] args) {
@@ -40,9 +42,9 @@ public class SaisirDureeStationnement extends JFrame {
 	public SaisirDureeStationnement() {
 		this.setTitle("Démarrer le Stationnement");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600, 600);
+		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
-		this.btnPayment = new JButton("Payer");
+		this.btnConfirmer = new JButton("Confirmer le stationnement");
 
 		this.contentPane = new JPanel(new BorderLayout(15, 15));
 		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -66,7 +68,7 @@ public class SaisirDureeStationnement extends JFrame {
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 
-		JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
+		JLabel lblSousTitre = new JLabel("Veuillez confirmez votre stationnement en voirie");
 		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		texte.add(lblSousTitre);
@@ -82,7 +84,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.contentPane.add(body, BorderLayout.CENTER);
 
 		// Création des champs de details du stationnement
-		this.ajouterCarteDeDétails(body, "Parking Sélectionné", this.detailsDuParking());
+		this.ajouterCarteDeDétails(body, "Zone Sélectionnée", this.detailsZone());
 		this.ajouterCarteDeDétails(body, "Informations du Véhicule", this.detailsVoiture());
 		this.ajouterCarteDeDétails(body, "Durée Stationnement", this.detailsDureeStationnement());
 
@@ -91,25 +93,25 @@ public class SaisirDureeStationnement extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
 
-		this.btnPayment.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		this.btnPayment.setBackground(new Color(0, 122, 255));
-		this.btnPayment.setForeground(Color.WHITE);
-		this.btnPayment.setFocusPainted(false);
-		this.btnPayment.setBorderPainted(false);
-		this.btnPayment.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.btnPayment.setPreferredSize(new Dimension(120, 40));
-		this.btnPayment.setOpaque(true);
-		buttonPanel.add(this.btnPayment);
+		this.btnConfirmer.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		this.btnConfirmer.setBackground(new Color(0, 122, 255));
+		this.btnConfirmer.setForeground(Color.WHITE);
+		this.btnConfirmer.setFocusPainted(false);
+		this.btnConfirmer.setBorderPainted(false);
+		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.btnConfirmer.setPreferredSize(new Dimension(250, 40));
+		this.btnConfirmer.setOpaque(true);
+		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
 	}
 
-	private JPanel detailsDuParking() {
+	private JPanel detailsZone() {
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(Color.WHITE);
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-		JLabel lblParking = new JLabel("Parking Capitole");
+		JLabel lblParking = new JLabel("Zone rouge");
 		lblParking.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblParking.setForeground(new Color(50, 50, 50));
 		p.add(lblParking);
@@ -135,7 +137,7 @@ public class SaisirDureeStationnement extends JFrame {
 		plaque.setBorder(new EmptyBorder(5, 0, 0, 0));
 		p.add(plaque);
 
-		JLabel lblInfoImatricule = new JLabel("Nécessaire pour l'entrée et la sortie automatisées");
+		JLabel lblInfoImatricule = new JLabel("Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
 		lblInfoImatricule.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblInfoImatricule.setForeground(new Color(120, 120, 120));
 		lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
@@ -192,7 +194,7 @@ public class SaisirDureeStationnement extends JFrame {
 	}
 
 	public JButton getBtnPayment() {
-		return this.btnPayment;
+		return this.btnConfirmer;
 	}
 
 	public JTextField getTextField() {

@@ -1,6 +1,9 @@
 package VUE;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -93,13 +96,24 @@ public class Paiement extends JFrame {
         JPanel panelBtn = new JPanel();
         panelBtn.setBackground(Color.WHITE);
 
-        JButton btnPayer = new JButton("Payer");
+        JButton btnPayer = new JButton("Payer - 15€");
         btnPayer.setBackground(new Color(0, 128, 255));
         btnPayer.setForeground(Color.WHITE);
         btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         btnPayer.setFocusPainted(false);
         btnPayer.setPreferredSize(new Dimension(160, 40));
         panelBtn.add(btnPayer);
+        btnPayer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                	ConfirmationPaiement framePaiement = new ConfirmationPaiement(15);
+                    framePaiement.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         card.add(panelBtn);
     }

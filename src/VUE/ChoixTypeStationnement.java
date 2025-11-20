@@ -38,7 +38,7 @@ public class ChoixTypeStationnement extends JFrame {
 
 	public ChoixTypeStationnement() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600, 450);
+		this.setSize(900, 600);
 		this.setLocationRelativeTo(null);
 
 		this.contentPane = new JPanel();

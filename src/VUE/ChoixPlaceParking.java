@@ -12,6 +12,8 @@ import javax.swing.JButton;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
@@ -75,7 +77,7 @@ public class ChoixPlaceParking extends JFrame {
 
         // LISTA DE PLACES
         PlaceParking place1 = new PlaceParking("Place Capitle", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Ouvert");
-        PlaceParking place2 = new PlaceParking("Place Capitle", "Centre Ville, oulouse", "09 - 10", "59/100", "10", "Fermé");
+        PlaceParking place2 = new PlaceParking("Place Capitle", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Fermé");
         
         List<PlaceParking> p = new ArrayList<PlaceParking>();
         p.add(place1);
@@ -89,15 +91,26 @@ public class ChoixPlaceParking extends JFrame {
         JPanel panelBtn = new JPanel();
         panelBtn.setBackground(Color.WHITE);
 
-        JButton btnPayer = new JButton("Choisir Parking");
-        btnPayer.setBackground(new Color(0, 128, 255));
-        btnPayer.setForeground(Color.WHITE);
-        btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        btnPayer.setFocusPainted(false);
-        btnPayer.setPreferredSize(new Dimension(160, 40));
-        panelBtn.add(btnPayer);
-        panel.add(btnPayer);
-        
+        JButton btnParking = new JButton("Choisir Parking");
+        btnParking.setBackground(new Color(0, 128, 255));
+        btnParking.setForeground(Color.WHITE);
+        btnParking.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        btnParking.setFocusPainted(false);
+        btnParking.setPreferredSize(new Dimension(160, 40));
+        panelBtn.add(btnParking);
+        panel.add(btnParking);
+        btnParking.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    SaisirHeureArriveParking framePaiement = new SaisirHeureArriveParking();
+                    framePaiement.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        }
+       
         
     }
-}
