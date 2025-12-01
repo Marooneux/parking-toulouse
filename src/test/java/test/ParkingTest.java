@@ -1,4 +1,4 @@
-package test;
+package test.java.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,8 +11,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.Parking;
-import modele.Voiture;
+import main.java.modele.Parking;
+import main.java.modele.Voiture;
 
 public class ParkingTest {
 
@@ -22,7 +22,8 @@ public class ParkingTest {
 
 	@Before
 	public void setUp() {
-		this.parking = new Parking("Parking Central", "Rue Victor Hugo", 2.5, 100, 1.8, LocalTime.of(9, 0), LocalTime.of(21, 0));
+		this.parking = new Parking("Parking Central", "Rue Victor Hugo", 2.5, 100, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0));
 		this.voiture1 = new Voiture(150, "AB-123-CD", true, false);
 		this.voiture2 = new Voiture(140, "EF-456-GH", false, true);
 	}
@@ -49,7 +50,6 @@ public class ParkingTest {
 		this.parking.setHauteur(2.0);
 		this.parking.setHeureOuverture(LocalTime.of(8, 0));
 		this.parking.setHeureFermeture(LocalTime.of(22, 0));
-		
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Boulevard Carnot", this.parking.getAdresse());
@@ -78,7 +78,7 @@ public class ParkingTest {
 	public void testGetVehiculeNotFound() {
 		assertNull(this.parking.getVehicule("ZZ-999-ZZ"));
 	}
-	
+
 	@Test
 	public void testEstOuvert() {
 		assertTrue(this.parking.estOuvert(LocalTime.of(15, 0)));

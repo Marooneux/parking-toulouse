@@ -1,4 +1,4 @@
-package modele;
+package main.java.modele;
 
 import java.time.LocalTime;
 
@@ -9,7 +9,8 @@ public class AdministrateurParking extends Compte {
 	}
 
 	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
-			int nouveauNbPlacesTotales, double nouvelleHauteur, LocalTime nouvelleHeureOuverture, LocalTime nouvelleHeureFermeture) {
+			int nouveauNbPlacesTotales, double nouvelleHauteur, LocalTime nouvelleHeureOuverture,
+			LocalTime nouvelleHeureFermeture) {
 		p.setNom(nouveauNom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarif(nouveauTarif);

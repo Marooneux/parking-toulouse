@@ -1,11 +1,11 @@
-package test;
+package test.java.test;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.Moto;
+import main.java.modele.Moto;
 
 public class MotoTest {
 

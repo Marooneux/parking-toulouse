@@ -1,4 +1,4 @@
-package vue;
+package main.java.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -65,30 +65,32 @@ public class ChoixTypeStationnement extends JFrame {
 		// Card 1 - Parking
 		JButton btnParking = this.cardParking(centre);
 		btnParking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	ChoixParking frameChoixParking = new ChoixParking();
-                	frameChoixParking.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ChoixParking frameChoixParking = new ChoixParking();
+					frameChoixParking.setVisible(true);
+					ChoixTypeStationnement.this.dispose();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 
 		// Card 2 Voirie
 		JButton btnVoirie = this.cardVoirie(centre);
 		btnVoirie.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	SaisirDureeStationnement frameVoirie = new SaisirDureeStationnement();
-                	frameVoirie.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SaisirDureeStationnement frameVoirie = new SaisirDureeStationnement();
+					frameVoirie.setVisible(true);
+					ChoixTypeStationnement.this.dispose();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 
 		// Listeners
 		btnParking.addActionListener(e -> {

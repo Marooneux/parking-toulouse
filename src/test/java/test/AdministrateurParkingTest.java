@@ -1,4 +1,4 @@
-package test;
+package test.java.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,8 +8,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.AdministrateurParking;
-import modele.Parking;
+import main.java.modele.AdministrateurParking;
+import main.java.modele.Parking;
 
 public class AdministrateurParkingTest {
 
@@ -19,7 +19,8 @@ public class AdministrateurParkingTest {
 	@Before
 	public void setUp() {
 		this.admin = new AdministrateurParking("Bold", "Bat", "Bold.bat@example.com", "secret");
-		this.parking = new Parking("Parking Central", "Rue de Paris", 2.5, 100, 1.8, LocalTime.of(9, 0), LocalTime.of(21, 0));
+		this.parking = new Parking("Parking Central", "Rue de Paris", 2.5, 100, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0));
 	}
 
 	@Test
@@ -32,7 +33,8 @@ public class AdministrateurParkingTest {
 
 	@Test
 	public void testModifierInfoParking() {
-		this.admin.modifierInfoParking(this.parking, "Parking Sud", "Avenue Toulouse", 3.0, 80, 1.75, LocalTime.of(6, 30), LocalTime.of(23, 0));
+		this.admin.modifierInfoParking(this.parking, "Parking Sud", "Avenue Toulouse", 3.0, 80, 1.75,
+				LocalTime.of(6, 30), LocalTime.of(23, 0));
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Avenue Toulouse", this.parking.getAdresse());

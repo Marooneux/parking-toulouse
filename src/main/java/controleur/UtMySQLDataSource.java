@@ -1,4 +1,4 @@
-package controleur;
+package main.java.controleur;
 /* package CONTROLEUR;
 
 import java.sql.*;

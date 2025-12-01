@@ -1,4 +1,4 @@
-package vue;
+package main.java.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -102,18 +100,18 @@ public class SaisirDureeStationnement extends JFrame {
 		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnConfirmer.setPreferredSize(new Dimension(250, 40));
 		this.btnConfirmer.setOpaque(true);
-        this.btnConfirmer.addActionListener(e -> {
-            String duree = this.textField.getText();
-            if (duree == null || duree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
-                return;
-            }
+		this.btnConfirmer.addActionListener(e -> {
+			String duree = this.textField.getText();
+			if (duree == null || duree.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+				return;
+			}
 
-            PaiementVoirie framePaiementVoirie = new PaiementVoirie();
-            framePaiementVoirie.setVisible(true);
-            dispose();
-        });
-	 
+			PaiementVoirie framePaiementVoirie = new PaiementVoirie();
+			framePaiementVoirie.setVisible(true);
+			this.dispose();
+		});
+
 		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
 	}
@@ -150,7 +148,8 @@ public class SaisirDureeStationnement extends JFrame {
 		plaque.setBorder(new EmptyBorder(5, 0, 0, 0));
 		p.add(plaque);
 
-		JLabel lblInfoImatricule = new JLabel("Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
+		JLabel lblInfoImatricule = new JLabel(
+				"Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
 		lblInfoImatricule.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblInfoImatricule.setForeground(new Color(120, 120, 120));
 		lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
@@ -160,7 +159,7 @@ public class SaisirDureeStationnement extends JFrame {
 	}
 
 	private JPanel detailsDureeStationnement() {
-		textFieldDuree = new PlaceholderTextField("Nom Prénom", 20);
+		this.textFieldDuree = new PlaceholderTextField("Nom Prénom", 20);
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(Color.WHITE);

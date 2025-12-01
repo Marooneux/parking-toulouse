@@ -1,4 +1,4 @@
-package vue;
+package main.java.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -101,17 +99,17 @@ public class SaisirHeureArriveParking extends JFrame {
 		this.btnStart.setOpaque(true);
 		buttonPanel.add(this.btnStart);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
-        this.btnStart.addActionListener(e -> {
-            String duree = this.textField.getText();
-            if (duree == null || duree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
-                return;
-            }
+		this.btnStart.addActionListener(e -> {
+			String duree = this.textField.getText();
+			if (duree == null || duree.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+				return;
+			}
 
-            TicketParking frameTicketParking = new TicketParking();
-            frameTicketParking.setVisible(true);
-            dispose();
-        });
+			TicketParking frameTicketParking = new TicketParking();
+			frameTicketParking.setVisible(true);
+			this.dispose();
+		});
 	}
 
 	private JPanel detailsDuParking() {

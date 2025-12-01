@@ -1,4 +1,4 @@
-package modele;
+package main.java.modele;
 
 public class AdministrateurSysteme extends Compte {
 	private EnsembleParking parkings;

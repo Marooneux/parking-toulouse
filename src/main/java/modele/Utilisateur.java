@@ -1,4 +1,4 @@
-package modele;
+package main.java.modele;
 
 public class Utilisateur extends Compte {
 
@@ -6,7 +6,8 @@ public class Utilisateur extends Compte {
 		super(nom, prenom, email, mdp);
 	}
 
-	public void modifierProfil(String nouveauNom, String nouveauprenom, String nouvelEmail, String ancienMdp, String nouveauMdp) {
+	public void modifierProfil(String nouveauNom, String nouveauprenom, String nouvelEmail, String ancienMdp,
+			String nouveauMdp) {
 		this.setNom(nouveauNom);
 		this.setPrenom(nouveauprenom);
 		this.setEmail(nouvelEmail);

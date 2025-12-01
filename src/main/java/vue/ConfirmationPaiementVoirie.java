@@ -1,118 +1,121 @@
-package vue;
+package main.java.vue;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.border.LineBorder;
-import java.awt.GridLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class ConfirmationPaiementVoirie extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    public ConfirmationPaiementVoirie(double d) {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 750, 550);
-        setTitle("Paiement validé");
-        
-        contentPane = new JPanel();
-        contentPane.setBackground(new Color(255, 255, 255));
-        contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-        setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout(0, 0));
+	public ConfirmationPaiementVoirie(double d) {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 750, 550);
+		this.setTitle("Paiement validé");
 
-        JPanel panelCenterContainer = new JPanel();
-        panelCenterContainer.setBackground(new Color(255, 255, 255));
-        panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
-        contentPane.add(panelCenterContainer, BorderLayout.CENTER);
-        panelCenterContainer.setLayout(new BorderLayout(0, 0));
+		this.contentPane = new JPanel();
+		this.contentPane.setBackground(new Color(255, 255, 255));
+		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.setContentPane(this.contentPane);
+		this.contentPane.setLayout(new BorderLayout(0, 0));
 
-        JPanel panelCard = new JPanel();
-        panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-        panelCard.setBackground(new Color(255, 255, 255));
-        panelCenterContainer.add(panelCard);
-        panelCard.setLayout(new BorderLayout(0, 0));
+		JPanel panelCenterContainer = new JPanel();
+		panelCenterContainer.setBackground(new Color(255, 255, 255));
+		panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
+		this.contentPane.add(panelCenterContainer, BorderLayout.CENTER);
+		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
-        JPanel panelInnerContent = new JPanel();
-        panelInnerContent.setBackground(Color.WHITE);
-        panelInnerContent.setBorder(new EmptyBorder(30, 20, 30, 20));
-        panelCard.add(panelInnerContent, BorderLayout.CENTER);
-        panelInnerContent.setLayout(new GridLayout(5, 1, 0, 10));
+		JPanel panelCard = new JPanel();
+		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
+		panelCard.setBackground(new Color(255, 255, 255));
+		panelCenterContainer.add(panelCard);
+		panelCard.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblIconSuccess = new JLabel("✔");
-        lblIconSuccess.setForeground(new Color(40, 167, 69));
-        lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
-        lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
-        panelInnerContent.add(lblIconSuccess);
+		JPanel panelInnerContent = new JPanel();
+		panelInnerContent.setBackground(Color.WHITE);
+		panelInnerContent.setBorder(new EmptyBorder(30, 20, 30, 20));
+		panelCard.add(panelInnerContent, BorderLayout.CENTER);
+		panelInnerContent.setLayout(new GridLayout(5, 1, 0, 10));
 
-        JLabel lblTitre = new JLabel("Paiement Validé !");
-        lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitre.setForeground(new Color(40, 167, 69));
-        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        panelInnerContent.add(lblTitre);
+		JLabel lblIconSuccess = new JLabel("✔");
+		lblIconSuccess.setForeground(new Color(40, 167, 69));
+		lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
+		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
+		panelInnerContent.add(lblIconSuccess);
 
-        JLabel lblMerci = new JLabel("Merci de votre visite");
-        lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
-        lblMerci.setForeground(new Color(100, 100, 100));
-        lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        panelInnerContent.add(lblMerci);
+		JLabel lblTitre = new JLabel("Paiement Validé !");
+		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitre.setForeground(new Color(40, 167, 69));
+		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		panelInnerContent.add(lblTitre);
 
-        JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", d));
-        lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-        lblMontant.setForeground(new Color(33, 37, 41));
-        lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        panelInnerContent.add(lblMontant);
+		JLabel lblMerci = new JLabel("Merci de votre visite");
+		lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMerci.setForeground(new Color(100, 100, 100));
+		lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		panelInnerContent.add(lblMerci);
 
-        JPanel panelFooter = new JPanel();
-        panelFooter.setBackground(new Color(255, 255, 255));
-        panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
-        contentPane.add(panelFooter, BorderLayout.SOUTH);
-        
-        JButton btnTerminer = new JButton("Voir le e-ticket");
-        btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnTerminer.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                    	TicketVoirie framePaiement = new TicketVoirie();
-                        framePaiement.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
-        btnTerminer.setForeground(Color.WHITE);
-        btnTerminer.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        btnTerminer.setBackground(new Color(0, 123, 255));
-        btnTerminer.setFocusPainted(false);
-        btnTerminer.setBorderPainted(false);
-        btnTerminer.setPreferredSize(new Dimension(250, 45));
-        
-        panelFooter.add(btnTerminer);
-    }
+		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", d));
+		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMontant.setForeground(new Color(33, 37, 41));
+		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		panelInnerContent.add(lblMontant);
+
+		JPanel panelFooter = new JPanel();
+		panelFooter.setBackground(new Color(255, 255, 255));
+		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
+		this.contentPane.add(panelFooter, BorderLayout.SOUTH);
+
+		JButton btnTerminer = new JButton("Voir le e-ticket");
+		btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTerminer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					TicketVoirie framePaiement = new TicketVoirie();
+					framePaiement.setVisible(true);
+					ConfirmationPaiementVoirie.this.dispose();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnTerminer.setForeground(Color.WHITE);
+		btnTerminer.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		btnTerminer.setBackground(new Color(0, 123, 255));
+		btnTerminer.setFocusPainted(false);
+		btnTerminer.setBorderPainted(false);
+		btnTerminer.setPreferredSize(new Dimension(250, 45));
+
+		panelFooter.add(btnTerminer);
+	}
 }

@@ -1,4 +1,4 @@
-package modele;
+package main.java.modele;
 
 public abstract class Compte {
 	private String nom;
@@ -40,7 +40,7 @@ public abstract class Compte {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getMdp() {
 		return this.mdp;
 	}

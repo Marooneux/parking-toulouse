@@ -1,4 +1,4 @@
-package test;
+package test.java.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.EnsembleParking;
-import modele.Parking;
+import main.java.modele.EnsembleParking;
+import main.java.modele.Parking;
 
 public class EnsembleParkingTest {
 
@@ -21,8 +21,10 @@ public class EnsembleParkingTest {
 	@Before
 	public void setUp() {
 		this.ensemble = new EnsembleParking();
-		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 2.0, 50, 1.8, LocalTime.of(9, 0), LocalTime.of(21, 0));
-		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 3.0, 80, 1.9, LocalTime.of(8, 0), LocalTime.of(21, 0));
+		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 2.0, 50, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0));
+		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 3.0, 80, 1.9, LocalTime.of(8, 0),
+				LocalTime.of(21, 0));
 	}
 
 	@Test
