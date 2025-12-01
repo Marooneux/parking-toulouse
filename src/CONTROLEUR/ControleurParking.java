@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import VUE.ChoixPlaceParking;
 import VUE.ChoixTypeStationnement;
 import VUE.Paiement;
+import VUE.PaiementVoirie;
 import VUE.SaisirDureeStationnement;
 import VUE.SaisirHeureArriveParking;
 
@@ -13,7 +14,7 @@ public class ControleurParking {
 	private JFrame vue;
 
 	private enum TypeStationnement {
-		CONNECTION, CHOIXPARKING, CHOIXVOIRIE, HEURE, PAIEMENT
+		CONNECTION, CHOIXPARKING, CHOIXVOIRIE, HEURE, PAIEMENT, PAIEMENTVOIRIE
 	}
 
 	public ControleurParking(JFrame vue) {
@@ -35,7 +36,7 @@ public class ControleurParking {
 					JOptionPane.showMessageDialog(dureeVue, "Veuillez saisir une durée avant de payer.");
 					return;
 				}
-				this.handleAction(TypeStationnement.PAIEMENT);
+				this.handleAction(TypeStationnement.PAIEMENTVOIRIE);
 			});
 		}
 
@@ -80,6 +81,12 @@ public class ControleurParking {
 		case PAIEMENT: {
 			Paiement paiementVue = new Paiement();
 			paiementVue.setVisible(true);
+			this.vue.dispose();
+			break;
+		}
+		case PAIEMENTVOIRIE: {
+			PaiementVoirie paiementVoirieVue = new PaiementVoirie();
+			paiementVoirieVue.setVisible(true);
 			this.vue.dispose();
 			break;
 		}

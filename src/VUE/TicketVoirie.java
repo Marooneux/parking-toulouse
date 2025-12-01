@@ -26,13 +26,7 @@ public class TicketVoirie extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TicketVoirie frame = new TicketVoirie(
-                        "Zone Rouge", 
-                        "AB-123-CD", 
-                        "14:30",
-                        "16:30",
-                        "Carte Bancaire"
-                    );
+                    TicketVoirie frame = new TicketVoirie();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -41,7 +35,7 @@ public class TicketVoirie extends JFrame {
         });
     }
 
-    public TicketVoirie(String nomZone, String plaque, String heureArrivee, String heureDepartMax, String moyenPaiement) {
+    public TicketVoirie() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 750, 600);
         setTitle("Ticket de voirie");
@@ -99,11 +93,11 @@ public class TicketVoirie extends JFrame {
         panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
 
         createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#V-00001");
-        createInfoRow(panelInfoGrid, "Zone :", nomZone);
-        createInfoRow(panelInfoGrid, "Immatriculation :", plaque);
-        createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
-        createInfoRow(panelInfoGrid, "Heure départ max :", heureDepartMax);
-        createInfoRow(panelInfoGrid, "Moyen de paiement :", moyenPaiement);
+        createInfoRow(panelInfoGrid, "Zone :", "Zone Rouge");
+        createInfoRow(panelInfoGrid, "Immatriculation :", "AB-123-CD");
+        createInfoRow(panelInfoGrid, "Heure d'arrivée :", "14:30");
+        createInfoRow(panelInfoGrid, "Heure départ max :", "16:30");
+        createInfoRow(panelInfoGrid, "Moyen de paiement :", "Carte Bancaire");
 
         JPanel panelFooter = new JPanel();
         panelFooter.setBackground(new Color(255, 255, 255));
@@ -130,6 +124,11 @@ public class TicketVoirie extends JFrame {
         btnPaiement.setFocusPainted(false);
         btnPaiement.setBorderPainted(false);
         btnPaiement.setPreferredSize(new Dimension(200, 45));
+        btnPaiement.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    });
     }
 
     private void createInfoRow(JPanel parent, String label, String valeur) {
