@@ -3,9 +3,9 @@ package CONTROLEUR;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import VUE.ChoixPlaceParking;
+import VUE.ChoixParking;
 import VUE.ChoixTypeStationnement;
-import VUE.Paiement;
+import VUE.PaiementParking;
 import VUE.PaiementVoirie;
 import VUE.SaisirDureeStationnement;
 import VUE.SaisirHeureArriveParking;

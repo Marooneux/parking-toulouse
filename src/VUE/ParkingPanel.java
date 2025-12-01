@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class PlaceParking extends JPanel {
+public class ParkingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private String nomPlace;
 	private String nomLocalisation;
@@ -23,7 +23,7 @@ public class PlaceParking extends JPanel {
 	private String status;
 
 	
-    public PlaceParking(String nomPlace, String nomLocalisation, String horaires, String placesDisponibles, String tarif, String status) {
+    public ParkingPanel(String nomPlace, String nomLocalisation, String horaires, String placesDisponibles, String tarif, String status) {
         JPanel place = new JPanel();
         place.setBackground(Color.WHITE);
         place.setPreferredSize(new Dimension(260, 260));

@@ -22,7 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
-public class ChoixPlaceParking extends JFrame {
+public class ChoixParking extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -30,7 +30,7 @@ public class ChoixPlaceParking extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                ChoixPlaceParking frame = new ChoixPlaceParking();
+                ChoixParking frame = new ChoixParking();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -38,7 +38,7 @@ public class ChoixPlaceParking extends JFrame {
         });
     }
 
-    public ChoixPlaceParking() {
+    public ChoixParking() {
         setTitle("Stationnement dans un Parking");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
@@ -76,13 +76,13 @@ public class ChoixPlaceParking extends JFrame {
         contentPane.add(header, BorderLayout.NORTH);
 
         // LISTA DE PLACES
-        PlaceParking place1 = new PlaceParking("Place Capitle", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Ouvert");
-        PlaceParking place2 = new PlaceParking("Place Capitle", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Fermé");
+        ParkingPanel place1 = new ParkingPanel("Place Capitole", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Ouvert");
+        ParkingPanel place2 = new ParkingPanel("Place Capitoe", "Centre Ville, Toulouse", "09 - 10", "59/100", "10", "Fermé");
         
-        List<PlaceParking> p = new ArrayList<PlaceParking>();
+        List<ParkingPanel> p = new ArrayList<ParkingPanel>();
         p.add(place1);
         p.add(place2);
-        ListePlacesParking listeParkings = new ListePlacesParking(p);
+        ListeParkings listeParkings = new ListeParkings(p);
         contentPane.add(listeParkings, BorderLayout.CENTER);
         
         JPanel panel = new JPanel();

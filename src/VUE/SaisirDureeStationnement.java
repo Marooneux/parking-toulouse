@@ -27,6 +27,7 @@ public class SaisirDureeStationnement extends JFrame {
 	private JPanel contentPane;
 	private JButton btnConfirmer;
 	private JTextField textField;
+	private JTextField textFieldDuree;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -159,6 +160,7 @@ public class SaisirDureeStationnement extends JFrame {
 	}
 
 	private JPanel detailsDureeStationnement() {
+		textFieldDuree = new PlaceholderTextField("Nom Prénom", 20);
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(Color.WHITE);

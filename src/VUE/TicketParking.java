@@ -120,7 +120,7 @@ public class TicketParking extends JFrame {
         btnPaiement.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Paiement framePaiement = new Paiement();
+                    PaiementParking framePaiement = new PaiementParking();
                     framePaiement.setVisible(true);
                     dispose();
                 } catch (Exception ex) {

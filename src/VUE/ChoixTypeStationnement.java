@@ -67,7 +67,7 @@ public class ChoixTypeStationnement extends JFrame {
 		btnParking.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	ChoixPlaceParking frameChoixParking = new ChoixPlaceParking();
+                	ChoixParking frameChoixParking = new ChoixParking();
                 	frameChoixParking.setVisible(true);
                     dispose();
                 } catch (Exception ex) {

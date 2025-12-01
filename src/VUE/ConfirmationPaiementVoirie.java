@@ -26,7 +26,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ConfirmationPaiement frame = new ConfirmationPaiement(15);
+                    ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 
-public class Paiement extends JFrame {
+public class PaiementParking extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -19,7 +19,7 @@ public class Paiement extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                Paiement frame = new Paiement();
+                PaiementParking frame = new PaiementParking();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -27,7 +27,7 @@ public class Paiement extends JFrame {
         });
     }
 
-    public Paiement() {
+    public PaiementParking() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(520, 480);
         setLocationRelativeTo(null);
@@ -123,7 +123,7 @@ public class Paiement extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	ConfirmationPaiement frameConfirmationPaiement = new ConfirmationPaiement(15);
+                	ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(15);
                 	frameConfirmationPaiement.setVisible(true);
                     dispose();
                 } catch (Exception ex) {
