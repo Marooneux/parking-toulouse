@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,7 +30,6 @@ public class ChoixTypeStationnement extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				ChoixTypeStationnement frame = new ChoixTypeStationnement();
-				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -63,9 +64,31 @@ public class ChoixTypeStationnement extends JFrame {
 
 		// Card 1 - Parking
 		JButton btnParking = this.cardParking(centre);
+		btnParking.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                	ChoixPlaceParking frameChoixParking = new ChoixPlaceParking();
+                	frameChoixParking.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
 		// Card 2 Voirie
 		JButton btnVoirie = this.cardVoirie(centre);
+		btnVoirie.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                	SaisirDureeStationnement frameVoirie = new SaisirDureeStationnement();
+                	frameVoirie.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
 		// Listeners
 		btnParking.addActionListener(e -> {

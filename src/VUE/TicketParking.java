@@ -26,12 +26,7 @@ public class TicketParking extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TicketParking frame = new TicketParking(
-                        "Parking Capitole", 
-                        "AB-123-CD", 
-                        "14:30", 
-                        "Carte Bancaire"
-                    );
+                    TicketParking frame = new TicketParking();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -40,7 +35,7 @@ public class TicketParking extends JFrame {
         });
     }
 
-    public TicketParking(String nomParking, String plaque, String heureArrivee, String moyenPaiement) {
+    public TicketParking() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 750, 600);
         setTitle("Ticket de sortie");
@@ -98,10 +93,10 @@ public class TicketParking extends JFrame {
         panelInfoGrid.setLayout(new GridLayout(5, 1, 0, 10));
 
         createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
-        createInfoRow(panelInfoGrid, "Parking :", nomParking);
-        createInfoRow(panelInfoGrid, "Immatriculation :", plaque);
-        createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
-        createInfoRow(panelInfoGrid, "Moyen de paiement :", moyenPaiement);
+        createInfoRow(panelInfoGrid, "Parking :", "Parking Capitole");
+        createInfoRow(panelInfoGrid, "Immatriculation :", "AB-123-CD");
+        createInfoRow(panelInfoGrid, "Heure d'arrivée :", "14:30");
+        createInfoRow(panelInfoGrid, "Moyen de paiement :", "Carte Bancaire");
 
         JPanel panelFooter = new JPanel();
         panelFooter.setBackground(new Color(255, 255, 255));

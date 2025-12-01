@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -31,7 +32,6 @@ public class SaisirHeureArriveParking extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				SaisirHeureArriveParking frame = new SaisirHeureArriveParking();
-				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -97,20 +97,20 @@ public class SaisirHeureArriveParking extends JFrame {
 		this.btnStart.setFocusPainted(false);
 		this.btnStart.setBorderPainted(false);
 		this.btnStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.btnStart.setPreferredSize(new Dimension(240, 40));
+		this.btnStart.setPreferredSize(new Dimension(250, 40));
 		this.btnStart.setOpaque(true);
 		buttonPanel.add(this.btnStart);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
-        this.btnStart.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    TicketParking framePaiement = new TicketParking("Parking Capitole", "AB-123-CD", "14:30", "Carte Bancaire");
-                    framePaiement.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        this.btnStart.addActionListener(e -> {
+            String duree = this.textField.getText();
+            if (duree == null || duree.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+                return;
             }
+
+            TicketParking frameTicketParking = new TicketParking();
+            frameTicketParking.setVisible(true);
+            dispose();
         });
 	}
 

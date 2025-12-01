@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -31,7 +32,6 @@ public class SaisirDureeStationnement extends JFrame {
 		EventQueue.invokeLater(() -> {
 			try {
 				SaisirDureeStationnement frame = new SaisirDureeStationnement();
-				new CONTROLEUR.ControleurParking(frame);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -44,7 +44,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
-		this.btnConfirmer = new JButton("Confirmer le stationnement");
+		this.btnConfirmer = new JButton("Continuer vers le paiement");
 
 		this.contentPane = new JPanel(new BorderLayout(15, 15));
 		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -101,6 +101,18 @@ public class SaisirDureeStationnement extends JFrame {
 		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnConfirmer.setPreferredSize(new Dimension(250, 40));
 		this.btnConfirmer.setOpaque(true);
+        this.btnConfirmer.addActionListener(e -> {
+            String duree = this.textField.getText();
+            if (duree == null || duree.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+                return;
+            }
+
+            PaiementVoirie framePaiementVoirie = new PaiementVoirie();
+            framePaiementVoirie.setVisible(true);
+            dispose();
+        });
+	 
 		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
 	}
