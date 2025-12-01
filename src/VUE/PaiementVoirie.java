@@ -3,9 +3,9 @@ package VUE;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.*;
 
 public class PaiementVoirie extends JFrame {
 
@@ -19,7 +19,7 @@ public class PaiementVoirie extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                Paiement frame = new Paiement();
+                PaiementVoirie frame = new PaiementVoirie();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -29,7 +29,7 @@ public class PaiementVoirie extends JFrame {
 
     public PaiementVoirie() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(520, 430);
+        setSize(520, 480);
         setLocationRelativeTo(null);
 
         contentPane = new JPanel();
@@ -74,19 +74,36 @@ public class PaiementVoirie extends JFrame {
         contentPane.add(card, BorderLayout.CENTER);
 
         // --- CHAMP NOM ---
-        JPanel blocNom = criarBlocChamp("Nom", textFieldNom = new JTextField("Nom Prénom"));
+        textFieldNom = new PlaceholderTextField("Nom Prénom", 20);
+        ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+        textFieldNom.setPreferredSize(new Dimension(250, 30)); 
+        
+        JPanel blocNom = criarBlocChamp("Numéro de carte", textFieldNom);
         card.add(blocNom);
 
         // --- NUMÉRO DE CARTE ---
-        JPanel blocCarte = criarBlocChamp("Numéro de carte", textFieldNumCarte = new JTextField("1234 5678 9012 3456"));
+        textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 20);
+        ((AbstractDocument) textFieldNumCarte.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
+        
+        textFieldNumCarte.setPreferredSize(new Dimension(250, 30)); 
+        
+        JPanel blocCarte = criarBlocChamp("Numéro de carte", textFieldNumCarte);
         card.add(blocCarte);
+
 
         // --- CHAINE EXPIRATION + CVC ---
         JPanel row = new JPanel(new GridLayout(1, 2, 20, 0));
         row.setOpaque(false);
 
-        JPanel blocExp = criarBlocChamp("Date d'expiration", textFieldExpiration = new JTextField("MM/YY"));
-        JPanel blocCVC = criarBlocChamp("CVC", textFieldCVC = new JTextField("123"));
+        textFieldExpiration = new PlaceholderTextField("MM/YY", 10);
+        ((AbstractDocument) textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
+        textFieldExpiration.setPreferredSize(new Dimension(100, 28));
+        JPanel blocExp = criarBlocChamp("Date d'expiration", textFieldExpiration);
+        
+        textFieldCVC = new PlaceholderTextField("123", 8);
+        ((AbstractDocument) textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
+        textFieldCVC.setPreferredSize(new Dimension(100, 28));
+        JPanel blocCVC = criarBlocChamp("CVC", textFieldCVC);
 
         row.add(blocExp);
         row.add(blocCVC);
@@ -102,12 +119,12 @@ public class PaiementVoirie extends JFrame {
         btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         btnPayer.setFocusPainted(false);
         btnPayer.setPreferredSize(new Dimension(160, 40));
-        panelBtn.add(btnPayer);
+        panelBtn.add(btnPayer);  
         btnPayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	ConfirmationPaiementVoirie framePaiement = new ConfirmationPaiementVoirie(15);
-                    framePaiement.setVisible(true);
+                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(15);
+                	frameConfirmationPaiement.setVisible(true);
                     dispose();
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -129,8 +146,7 @@ public class PaiementVoirie extends JFrame {
 
         JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         champPanel.setOpaque(false);
-
-        textField.setPreferredSize(new Dimension(250, 28));
+        
         textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         textField.setForeground(new Color(120, 120, 120));
 
@@ -140,5 +156,51 @@ public class PaiementVoirie extends JFrame {
         bloc.add(champPanel);
 
         return bloc;
+    }
+    
+    class FiltreUniquementChiffres extends DocumentFilter {
+        private int maxCaracteres;
+        public FiltreUniquementChiffres(int maxCaracteres) { this.maxCaracteres = maxCaracteres; }
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (estValide(fb.getDocument().getLength(), string.length(), string)) super.insertString(fb, offset, string, attr);
+        }
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int newLength = fb.getDocument().getLength() - length + text.length();
+            if (newLength <= maxCaracteres && text.matches("\\d+")) super.replace(fb, offset, length, text, attrs);
+            else Toolkit.getDefaultToolkit().beep();
+        }
+        private boolean estValide(int currentLength, int newStringLength, String text) {
+            if (text == null) return false;
+            return (currentLength + newStringLength) <= maxCaracteres && text.matches("\\d+");
+        }
+    }
+    
+    static class LimiteCaracteresFilter extends DocumentFilter {
+        private int maxCaracteres;
+
+        public LimiteCaracteresFilter(int maxCaracteres) {
+            this.maxCaracteres = maxCaracteres;
+        }
+
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if ((fb.getDocument().getLength() + string.length()) <= maxCaracteres) {
+                super.insertString(fb, offset, string, attr);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int newLength = fb.getDocument().getLength() - length + text.length();
+            if (newLength <= maxCaracteres) {
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
     }
 }
