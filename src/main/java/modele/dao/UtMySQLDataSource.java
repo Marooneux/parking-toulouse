@@ -1,13 +1,9 @@
-package main.java.controleur;
-/* package CONTROLEUR;
+package main.java.modele.dao;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-
-
 
 public class UtMySQLDataSource extends MysqlDataSource {
 
@@ -17,16 +13,17 @@ public class UtMySQLDataSource extends MysqlDataSource {
 		this.setUser("wacker_admin");
 		this.setPassword("saeadmin");
 	}
-	
+
 	public static void main(String[] args) throws SQLException {
 		UtMySQLDataSource bd = new UtMySQLDataSource();
 		Connection cn = bd.getConnection();
-		
-		if (cn.isValid(10)) { System.out.println("Connexion réussie"); } 
 
+		if (cn.isValid(10)) {
+			System.out.println("Connexion réussie");
+		}
+
+		cn.close();
 
 	}
-      
-      
 
-} */
+}
