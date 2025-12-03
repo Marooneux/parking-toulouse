@@ -1,32 +1,52 @@
 package controleur;
-/* package CONTROLEUR;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
+public class UtMySQLDataSource {
+    private static final String NOM_SCHEMA = "parking";
+    private static Connection connexion = null;
 
+    private static String login;
+    private static String password;
 
+    private static final String URL = "jdbc:mysql://localhost:3306/" +
+                                        UtMySQLDataSource.NOM_SCHEMA + "?serverTimezone=UTC";
 
-public class UtMySQLDataSource extends MysqlDataSource {
+    private UtMySQLDataSource(String login, String password) {};
 
-	public UtMySQLDataSource() throws SQLException {
-		super();
-		this.setURL("jdbc:mysql://mysql-wacker.alwaysdata.net:3306/wacker_sae_parking");
-		this.setUser("wacker_admin");
-		this.setPassword("saeadmin");
-	}
-	
-	public static void main(String[] args) throws SQLException {
-		UtMySQLDataSource bd = new UtMySQLDataSource();
-		Connection cn = bd.getConnection();
-		
-		if (cn.isValid(10)) { System.out.println("Connexion réussie"); } 
+    public static void creerAcces(String pLogin, String pPassword) {
+        UtMySQLDataSource.login = pLogin;
+        UtMySQLDataSource.password = pPassword;
+        UtMySQLDataSource.connexion = null;
+    }
 
+    public static Connection getConnexion() throws SQLException {
+        if (connexion == null) {
+            UtMySQLDataSource.connexion = DriverManager.getConnection(
+                    UtMySQLDataSource.URL,
+                    UtMySQLDataSource.login,
+                    UtMySQLDataSource.password
+            );
+            UtMySQLDataSource.connexion.setAutoCommit(true);
+        }
+        return UtMySQLDataSource.connexion;
+    }
 
-	}
-      
-      
+    public static void commit() throws SQLException
+    {
+        UtMySQLDataSource.connexion.commit();
+    }
 
-} */
+    public static void rollback() throws SQLException
+    {
+        UtMySQLDataSource.connexion.rollback();
+    }
+
+    public static void deconnecter() throws SQLException
+    {
+        UtMySQLDataSource.connexion.close();
+        UtMySQLDataSource.connexion = null;
+    }
+}
