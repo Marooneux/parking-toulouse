@@ -21,28 +21,36 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	public ControleurSaisirDureeStationnement(SaisirDureeStationnement vue) {
 		this.vue = vue;
 		this.etat = Etat.ATTENTE_DUREE;
-
 		vue.getBtnConfirmer().addActionListener(this);
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		switch (this.etat) {
-		case ATTENTE_DUREE:
-			String duree = this.vue.getTextField().getText();
-			if (duree == null || duree.trim().isEmpty()) {
-				JOptionPane.showMessageDialog(this.vue, "Veuillez saisir une durée avant de payer.");
-				return;
-			}
-			this.etat = Etat.PAIEMENT;
-		case PAIEMENT:
-			PaiementVoirie paiement = new PaiementVoirie();
-			paiement.setVisible(true);
-			this.vue.dispose();
-			break;
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+        switch (etat) {
+            case ATTENTE_DUREE :
+                if (!verifierDuree()) return;
+                etat = Etat.PAIEMENT;
+                ouvrirPaiement();
+                break;
+            case PAIEMENT :
+            	ouvrirPaiement();
+            	break;
+        }
+    }
 
+    private boolean verifierDuree() {
+        String duree = vue.getTextField().getText().trim();
+        if (duree.isEmpty()) {
+            JOptionPane.showMessageDialog(vue, "Veuillez saisir une durée avant de payer.");
+            return false;
+        }
+        return true;
+    }
+
+    private void ouvrirPaiement() {
+        new PaiementVoirie().setVisible(true);
+        vue.dispose();
+    }
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			SaisirDureeStationnement vue = new SaisirDureeStationnement();

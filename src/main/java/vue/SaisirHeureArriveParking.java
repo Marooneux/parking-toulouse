@@ -28,6 +28,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	private JButton btnNow;
 	private JLabel lblParkingInfo;
 	private ParkingPanel parking;
+	private JTextField plaque;
 
 	public SaisirHeureArriveParking(ParkingPanel parking) {
 
@@ -101,9 +102,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	    lblParkingInfo = new JLabel("blabla");
 	    lblParkingInfo.setFont(new Font("Segoe UI", Font.BOLD, 15));
 	    lblParkingInfo.setForeground(new Color(50, 50, 50));
-	    lblParkingInfo.setText(this.parking.getNomPlace());
 	    p.add(lblParkingInfo);
-
 	    return p;
 	}
 
@@ -120,7 +119,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
-		JLabel plaque = new JLabel("AB-123-CD");
+		plaque = new JTextField("");
 		plaque.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		plaque.setForeground(new Color(70, 70, 70));
 		plaque.setBorder(new EmptyBorder(5, 0, 0, 0));
@@ -214,4 +213,13 @@ public class SaisirHeureArriveParking extends JFrame {
 	public JButton getBtnMaintenant() {
 		return this.btnNow;
 	}
+	
+	public JLabel getLblParkingInfo() {
+	    return this.lblParkingInfo;
+	}
+	
+	public JTextField getPlaque() {
+		return this.plaque;
+	}
+
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import vue.ChoixParking;
 import vue.ParkingPanel;
@@ -12,52 +13,52 @@ import vue.SaisirHeureArriveParking;
 
 public class ControleurChoixParking implements ActionListener {
 
-	public enum Etat {
-		HEURE
-	}
+    private final ChoixParking vue;
+    private final JButton btnChoisirParking;
 
-	private Etat etat;
-	private ChoixParking vue;
-	private JButton btnChoisirParking;
+    public ControleurChoixParking(ChoixParking vue) {
+        this.vue = vue;
+        this.btnChoisirParking = vue.getBtnChoisirParking();
+        this.btnChoisirParking.addActionListener(this);
+    }
 
-	public ControleurChoixParking(ChoixParking vue) {
-		this.vue = vue;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() != btnChoisirParking) return;
 
-		this.btnChoisirParking = vue.getBtnChoisirParking();
-		this.btnChoisirParking.addActionListener(this);
-	}
+        handleEtatHeure();
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
+    private void handleEtatHeure() {
+        ParkingPanel selectedParking = vue.getParkingSelectionne();
 
-		if (source == this.btnChoisirParking) {
-			this.etat = Etat.HEURE;
-		} else {
-			return;
-		}
+        if (!isParkingSelected(selectedParking)) return;
 
-		switch (this.etat) {
-		case HEURE:
-			ParkingPanel selectedParking = this.vue.getParkingSelectionne();
-			if (selectedParking == null) {
-				javax.swing.JOptionPane.showMessageDialog(this.vue, "Veuillez sélectionner un parking.");
-				return;
-			}
+        ouvrirSaisirHeure(selectedParking);
+    }
 
-			SaisirHeureArriveParking next = new SaisirHeureArriveParking(selectedParking);
-			new ControleurSaisirHeureArriveParking(next);
-			next.setVisible(true);
-			this.vue.dispose();
-			break;
-		}
-	}
+    private boolean isParkingSelected(ParkingPanel parking) {
+        if (parking == null) {
+            JOptionPane.showMessageDialog(vue, "Veuillez sélectionner un parking.");
+            return false;
+        }
+        return true;
+    }
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			ChoixParking vue = new ChoixParking();
-			new ControleurChoixParking(vue);
-			vue.setVisible(true);
-		});
-	}
+    private void ouvrirSaisirHeure(ParkingPanel parking) {
+        SaisirHeureArriveParking nextVue = new SaisirHeureArriveParking(parking);
+        nextVue.getLblParkingInfo().setText(parking.getNomPlace());
+
+        new ControleurSaisirHeureArriveParking(nextVue);
+        nextVue.setVisible(true);
+        vue.dispose();
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            ChoixParking vue = new ChoixParking();
+            new ControleurChoixParking(vue);
+            vue.setVisible(true);
+        });
+    }
 }

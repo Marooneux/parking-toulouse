@@ -27,34 +27,43 @@ public class ControleurChoixTypeStationnement implements ActionListener {
 		vue.getBtnVoirie().addActionListener(this);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
+        Object source = e.getSource();
 
-		if (source == this.vue.getBtnParking()) {
-			this.etat = Etat.PARKING;
-		} else if (source == this.vue.getBtnVoirie()) {
-			this.etat = Etat.VOIRIE;
-		} else {
-			return;
-		}
+        // Update state based on button clicked
+        if (source == vue.getBtnParking()) {
+            etat = Etat.PARKING;
+        } else if (source == vue.getBtnVoirie()) {
+            etat = Etat.VOIRIE;
+        } else {
+            return;
+        }
 
-		switch (this.etat) {
-		case PARKING:
-			ChoixParking parkingPage = new ChoixParking();
-			new ControleurChoixParking(parkingPage);
-			parkingPage.setVisible(true);
-			this.vue.dispose();
-			break;
+        // Take action based on state
+        switch (etat) {
+            case PARKING :
+            	openParkingPage();
+            	break;
+            case VOIRIE :
+            	openVoiriePage();
+            	break;
+        }
+    }
 
-		case VOIRIE:
-			SaisirDureeStationnement voiriePage = new SaisirDureeStationnement();
-			new ControleurSaisirDureeStationnement(voiriePage);
-			voiriePage.setVisible(true);
-			this.vue.dispose();
-			break;
-		}
-	}
+    private void openParkingPage() {
+        ChoixParking parkingPage = new ChoixParking();
+        new ControleurChoixParking(parkingPage);
+        parkingPage.setVisible(true);
+        vue.dispose();
+    }
+
+    private void openVoiriePage() {
+        SaisirDureeStationnement voiriePage = new SaisirDureeStationnement();
+        new ControleurSaisirDureeStationnement(voiriePage);
+        voiriePage.setVisible(true);
+        vue.dispose();
+    }
+
 
 	public static void main(String[] args) {
 
