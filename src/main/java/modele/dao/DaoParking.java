@@ -1,41 +1,75 @@
-package main.java.modele.dao;
+package modele.dao;
 
+import modele.Parking;
+import modele.requests.RequestSelectParkingById;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import main.java.modele.Parking;
+public class DaoParking implements Dao<Parking> {
 
-public class DaoParking extends DaoModele<Parking> {
+    public static void main(String[] args) throws SQLException {
+        DaoParking daoParking = new DaoParking();
 
-	@Override
-	public void create(Parking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+        Parking p = daoParking.getOne(1);
+        System.out.println(p);
+    }
 
-	}
+    @Override
+    public void create(Parking donnee) throws SQLException {
+        Connection cn = UtMySQLDataSource.getConnexion();
+        RequestSelectParkingById insertRequest = new RequestSelectParkingById();
+        PreparedStatement insert = cn.prepareStatement(insertRequest.request());
+        insertRequest.parameters(insert);
+        insert.executeUpdate();
+    }
 
-	@Override
-	public void update(Parking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+    @Override
+    public void update(Parking donnee) throws SQLException {
+        Connection cn = UtMySQLDataSource.getConnexion();
+        PreparedStatement update = cn.prepareStatement("UPDATE parking SET name = ? WHERE id = ?");
+        update.executeUpdate();
+    }
 
-	}
+    @Override
+    public void delete(Parking donnee) throws SQLException {
 
-	@Override
-	public void delete(Parking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public List<Parking> getAll() throws SQLException {
+        Connection cn = UtMySQLDataSource.getConnexion();
+        PreparedStatement select = cn.prepareStatement("SELECT * FROM parking");
+        ResultSet rs = select.executeQuery();
+        List<Parking> parkings = new ArrayList<>();
+        while (rs.next()) {
+            //parkings.add(new Parking());
+        }
+        return parkings;
+    }
 
-	@Override
-	public List<Parking> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    // Todo: Verifier la bonne foçon de retourner un seul ResultSet();
+    @Override
+    public Parking getOne(int id) throws SQLException {
+        UtMySQLDataSource.creerAcces("root", "claudio");
+        Connection cn = UtMySQLDataSource.getConnexion();
+        PreparedStatement select = cn.prepareStatement("SELECT * FROM parkings WHERE idparkings = ?");
+        select.setInt(1, id);
+        ResultSet rs = select.executeQuery();
+        Parking  parking = null;
+        if (rs.next()) {
+           parking = new Parking(rs.getString(2),
+                                rs.getString(3),
+                                rs.getDouble(4),
+                                rs.getInt(5),
+                                rs.getDouble(6)
+                                );
+           return parking;
+        }
+        return null;
+    }
 }
