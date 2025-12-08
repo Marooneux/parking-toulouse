@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 
 public class Iterateur implements Iterator {
+	private ResultSet curseur;
 
-	public Iterateur(ResultSet curseur, DaoModele<?> dao) {
-
+	public Iterateur(ResultSet curseur, DaoModele<?> daoModele) {
+		this.curseur = curseur;
 	}
 
 	@Override

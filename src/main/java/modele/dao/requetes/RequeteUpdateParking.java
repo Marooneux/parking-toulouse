@@ -4,10 +4,10 @@ import modele.Parking;
 
 public class RequeteUpdateParking extends Requete<Parking> {
 
+	// TODO ajouter parametres
 	@Override
 	public String requete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "update Parking set = ?";
 	}
 
 }

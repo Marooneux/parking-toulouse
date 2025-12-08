@@ -8,6 +8,7 @@ import java.util.List;
 import modele.Parking;
 import modele.dao.requetes.RequeteDeleteParking;
 import modele.dao.requetes.RequeteInsertParking;
+import modele.dao.requetes.RequeteSelectParking;
 import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
@@ -38,7 +39,7 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	public List<Parking> findAll() throws SQLException {
-		return this.findAll();
+		return this.findAll(new RequeteSelectParking());
 	}
 
 	@Override

@@ -4,10 +4,10 @@ import modele.Parking;
 
 public class RequeteDeleteParking extends Requete<Parking> {
 
+	// TODO ajouter parametres
 	@Override
 	public String requete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "delete from Parking where idParking = ?";
 	}
 
 }
