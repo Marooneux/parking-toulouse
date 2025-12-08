@@ -81,8 +81,8 @@ public class ChoixTypeStationnement extends JFrame {
 		btnVoirie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	SaisirDureeStationnement frameVoirie = new SaisirDureeStationnement();
-                	frameVoirie.setVisible(true);
+                	ChoixZone frameChoixZone = new ChoixZone();
+                	frameChoixZone.setVisible(true);
                     dispose();
                 } catch (Exception ex) {
                     ex.printStackTrace();

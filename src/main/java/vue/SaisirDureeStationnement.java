@@ -52,7 +52,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.contentPane.setBackground(new Color(250, 250, 250));
 		this.setContentPane(this.contentPane);
 
-		// Entente
+		// Entête
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		header.setBackground(new Color(250, 250, 250));
 
