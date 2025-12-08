@@ -29,14 +29,14 @@ public abstract class DaoModele<T> implements Dao<T> {
 		return ps.executeUpdate(req.requete());
 	}
 
-	public List<T> findAll(Requete<T> req, String... id) throws SQLException {
+	public List<T> find(Requete<T> req, String... id) throws SQLException {
 		PreparedStatement ps = (PreparedStatement) MySQLDataSource.getConnexion().createStatement();
 		req.parametres(ps, id);
 		return this.select(ps);
 	}
 
 	public T findById(Requete<T> req, String... id) throws SQLException {
-		List<T> res = this.findAll(req, id);
+		List<T> res = this.find(req, id);
 		if (res.isEmpty()) {
 			return null;
 		}
