@@ -1,11 +1,11 @@
-package modele.requests;
+package modele.dao.requetes;
 
 import modele.Parking;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequestSelectParkingById extends Request<Parking>{
+public class RequestSelectParkingById extends Requete<Parking> {
 
     @Override
     public String request() {

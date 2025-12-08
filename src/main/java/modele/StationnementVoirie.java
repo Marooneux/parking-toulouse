@@ -1,4 +1,4 @@
-package main.java.modele;
+package modele;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;

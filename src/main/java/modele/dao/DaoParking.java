@@ -1,7 +1,7 @@
 package modele.dao;
 
 import modele.Parking;
-import modele.requests.RequestSelectParkingById;
+import modele.dao.requetes.RequestSelectParkingById;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

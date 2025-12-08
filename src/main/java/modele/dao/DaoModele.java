@@ -1,4 +1,4 @@
-package main.java.modele.dao;
+package modele.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +36,7 @@ public abstract class DaoModele<T> implements Dao<T> {
 	}
 
 	public T findById(Requete<T> req, String... id) throws SQLException {
-		List<T> res = this.find(req, id);
+		List<T> res = this.findAll(req, id);
 		if (res.isEmpty()) {
 			return null;
 		}

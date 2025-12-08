@@ -1,15 +1,11 @@
-package main.java.modele.dao.requetes;
+package modele.dao.requetes;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public abstract class Requete<T> {
+    public abstract String request();
 
-	public abstract String requete();
+    public void parameters(PreparedStatement statement, String ...id) {};
 
-	public void parametres(PreparedStatement prSt, String... id) throws SQLException {
-	}
-
-	public void parametres(PreparedStatement prSt, T donnee) throws SQLException {
-	}
+    public void parameters(PreparedStatement statement, T donnee) {};
 }

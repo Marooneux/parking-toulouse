@@ -1,4 +1,4 @@
-package main.java.vue;
+package vue;
 
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;

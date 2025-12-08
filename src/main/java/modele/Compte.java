@@ -1,4 +1,4 @@
-package main.java.modele;
+package modele;
 
 public abstract class Compte {
 	private String nom;
