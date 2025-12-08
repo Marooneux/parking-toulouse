@@ -8,9 +8,9 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.modele.AdministrateurParking;
-import main.java.modele.AdministrateurSysteme;
-import main.java.modele.Parking;
+import modele.AdministrateurParking;
+import modele.AdministrateurSysteme;
+import modele.Parking;
 
 public class AdministrateurSystemeTest {
 

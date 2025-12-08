@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import main.java.modele.Utilisateur;
+import modele.Utilisateur;
 
 public class UtilisateurTest {
 
