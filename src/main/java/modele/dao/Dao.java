@@ -7,6 +7,6 @@ public interface Dao<T> {
     public abstract void create(T donnee) throws SQLException;
     public abstract void update(T donnee) throws SQLException;
     public abstract void delete(T donnee) throws SQLException;
-    public abstract List<T> findAll() throws SQLException;
+    public abstract List<T> find() throws SQLException;
     public abstract T findById(int id) throws SQLException;
 }

@@ -13,22 +13,13 @@ public class RequesteSelectParkingById extends Requete<Parking> {
     }
 
     @Override
-    public void parameters(PreparedStatement statement, String ...id) {
-        try {
-            statement.setString(1, id[0]);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void parametres(PreparedStatement statement, String ...id) throws SQLException {
+        statement.setString(1, id[0]);
     };
 
     // ! A vérifier la clé du parking pour les requetes.
     @Override
-    public void parameters(PreparedStatement statement, Parking donnee) {
-        try {
-            statement.setString(1, donnee.getNom());
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
+    public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
+        statement.setString(1, donnee.getNom());
     }
 }
