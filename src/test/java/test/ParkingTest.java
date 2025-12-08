@@ -11,8 +11,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.modele.Parking;
-import main.java.modele.Voiture;
+import modele.Parking;
+import modele.Voiture;
 
 public class ParkingTest {
 

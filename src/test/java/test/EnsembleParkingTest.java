@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.modele.EnsembleParking;
-import main.java.modele.Parking;
+import modele.EnsembleParking;
+import modele.Parking;
 
 public class EnsembleParkingTest {
 

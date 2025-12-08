@@ -10,8 +10,8 @@ import java.time.LocalTime;
 
 import org.junit.Test;
 
-import main.java.modele.Parking;
-import main.java.modele.Reservation;
+import modele.Parking;
+import modele.Reservation;
 
 public class testReservation {
 

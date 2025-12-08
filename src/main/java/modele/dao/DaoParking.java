@@ -1,35 +1,44 @@
 package modele.dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import modele.Parking;
+import modele.dao.requetes.RequeteDeleteParking;
+import modele.dao.requetes.RequeteInsertParking;
+import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	public void create(Parking donnee) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Connection cn = MySQLDataSource.getConnexion();
+		RequeteInsertParking req = new RequeteInsertParking();
+		this.miseAJour(req, donnee);
+		cn.close();
 	}
 
 	@Override
 	public void update(Parking donnee) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Connection cn = MySQLDataSource.getConnexion();
+		RequeteUpdateParking req = new RequeteUpdateParking();
+		this.miseAJour(req, donnee);
+		cn.close();
 	}
 
 	@Override
 	public void delete(Parking donnee) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Connection cn = MySQLDataSource.getConnexion();
+		RequeteDeleteParking req = new RequeteDeleteParking();
+		this.miseAJour(req, donnee);
+		cn.close();
 	}
 
 	@Override
 	public List<Parking> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.findAll();
 	}
 
 	@Override
