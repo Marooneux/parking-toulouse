@@ -41,7 +41,7 @@ public class DaoParking implements Dao<Parking> {
     }
 
     @Override
-    public List<Parking> getAll() throws SQLException {
+    public List<Parking> findAll() throws SQLException {
         Connection cn = UtMySQLDataSource.getConnexion();
         PreparedStatement select = cn.prepareStatement("SELECT * FROM parking");
         ResultSet rs = select.executeQuery();
@@ -54,7 +54,7 @@ public class DaoParking implements Dao<Parking> {
 
     // Todo: Verifier la bonne foçon de retourner un seul ResultSet();
     @Override
-    public Parking getOne(int id) throws SQLException {
+    public Parking findById(int id) throws SQLException {
         UtMySQLDataSource.creerAcces("root", "claudio");
         Connection cn = UtMySQLDataSource.getConnexion();
         PreparedStatement select = cn.prepareStatement("SELECT * FROM parkings WHERE idparkings = ?");

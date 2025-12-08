@@ -23,13 +23,13 @@ public abstract class DaoModele<T> implements Dao<T> {
 		return t;
 	}
 
-	public int miseAJour(Requete<T> req, T donnee) throws SQLException {
+	public int update(Requete<T> req, T donnee) throws SQLException {
 		PreparedStatement ps = (PreparedStatement) MySQLDataSource.getConnexion().createStatement();
 		req.parametres(ps, donnee);
 		return ps.executeUpdate(req.requete());
 	}
 
-	public List<T> find(Requete<T> req, String... id) throws SQLException {
+	public List<T> findAll(Requete<T> req, String... id) throws SQLException {
 		PreparedStatement ps = (PreparedStatement) MySQLDataSource.getConnexion().createStatement();
 		req.parametres(ps, id);
 		return this.select(ps);
