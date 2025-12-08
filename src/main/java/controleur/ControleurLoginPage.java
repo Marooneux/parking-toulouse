@@ -1,9 +1,9 @@
-package main.java.controleur;
+package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main.java.vue.LoginPage;
+import vue.LoginPage;
 
 public class ControleurLoginPage implements ActionListener {
 	private LoginPage vue;
