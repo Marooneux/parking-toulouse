@@ -34,8 +34,10 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
 	protected Utilisateur creerInstance(ResultSet curseur) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Utilisateur(curseur.getString(0),
+				curseur.getString(1),
+				curseur.getString(2),
+				curseur.getString(3));
 	}
 
 }

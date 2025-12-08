@@ -34,7 +34,12 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Parking(curseur.getString(0),
+				curseur.getString(1),
+				curseur.getDouble(2),
+				curseur.getInt(3),
+				curseur.getDouble(4),
+				curseur.getTime(5).toLocalTime(),
+				curseur.getTime(6).toLocalTime());
 	}
 }
