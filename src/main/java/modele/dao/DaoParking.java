@@ -1,8 +1,6 @@
 package modele.dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 import modele.Parking;
@@ -11,6 +9,18 @@ import modele.dao.requetes.RequeteInsertParking;
 import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
+
+    public static void main (String[] args) throws SQLException {
+        MySQLDataSource.creerAcces("root", "claudio");
+        DaoParking dao = new DaoParking();
+        dao.create(new Parking("Claudio",
+                "Noam",
+                5.0,
+                120,
+                2.0,
+                Time.valueOf("08:00:00").toLocalTime(),
+                Time.valueOf("18:30:00").toLocalTime()));
+    }
 
 	@Override
 	public void create(Parking donnee) throws SQLException {

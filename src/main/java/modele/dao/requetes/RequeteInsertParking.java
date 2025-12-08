@@ -10,11 +10,12 @@ public class RequeteInsertParking extends Requete<Parking> {
 
 	@Override
 	public String requete() {
-		return "insert into Parking values(?,?,?,?,?,?,?,?)";
+		return "insert into parkings values(?,?,?,?,?,?,?,?,?)";
 	}
 
 	@Override
 	public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
+        statement.setInt(1, 111);
 		statement.setString(2, donnee.getNom());
 		statement.setString(3, donnee.getAdresse());
 		statement.setDouble(4, donnee.getTarif());

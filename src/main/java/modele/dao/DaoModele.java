@@ -1,5 +1,6 @@
 package modele.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,9 +25,10 @@ public abstract class DaoModele<T> implements Dao<T> {
 	}
 
 	public int miseAJour(Requete<T> req, T donnee) throws SQLException {
-		PreparedStatement ps = (PreparedStatement) MySQLDataSource.getConnexion().createStatement();
+        Connection cn = MySQLDataSource.getConnexion();
+		PreparedStatement ps = cn.prepareStatement(req.requete());
 		req.parametres(ps, donnee);
-		return ps.executeUpdate(req.requete());
+		return ps.executeUpdate();
 	}
 
 	public List<T> find(Requete<T> req, String... id) throws SQLException {
