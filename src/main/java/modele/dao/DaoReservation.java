@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import modele.Reservation;
+import modele.dao.requetes.RequeteSelectParking;
 
 public class DaoReservation extends DaoModele<Reservation> {
 
@@ -34,8 +35,9 @@ public class DaoReservation extends DaoModele<Reservation> {
 
 	@Override
 	protected Reservation creerInstance(ResultSet curseur) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Reservation(curseur.getString(0),
+				new DaoParking().findById(new RequeteSelectParking(), curseur.getString(1)),
+				curseur.getTimestamp(2).toLocalDateTime());
 	}
 
 }

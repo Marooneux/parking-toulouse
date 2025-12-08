@@ -5,7 +5,7 @@ import modele.Parking;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequesteSelectParkingById extends Requete<Parking> {
+public class RequeteSelectParkingById extends Requete<Parking> {
 
     @Override
     public String requete() {
