@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.modele.Reservation;
+import modele.Reservation;
 
 public class DaoReservation extends DaoModele<Reservation> {
 

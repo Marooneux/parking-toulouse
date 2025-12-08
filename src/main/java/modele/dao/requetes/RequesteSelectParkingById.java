@@ -5,10 +5,10 @@ import modele.Parking;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequestSelectParkingById extends Requete<Parking> {
+public class RequesteSelectParkingById extends Requete<Parking> {
 
     @Override
-    public String request() {
+    public String requete() {
         return "SELECT * FROM parking WHERE id = ?";
     }
 

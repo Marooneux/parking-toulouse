@@ -1,7 +1,7 @@
 package modele.dao;
 
 import modele.Parking;
-import modele.dao.requetes.RequestSelectParkingById;
+import modele.dao.requetes.RequesteSelectParkingById;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +22,8 @@ public class DaoParking implements Dao<Parking> {
     @Override
     public void create(Parking donnee) throws SQLException {
         Connection cn = UtMySQLDataSource.getConnexion();
-        RequestSelectParkingById insertRequest = new RequestSelectParkingById();
-        PreparedStatement insert = cn.prepareStatement(insertRequest.request());
+        RequesteSelectParkingById insertRequest = new RequesteSelectParkingById();
+        PreparedStatement insert = cn.prepareStatement(insertRequest.requete());
         insertRequest.parameters(insert);
         insert.executeUpdate();
     }

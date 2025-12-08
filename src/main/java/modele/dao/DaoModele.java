@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.java.modele.dao.requetes.Requete;
+import modele.dao.requetes.Requete;
 
 public abstract class DaoModele<T> implements Dao<T> {
 

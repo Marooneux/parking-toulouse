@@ -3,7 +3,7 @@ package modele.dao.requetes;
 import java.sql.PreparedStatement;
 
 public abstract class Requete<T> {
-    public abstract String request();
+    public abstract String requete();
 
     public void parameters(PreparedStatement statement, String ...id) {};
 
