@@ -99,9 +99,18 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     }
 
     private void ouvrirTicket() {
-        new TicketParking().setVisible(true);
+        String plaque = vue.getPlaque().getText().trim();
+        String heure = vue.getTextField().getText().trim();
+        String nomParking = vue.getLblParkingInfo().getText();
+        TicketParking ticket = new TicketParking();
+
+        ticket.remplirInfos("#P-00001",nomParking, plaque, heure, "Carte Bancaire");
+
+        ticket.setVisible(true);
         vue.dispose();
     }
+
+
     
     
 
