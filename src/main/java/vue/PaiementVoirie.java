@@ -78,7 +78,7 @@ public class PaiementVoirie extends JFrame {
         ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
         textFieldNom.setPreferredSize(new Dimension(250, 30)); 
         
-        JPanel blocNom = criarBlocChamp("Numéro de carte", textFieldNom);
+        JPanel blocNom = creerBlocChamps("Numéro de carte", textFieldNom);
         card.add(blocNom);
 
         // --- NUMÉRO DE CARTE ---
@@ -87,7 +87,7 @@ public class PaiementVoirie extends JFrame {
         
         textFieldNumCarte.setPreferredSize(new Dimension(250, 30)); 
         
-        JPanel blocCarte = criarBlocChamp("Numéro de carte", textFieldNumCarte);
+        JPanel blocCarte = creerBlocChamps("Numéro de carte", textFieldNumCarte);
         card.add(blocCarte);
 
 
@@ -98,12 +98,12 @@ public class PaiementVoirie extends JFrame {
         textFieldExpiration = new PlaceholderTextField("MM/YY", 10);
         ((AbstractDocument) textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
         textFieldExpiration.setPreferredSize(new Dimension(100, 28));
-        JPanel blocExp = criarBlocChamp("Date d'expiration", textFieldExpiration);
+        JPanel blocExp = creerBlocChamps("Date d'expiration", textFieldExpiration);
         
         textFieldCVC = new PlaceholderTextField("123", 8);
         ((AbstractDocument) textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
         textFieldCVC.setPreferredSize(new Dimension(100, 28));
-        JPanel blocCVC = criarBlocChamp("CVC", textFieldCVC);
+        JPanel blocCVC = creerBlocChamps("CVC", textFieldCVC);
 
         row.add(blocExp);
         row.add(blocCVC);
@@ -135,7 +135,7 @@ public class PaiementVoirie extends JFrame {
         card.add(panelBtn);
     }
 
-    private JPanel criarBlocChamp(String labelText, JTextField textField) {
+    private JPanel creerBlocChamps(String labelText, JTextField textField) {
         JPanel bloc = new JPanel();
         bloc.setOpaque(false);
         bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));

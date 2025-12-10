@@ -77,17 +77,18 @@ public class ChoixZone extends JFrame {
 
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         row1.setOpaque(false);
-        row1.add(createCard("Zone jaune", new Color(255, 204, 0), "Lundi au samedi", "9h00 - 20h00", "2,5 heures", "1.50€/h"));
-        row1.add(createCard("Zone orange", new Color(255, 149, 0), "Lundi au samedi", "9h00 - 19h00", "5 heures", "1.00€/h"));
-        row1.add(createCard("Zone rouge", new Color(255, 59, 48), "Lundi au samedi", "9h00 - 19h00", "3 heures", "1.00€/h"));
+        row1.add(createCard("Zone jaune", new Color(255, 204, 0), "Lundi au samedi", "9h00 - 20h00", 150, "1.50€/h"));
+        row1.add(createCard("Zone orange", new Color(255, 149, 0), "Lundi au samedi", "9h00 - 19h00", 300, "1.00€/h"));
+        row1.add(createCard("Zone rouge", new Color(255, 59, 48), "Lundi au samedi", "9h00 - 19h00", 180, "1.00€/h"));
         
         gridContainer.add(row1);
         gridContainer.add(Box.createVerticalStrut(30)); 
 
         JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         row2.setOpaque(false);
-        row2.add(createCard("Zone verte", new Color(0, 128, 0), "Lundi au samedi", "9h00 - 20h00", "5 heures", "0.50€/h"));
-        row2.add(createCard("Zone bleu (disque requis)", new Color(0, 122, 255), "Lundi au samedi", "9h00 - 12h00, 14h00 - 19h00", "1,5 heures", "Gratuit"));
+        row2.add(createCard("Zone verte", new Color(0, 128, 0), "Lundi au samedi", "9h00 - 20h00", 300, "0.50€/h"));
+        row2.add(createCard("Zone bleu (disque requis)", new Color(0, 122, 255), "Lundi au samedi",
+        					"9h00 - 12h00, 14h00 - 19h00", 90, "Gratuit"));
         
         gridContainer.add(row2);
         
@@ -95,7 +96,7 @@ public class ChoixZone extends JFrame {
         getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createCard(String zoneName, Color themeColor, String jours, String horaires, String dureeMax, String tarif) {
+    private JPanel createCard(String couleurZone, Color themeColor, String jours, String horaires, int dureeMax, String tarif) {
         
         JPanel card = new JPanel() {
             @Override
@@ -134,7 +135,7 @@ public class ChoixZone extends JFrame {
         iconCircle.setOpaque(false);
         card.add(iconCircle);
 
-        JLabel lblTitre = new JLabel(zoneName);
+        JLabel lblTitre = new JLabel(couleurZone);
         lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 18));
         lblTitre.setForeground(new Color(33, 33, 33));
         lblTitre.setBounds(25, 80, 250, 25);
@@ -174,7 +175,7 @@ public class ChoixZone extends JFrame {
         lblDureeTitle.setBounds(50, 190, 120, 15);
         card.add(lblDureeTitle);
 
-        JLabel lblDureeVal = new JLabel(dureeMax);
+        JLabel lblDureeVal = new JLabel(dureeMaxToString(dureeMax));
         lblDureeVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblDureeVal.setForeground(new Color(50, 50, 50));
         lblDureeVal.setBounds(50, 208, 150, 20);
@@ -201,7 +202,7 @@ public class ChoixZone extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement();
+                    SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(couleurZone, dureeMax);
                     frameDureeStationnement.setVisible(true);
                     ChoixZone.this.dispose(); 
                 } catch (Exception ex) {
@@ -211,5 +212,18 @@ public class ChoixZone extends JFrame {
         });
 
         return card;
+    }
+    
+    public String dureeMaxToString(int dureeMax) {
+    	String duree = " heures";
+    	int heures = dureeMax / 60;
+    	int minutes = dureeMax % 60;
+    	if (heures <= 1) {
+    		duree = duree.substring(0, duree.length() - 1);
+    	}
+    	if (minutes > 0) {
+    		duree = duree + " " + minutes + " minutes";
+    	}
+    	return (heures + duree);
     }
 }
