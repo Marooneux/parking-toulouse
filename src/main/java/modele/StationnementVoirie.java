@@ -4,26 +4,77 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public abstract class StationnementVoirie {
-	public enum Couleur {JAUNE, ORANGE, ROUGE, VERTE}
+public class StationnementVoirie {
+	public enum Couleur {JAUNE, ORANGE, ROUGE, VERTE, BLEU}
 	private Couleur couleur;
 	private double tarifHoraire;
-	private double dureeMax;
+	private int dureeMax;
 	private LocalTime HorairePayantDebut; // Stationnement gratuit de minuit à 9h dans toutes les zones sauf bleus
 	private LocalTime HorairePayantFin; // Stationnement gratuit de 19h/20h à minuit dans toutes les zones sauf bleus
-	private Boolean isDimanche; // Stationnement gratuit le dimanche dans toutes les zones
 	
 	
-	public StationnementVoirie(Couleur couleur, double tarifHoraire, double dureeMax, LocalTime horairePayantFin) {
+	public StationnementVoirie(Couleur couleur, double tarifHoraire, int dureeMax, LocalTime horairePayantFin) {
 		this.couleur = couleur;
 		this.tarifHoraire = tarifHoraire;
 		this.dureeMax = dureeMax;
 		this.HorairePayantDebut = LocalTime.of(9, 0);
 		this.HorairePayantFin = horairePayantFin;
-		this.isDimanche = isDimanche();
 	}
 	
 	
+	
+	
+	public double calculerPrixTotal(int duree) {
+		double prixTotal = 0;
+    	int heures = duree / 60;
+    	int minutes = duree % 60;
+    	if (minutes > 0) {
+    		prixTotal += tarifHoraire;
+    	}
+    	prixTotal += heures*tarifHoraire;
+    	if (couleur == Couleur.ORANGE) {
+    		if (duree > 180 && duree < 240) {
+    			prixTotal = 4;
+    		} else if (duree > 240) {
+    			prixTotal = 6;
+    		}
+    	}
+    	return prixTotal;
+	}
+	
+	
+	
+	
+	
+	
+	public String horairesToString() {
+		return (HorairePayantDebut.toString() + " - " + HorairePayantFin.toString());
+	}
+	
+	public String couleurZoneToString() {
+		return "Zone " + (couleur.toString().toLowerCase());
+	}
+	
+    public String dureeMaxToString() {
+    	String duree = " heures";
+    	int heures = dureeMax / 60;
+    	int minutes = dureeMax % 60;
+    	if (heures <= 1) {
+    		duree = duree.substring(0, duree.length() - 1);
+    	}
+    	if (minutes > 0) {
+    		duree = duree + " " + minutes + " minutes";
+    	}
+    	return (heures + duree);
+    }
+    
+    public String tarifToString() {
+    	if (tarifHoraire > 0) {
+    		return tarifHoraire + "€/h";
+    	} return "Gratuit";
+    }
+	
+	// Stationnement gratuit le dimanche dans toutes les zones
 	public Boolean isDimanche() {
 		return (LocalDateTime.now().getDayOfWeek() == DayOfWeek.SUNDAY);
 	}
@@ -31,6 +82,12 @@ public abstract class StationnementVoirie {
 
 	
 	// Getters & Setters
+	public Couleur getCouleur() {
+		return couleur;
+	}
+	public void setCouleur(Couleur couleur) {
+		this.couleur = couleur;
+	}
 	public double getTarifHoraire() {
 		return tarifHoraire;
 	}
@@ -39,10 +96,10 @@ public abstract class StationnementVoirie {
 	}
 
 
-	public double getDureeMax() {
+	public int getDureeMax() {
 		return dureeMax;
 	}
-	public void setDureeMax(double dureeMax) {
+	public void setDureeMax(int dureeMax) {
 		this.dureeMax = dureeMax;
 	}
 
@@ -61,16 +118,5 @@ public abstract class StationnementVoirie {
 	public void setHorairePayantFin(LocalTime horairePayantFin) {
 		HorairePayantFin = horairePayantFin;
 	}
-
-
-	public Boolean getIsDimanche() {
-		return isDimanche;
-	}
-	public void setIsDimanche(Boolean isDimanche) {
-		this.isDimanche = isDimanche;
-	}
-	
-	
-	
 	
 }

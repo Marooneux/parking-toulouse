@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalTime;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,6 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import modele.StationnementVoirie;
+import modele.StationnementVoirie.Couleur;
+import modele.StationnementVoirieBleu;
 
 public class ChoixZone extends JFrame {
 
@@ -41,6 +45,15 @@ public class ChoixZone extends JFrame {
         setBounds(100, 100, 1100, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout(0, 0));
+        
+        
+        // CREATION DE TOUTES LES ZONES
+        StationnementVoirie zoneJaune = new StationnementVoirie(Couleur.JAUNE, 1.5, 150, LocalTime.of(20, 00));
+        StationnementVoirie zoneOrange = new StationnementVoirie(Couleur.ORANGE, 1, 300, LocalTime.of(19, 00));
+        StationnementVoirie zoneRouge = new StationnementVoirie(Couleur.ROUGE, 1, 180, LocalTime.of(19, 00));
+        StationnementVoirie zoneVerte = new StationnementVoirie(Couleur.VERTE, 0.5, 300, LocalTime.of(20, 00));
+        StationnementVoirieBleu zoneBleu = new StationnementVoirieBleu(Couleur.BLEU, 0, 90, LocalTime.of(12, 00), 
+        		LocalTime.of(14, 00), LocalTime.of(19, 00));
 
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
         header.setBackground(new Color(250, 250, 250));
@@ -77,18 +90,17 @@ public class ChoixZone extends JFrame {
 
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         row1.setOpaque(false);
-        row1.add(createCard("Zone jaune", new Color(255, 204, 0), "Lundi au samedi", "9h00 - 20h00", 150, "1.50€/h"));
-        row1.add(createCard("Zone orange", new Color(255, 149, 0), "Lundi au samedi", "9h00 - 19h00", 300, "1.00€/h"));
-        row1.add(createCard("Zone rouge", new Color(255, 59, 48), "Lundi au samedi", "9h00 - 19h00", 180, "1.00€/h"));
+        row1.add(createCard(zoneJaune, new Color(255, 204, 0)));
+        row1.add(createCard(zoneOrange, new Color(255, 149, 0)));
+        row1.add(createCard(zoneRouge, new Color(255, 59, 48)));
         
         gridContainer.add(row1);
         gridContainer.add(Box.createVerticalStrut(30)); 
 
         JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         row2.setOpaque(false);
-        row2.add(createCard("Zone verte", new Color(0, 128, 0), "Lundi au samedi", "9h00 - 20h00", 300, "0.50€/h"));
-        row2.add(createCard("Zone bleu (disque requis)", new Color(0, 122, 255), "Lundi au samedi",
-        					"9h00 - 12h00, 14h00 - 19h00", 90, "Gratuit"));
+        row2.add(createCard(zoneVerte, new Color(0, 128, 0)));
+        row2.add(createCard(zoneBleu, new Color(0, 122, 255)));
         
         gridContainer.add(row2);
         
@@ -96,7 +108,7 @@ public class ChoixZone extends JFrame {
         getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createCard(String couleurZone, Color themeColor, String jours, String horaires, int dureeMax, String tarif) {
+    private JPanel createCard(StationnementVoirie zone, Color themeColor) {
         
         JPanel card = new JPanel() {
             @Override
@@ -135,7 +147,7 @@ public class ChoixZone extends JFrame {
         iconCircle.setOpaque(false);
         card.add(iconCircle);
 
-        JLabel lblTitre = new JLabel(couleurZone);
+        JLabel lblTitre = new JLabel(zone.couleurZoneToString());
         lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 18));
         lblTitre.setForeground(new Color(33, 33, 33));
         lblTitre.setBounds(25, 80, 250, 25);
@@ -152,13 +164,13 @@ public class ChoixZone extends JFrame {
         lblHorairesTitle.setBounds(50, 120, 120, 15);
         card.add(lblHorairesTitle);
         
-        JLabel lblJoursVal = new JLabel(jours);
+        JLabel lblJoursVal = new JLabel("Lundi au samedi");
         lblJoursVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblJoursVal.setForeground(new Color(50, 50, 50));
         lblJoursVal.setBounds(50, 138, 150, 20);
         card.add(lblJoursVal);
 
-        JLabel lblHorairesVal = new JLabel(horaires);
+        JLabel lblHorairesVal = new JLabel(zone.horairesToString());
         lblHorairesVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblHorairesVal.setForeground(new Color(50, 50, 50));
         lblHorairesVal.setBounds(50, 158, 180, 20);
@@ -175,7 +187,7 @@ public class ChoixZone extends JFrame {
         lblDureeTitle.setBounds(50, 190, 120, 15);
         card.add(lblDureeTitle);
 
-        JLabel lblDureeVal = new JLabel(dureeMaxToString(dureeMax));
+        JLabel lblDureeVal = new JLabel(zone.dureeMaxToString());
         lblDureeVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblDureeVal.setForeground(new Color(50, 50, 50));
         lblDureeVal.setBounds(50, 208, 150, 20);
@@ -192,7 +204,7 @@ public class ChoixZone extends JFrame {
         lblTarifTitle.setBounds(25, 270, 100, 20);
         card.add(lblTarifTitle);
 
-        JLabel lblPrix = new JLabel(tarif);
+        JLabel lblPrix = new JLabel(zone.tarifToString());
         lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 18));
         lblPrix.setHorizontalAlignment(SwingConstants.RIGHT);
         lblPrix.setBounds(175, 270, 100, 20);
@@ -202,7 +214,7 @@ public class ChoixZone extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(couleurZone, dureeMax);
+                    SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
                     frameDureeStationnement.setVisible(true);
                     ChoixZone.this.dispose(); 
                 } catch (Exception ex) {
@@ -214,16 +226,5 @@ public class ChoixZone extends JFrame {
         return card;
     }
     
-    public String dureeMaxToString(int dureeMax) {
-    	String duree = " heures";
-    	int heures = dureeMax / 60;
-    	int minutes = dureeMax % 60;
-    	if (heures <= 1) {
-    		duree = duree.substring(0, duree.length() - 1);
-    	}
-    	if (minutes > 0) {
-    		duree = duree + " " + minutes + " minutes";
-    	}
-    	return (heures + duree);
-    }
+
 }

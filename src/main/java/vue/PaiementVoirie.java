@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 
+import modele.StationnementVoirie;
+
 public class PaiementVoirie extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -15,19 +17,23 @@ public class PaiementVoirie extends JFrame {
     private JTextField textFieldNumCarte;
     private JTextField textFieldExpiration;
     private JTextField textFieldCVC;
+    private StationnementVoirie zone;
+    private int duree;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                PaiementVoirie frame = new PaiementVoirie();
-                frame.setVisible(true);
+                //PaiementVoirie frame = new PaiementVoirie();
+                //frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public PaiementVoirie() {
+    public PaiementVoirie(StationnementVoirie zone, int duree) {
+    	this.zone = zone;
+    	this.duree = duree;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(520, 480);
         setLocationRelativeTo(null);
@@ -113,7 +119,7 @@ public class PaiementVoirie extends JFrame {
         JPanel panelBtn = new JPanel();
         panelBtn.setBackground(Color.WHITE);
 
-        JButton btnPayer = new JButton("Payer - 15€");
+        JButton btnPayer = new JButton("Payer - " + zone.calculerPrixTotal(duree) + "€");
         btnPayer.setBackground(new Color(0, 128, 255));
         btnPayer.setForeground(Color.WHITE);
         btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -123,7 +129,7 @@ public class PaiementVoirie extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(15);
+                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone.calculerPrixTotal(duree));
                 	frameConfirmationPaiement.setVisible(true);
                     dispose();
                 } catch (Exception ex) {
