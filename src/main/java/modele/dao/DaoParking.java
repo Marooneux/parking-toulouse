@@ -1,15 +1,15 @@
 package modele.dao;
 
+<<<<<<<HEAD
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.Time;=======
+import java.sql.*;>>>>>>>cb88c7a39b34d8f4f5fc279c787fb41fa90e7401
 import java.util.List;
 
 import modele.Parking;
-import modele.dao.requetes.RequeteDeleteParking;
-import modele.dao.requetes.RequeteInsertParking;
-import modele.dao.requetes.RequeteSelectParking;
-import modele.dao.requetes.RequeteUpdateParking;
+import modele.dao.requetes.*;
 
 public class DaoParking extends DaoModele<Parking> {
 	private static Iterateur<Parking> ite;
@@ -17,6 +17,7 @@ public class DaoParking extends DaoModele<Parking> {
 	public static void main(String[] args) throws SQLException {
 		MySQLDataSource.creerAcces("root", "claudio");
 		DaoParking dao = new DaoParking();
+<<<<<<< HEAD
 		dao.create(new Parking("Claudio",
 				"Noam",
 				300,
@@ -25,6 +26,28 @@ public class DaoParking extends DaoModele<Parking> {
 				Time.valueOf("08:00:00").toLocalTime(),
 				Time.valueOf("18:30:00").toLocalTime(),
 				false));
+=======
+        Parking p = new Parking("Claudio",
+                "Noam",
+                5.0,
+                120,
+                10,
+                12.5,
+                Time.valueOf("08:00:00").toLocalTime(),
+                Time.valueOf("18:30:00").toLocalTime());
+		//dao.create(p);
+        int nb = 0;
+        List<Parking> ps = dao.findAll();
+        for (Parking p1 : ps) {
+            System.out.println(p1);
+            if(nb >= 4) {
+                break;
+            }
+            nb++;
+        }
+
+        //dao.delete(p);
+>>>>>>> cb88c7a39b34d8f4f5fc279c787fb41fa90e7401
 	}
 
 	@Override

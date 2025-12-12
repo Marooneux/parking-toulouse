@@ -98,6 +98,10 @@ public class Parking {
 		this.contientPlacesMoto = contientPlacesMoto;
 	}
 
+	public int nbPlacesOccupees() {
+		return this.nbPlacesOccupees;
+	}
+
 	public Boolean estOuvert(LocalTime heure) {
 		return (heure.isAfter(this.heureOuverture) && heure.isBefore(this.heureFermeture));
 	}
@@ -114,4 +118,17 @@ public class Parking {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Parking{" +
+				"nom='" + this.nom + '\'' +
+				", adresse='" + this.adresse + '\'' +
+				", tarif=" + tarif +
+				", nbPlacesOccupees=" + this.nbPlacesOccupees +
+				", nbPlacesTotales=" + this.nbPlacesMax +
+				", hauteur=" + this.hauteur +
+				", heureOuverture=" + this.heureOuverture +
+				", heureFermeture=" + this.heureFermeture +
+				'}';
+	}
 }

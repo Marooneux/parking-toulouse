@@ -6,7 +6,7 @@ public class RequeteSelectParking extends Requete<Parking> {
 
 	@Override
 	public String requete() {
-		return "select * from Parking";
+		return "select * from Parkings";
 	}
 
 }
