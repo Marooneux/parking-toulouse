@@ -9,7 +9,6 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.EnsembleParking;
 import modele.Parking;
 
 public class EnsembleParkingTest {

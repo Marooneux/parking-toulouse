@@ -15,8 +15,14 @@ public class Parking {
 	private LocalTime heureFermeture;
 	private List<Voiture> vehicules;
 
-	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesTotales, double hauteur,
-			LocalTime heureOuverture, LocalTime heureFermeture) {
+	public Parking(String nom,
+                   String adresse,
+                   double tarifHoraire,
+                   int nbPlacesTotales,
+                   int nbPlacesOccupees,
+                   double hauteur,
+			        LocalTime heureOuverture,
+                   LocalTime heureFermeture) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.tarif = tarifHoraire;
@@ -100,6 +106,10 @@ public class Parking {
 		this.vehicules = vehicules;
 	}
 
+    public int nbPlacesOccupees() {
+        return this.nbPlacesOccupees;
+    }
+
 	public Boolean estOuvert(LocalTime heure) {
 		return (heure.isAfter(this.heureOuverture) && heure.isBefore(this.heureFermeture));
 	}
@@ -121,4 +131,18 @@ public class Parking {
 		this.vehicules.remove(voiture);
 	}
 
+    @Override
+    public String toString() {
+        return "Parking{" +
+                "nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", tarif=" + tarif +
+                ", nbPlacesOccupees=" + nbPlacesOccupees +
+                ", nbPlacesTotales=" + nbPlacesTotales +
+                ", hauteur=" + hauteur +
+                ", heureOuverture=" + heureOuverture +
+                ", heureFermeture=" + heureFermeture +
+                ", vehicules=" + vehicules +
+                '}';
+    }
 }
