@@ -3,14 +3,14 @@ package modele;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class ReservationParking {
 	private String immatriculation;
 	private Parking parking;
 	private LocalDateTime dateArrivee;
 	private LocalDateTime dateDepart;
 	private boolean estPayee;
 
-	public Reservation(String immatriculation, Parking parking, LocalDateTime dateArrivee) {
+	public ReservationParking(String immatriculation, Parking parking, LocalDateTime dateArrivee) {
 		this.immatriculation = immatriculation;
 		this.parking = parking;
 		this.dateArrivee = dateArrivee;

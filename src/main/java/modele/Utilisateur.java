@@ -1,17 +1,19 @@
 package modele;
 
 public class Utilisateur extends Compte {
+	private String abonnement;
 
-	public Utilisateur(String nom, String prenom, String email, String mdp) {
+	public Utilisateur(String nom, String prenom, String email, String mdp, String abonnement) {
 		super(nom, prenom, email, mdp);
+		this.abonnement = abonnement;
 	}
 
-	public void modifierProfil(String nouveauNom, String nouveauprenom, String nouvelEmail, String ancienMdp,
-			String nouveauMdp) {
-		this.setNom(nouveauNom);
-		this.setPrenom(nouveauprenom);
-		this.setEmail(nouvelEmail);
-		this.setMdp(ancienMdp, nouveauMdp);
+	public String getAbonnement() {
+		return this.abonnement;
+	}
+
+	public void setAbonnement(String abonnement) {
+		this.abonnement = abonnement;
 	}
 
 }

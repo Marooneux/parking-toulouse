@@ -4,38 +4,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import modele.Reservation;
+import modele.ReservationParking;
 import modele.dao.requetes.RequeteSelectParking;
 
-public class DaoReservation extends DaoModele<Reservation> {
+public class DaoReservation extends DaoModele<ReservationParking> {
 
 	@Override
-	public void create(Reservation donnees) throws SQLException {
+	public void create(ReservationParking donnees) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void update(Reservation donnees) throws SQLException {
+	public void update(ReservationParking donnees) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(Reservation donnees) throws SQLException {
+	public void delete(ReservationParking donnees) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public List<Reservation> findAll() throws SQLException {
+	public List<ReservationParking> findAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected Reservation creerInstance(ResultSet curseur) throws SQLException {
-		return new Reservation(curseur.getString(0),
+	protected ReservationParking creerInstance(ResultSet curseur) throws SQLException {
+		return new ReservationParking(curseur.getString(0),
 				new DaoParking().findById(new RequeteSelectParking(), curseur.getString(1)),
 				curseur.getTimestamp(2).toLocalDateTime());
 	}

@@ -15,11 +15,11 @@ public class RequeteInsertParking extends Requete<Parking> {
 
 	@Override
 	public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
-        statement.setInt(1, 111);
+		statement.setInt(1, 111);
 		statement.setString(2, donnee.getNom());
 		statement.setString(3, donnee.getAdresse());
-		statement.setDouble(4, donnee.getTarif());
-		statement.setInt(5, donnee.getNbPlacesTotales());
+		statement.setDouble(4, Parking.getTarif());
+		statement.setInt(5, donnee.getNbPlacesMax());
 		statement.setInt(6, donnee.getNbPlacesOccupees());
 		statement.setDouble(7, donnee.getHauteur());
 		statement.setTime(8, Time.valueOf(donnee.getHeureOuverture()));

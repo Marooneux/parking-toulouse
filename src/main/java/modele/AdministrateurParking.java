@@ -14,7 +14,7 @@ public class AdministrateurParking extends Compte {
 		p.setNom(nouveauNom);
 		p.setAdresse(nouvelleAdresse);
 		p.setTarif(nouveauTarif);
-		p.setNbPlacesTotales(nouveauNbPlacesTotales);
+		p.setNbPlacesMax(nouveauNbPlacesTotales);
 		p.setHauteur(nouvelleHauteur);
 		p.setHeureOuverture(nouvelleHeureOuverture);
 		p.setHeureFermeture(nouvelleHeureFermeture);

@@ -5,23 +5,24 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public abstract class StationnementVoirie {
-	public enum Couleur {
+	public enum Zone {
 		JAUNE, ORANGE, ROUGE, VERTE
 	}
 
-	private Couleur couleur;
+	private Zone zone;
 	private double tarifHoraire;
 	private double dureeMax;
+	private long dureeMinutes;
 	private LocalTime HorairePayantDebut; // Stationnement gratuit de minuit à 9h dans toutes les zones sauf bleus
 	private LocalTime HorairePayantFin; // Stationnement gratuit de 19h/20h à minuit dans toutes les zones sauf bleus
 	private Boolean isDimanche; // Stationnement gratuit le dimanche dans toutes les zones
 
-	public StationnementVoirie(Couleur couleur, double tarifHoraire, double dureeMax, LocalTime horairePayantFin) {
-		this.couleur = couleur;
+	public StationnementVoirie(Zone zone, double tarifHoraire, double dureeMax, LocalTime horairePayantFin) {
+		this.zone = zone;
 		this.tarifHoraire = tarifHoraire;
 		this.dureeMax = dureeMax;
 		this.HorairePayantDebut = LocalTime.of(9, 0);
-		this.HorairePayantFin = horairePayantFin;
+		this.HorairePayantFin = this.HorairePayantDebut.plusMinutes(this.dureeMinutes);
 		this.isDimanche = this.isDimanche();
 	}
 
@@ -29,7 +30,6 @@ public abstract class StationnementVoirie {
 		return (LocalDateTime.now().getDayOfWeek() == DayOfWeek.SUNDAY);
 	}
 
-	// Getters & Setters
 	public double getTarifHoraire() {
 		return this.tarifHoraire;
 	}

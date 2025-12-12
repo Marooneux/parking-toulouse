@@ -37,7 +37,7 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 		return new Utilisateur(curseur.getString(0),
 				curseur.getString(1),
 				curseur.getString(2),
-				curseur.getString(3));
+				curseur.getString(3), null);
 	}
 
 }
