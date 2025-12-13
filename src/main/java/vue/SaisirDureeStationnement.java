@@ -134,18 +134,14 @@ public class SaisirDureeStationnement extends JFrame {
                 	JOptionPane.showMessageDialog(this, "La durée saisie est supérieure à la durée maximum de cette zone.");
                     return;
                 }
-                if (zone.getCouleur() == Couleur.BLEU) {
+                if ((zone.getCouleur() == Couleur.BLEU) || (zone.getCouleur() == Couleur.ROUGE && intDuree <= 30)) {
+                	// Créer une reservation ici
                     TicketVoirie frameTicketVoirie = new TicketVoirie();
                     frameTicketVoirie.setVisible(true);
 	                dispose();
-                } else if (zone.getCouleur() == Couleur.ROUGE && intDuree <= 30) {
-                	TicketVoirie frameTicketVoirie = new TicketVoirie();
-                    frameTicketVoirie.setVisible(true);
- 	                dispose();
-                
             	} else {
-	                PaiementVoirie framePaiementVoirie = new PaiementVoirie(zone, intDuree);
-	                framePaiementVoirie.setVisible(true);
+            		ChoixMoyenPaiement frameChoixPaiementVoirie = new ChoixMoyenPaiement(zone, intDuree);
+	                frameChoixPaiementVoirie.setVisible(true);
 	                dispose();
                 }
             } catch (NumberFormatException ex) {
@@ -192,7 +188,6 @@ public class SaisirDureeStationnement extends JFrame {
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
-		// Todo: Rendre Plaque imatricule changeable par une méthode;
         textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
         ((AbstractDocument) textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
         textFieldPlaque.setPreferredSize(new Dimension(250, 30)); 
