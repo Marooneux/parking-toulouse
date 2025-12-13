@@ -1,225 +1,160 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
-public class ParkingPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private String nomPlace;
-	private String nomLocalisation;
-	private String horaires;
-	private String placesDisponibles;
-	private String tarif;
-	private String status;
-	private boolean selected = false;
+import modele.Parking;
 
-	public ParkingPanel(String nomPlace, String nomLocalisation, String horaires, String placesDisponibles,
-			String tarif, String status) {
-		this.nomPlace = nomPlace;
-	    this.nomLocalisation = nomLocalisation;
-	    this.horaires = horaires;
-	    this.placesDisponibles = placesDisponibles;
-	    this.tarif = tarif;
-	    this.status = status;
-	    
-		JPanel place = new JPanel();
-		place.setBackground(Color.WHITE);
-		place.setPreferredSize(new Dimension(260, 260));
-		place.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true), new EmptyBorder(15, 15, 15, 15)));
-		place.setLayout(new BorderLayout());
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.function.Consumer;
 
-		// TITRE CARD
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setOpaque(false);
+class ParkingCard extends JPanel {
+    private Parking parking;
+    private Consumer<Parking> onClick;
+    private Color normalBorder = new Color(230, 230, 230);
+    private Color hoverBorder = new Color(100, 100, 100);
 
-		JLabel lblNomPlace = new JLabel(nomPlace);
-		lblNomPlace.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    public ParkingCard(Parking parking, Consumer<Parking> onClick) {
+        this.parking = parking;
+        this.onClick = onClick;
 
-		header.add(lblNomPlace);
-		place.add(header, BorderLayout.NORTH);
+        setLayout(new BorderLayout());
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(300, 260));
+        setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(normalBorder, 1),
+                new EmptyBorder(20, 20, 20, 20)
+        ));
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		// CORP CARD
-		JPanel body = new JPanel();
-		body.setOpaque(false);
-		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-		body.setBorder(new EmptyBorder(10, 0, 0, 0));
-		place.add(body, BorderLayout.CENTER);
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (onClick != null) onClick.accept(parking);
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBorder(BorderFactory.createCompoundBorder(
+                    new LineBorder(hoverBorder, 1),
+                    new EmptyBorder(20, 20, 20, 20)
+                ));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBorder(BorderFactory.createCompoundBorder(
+                    new LineBorder(normalBorder, 1),
+                    new EmptyBorder(20, 20, 20, 20)
+                ));
+            }
+        });
 
-		// Localisation
-		JPanel localisation = this.localisationField(nomLocalisation);
-		body.add(localisation);
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        topPanel.setOpaque(false);
+        
+        CircleIcon pIcon = new CircleIcon("P");
+        topPanel.add(pIcon);
+        
+        JLabel space = new JLabel();
+        space.setPreferredSize(new Dimension(15, 1));
+        topPanel.add(space);
 
-		// Horaire
-		JPanel horaire = this.horairesField(horaires, status);
-		body.add(horaire);
+        JLabel lblName = new JLabel("<html>" + parking.getNom() + "</html>");
+        lblName.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblName.setForeground(new Color(33, 37, 41));
+        topPanel.add(lblName);
 
-		// Nb Places
-		JPanel nbPlaces = this.placesField(placesDisponibles);
-		body.add(nbPlaces);
+        add(topPanel, BorderLayout.NORTH);
 
-		// Tarif
-		JPanel tarifField = this.tarifField(tarif);
-		body.add(tarifField);
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setOpaque(false);
+        centerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-		this.add(place, BorderLayout.CENTER);
+        centerPanel.add(createDetailRow("📍", parking.getAdresse()));
+        centerPanel.add(Box.createVerticalStrut(8));
+        
+        String horaireText = (parking.getHeureOuverture().equals(parking.getHeureFermeture())) 
+                ? "24h / 24" 
+                : parking.getHeureOuverture() + " - " + parking.getHeureFermeture();
+        centerPanel.add(createDetailRow("🕒", horaireText));
+        
+        centerPanel.add(Box.createVerticalStrut(8));
+        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesTotales() - parking.getNbPlacesOccupees()) + " places"));
+        
+        centerPanel.add(Box.createVerticalStrut(8));
+        centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()/100.0) + "m"));
 
-		this.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				ParkingPanel.this.toggleSelection();
-			}
-		});
+        add(centerPanel, BorderLayout.CENTER);
 
-	}
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setOpaque(false);
+        
+        JPanel borderTop = new JPanel();
+        borderTop.setBackground(new Color(240, 240, 240));
+        borderTop.setPreferredSize(new Dimension(100, 1));
+        bottomPanel.add(borderTop, BorderLayout.NORTH);
+        
+        JLabel lblTarifLabel = new JLabel("Tarif");
+        lblTarifLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        lblTarifLabel.setForeground(Color.GRAY);
+        lblTarifLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
+        
+        JLabel lblPrice = new JLabel(String.format("%.2f€/h", parking.getTarif()));
+        lblPrice.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblPrice.setForeground(new Color(33, 37, 41));
+        lblPrice.setBorder(new EmptyBorder(5, 0, 0, 0));
 
-	public String getNomPlace() {
-		return this.nomPlace;
-	}
+        bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
+        bottomPanel.add(lblPrice, BorderLayout.EAST);
 
-	public void setNomPlace(String nomPlace) {
-		this.nomPlace = nomPlace;
-	}
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
 
-	public String getNomLocalisation() {
-		return this.nomLocalisation;
-	}
-
-	public void setNomLocalisation(String nomLocalisation) {
-		this.nomLocalisation = nomLocalisation;
-	}
-
-	public String getHoraires() {
-		return this.horaires;
-	}
-
-	public void setHoraires(String horaires) {
-		this.horaires = horaires;
-	}
-
-	public String getPlacesDisponibles() {
-		return this.placesDisponibles;
-	}
-
-	public void setPlacesDisponibles(String placesDisponibles) {
-		this.placesDisponibles = placesDisponibles;
-	}
-
-	public String getTarif() {
-		return this.tarif;
-	}
-
-	public void setTarif(String tarif) {
-		this.tarif = tarif;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	private JPanel localisationField(String Nomlocalisation) {
-		JPanel localisation = new JPanel();
-		localisation.setOpaque(false);
-		localisation.setLayout(new BoxLayout(localisation, BoxLayout.Y_AXIS));
-
-		JLabel lblLocalisation = new JLabel("Localisation");
-		lblLocalisation.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-		JLabel lblNomLocalisation = new JLabel(Nomlocalisation);
-		lblNomLocalisation.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNomLocalisation.setForeground(new Color(70, 70, 70));
-
-		localisation.add(lblLocalisation);
-		localisation.add(lblNomLocalisation);
-		localisation.add(Box.createRigidArea(new Dimension(0, 8)));
-
-		return localisation;
-	}
-
-	private JPanel horairesField(String horaires, String status) {
-		JPanel horaire = new JPanel();
-		horaire.setOpaque(false);
-		horaire.setLayout(new BoxLayout(horaire, BoxLayout.Y_AXIS));
-
-		JLabel lblHoraires = new JLabel("Horaires");
-		lblHoraires.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-		JLabel lblHeure = new JLabel(horaires);
-		lblHeure.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblHeure.setForeground(new Color(70, 70, 70));
-
-		JLabel lblStatus = new JLabel(status);
-		lblStatus.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblStatus.setForeground(new Color(0, 130, 0));
-
-		horaire.add(lblHoraires);
-		horaire.add(lblHeure);
-		horaire.add(lblStatus);
-		horaire.add(Box.createRigidArea(new Dimension(0, 8)));
-
-		return horaire;
-	}
-
-	private JPanel placesField(String places) {
-		JPanel nbPlaces = new JPanel();
-		nbPlaces.setOpaque(false);
-		nbPlaces.setLayout(new BoxLayout(nbPlaces, BoxLayout.Y_AXIS));
-
-		JLabel lblNbPlaces = new JLabel("Places Disponibles");
-		lblNbPlaces.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-		JLabel lblPlacesDisponibles = new JLabel(places);
-		lblPlacesDisponibles.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblPlacesDisponibles.setForeground(new Color(70, 70, 70));
-
-		nbPlaces.add(lblNbPlaces);
-		nbPlaces.add(lblPlacesDisponibles);
-		nbPlaces.add(Box.createRigidArea(new Dimension(0, 8)));
-
-		return nbPlaces;
-	}
-
-	private JPanel tarifField(String tarification) {
-		JPanel tarif = new JPanel();
-		tarif.setOpaque(false);
-		tarif.setLayout(new BoxLayout(tarif, BoxLayout.Y_AXIS));
-
-		JLabel lblTarif = new JLabel("Tarif");
-		lblTarif.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-		JLabel lblPrix = new JLabel(tarification);
-		lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblPrix.setForeground(new Color(70, 70, 70));
-
-		tarif.add(lblTarif);
-		tarif.add(lblPrix);
-
-		return tarif;
-	}
-
-	// selected
-	public void toggleSelection() {
-		this.selected = !this.selected;
-		this.setBackground(this.selected ? new Color(200, 230, 255) : Color.WHITE);
-		this.repaint();
-	}
-
-	public boolean isSelected() {
-		return this.selected;
-	}
-
+    private JPanel createDetailRow(String icon, String text) {
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        row.setOpaque(false);
+        
+        JLabel lblIcon = new JLabel(icon);
+        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        lblIcon.setPreferredSize(new Dimension(25, 20));
+        lblIcon.setForeground(Color.GRAY);
+        
+        JLabel lblText = new JLabel(text);
+        lblText.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblText.setForeground(new Color(73, 80, 87));
+        
+        row.add(lblIcon);
+        row.add(lblText);
+        return row;
+    }
+    
+    class CircleIcon extends JComponent {
+        private String text;
+        public CircleIcon(String text) {
+            this.text = text;
+            setPreferredSize(new Dimension(45, 45));
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            g2.setColor(new Color(52, 58, 64)); 
+            g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
+            
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Segoe UI", Font.BOLD, 22));
+            FontMetrics fm = g2.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(text)) / 2;
+            int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+            g2.drawString(text, x, y - 2);
+        }
+    }
 }
