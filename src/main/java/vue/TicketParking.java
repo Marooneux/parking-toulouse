@@ -22,20 +22,12 @@ public class TicketParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					TicketParking frame = new TicketParking();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton btnPaiement;
+	private JLabel lblNumeroTicket;
+	private JLabel lblParking;
+    private JLabel lblPlaque;
+    private JLabel lblHeure;
+    private JLabel lblMoyenPaiement;
 
 	public TicketParking() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,11 +86,12 @@ public class TicketParking extends JFrame {
 		panelCard.add(panelInfoGrid, BorderLayout.CENTER);
 		panelInfoGrid.setLayout(new GridLayout(5, 1, 0, 10));
 
-		this.createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
-		this.createInfoRow(panelInfoGrid, "Parking :", "Parking Capitole");
-		this.createInfoRow(panelInfoGrid, "Immatriculation :", "AB-123-CD");
-		this.createInfoRow(panelInfoGrid, "Heure d'arrivée :", "14:30");
-		this.createInfoRow(panelInfoGrid, "Moyen de paiement :", "Carte Bancaire");
+		this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "");
+		this.lblParking = createInfoRow(panelInfoGrid, "Parking :", "");
+		this.lblPlaque  = createInfoRow(panelInfoGrid, "Immatriculation :", "");
+		this.lblHeure   = createInfoRow(panelInfoGrid, "Heure d'arrivée :", "");
+		this.lblMoyenPaiement = createInfoRow(panelInfoGrid, "Moyen de paiement :", "");
+		
 
 		JPanel panelFooter = new JPanel();
 		panelFooter.setBackground(new Color(255, 255, 255));
@@ -116,21 +109,10 @@ public class TicketParking extends JFrame {
 		panelButtonContainer.setBackground(Color.WHITE);
 		panelFooter.add(panelButtonContainer);
 
-		JButton btnPaiement = new JButton("Aller au paiement");
+		btnPaiement = new JButton("Aller au paiement");
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPaiement.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					PaiementParking framePaiement = new PaiementParking();
-					framePaiement.setVisible(true);
-					TicketParking.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+		
 		btnPaiement.setForeground(Color.WHITE);
 		btnPaiement.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		btnPaiement.setBackground(new Color(0, 123, 255));
@@ -139,7 +121,7 @@ public class TicketParking extends JFrame {
 		btnPaiement.setPreferredSize(new Dimension(250, 45));
 	}
 
-	private void createInfoRow(JPanel parent, String label, String valeur) {
+	private JLabel createInfoRow(JPanel parent, String label, String valeur) {
 		JPanel row = new JPanel();
 		row.setBackground(Color.WHITE);
 		row.setLayout(new BorderLayout());
@@ -162,5 +144,21 @@ public class TicketParking extends JFrame {
 		row.add(separator, BorderLayout.SOUTH);
 
 		parent.add(row);
+		return lblVal;
 	}
+	
+	public JButton getBtnPaiement() {
+	    return this.btnPaiement;
+	}
+	
+	public void remplirInfos(String numéroTicket, String parking, String plaque, String heure, String moyenPaiement) {
+		lblNumeroTicket.setText(numéroTicket);
+	    lblParking.setText(parking);
+	    lblPlaque.setText(plaque);
+	    lblHeure.setText(heure);
+	    lblMoyenPaiement.setText(moyenPaiement);
+	}
+
+
+
 }
