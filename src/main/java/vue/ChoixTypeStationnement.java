@@ -3,12 +3,9 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -25,17 +22,6 @@ public class ChoixTypeStationnement extends JFrame {
 	private JPanel contentPane;
 	private JButton btnParking;
 	private JButton btnVoirie;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				ChoixTypeStationnement frame = new ChoixTypeStationnement();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public ChoixTypeStationnement() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,40 +47,9 @@ public class ChoixTypeStationnement extends JFrame {
 
 		this.btnParking = this.crerButton("Trouver un parking");
 		this.btnVoirie = this.crerButton("Trouver un emplacement");
+		this.cardParking(centre);
+		this.cardVoirie(centre);
 
-		// Card 1 - Parking
-		JButton btnParking = this.cardParking(centre);
-		btnParking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	ChoixParking frameChoixParking = new ChoixParking();
-                	frameChoixParking.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-		// Card 2 Voirie
-		JButton btnVoirie = this.cardVoirie(centre);
-		btnVoirie.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	SaisirDureeStationnement frameVoirie = new SaisirDureeStationnement();
-                	frameVoirie.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-		// Listeners
-		btnParking.addActionListener(e -> {
-		});
-		btnVoirie.addActionListener(e -> {
-		});
 	}
 
 	private JPanel EnteteDeLaFenetre() {
