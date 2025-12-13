@@ -1,11 +1,11 @@
 package modele.dao.requetes;
 
-import modele.Reservation;
+import modele.ReservationParking;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequeteSelectReservationById extends Requete<Reservation> {
+public class RequeteSelectReservationById extends Requete<ReservationParking> {
     @Override
     public String requete() {
         return "SELECT * FROM Reservation WHERE ReservationID = ?";
@@ -17,7 +17,7 @@ public class RequeteSelectReservationById extends Requete<Reservation> {
     }
 
     @Override
-    public void parametres(PreparedStatement statement, Reservation donnee) throws SQLException {
+    public void parametres(PreparedStatement statement, ReservationParking donnee) throws SQLException {
         statement.setInt(1, 10);
     }
 }

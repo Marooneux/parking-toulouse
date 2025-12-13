@@ -10,12 +10,12 @@ public class RequeteDeleteParking extends Requete<Parking> {
 	// TODO ajouter parametres
 	@Override
 	public String requete() {
-		return "delete from parkings where idparkings = ?";
+		return "DELETE FROM parkings WHERE id_parking = ?";
 	}
 
     @Override
     public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
-        statement.setInt(1,111);
+		statement.setInt(1, donnee.getId());
     };
 
 }

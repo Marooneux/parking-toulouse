@@ -1,13 +1,11 @@
 package modele.dao.requetes;
 
-import modele.Reservation;
+import modele.ReservationParking;
 
-public class RequeteUpdateReservation extends Requete<Reservation> {
+public class RequeteUpdateReservation extends Requete<ReservationParking> {
     @Override
     public String requete() {
         return "UPDATE reservations" +
                 "SET ";
     }
-
-    public void parametres()
 }

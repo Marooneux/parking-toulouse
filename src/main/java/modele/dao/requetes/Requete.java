@@ -1,6 +1,6 @@
 package modele.dao.requetes;
 
-import modele.Reservation;
+import modele.ReservationParking;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

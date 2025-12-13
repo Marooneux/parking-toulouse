@@ -6,20 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RequeteSelectParkingById extends Requete<Parking> {
-
     @Override
     public String requete() {
-        return "SELECT * FROM parking WHERE id = ?";
+        return "SELECT * FROM parkings WHERE id_parking = ?";
     }
 
     @Override
-    public void parametres(PreparedStatement statement, String ...id) throws SQLException {
-        statement.setString(1, id[0]);
-    };
-
-    // ! A vérifier la clé du parking pour les requetes.
-    @Override
-    public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
-        statement.setString(1, donnee.getNom());
+    public void parametres(PreparedStatement statement, String... id) throws SQLException {
+        statement.setInt(1, Integer.parseInt(id[0]));
     }
 }

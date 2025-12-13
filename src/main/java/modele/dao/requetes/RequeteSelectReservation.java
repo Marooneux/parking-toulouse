@@ -1,8 +1,8 @@
 package modele.dao.requetes;
 
-import modele.Reservation;
+import modele.ReservationParking;
 
-public class RequeteSelectReservation extends Requete<Reservation> {
+public class RequeteSelectReservation extends Requete<ReservationParking> {
 
 
     @Override

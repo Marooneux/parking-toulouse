@@ -5,6 +5,7 @@ import java.time.LocalTime;
 public class Parking {
 	private static double tarif; // prix pour 15mins de stationnement
 
+	private int id;
 	private String nom;
 	private String adresse;
 	private int nbPlacesMax;
@@ -14,12 +15,13 @@ public class Parking {
 	private LocalTime heureFermeture;
 	private boolean contientPlacesMoto;
 
-	public Parking(String nom, String adresse, int nbPlacesMax, int nbPlacesOccupees, double hauteur,
+	// Constructeur sans id; l'id sera défini après insertion (clé auto) via setId.
+	public Parking(String nom, String adresse, int nbPlacesMax, double hauteur,
 			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.nbPlacesMax = nbPlacesMax;
-		this.nbPlacesOccupees = nbPlacesOccupees;
+		this.nbPlacesOccupees = 0;
 		this.hauteur = hauteur;
 		this.heureOuverture = heureOuverture;
 		this.heureFermeture = heureFermeture;
@@ -96,6 +98,14 @@ public class Parking {
 
 	public void setContientPlacesMoto(boolean contientPlacesMoto) {
 		this.contientPlacesMoto = contientPlacesMoto;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int nbPlacesOccupees() {

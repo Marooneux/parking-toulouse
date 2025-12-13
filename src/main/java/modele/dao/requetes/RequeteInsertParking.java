@@ -1,29 +1,27 @@
 package modele.dao.requetes;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Time;
-
 import modele.Parking;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+
 public class RequeteInsertParking extends Requete<Parking> {
+    @Override
+    public String requete() {
+        return "INSERT INTO parkings (nom, adresse, nombre_places_max, hauteur_max, horaire_ouverture, horaire_fermeture, contient_places_moto) VALUES (?,?,?,?,?,?,?)";
+    }
 
-	@Override
-	public String requete() {
-		return "insert into parkings values(?,?,?,?,?,?,?,?,?)";
-	}
-
-	@Override
-	public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
-		statement.setInt(1, 111);
-		statement.setString(2, donnee.getNom());
-		statement.setString(3, donnee.getAdresse());
-		statement.setDouble(4, Parking.getTarif());
-		statement.setInt(5, donnee.getNbPlacesMax());
-		statement.setInt(6, donnee.getNbPlacesOccupees());
-		statement.setDouble(7, donnee.getHauteur());
-		statement.setTime(8, Time.valueOf(donnee.getHeureOuverture()));
-		statement.setTime(9, Time.valueOf(donnee.getHeureOuverture()));
-	};
-
+    @Override
+    public void parametres(PreparedStatement statement, Parking p) throws SQLException {
+        statement.setString(1, p.getNom());
+        statement.setString(2, p.getAdresse());
+        statement.setInt(3, p.getNbPlacesMax());
+        statement.setDouble(4, p.getHauteur());
+        statement.setTime(5, p.getHeureOuverture() != null ? Time.valueOf(p.getHeureOuverture()) : null);
+        statement.setTime(6, p.getHeureFermeture() != null ? Time.valueOf(p.getHeureFermeture()) : null);
+        statement.setBoolean(7, p.isContientPlacesMoto());
+		
+    }
 }

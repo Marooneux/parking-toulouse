@@ -1,11 +1,11 @@
 package modele.dao.requetes;
 
-import modele.Reservation;
+import modele.ReservationParking;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequeteDeleteReservation extends Requete<Reservation>{
+public class RequeteDeleteReservation extends Requete<ReservationParking>{
     @Override
     public String requete() {
         return "DELETE FROM reservation" +
@@ -18,7 +18,7 @@ public class RequeteDeleteReservation extends Requete<Reservation>{
     }
 
     @Override
-    public void parametres(PreparedStatement statement, Reservation id) throws SQLException {
+    public void parametres(PreparedStatement statement, ReservationParking id) throws SQLException {
         statement.setInt(1, 10);
     }
 }
