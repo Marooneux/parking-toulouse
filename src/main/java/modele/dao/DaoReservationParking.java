@@ -9,7 +9,7 @@ import modele.Parking;
 import modele.ReservationParking;
 import modele.dao.requetes.RequeteDeleteReservationParking;
 import modele.dao.requetes.RequeteInsertReservationParking;
-import modele.dao.requetes.RequeteSelectReservationsParking;
+import modele.dao.requetes.RequeteSelectReservationParking;
 import modele.dao.requetes.RequeteUpdateReservationParking;
 
 public class DaoReservationParking extends DaoModele<ReservationParking> {
@@ -30,7 +30,7 @@ public class DaoReservationParking extends DaoModele<ReservationParking> {
 
     @Override
     public List<ReservationParking> findAll() throws SQLException {
-        return this.find(new RequeteSelectReservationsParking());
+        return this.find(new RequeteSelectReservationParking());
     }
 
     @Override

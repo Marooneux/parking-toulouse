@@ -1,33 +1,41 @@
 package modele.dao;
 
-import modele.Proximite;
-import modele.dao.requetes.RequeteSelectProximites;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import modele.Proximite;
+import modele.dao.requetes.RequeteDeleteProximite;
+import modele.dao.requetes.RequeteInsertProximite;
+import modele.dao.requetes.RequeteSelectProximite;
+import modele.dao.requetes.RequeteUpdateProximite;
+
 public class DaoProximite extends DaoModele<Proximite> {
-    @Override
-    public void create(Proximite donnees) throws SQLException {}
+	@Override
+	public void create(Proximite donnee) throws SQLException {
+		this.miseAJour(new RequeteInsertProximite(), donnee);
+	}
 
-    @Override
-    public void update(Proximite donnees) throws SQLException {}
+	@Override
+	public void update(Proximite donnee) throws SQLException {
+		this.miseAJour(new RequeteUpdateProximite(), donnee);
+	}
 
-    @Override
-    public void delete(Proximite donnees) throws SQLException {}
+	@Override
+	public void delete(Proximite donnee) throws SQLException {
+		this.miseAJour(new RequeteDeleteProximite(), donnee);
+	}
 
-    @Override
-    public List<Proximite> findAll() throws SQLException {
-        return this.find(new RequeteSelectProximites());
-    }
+	@Override
+	public List<Proximite> findAll() throws SQLException {
+		return this.find(new RequeteSelectProximite());
+	}
 
-    @Override
-    protected Proximite creerInstance(ResultSet c) throws SQLException {
-        return new Proximite(
-                c.getInt("id_parking"),
-                c.getInt("id_ligne_metro"),
-                c.getInt("distance_metres")
-        );
-    }
+	@Override
+	protected Proximite creerInstance(ResultSet c) throws SQLException {
+		return new Proximite(
+				c.getInt("id_parking"),
+				c.getInt("id_ligne_metro"),
+				c.getInt("distance_metres"));
+	}
 }

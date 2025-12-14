@@ -5,26 +5,26 @@ import java.sql.SQLException;
 import java.util.List;
 
 import modele.Utilisateur;
+import modele.dao.requetes.RequeteDeleteUtilisateur;
+import modele.dao.requetes.RequeteInsertUtilisateur;
 import modele.dao.requetes.RequeteSelectUtilisateurs;
+import modele.dao.requetes.RequeteUpdateUtilisateur;
 
 public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
-	public void create(Utilisateur donnees) throws SQLException {
-		this.miseAJour(new modele.dao.requetes.RequeteInsertUtilisateur(), donnees);
-
+	public void create(Utilisateur donnee) throws SQLException {
+		this.miseAJour(new RequeteInsertUtilisateur(), donnee);
 	}
 
 	@Override
-	public void update(Utilisateur donnees) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void update(Utilisateur donnee) throws SQLException {
+		this.miseAJour(new RequeteUpdateUtilisateur(), donnee);
 	}
 
 	@Override
-	public void delete(Utilisateur donnees) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void delete(Utilisateur donnee) throws SQLException {
+		this.miseAJour(new RequeteDeleteUtilisateur(), donnee);
 	}
 
 	@Override
