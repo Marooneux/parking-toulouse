@@ -10,6 +10,7 @@ public class Zone {
 		ORANGE
 	}
 
+	private int id;
 	private String nom;
 	private CouleurZone couleur;
 	private double tarifHoraire;
@@ -20,6 +21,21 @@ public class Zone {
 		this.couleur = couleur;
 		this.tarifHoraire = tarifHoraire;
 		this.dureeMax = dureeMax;
+	}
+
+	// Constructeur utilisé par DaoZoneVoirie.creerInstance(ResultSet)
+	public Zone(int id, String nom, double tarifHoraire) {
+		this.id = id;
+		this.nom = nom;
+		this.tarifHoraire = tarifHoraire;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNom() {
