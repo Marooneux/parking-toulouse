@@ -1,6 +1,7 @@
 package modele;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -25,6 +26,11 @@ public class StationnementVoirie {
 	
 	
 	public double calculerPrixTotal(int duree) {
+		LocalTime actuel = LocalTime.of(6, 0);
+		if ((actuel.isBefore(HorairePayantFin) && actuel.isAfter(HorairePayantDebut)) || LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return 0;
+		}
+		
 		double prixTotal = 0;
     	int heures = duree / 60;
     	int minutes = duree % 60;
@@ -73,11 +79,6 @@ public class StationnementVoirie {
     		return tarifHoraire + "€/h";
     	} return "Gratuit";
     }
-	
-	// Stationnement gratuit le dimanche dans toutes les zones
-	public Boolean isDimanche() {
-		return (LocalDateTime.now().getDayOfWeek() == DayOfWeek.SUNDAY);
-	}
 
 
 	

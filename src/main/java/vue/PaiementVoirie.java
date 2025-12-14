@@ -18,7 +18,9 @@ public class PaiementVoirie extends JFrame {
     private JTextField textFieldExpiration;
     private JTextField textFieldCVC;
     private StationnementVoirie zone;
+    private String immatriculation;
     private int duree;
+    private double prix;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -31,9 +33,11 @@ public class PaiementVoirie extends JFrame {
         });
     }
 
-    public PaiementVoirie(StationnementVoirie zone, int duree) {
+    public PaiementVoirie(StationnementVoirie zone, String immatriculation, int duree, double prix) {
     	this.zone = zone;
+    	this.immatriculation = immatriculation;
     	this.duree = duree;
+    	this.prix = prix;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(520, 480);
         setLocationRelativeTo(null);
@@ -119,7 +123,7 @@ public class PaiementVoirie extends JFrame {
         JPanel panelBtn = new JPanel();
         panelBtn.setBackground(Color.WHITE);
 
-        JButton btnPayer = new JButton("Payer - " + zone.calculerPrixTotal(duree) + "€");
+        JButton btnPayer = new JButton("Payer - " + prix + "€");
         btnPayer.setBackground(new Color(0, 128, 255));
         btnPayer.setForeground(Color.WHITE);
         btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -129,7 +133,7 @@ public class PaiementVoirie extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone.calculerPrixTotal(duree));
+                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone, immatriculation, duree, prix, "Carte bancaire");
                 	frameConfirmationPaiement.setVisible(true);
                     dispose();
                 } catch (Exception ex) {

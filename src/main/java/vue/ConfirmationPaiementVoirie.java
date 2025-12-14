@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import modele.StationnementVoirie;
+
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -21,21 +24,20 @@ public class ConfirmationPaiementVoirie extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private StationnementVoirie zone;
+    private String immatriculation;
+    private int duree;
+    private double prix;
+    private String moyenPaiement;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
-    public ConfirmationPaiementVoirie(double d) {
+    public ConfirmationPaiementVoirie(StationnementVoirie zone, String immatriculation, int duree, double prix, String moyenPaiement) {
+    	this.zone = zone;
+    	this.immatriculation = immatriculation;
+    	this.duree = duree;
+    	this.prix = prix;
+    	this.moyenPaiement = moyenPaiement;
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 750, 550);
         setTitle("Paiement validé");
@@ -82,7 +84,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
         lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         panelInnerContent.add(lblMerci);
 
-        JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", d));
+        JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
         lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
         lblMontant.setForeground(new Color(33, 37, 41));
         lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -98,7 +100,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
         btnTerminer.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                    	TicketVoirie framePaiement = new TicketVoirie();
+                    	TicketVoirie framePaiement = new TicketVoirie(zone, immatriculation, duree, moyenPaiement);
                         framePaiement.setVisible(true);
                         dispose();
                     } catch (Exception ex) {

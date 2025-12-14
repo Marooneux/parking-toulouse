@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.time.LocalTime;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +24,7 @@ import javax.swing.text.AbstractDocument;
 import modele.StationnementVoirie;
 import modele.StationnementVoirie.Couleur;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
+import controleur.ControleurSaisirDureeStationnement;
 
 public class SaisirDureeStationnement extends JFrame {
 
@@ -129,16 +133,15 @@ public class SaisirDureeStationnement extends JFrame {
                 if (intDuree > zone.getDureeMax()) {
                 	JOptionPane.showMessageDialog(this, "La durée saisie est supérieure à la durée maximum de cette zone.");
                     return;
-                }
-                if ((zone.getCouleur() == Couleur.BLEU) || (zone.getCouleur() == Couleur.ROUGE && intDuree <= 30)) {
-                	// Créer une reservation ici
-                    TicketVoirie frameTicketVoirie = new TicketVoirie();
-                    frameTicketVoirie.setVisible(true);
-	                dispose();
-            	} else {
-            		ChoixMoyenPaiement frameChoixPaiementVoirie = new ChoixMoyenPaiement(zone, intDuree);
-	                frameChoixPaiementVoirie.setVisible(true);
-	                dispose();
+                } else {
+                	double prix = ControleurSaisirDureeStationnement.calculerPrixTotal(zone, intDuree);
+                	if (prix == 0) {
+                		ControleurSaisirDureeStationnement.ouvrirTicket(zone, immatriculation, intDuree);
+                		dispose();
+                	} else {
+                		ControleurSaisirDureeStationnement.ouvrirPaiement(zone, immatriculation, intDuree, prix);
+                		dispose();
+                	}
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Veuillez entrer une durée en minutes uniquement.");
