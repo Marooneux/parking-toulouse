@@ -112,7 +112,7 @@ public class ChoixParking extends JFrame {
     private void addParking(Parking parking) {
         ParkingCard card = new ParkingCard(parking, p -> {
             try {
-                SaisirHeureArriveParking frameSaisirHeureArrive = new SaisirHeureArriveParking();
+                SaisirHeureArriveParking frameSaisirHeureArrive = new SaisirHeureArriveParking(parking);
                 frameSaisirHeureArrive.setVisible(true);                
                 dispose();
             } catch (Exception ex) {

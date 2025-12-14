@@ -20,11 +20,15 @@ public class ChoixMoyenPaiement extends JFrame {
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
     private final Color BUTTON_TEXT_COLOR = Color.WHITE;
     private StationnementVoirie zone;
+    private String immatriculation;
     private int duree;
+    private double prix;
 
-    public ChoixMoyenPaiement(StationnementVoirie zone, int duree) {
+    public ChoixMoyenPaiement(StationnementVoirie zone, String immatriculation, int duree, double prix) {
     	this.zone = zone;
+    	this.immatriculation = immatriculation;
     	this.duree = duree;
+    	this.prix = prix;
     	
         setTitle("Moyen de Paiement");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +56,7 @@ public class ChoixMoyenPaiement extends JFrame {
                 new IconCard(),
                 e -> {
                     try {
-                        PaiementVoirie pagePaiementCB = new PaiementVoirie(zone, duree);
+                        PaiementVoirie pagePaiementCB = new PaiementVoirie(zone, immatriculation, duree, prix);
                         pagePaiementCB.setVisible(true);
                         dispose();
                     } catch (Exception ex) {
@@ -68,7 +72,7 @@ public class ChoixMoyenPaiement extends JFrame {
                 new IconBank(),
                 e -> {
                     try {
-                        PaiementVirement pageVirement = new PaiementVirement(zone, duree);
+                        PaiementVirement pageVirement = new PaiementVirement(zone, immatriculation, duree, prix);
                         pageVirement.setVisible(true);
                         dispose();
                     } catch (Exception ex) {

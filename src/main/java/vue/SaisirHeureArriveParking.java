@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -27,10 +28,10 @@ public class SaisirHeureArriveParking extends JFrame {
 	private JButton btnStart;
 	private JButton btnNow;
 	private JLabel lblParkingInfo;
-	private ParkingPanel parking;
+	private Parking parking;
 	private JTextField plaque;
 
-	public SaisirHeureArriveParking(ParkingPanel parking) {
+	public SaisirHeureArriveParking(Parking parking) {
 
 		this.parking = parking;
 	    this.setTitle("Démarrer le Stationnement");
@@ -90,6 +91,17 @@ public class SaisirHeureArriveParking extends JFrame {
 	    this.btnStart.setOpaque(true);
 	    buttonPanel.add(this.btnStart);
 	    this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        this.btnStart.addActionListener(e -> {
+            String duree = this.textField.getText();
+            if (duree == null || duree.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+                return;
+            }
+
+            TicketParking frameTicketParking = new TicketParking();
+            frameTicketParking.setVisible(true);
+            dispose();
+        });
 	}
 
 	public SaisirHeureArriveParking() {
