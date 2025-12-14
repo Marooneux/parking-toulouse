@@ -5,13 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.time.LocalTime;
 import java.util.function.Consumer;
 
@@ -19,19 +14,12 @@ import modele.Parking;
 
 public class ChoixParking extends JFrame {
 
-    private JPanel gridPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel gridPanel;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                ChoixParking frame = new ChoixParking();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     public ChoixParking() {
         initialize();
@@ -89,36 +77,27 @@ public class ChoixParking extends JFrame {
 
         scrollPane.setViewportView(gridPanel);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-        addParking(new Parking("Parking Centre-Ville", "12 Rue de la République", 2.5, 120, 190, 
-                LocalTime.of(0, 0), LocalTime.of(0, 0)));
-
-        addParking(new Parking("Gare Saint-Roch", "Place de la Gare", 3.10, 45, 210, 
-                LocalTime.of(5, 0), LocalTime.of(1, 0)));
-
-        addParking(new Parking("Victor Hugo", "Bd Victor Hugo", 1.80, 12, 180, 
-                LocalTime.of(8, 0), LocalTime.of(20, 0)));
-
-        addParking(new Parking("Les Halles", "Rue du Marché", 2.20, 230, 200, 
-                LocalTime.of(6, 0), LocalTime.of(22, 0)));
         
-        addParking(new Parking("Polygone", "Av. des États du Languedoc", 2.00, 1500, 220, 
-                LocalTime.of(9, 0), LocalTime.of(21, 0)));
-        
-        addParking(new Parking("Antigone", "Place du Nombre d'Or", 1.50, 80, 190, 
-                LocalTime.of(7, 0), LocalTime.of(23, 0)));
     }
 
-    private void addParking(Parking parking) {
-        ParkingCard card = new ParkingCard(parking, p -> {
-            try {
-                SaisirHeureArriveParking frameSaisirHeureArrive = new SaisirHeureArriveParking(parking);
-                frameSaisirHeureArrive.setVisible(true);                
-                dispose();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
+    public void addParking(Parking parking, Consumer<Parking> onSelect) {
+        ParkingPanel card = new ParkingPanel(parking, onSelect);
         gridPanel.add(card);
     }
+    
+    public void populateDefaultParkings(Consumer<Parking> onSelect) {
+        addParking(new Parking("Parking Centre-Ville","12 Rue de la République",120,2.5,LocalTime.of(0, 0),LocalTime.of(0, 0),false), onSelect);
+
+        addParking(new Parking("Gare Saint-Roch","Place de la Gare",45,3.10,LocalTime.of(5, 0),LocalTime.of(1, 0),true), onSelect);
+
+        addParking(new Parking("Victor Hugo","Bd Victor Hugo",12,1.80,LocalTime.of(8, 0),LocalTime.of(20, 0),false), onSelect);
+
+        addParking(new Parking("Les Halles","Rue du Marché",230,2.20, LocalTime.of(6, 0),LocalTime.of(22, 0),false), onSelect);
+
+        addParking(new Parking("Polygone","Av. des États du Languedoc",1500,2.00,LocalTime.of(9, 0),LocalTime.of(21, 0),true), onSelect);
+
+        addParking(new Parking("Antigone","Place du Nombre d'Or",80,1.50,LocalTime.of(7, 0),LocalTime.of(23, 0),false), onSelect);
+    }
+
 }
+

@@ -14,13 +14,13 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
-class ParkingCard extends JPanel {
+class ParkingPanel extends JPanel {
     private Parking parking;
     private Consumer<Parking> onClick;
     private Color normalBorder = new Color(230, 230, 230);
     private Color hoverBorder = new Color(100, 100, 100);
 
-    public ParkingCard(Parking parking, Consumer<Parking> onClick) {
+    public ParkingPanel(Parking parking, Consumer<Parking> onClick) {
         this.parking = parking;
         this.onClick = onClick;
 
@@ -85,7 +85,7 @@ class ParkingCard extends JPanel {
         centerPanel.add(createDetailRow("🕒", horaireText));
         
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesTotales() - parking.getNbPlacesOccupees()) + " places"));
+        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesMax() - parking.getNbPlacesOccupees()) + " places"));
         
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()/100.0) + "m"));

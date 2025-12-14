@@ -1,64 +1,38 @@
 package controleur;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 import vue.ChoixParking;
-import vue.ParkingPanel;
 import vue.SaisirHeureArriveParking;
+import modele.Parking;
 
-public class ControleurChoixParking implements ActionListener {
 
-    private final ChoixParking vue;
-    private final JButton btnChoisirParking;
 
-    public ControleurChoixParking(ChoixParking vue) {
-        this.vue = vue;
-        this.btnChoisirParking = vue.getBtnChoisirParking();
-        this.btnChoisirParking.addActionListener(this);
+public class ControleurChoixParking {
+
+    private ChoixParking view;
+
+    public ControleurChoixParking() {
+        view = new ChoixParking();
+
+        // Populate parkings with selection logic
+        view.populateDefaultParkings(this::onParkingSelected);
+
+        view.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() != btnChoisirParking) return;
-
-        handleEtatHeure();
-    }
-
-    private void handleEtatHeure() {
-        ParkingPanel selectedParking = vue.getParkingSelectionne();
-
-        if (!isParkingSelected(selectedParking)) return;
-
-        ouvrirSaisirHeure(selectedParking);
-    }
-
-    private boolean isParkingSelected(ParkingPanel parking) {
-        if (parking == null) {
-            JOptionPane.showMessageDialog(vue, "Veuillez sélectionner un parking.");
-            return false;
+    private void onParkingSelected(Parking parking) {
+    	if (parking == null) {
+            return;
         }
-        return true;
-    }
+        // Example control logic
+        SaisirHeureArriveParking saisirHeureView = new SaisirHeureArriveParking(parking);
+        saisirHeureView.setVisible(true);
 
-    private void ouvrirSaisirHeure(ParkingPanel parking) {
-        SaisirHeureArriveParking nextVue = new SaisirHeureArriveParking(parking);
-        nextVue.getLblParkingInfo().setText(parking.getNomPlace());
-
-        new ControleurSaisirHeureArriveParking(nextVue);
-        nextVue.setVisible(true);
-        vue.dispose();
+        // Close the current view if needed
+        view.dispose();
     }
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            ChoixParking vue = new ChoixParking();
-            new ControleurChoixParking(vue);
-            vue.setVisible(true);
-        });
+        new ControleurChoixParking();
     }
 }
+ 

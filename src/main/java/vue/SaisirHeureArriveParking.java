@@ -28,7 +28,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	private JButton btnStart;
 	private JButton btnNow;
 	private JLabel lblParkingInfo;
-	private Parking parking;
+	public Parking parking;
 	private JTextField plaque;
 
 	public SaisirHeureArriveParking(Parking parking) {
@@ -77,7 +77,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	    this.ajouterCarteDeDétails(body, "Parking Sélectionné", this.detailsDuParking());
 	    this.ajouterCarteDeDétails(body, "Informations du Véhicule", this.detailsVoiture());
 	    this.ajouterCarteDeDétails(body, "Heure d'Arrivée", this.detailsHeureArrive());
-
+	    
 	    // Buttons
 	    JPanel buttonPanel = new JPanel();
 	    buttonPanel.setBackground(new Color(250, 250, 250));
@@ -91,17 +91,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	    this.btnStart.setOpaque(true);
 	    buttonPanel.add(this.btnStart);
 	    this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
-        this.btnStart.addActionListener(e -> {
-            String duree = this.textField.getText();
-            if (duree == null || duree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
-                return;
-            }
-
-            TicketParking frameTicketParking = new TicketParking();
-            frameTicketParking.setVisible(true);
-            dispose();
-        });
+     
 	}
 
 	public SaisirHeureArriveParking() {
@@ -185,7 +175,7 @@ public class SaisirHeureArriveParking extends JFrame {
 	    p.setBackground(Color.WHITE);
 	    p.setBorder(new EmptyBorder(15, 15, 15, 15));
 	    
-	    lblParkingInfo = new JLabel("blabla");
+	    lblParkingInfo = new JLabel(parking != null ? parking.getNom() : "Aucun parking sélectionné");
 	    lblParkingInfo.setFont(new Font("Segoe UI", Font.BOLD, 15));
 	    lblParkingInfo.setForeground(new Color(50, 50, 50));
 	    p.add(lblParkingInfo);

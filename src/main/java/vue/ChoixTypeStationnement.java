@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 
 public class ChoixTypeStationnement extends JFrame {
 
+	
+	private JButton btnParking;
+	private JButton btnVoirie;
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color CARD_COLOR = Color.WHITE;
     private final Color TEXT_COLOR = new Color(33, 37, 41);
@@ -62,30 +65,15 @@ public class ChoixTypeStationnement extends JFrame {
                 "Stationnement Parking",
                 "Stationner dans un parking sécurisé au choix.",
                 "Trouver un parking",
-                e -> {
-                    try {
-                        ChoixParking frameChoixParking = new ChoixParking();
-                        frameChoixParking.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                false
         );
 
         JPanel cardVoirie = createCard(
                 "Stationnement en Voirie",
                 "Stationner en voirie dans une zone au choix.",
                 "Trouver un emplacement",
-                e -> {
-                    try {
-                        ChoixZone frameChoixZone = new ChoixZone();
-                        frameChoixZone.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                false
+                
         );
 
         cardsContainer.add(cardParking);
@@ -97,7 +85,7 @@ public class ChoixTypeStationnement extends JFrame {
         add(mainPanel);
     }
 
-    private JPanel createCard(String title, String subtitle, String buttonText, ActionListener action) {
+    private JPanel createCard(String title, String subtitle, String buttonText, boolean withListener) {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
         card.setBackground(CARD_COLOR);
@@ -128,7 +116,13 @@ public class ChoixTypeStationnement extends JFrame {
         btn.setBorder(new EmptyBorder(10, 20, 10, 20));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btn.addActionListener(action);
+        if (title.contains("Parking")) btnParking = btn;
+        if (title.contains("Voirie")) btnVoirie = btn;
+
+        // Only add listener in controller
+        if (withListener && btnParking != null) {
+            btnParking.addActionListener(e -> {});
+        }
 
         btn.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
@@ -184,6 +178,15 @@ public class ChoixTypeStationnement extends JFrame {
         @Override
         public int getIconHeight() { return 24; }
     }
+    
+    public JButton getParkingButton() {
+        return btnParking;
+    }
+
+    public JButton getVoirieButton() {
+        return btnVoirie;
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ChoixTypeStationnement().setVisible(true));
