@@ -1,9 +1,9 @@
 package controleur;
 
-import java.awt.event.ActionEvent;
+/*import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main.java.vue.LoginPage;
+import vue.LoginPage;
 
 public class ControleurLoginPage implements ActionListener {
 	private LoginPage vue;
@@ -12,7 +12,6 @@ public class ControleurLoginPage implements ActionListener {
 	public ControleurLoginPage(LoginPage vue) {
 		this.vue = vue;
 		this.vue.setActifBoutonValider(false);
-		this.modele = new ModeleUtilisateur();
 	}
 
 	@Override
@@ -25,4 +24,4 @@ public class ControleurLoginPage implements ActionListener {
 			return new ControleurChoixTypeStationnement();
 		}
 	}
-}
+}*/

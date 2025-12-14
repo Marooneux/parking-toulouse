@@ -104,8 +104,80 @@ public class SaisirHeureArriveParking extends JFrame {
         });
 	}
 
-	
+	public SaisirHeureArriveParking() {
+		this.setTitle("Démarrer le Stationnement");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(600, 700);
+		this.setLocationRelativeTo(null);
+		this.btnStart = new JButton("Démarrer le Stationnement");
 
+		this.contentPane = new JPanel(new BorderLayout(15, 15));
+		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.contentPane.setBackground(new Color(250, 250, 250));
+		this.setContentPane(this.contentPane);
+
+		// Header
+		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		header.setBackground(new Color(250, 250, 250));
+
+		JLabel lblIcon = new JLabel("\uD83C\uDFE2");
+		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
+		header.add(lblIcon);
+
+		JPanel texte = new JPanel();
+		texte.setBackground(new Color(250, 250, 250));
+		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
+
+		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
+		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitre.setForeground(new Color(40, 40, 40));
+		texte.add(lblTitre);
+
+		JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
+		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSousTitre.setForeground(new Color(100, 100, 100));
+		texte.add(lblSousTitre);
+
+		header.add(texte);
+		this.contentPane.add(header, BorderLayout.NORTH);
+
+		// Corps
+		JPanel body = new JPanel();
+		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+		body.setBackground(new Color(250, 250, 250));
+		body.setBorder(new EmptyBorder(10, 0, 10, 0));
+		this.contentPane.add(body, BorderLayout.CENTER);
+
+		this.ajouterCarteDeDétails(body, "Parking Sélectionné", this.detailsDuParking());
+		this.ajouterCarteDeDétails(body, "Informations du Véhicule", this.detailsVoiture());
+		this.ajouterCarteDeDétails(body, "Heure d'Arrivée", this.detailsHeureArrive());
+
+		// Button
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(new Color(250, 250, 250));
+
+		this.btnStart.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		this.btnStart.setBackground(new Color(0, 122, 255));
+		this.btnStart.setForeground(Color.WHITE);
+		this.btnStart.setFocusPainted(false);
+		this.btnStart.setBorderPainted(false);
+		this.btnStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.btnStart.setPreferredSize(new Dimension(250, 40));
+		this.btnStart.setOpaque(true);
+		buttonPanel.add(this.btnStart);
+		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
+		this.btnStart.addActionListener(e -> {
+			String duree = this.textField.getText();
+			if (duree == null || duree.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+				return;
+			}
+
+			TicketParking frameTicketParking = new TicketParking();
+			frameTicketParking.setVisible(true);
+			this.dispose();
+		});
+	}
 
 	private JPanel detailsDuParking() {
 	    JPanel p = new JPanel();

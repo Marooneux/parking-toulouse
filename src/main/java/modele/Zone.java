@@ -2,55 +2,72 @@ package modele;
 
 public class Zone {
 
-    public enum CouleurZone {
-        BLEU,
-        ROUGE,
-        JAUNE,
-        VERTE,
-        ORANGE
-    }
-    private String nom;
-    private CouleurZone couleur;
-    private double tarifHoraire;
-    private double dureeMax; // Durée de stationnement max en heures
+	public enum CouleurZone {
+		BLEU,
+		ROUGE,
+		JAUNE,
+		VERTE,
+		ORANGE
+	}
 
-    public Zone(String nom, CouleurZone couleur, double tarifHoraire, double dureeMax) {
-        this.nom = nom;
-        this.couleur = couleur;
-        this.tarifHoraire = tarifHoraire;
-        this.dureeMax = dureeMax;
-    }
+	private int id;
+	private String nom;
+	private CouleurZone couleur;
+	private double tarifHoraire;
+	private double dureeMax; // Durée de stationnement max en heures
 
-    public String getNom() {
-        return nom;
-    }
+	public Zone(String nom, CouleurZone couleur, double tarifHoraire, double dureeMax) {
+		this.nom = nom;
+		this.couleur = couleur;
+		this.tarifHoraire = tarifHoraire;
+		this.dureeMax = dureeMax;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	// Constructeur utilisé par DaoZoneVoirie.creerInstance(ResultSet)
+	public Zone(int id, String nom, double tarifHoraire) {
+		this.id = id;
+		this.nom = nom;
+		this.tarifHoraire = tarifHoraire;
+	}
 
-    public CouleurZone getCouleur() {
-        return couleur;
-    }
+	public int getId() {
+		return this.id;
+	}
 
-    public void setCouleur(CouleurZone couleur) {
-        this.couleur = couleur;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public double getTarifHoraire() {
-        return tarifHoraire;
-    }
+	public String getNom() {
+		return this.nom;
+	}
 
-    public void setTarifHoraire(double tarifHoraire) {
-        this.tarifHoraire = tarifHoraire;
-    }
-    
-    public double getDureeMax() {
-    	return this.dureeMax;
-    }
-    
-    public void setDureeMax(double dureeMax) {
-    	this.dureeMax = dureeMax;
-    }
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public CouleurZone getCouleur() {
+		return this.couleur;
+	}
+
+	public void setCouleur(CouleurZone couleur) {
+		this.couleur = couleur;
+	}
+
+	public double getTarifHoraire() {
+		return this.tarifHoraire;
+	}
+
+	public void setTarifHoraire(double tarifHoraire) {
+		this.tarifHoraire = tarifHoraire;
+	}
+
+	public double getDureeMax() {
+		return this.dureeMax;
+	}
+
+	public void setDureeMax(double dureeMax) {
+		this.dureeMax = dureeMax;
+	}
 
 }

@@ -7,19 +7,19 @@ public class Paiement {
 		CB, VIREMENT
 	};
 
-	private Reservation reservation;
+	private ReservationParking reservation;
 	private OptionsPaiement moyenPaiement;
 	private double montant;
 	private LocalDateTime datePaiement;
 
-	public Paiement(Reservation reservation, String moyenPaiement) {
+	public Paiement(ReservationParking reservation, String moyenPaiement) {
 		this.reservation = reservation;
 		this.moyenPaiement = OptionsPaiement.CB;
 		this.montant = reservation.calculerPrixTotal();
 		this.datePaiement = LocalDateTime.now();
 	}
 
-	public Reservation getReservation() {
+	public ReservationParking getReservation() {
 		return this.reservation;
 	}
 
