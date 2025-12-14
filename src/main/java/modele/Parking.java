@@ -3,7 +3,7 @@ package modele;
 import java.time.LocalTime;
 
 public class Parking {
-	private static double tarif; // prix pour 15mins de stationnement
+	private double tarif; // prix pour 15mins de stationnement
 
 	private int id;
 	private String nom;
@@ -16,10 +16,11 @@ public class Parking {
 	private boolean contientPlacesMoto;
 
 	// Constructeur sans id; l'id sera défini après insertion (clé auto) via setId.
-	public Parking(String nom, String adresse, int nbPlacesMax, double hauteur,
+	public Parking(String nom, String adresse, double tarif, int nbPlacesMax, double hauteur, 
 			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto) {
 		this.nom = nom;
 		this.adresse = adresse;
+		this.tarif = tarif;
 		this.nbPlacesMax = nbPlacesMax;
 		this.nbPlacesOccupees = 0;
 		this.hauteur = hauteur;
@@ -28,12 +29,12 @@ public class Parking {
 		this.contientPlacesMoto = contientPlacesMoto;
 	}
 
-	public static double getTarif() {
+	public double getTarif() {
 		return tarif;
 	}
 
-	public static void setTarif(double tarif) {
-		Parking.tarif = tarif;
+	public void setTarif(double tarif) {
+		this.tarif = tarif;
 	}
 
 	public String getNom() {

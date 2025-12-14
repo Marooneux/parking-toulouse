@@ -50,11 +50,11 @@ public class ControleurChoixTypeStationnement {
         }
     }
 
-    private void openParkingPage() {
+    public static void openParkingPage() {
         try {
             ChoixParking parkingPage = new ChoixParking();
             parkingPage.setVisible(true);
-            vue.dispose();  // close the current ChoixTypeStationnement window
+            //vue.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
