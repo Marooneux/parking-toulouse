@@ -40,7 +40,7 @@ public abstract class Compte {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getMdp() {
 		return this.mdp;
 	}

@@ -89,8 +89,9 @@ public class StationnementVoirie {
 		this.couleur = couleur;
 	}
 	public double getTarifHoraire() {
-		return tarifHoraire;
+		return this.tarifHoraire;
 	}
+
 	public void setTarifHoraire(int tarifHoraire) {
 		this.tarifHoraire = tarifHoraire;
 	}
@@ -103,20 +104,16 @@ public class StationnementVoirie {
 		this.dureeMax = dureeMax;
 	}
 
-
 	public LocalTime getHorairePayantDebut() {
-		return HorairePayantDebut;
-	}
-	public void setHorairePayantDebut(LocalTime horairePayantDebut) {
-		HorairePayantDebut = horairePayantDebut;
+		return this.HorairePayantDebut;
 	}
 
+	public void setHorairePayantDebut(LocalTime horairePayantDebut) {
+		this.HorairePayantDebut = horairePayantDebut;
+	}
 
 	public LocalTime getHorairePayantFin() {
-		return HorairePayantFin;
-	}
-	public void setHorairePayantFin(LocalTime horairePayantFin) {
-		HorairePayantFin = horairePayantFin;
+		return this.HorairePayantFin;
 	}
 	
 }

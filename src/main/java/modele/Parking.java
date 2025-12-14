@@ -1,143 +1,144 @@
 package modele;
 
 import java.time.LocalTime;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Parking {
+	private static double tarif; // prix pour 15mins de stationnement
+
+	private int id;
 	private String nom;
 	private String adresse;
-	private double tarif; // prix pour 15mins de stationnement
+	private int nbPlacesMax;
 	private int nbPlacesOccupees;
-	private int nbPlacesTotales;
-	private double hauteur; // hauteur max en cm
+	private double hauteur;
 	private LocalTime heureOuverture;
 	private LocalTime heureFermeture;
-	private List<Voiture> vehicules;
+	private boolean contientPlacesMoto;
 
-	public Parking(String nom, String adresse, double tarifHoraire, int nbPlacesTotales, double hauteur, 
-			LocalTime heureOuverture, LocalTime heureFermeture) {
+	// Constructeur sans id; l'id sera défini après insertion (clé auto) via setId.
+	public Parking(String nom, String adresse, int nbPlacesMax, double hauteur,
+			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto) {
 		this.nom = nom;
 		this.adresse = adresse;
-		this.tarif = tarifHoraire;
+		this.nbPlacesMax = nbPlacesMax;
 		this.nbPlacesOccupees = 0;
-		this.nbPlacesTotales= nbPlacesTotales;
 		this.hauteur = hauteur;
 		this.heureOuverture = heureOuverture;
 		this.heureFermeture = heureFermeture;
-		this.vehicules = new LinkedList<>();
+		this.contientPlacesMoto = contientPlacesMoto;
 	}
-	
-	
-	
 
+	public static double getTarif() {
+		return tarif;
+	}
 
-	
+	public static void setTarif(double tarif) {
+		Parking.tarif = tarif;
+	}
+
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-
 	public String getAdresse() {
-		return adresse;
+		return this.adresse;
 	}
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
 
-
-	public double getTarif() {
-		return tarif;
+	public int getNbPlacesMax() {
+		return this.nbPlacesMax;
 	}
 
-	public void setTarif(double tarif) {
-		this.tarif = tarif;
+	public void setNbPlacesMax(int nbPlacesMax) {
+		this.nbPlacesMax = nbPlacesMax;
 	}
-
 
 	public int getNbPlacesOccupees() {
-		return nbPlacesOccupees;
+		return this.nbPlacesOccupees;
 	}
 
 	public void setNbPlacesOccupees(int nbPlacesOccupees) {
 		this.nbPlacesOccupees = nbPlacesOccupees;
 	}
 
-
-	public int getNbPlacesTotales() {
-		return nbPlacesTotales;
-	}
-
-	public void setNbPlacesTotales(int nbPlacesTotales) {
-		this.nbPlacesTotales = nbPlacesTotales;
-	}
-
-
 	public double getHauteur() {
-		return hauteur;
+		return this.hauteur;
 	}
 
 	public void setHauteur(double hauteur) {
 		this.hauteur = hauteur;
 	}
 
-
 	public LocalTime getHeureOuverture() {
-		return heureOuverture;
+		return this.heureOuverture;
 	}
 
 	public void setHeureOuverture(LocalTime heureOuverture) {
 		this.heureOuverture = heureOuverture;
 	}
 
-
 	public LocalTime getHeureFermeture() {
-		return heureFermeture;
+		return this.heureFermeture;
 	}
 
 	public void setHeureFermeture(LocalTime heureFermeture) {
 		this.heureFermeture = heureFermeture;
 	}
 
-
-	public List<Voiture> getVehicules() {
-		return vehicules;
+	public boolean isContientPlacesMoto() {
+		return this.contientPlacesMoto;
 	}
 
-	public void setVehicules(List<Voiture> vehicules) {
-		this.vehicules = vehicules;
+	public void setContientPlacesMoto(boolean contientPlacesMoto) {
+		this.contientPlacesMoto = contientPlacesMoto;
 	}
 
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 
-
-
+	public int nbPlacesOccupees() {
+		return this.nbPlacesOccupees;
+	}
 
 	public Boolean estOuvert(LocalTime heure) {
-		return (heure.isAfter(heureOuverture) && heure.isBefore(heureFermeture));
+		return (heure.isAfter(this.heureOuverture) && heure.isBefore(this.heureFermeture));
 	}
 
-
-	public Vehicule getVehicule(String immatriculation) {
-		for (Vehicule v : this.vehicules) {
-			if (v.getImmatriculation() == immatriculation) {
-				return v;
-			}
+	public void ajouterVehicule(Vehicule v) {
+		if (this.nbPlacesOccupees < this.nbPlacesMax) {
+			this.nbPlacesOccupees += 1;
 		}
-		return null;
 	}
 
-	public void ajouterVoiture(Voiture voiture) {
-		this.vehicules.add(voiture);
+	public void enleverVehicule(Vehicule v) {
+		if (this.nbPlacesOccupees > 0) {
+			this.nbPlacesOccupees -= 1;
+		}
 	}
 
-	public void enleverVoiture(Voiture voiture) {
-		this.vehicules.remove(voiture);
+	@Override
+	public String toString() {
+		return "Parking{" +
+				"nom='" + this.nom + '\'' +
+				", adresse='" + this.adresse + '\'' +
+				", tarif=" + tarif +
+				", nbPlacesOccupees=" + this.nbPlacesOccupees +
+				", nbPlacesTotales=" + this.nbPlacesMax +
+				", hauteur=" + this.hauteur +
+				", heureOuverture=" + this.heureOuverture +
+				", heureFermeture=" + this.heureFermeture +
+				'}';
 	}
-
 }

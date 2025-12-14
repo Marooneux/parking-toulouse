@@ -28,6 +28,18 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -44,11 +56,23 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire compatible with Java 21 -->
+            <!-- Surefire compatible with Java 21 permette de gerer les variable-->
+            <!-- pour meilleur interagir avec la base donnée -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
+                <configuration>
+                    <!-- Bridge OS env vars into Java system properties available to tests -->
+                    <systemPropertyVariables>
+                        <!-- Database connection properties -->
+                        <DB_URL>${env.DB_URL}</DB_URL>
+                        <DB_USER>${env.DB_USER}</DB_USER>
+                        <DB_PASS>${env.DB_PASS}</DB_PASS>
+                        <!-- Optional: datasource class name override -->
+                        <DB_DATASOURCE_CLASS>${env.DB_DATASOURCE_CLASS}</DB_DATASOURCE_CLASS>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
