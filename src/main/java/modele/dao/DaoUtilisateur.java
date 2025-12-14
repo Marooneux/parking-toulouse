@@ -5,12 +5,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import modele.Utilisateur;
+import modele.dao.requetes.RequeteSelectUtilisateurs;
 
 public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
 	public void create(Utilisateur donnees) throws SQLException {
-		// TODO Auto-generated method stub
+		this.miseAJour(new modele.dao.requetes.RequeteInsertUtilisateur(), donnees);
 
 	}
 
@@ -28,16 +29,17 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
 	public List<Utilisateur> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.find(new RequeteSelectUtilisateurs());
 	}
 
 	@Override
 	protected Utilisateur creerInstance(ResultSet curseur) throws SQLException {
-		return new Utilisateur(curseur.getString(0),
-				curseur.getString(1),
-				curseur.getString(2),
-				curseur.getString(3), null);
+		int id = curseur.getInt("id");
+		String nom = curseur.getString("nom");
+		String prenom = curseur.getString("prenom");
+		String email = curseur.getString("email");
+		String mdp = curseur.getString("mot_de_passe");
+		int idAb = curseur.getInt("id_abonnement");
+		return new Utilisateur(id, nom, prenom, email, mdp, String.valueOf(idAb));
 	}
-
 }
