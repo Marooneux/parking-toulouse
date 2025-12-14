@@ -23,13 +23,13 @@ public class ControleurChoixTypeStationnement implements ActionListener {
 	public ControleurChoixTypeStationnement(ChoixTypeStationnement vue) {
 		this.vue = vue;
 		this.etat = null;
-		vue.getBtnParking().addActionListener(this);
-		vue.getBtnVoirie().addActionListener(this);
+		//vue.getBtnParking().addActionListener(this);
+		//vue.getBtnVoirie().addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-
+/*
         // Update state based on button clicked
         if (source == vue.getBtnParking()) {
             etat = Etat.PARKING;
@@ -47,7 +47,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             case VOIRIE :
             	openVoiriePage();
             	break;
-        }
+        } */
     }
 
     private void openParkingPage() {
@@ -57,13 +57,14 @@ public class ControleurChoixTypeStationnement implements ActionListener {
         vue.dispose();
     }
 
+    /*
     private void openVoiriePage() {
         SaisirDureeStationnement voiriePage = new SaisirDureeStationnement();
         new ControleurSaisirDureeStationnement(voiriePage);
         voiriePage.setVisible(true);
         vue.dispose();
     }
-
+	*/
 
 	public static void main(String[] args) {
 
