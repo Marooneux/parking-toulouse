@@ -10,32 +10,33 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import modele.StationnementVoirie;
+
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 import java.awt.event.ActionEvent;
+import controleur.ControleurTicketVoirie;
 
 public class TicketVoirie extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private StationnementVoirie zone;
+    private String immatriculation; 
+    private int duree;
+    private String moyenPaiement;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TicketVoirie frame = new TicketVoirie();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public TicketVoirie() {
+    public TicketVoirie(StationnementVoirie zone, String immatriculation, int duree, String moyenPaiement) {
+    	this.zone = zone;
+    	this.immatriculation = immatriculation;
+    	this.duree = duree;
+    	this.moyenPaiement = moyenPaiement;
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 750, 600);
         setTitle("Ticket de voirie");
@@ -93,11 +94,11 @@ public class TicketVoirie extends JFrame {
         panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
 
         createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#V-00001");
-        createInfoRow(panelInfoGrid, "Zone :", "Zone Rouge");
-        createInfoRow(panelInfoGrid, "Immatriculation :", "AB-123-CD");
-        createInfoRow(panelInfoGrid, "Heure d'arrivée :", "14:30");
-        createInfoRow(panelInfoGrid, "Heure départ max :", "16:30");
-        createInfoRow(panelInfoGrid, "Moyen de paiement :", "Carte Bancaire");
+        createInfoRow(panelInfoGrid, "Zone :", zone.couleurZoneToString());
+        createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
+        createInfoRow(panelInfoGrid, "Heure d'arrivée :", ControleurTicketVoirie.getHeureActuelle());
+        createInfoRow(panelInfoGrid, "Heure départ max :", ControleurTicketVoirie.calculerHeureDepart(duree));
+        createInfoRow(panelInfoGrid, "Moyen de paiement :", moyenPaiement);
 
         JPanel panelFooter = new JPanel();
         panelFooter.setBackground(new Color(255, 255, 255));

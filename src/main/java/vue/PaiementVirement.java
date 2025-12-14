@@ -17,12 +17,16 @@ public class PaiementVirement extends JFrame {
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
     private StationnementVoirie zone;
+    private String immatriculation;
     private int duree;
+    private double prix;
 
 
-    public PaiementVirement(StationnementVoirie zone, int duree) {
+    public PaiementVirement(StationnementVoirie zone, String immatriculation, int duree, double prix) {
     	this.zone = zone;
+    	this.immatriculation = immatriculation;
     	this.duree = duree;
+    	this.prix = prix;
     	
         setTitle("Virement Bancaire");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +54,7 @@ public class PaiementVirement extends JFrame {
         addField(formCard, "Nom et Prénom");
         addField(formCard, "IBAN");
 
-        JButton btnPayer = new JButton("Payer " + zone.calculerPrixTotal(duree) + "€");
+        JButton btnPayer = new JButton("Payer " + prix + "€");
         btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnPayer.setBackground(BUTTON_COLOR);
         btnPayer.setForeground(Color.WHITE);
@@ -61,7 +65,7 @@ public class PaiementVirement extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            try {
-	            	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone.calculerPrixTotal(duree));
+	            	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone, immatriculation, duree, prix, "Virement bancaire");
 	            	frameConfirmationPaiement.setVisible(true);
 	                dispose();
 	            } catch (Exception ex) {
