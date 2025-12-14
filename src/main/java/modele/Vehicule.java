@@ -8,13 +8,12 @@ public abstract class Vehicule {
 	private Boolean electrique; // true pour les véhicules éléctriques
 	private Boolean disqueBleu; // true si possède le disque bleu pour stationner en zone bleu
 
-
 	public Vehicule(String type, int hauteur, String immatriculation, Boolean electrique, Boolean DisqueBleu) {
 		this.type = type;
 		this.hauteur = hauteur;
 		this.immatriculation = immatriculation;
 		this.electrique = electrique;
-		this.disqueBleu = disqueBleu;
+		this.disqueBleu = this.disqueBleu;
 	}
 
 	public String getType() {
@@ -48,11 +47,11 @@ public abstract class Vehicule {
 	public void setElectrique(Boolean electrique) {
 		this.electrique = electrique;
 	}
-	
-	
+
 	public Boolean getDisqueBleu() {
-		return disqueBleu;
+		return this.disqueBleu;
 	}
+
 	public void setDisqueBleu(Boolean disqueBleu) {
 		this.disqueBleu = disqueBleu;
 	}
