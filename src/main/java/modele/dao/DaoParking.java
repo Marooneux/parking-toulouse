@@ -34,6 +34,10 @@ public class DaoParking extends DaoModele<Parking> {
 		return this.find(new RequeteSelectParking());
 	}
 
+	public Parking findById(int id) throws SQLException {
+		return this.findById(new RequeteSelectParkingById(), String.valueOf(id));
+	}
+
 	public Iterateur<Parking> findAllIte() throws SQLException {
 		return DaoParking.ite;
 	}
