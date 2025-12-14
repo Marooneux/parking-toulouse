@@ -1,114 +1,124 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.time.LocalTime;
+import java.util.function.Consumer;
+
+import modele.Parking;
 
 public class ChoixParking extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private JPanel gridPanel;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				ChoixParking frame = new ChoixParking();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                ChoixParking frame = new ChoixParking();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-	public ChoixParking() {
-		this.setTitle("Stationnement dans un Parking");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600, 600);
-		this.setLocationRelativeTo(null);
+    public ChoixParking() {
+        initialize();
+    }
 
-		this.contentPane = new JPanel(new BorderLayout(15, 15));
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.contentPane.setBackground(new Color(250, 250, 250));
-		this.setContentPane(this.contentPane);
+    private void initialize() {
+        setTitle("Stationnement");
+        setBounds(100, 100, 1200, 750);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(new Color(248, 249, 250));
+        getContentPane().setLayout(new BorderLayout(0, 0));
 
-		// HEADER
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(new Color(250, 250, 250));
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setBackground(new Color(248, 249, 250));
+        headerPanel.setBorder(new EmptyBorder(40, 50, 30, 50));
 
-		JLabel lblIcon = new JLabel("\uD83D\uDED1");
-		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
-		header.add(lblIcon);
+        JPanel titleContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        titleContainer.setBackground(new Color(248, 249, 250));
+        
+        JPanel subtitleContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        subtitleContainer.setBackground(new Color(248, 249, 250));
 
-		JPanel texte = new JPanel();
-		texte.setBackground(new Color(250, 250, 250));
-		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
+        JLabel iconCar = new JLabel("\uD83C\uDD7F\uFE0F"); 
+        iconCar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        
+        JLabel lblTitle = new JLabel("Démarrer le Stationnement");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(new Color(33, 37, 41));
 
-		JLabel lblTitre = new JLabel("Stationnement dans un Parking");
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblTitre.setForeground(new Color(40, 40, 40));
+        titleContainer.add(iconCar);
+        titleContainer.add(lblTitle);
 
-		JLabel lblSousTitre = new JLabel("Choisissez une place de parking disponible");
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblSousTitre.setForeground(new Color(100, 100, 100));
+        JLabel lblSousTitre = new JLabel("Sélectionnez le parking souhaité.");
+        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSousTitre.setForeground(new Color(108, 117, 125));
+        lblSousTitre.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblSousTitre.setBorder(new EmptyBorder(10, 0, 0, 0));
+        subtitleContainer.add(lblSousTitre);
+        
+        headerPanel.add(titleContainer);
+        headerPanel.add(subtitleContainer);
+        
+        getContentPane().add(headerPanel, BorderLayout.NORTH);
 
-		texte.add(lblTitre);
-		texte.add(lblSousTitre);
-		header.add(texte);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getViewport().setBackground(new Color(248, 249, 250));
 
-		this.contentPane.add(header, BorderLayout.NORTH);
+        gridPanel = new JPanel();
+        gridPanel.setBackground(new Color(248, 249, 250));
+        gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
+        gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
-		// LISTA DE PLACES
-		ParkingPanel place1 = new ParkingPanel("Place Capitole", "Centre Ville, Toulouse", "09 - 10", "59/100", "10",
-				"Ouvert");
-		ParkingPanel place2 = new ParkingPanel("Place Capitoe", "Centre Ville, Toulouse", "09 - 10", "59/100", "10",
-				"Fermé");
+        scrollPane.setViewportView(gridPanel);
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-		List<ParkingPanel> p = new ArrayList<ParkingPanel>();
-		p.add(place1);
-		p.add(place2);
-		ListeParkings listeParkings = new ListeParkings(p);
-		this.contentPane.add(listeParkings, BorderLayout.CENTER);
+        addParking(new Parking("Parking Centre-Ville", "12 Rue de la République", 2.5, 120, 190, 
+                LocalTime.of(0, 0), LocalTime.of(0, 0)));
 
-		JPanel panel = new JPanel();
-		this.contentPane.add(panel, BorderLayout.SOUTH);
+        addParking(new Parking("Gare Saint-Roch", "Place de la Gare", 3.10, 45, 210, 
+                LocalTime.of(5, 0), LocalTime.of(1, 0)));
 
-		JPanel panelBtn = new JPanel();
-		panelBtn.setBackground(Color.WHITE);
+        addParking(new Parking("Victor Hugo", "Bd Victor Hugo", 1.80, 12, 180, 
+                LocalTime.of(8, 0), LocalTime.of(20, 0)));
 
-		JButton btnParking = new JButton("Choisir Parking");
-		btnParking.setBackground(new Color(0, 128, 255));
-		btnParking.setForeground(Color.WHITE);
-		btnParking.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnParking.setFocusPainted(false);
-		btnParking.setPreferredSize(new Dimension(160, 40));
-		panelBtn.add(btnParking);
-		panel.add(btnParking);
-		btnParking.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					SaisirHeureArriveParking framePaiement = new SaisirHeureArriveParking();
-					framePaiement.setVisible(true);
-					ChoixParking.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-	}
+        addParking(new Parking("Les Halles", "Rue du Marché", 2.20, 230, 200, 
+                LocalTime.of(6, 0), LocalTime.of(22, 0)));
+        
+        addParking(new Parking("Polygone", "Av. des États du Languedoc", 2.00, 1500, 220, 
+                LocalTime.of(9, 0), LocalTime.of(21, 0)));
+        
+        addParking(new Parking("Antigone", "Place du Nombre d'Or", 1.50, 80, 190, 
+                LocalTime.of(7, 0), LocalTime.of(23, 0)));
+    }
 
+    private void addParking(Parking parking) {
+        ParkingCard card = new ParkingCard(parking, p -> {
+            try {
+                SaisirHeureArriveParking frameSaisirHeureArrive = new SaisirHeureArriveParking();
+                frameSaisirHeureArrive.setVisible(true);                
+                dispose();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        gridPanel.add(card);
+    }
 }
