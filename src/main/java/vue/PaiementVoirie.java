@@ -29,6 +29,8 @@ import modele.StationnementVoirie;
 
 import modele.StationnementVoirie;
 
+import modele.StationnementVoirie;
+
 public class PaiementVoirie extends JFrame {
 
     private static final long serialVersionUID = 1L;
