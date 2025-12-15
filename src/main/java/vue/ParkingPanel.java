@@ -15,7 +15,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
 class ParkingPanel extends JPanel {
-    private Parking parking;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Parking parking;
     private Consumer<Parking> onClick;
     private Color normalBorder = new Color(230, 230, 230);
     private Color hoverBorder = new Color(100, 100, 100);
