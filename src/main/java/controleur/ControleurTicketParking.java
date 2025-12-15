@@ -30,9 +30,9 @@ public class ControleurTicketParking {
 
     private void allerAuPaiement() {
         try {
-            PaiementParking paiement = new PaiementParking();
+            /*PaiementParking paiement = new PaiementParking();
             paiement.setVisible(true);
-            vue.dispose();
+            vue.dispose();*/
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir le paiement.");
             ex.printStackTrace();

@@ -33,7 +33,7 @@ public class DaoReservationParkingTest {
     private Parking ensureParking() throws SQLException {
         List<Parking> parkings = daoParking.findAll();
         if (parkings.isEmpty()) {
-            Parking p = new Parking("TestResvPark", "AdresseTest", 100, 2.0,
+            Parking p = new Parking("TestResvPark", "AdresseTest", 1.0, 100, 2.0,
                     Time.valueOf("08:00:00").toLocalTime(),
                     Time.valueOf("18:30:00").toLocalTime(), true);
             daoParking.create(p);

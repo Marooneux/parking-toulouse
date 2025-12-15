@@ -89,8 +89,13 @@ public class StationnementVoirie {
 	public void setCouleur(Couleur couleur) {
 		this.couleur = couleur;
 	}
+	
 	public double getTarifHoraire() {
 		return tarifHoraire;
+	}
+
+	public void setTarifHoraire(int tarifHoraire) {
+		this.tarifHoraire = tarifHoraire;
 	}
 
 

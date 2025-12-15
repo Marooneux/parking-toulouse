@@ -4,8 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,108 +22,152 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
 
 import modele.Parking;
+import modele.StationnementVoirie;
+import modele.StationnementVoirie.Couleur;
+import vue.PaiementVoirie.LimiteCaracteresFilter;
+import controleur.ControleurSaisirDureeStationnement;
 
 public class SaisirHeureArriveParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JButton btnConfirmer;
 	private JTextField textField;
-	private JButton btnStart;
-	private JButton btnNow;
-	private JLabel lblParkingInfo;
+	private JTextField textFieldDuree;
+	private JTextField textFieldPlaque;
+    private JTextField textFieldNom;
 	private Parking parking;
-	private JTextField plaque;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(() -> {
+			try {
+				//SaisirDureeStationnement frame = new SaisirDureeStationnement();
+				//frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
 	public SaisirHeureArriveParking(Parking parking) {
-
 		this.parking = parking;
-	    this.setTitle("Démarrer le Stationnement");
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    this.setSize(600, 700);
-	    this.setLocationRelativeTo(null);
-	    this.btnStart = new JButton("Démarrer le Stationnement");
+		
+		this.setTitle("Démarrer le Stationnement");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(600, 700);
+		this.setLocationRelativeTo(null);
+		this.btnConfirmer = new JButton("Démarrer le stationnement");
+		
+		
+		this.contentPane = new JPanel(new BorderLayout(15, 15));
+		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.contentPane.setBackground(new Color(250, 250, 250));
+		this.setContentPane(this.contentPane);
 
-	    this.contentPane = new JPanel(new BorderLayout(15, 15));
-	    this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-	    this.contentPane.setBackground(new Color(250, 250, 250));
-	    this.setContentPane(this.contentPane);
-    
+		// Entête
+		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		header.setBackground(new Color(250, 250, 250));
 
-	    // Header (no changes)
-	    JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    header.setBackground(new Color(250, 250, 250));
-	    JLabel lblIcon = new JLabel("\uD83C\uDFE2");
-	    lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
-	    header.add(lblIcon);
-	    JPanel texte = new JPanel();
-	    texte.setBackground(new Color(250, 250, 250));
-	    texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
-	    JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-	    lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
-	    lblTitre.setForeground(new Color(40, 40, 40));
-	    texte.add(lblTitre);
-	    JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
-	    lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-	    lblSousTitre.setForeground(new Color(100, 100, 100));
-	    texte.add(lblSousTitre);
-	    header.add(texte);
-	    this.contentPane.add(header, BorderLayout.NORTH);
+		JLabel lblIcon = new JLabel("\uD83C\uDFE2");
+		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
+		header.add(lblIcon);
 
-	    // Body
-	    JPanel body = new JPanel();
-	    body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-	    body.setBackground(new Color(250, 250, 250));
-	    body.setBorder(new EmptyBorder(10, 0, 10, 0));
-	    this.contentPane.add(body, BorderLayout.CENTER);
+		JPanel texte = new JPanel();
+		texte.setBackground(new Color(250, 250, 250));
+		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
-	    // Add details using the **already initialized labels**
-	    this.ajouterCarteDeDétails(body, "Parking Sélectionné", this.detailsDuParking());
-	    this.ajouterCarteDeDétails(body, "Informations du Véhicule", this.detailsVoiture());
-	    this.ajouterCarteDeDétails(body, "Heure d'Arrivée", this.detailsHeureArrive());
+		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
+		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitre.setForeground(new Color(40, 40, 40));
+		texte.add(lblTitre);
 
-	    // Buttons
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setBackground(new Color(250, 250, 250));
-	    this.btnStart.setFont(new Font("Segoe UI", Font.BOLD, 16));
-	    this.btnStart.setBackground(new Color(0, 122, 255));
-	    this.btnStart.setForeground(Color.WHITE);
-	    this.btnStart.setFocusPainted(false);
-	    this.btnStart.setBorderPainted(false);
-	    this.btnStart.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-	    this.btnStart.setPreferredSize(new Dimension(250, 40));
-	    this.btnStart.setOpaque(true);
-	    buttonPanel.add(this.btnStart);
-	    this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
-        this.btnStart.addActionListener(e -> {
-            String duree = this.textField.getText();
-            if (duree == null || duree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+		JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
+		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSousTitre.setForeground(new Color(100, 100, 100));
+		texte.add(lblSousTitre);
+
+		header.add(texte);
+		this.contentPane.add(header, BorderLayout.NORTH);
+
+		// Corps
+		JPanel body = new JPanel();
+		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+		body.setBackground(new Color(250, 250, 250));
+		body.setBorder(new EmptyBorder(10, 0, 10, 0));
+		this.contentPane.add(body, BorderLayout.CENTER);
+
+		// Création des champs de details du stationnement
+		this.ajouterCarteDeDétails(body, "Parking selectionné", this.detailsZone());
+		this.ajouterCarteDeDétails(body, "Informations du véhicule", this.detailsVoiture());
+		this.ajouterCarteDeDétails(body, "Heure d'arrivée", this.detailsDureeStationnement());
+
+		// Button Payer
+		// ? Créer un prototype que peut être utilisé et changé partout dans l'appli ?
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(new Color(250, 250, 250));
+
+		this.btnConfirmer.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		this.btnConfirmer.setBackground(new Color(0, 122, 255));
+		this.btnConfirmer.setForeground(Color.WHITE);
+		this.btnConfirmer.setFocusPainted(false);
+		this.btnConfirmer.setBorderPainted(false);
+		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
+		this.btnConfirmer.setOpaque(true);
+        this.btnConfirmer.addActionListener(e -> {
+            String strHeureArrive= this.textFieldNom.getText();
+            String immatriculation = this.textFieldPlaque.getText();
+            if (immatriculation == null || immatriculation.trim().isEmpty()) {
+            	JOptionPane.showMessageDialog(this, "Veuillez saisir votre plaque d'immatriculation de continuer.");
                 return;
             }
+            if (strHeureArrive == null || strHeureArrive.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir une heure d'arrivée avant de continuer.");
+                return;
+            }
+            
+            DateTimeFormatter strictFormatter = DateTimeFormatter.ofPattern("HH:mm")
+                    .withResolverStyle(ResolverStyle.STRICT);
 
-            TicketParking frameTicketParking = new TicketParking();
-            frameTicketParking.setVisible(true);
-            dispose();
-        });
+            try {
+            	LocalTime heureArrivee = LocalTime.parse(strHeureArrive, strictFormatter);
+            	if (heureArrivee.isBefore(LocalTime.now())) {
+            		new TicketParking(parking, immatriculation, strHeureArrive).setVisible(true);
+            		dispose();
+            	} else {
+            		JOptionPane.showMessageDialog(this, "L'heure entrée doit être inférieure à l'heure actuelle.");
+            	}
+            } catch (DateTimeParseException ex) {
+            	JOptionPane.showMessageDialog(this, "L'heure entrée n'est pas au bon format.");
+            }
+            
+    	});
+ 
+		buttonPanel.add(this.btnConfirmer);
+		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
 	}
 
+	private JPanel detailsZone() {
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		p.setBackground(Color.WHITE);
+		p.setBorder(new EmptyBorder(15, 15, 15, 15));
+		
+		JLabel lblZone = new JLabel(parking.getNom());
+		lblZone.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lblZone.setForeground(new Color(50, 50, 50));
+		p.add(lblZone);
+		
+		JLabel lblDureeMax = new JLabel("Tarif horaire : " + parking.getTarif() + "€/h");
+		lblDureeMax.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lblDureeMax.setForeground(new Color(50, 50, 50));
+		p.add(lblDureeMax);
 
-	private JPanel detailsDuParking() {
-	    JPanel p = new JPanel();
-	    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	    p.setBackground(Color.WHITE);
-	    p.setBorder(new EmptyBorder(15, 15, 15, 15));
-	    
-	    lblParkingInfo = new JLabel("blabla");
-	    lblParkingInfo.setFont(new Font("Segoe UI", Font.BOLD, 15));
-	    lblParkingInfo.setForeground(new Color(50, 50, 50));
-	    p.add(lblParkingInfo);
-	    return p;
+		return p;
 	}
-
-
 
 	private JPanel detailsVoiture() {
 		JPanel p = new JPanel();
@@ -126,67 +175,45 @@ public class SaisirHeureArriveParking extends JFrame {
 		p.setBackground(Color.WHITE);
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-		JLabel lblInfoVehicule = new JLabel("Informations du Véhicule");
-		lblInfoVehicule.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		JLabel lblInfoVehicule = new JLabel("Entrez la plaque d'immatriculation de votre véhicule avec le format suivant");
+		lblInfoVehicule.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
-		plaque = new JTextField("");
-		plaque.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		plaque.setForeground(new Color(70, 70, 70));
-		plaque.setBorder(new EmptyBorder(5, 0, 0, 0));
-		p.add(plaque);
+        textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
+        ((AbstractDocument) textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+        textFieldPlaque.setPreferredSize(new Dimension(250, 30)); 
+		p.add(textFieldPlaque);
 
-		JLabel info = new JLabel("Nécessaire pour l'entrée et la sortie automatisées");
-		info.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		info.setForeground(new Color(120, 120, 120));
-		info.setBorder(new EmptyBorder(5, 0, 0, 0));
-		p.add(info);
+		JLabel lblInfoImatricule = new JLabel(
+				"Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
+		lblInfoImatricule.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblInfoImatricule.setForeground(new Color(120, 120, 120));
+		lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
+		p.add(lblInfoImatricule);
 
 		return p;
 	}
 
-	private JPanel detailsHeureArrive() {
+	private JPanel detailsDureeStationnement() {
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(Color.WHITE);
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-		JLabel lblTitreHeureArrive = new JLabel("Sélectionnez votre heure d'arrivée");
-		lblTitreHeureArrive.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		JLabel lblTitreHeureArrive = new JLabel("Saisissez votre heure d'arrivée avec le format suivant");
+		lblTitreHeureArrive.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblTitreHeureArrive.setForeground(new Color(50, 50, 50));
 		p.add(lblTitreHeureArrive);
 
 		p.add(Box.createRigidArea(new Dimension(0, 8)));
 
-		JPanel heurePanel = new JPanel();
-		heurePanel.setLayout(new BoxLayout(heurePanel, BoxLayout.X_AXIS));
-		heurePanel.setBackground(Color.WHITE);
-
-		this.textField = new JTextField();
-		this.textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		this.textField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
-		this.textField.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true));
-		this.textField.setBackground(new Color(245, 245, 245));
-		heurePanel.add(this.textField);
-
-		this.btnNow = new JButton("Maintenant");
-		this.btnNow.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		this.btnNow.setBackground(new Color(230, 230, 230));
-		this.btnNow.setBorderPainted(false);
-		this.btnNow.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.btnNow.setOpaque(true);
-		heurePanel.add(Box.createRigidArea(new Dimension(10, 0)));
-		heurePanel.add(this.btnNow);
-
-		p.add(heurePanel);
-
-		JLabel info = new JLabel(
-				"Vous pourrez quitter l'application et revenir plus tard pour enregistrer votre départ");
-		info.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		info.setForeground(new Color(120, 120, 120));
-		info.setBorder(new EmptyBorder(10, 0, 0, 0));
-		p.add(info);
+		// Todo : Rendre le texte field changeable par méthode pour pouvoir manipuler sa
+		// valeur
+        textFieldNom = new PlaceholderTextField("hh:mm", 4);
+        ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+        textFieldNom.setPreferredSize(new Dimension(250, 30)); 
+		p.add(this.textFieldNom);
 
 		return p;
 	}
@@ -204,7 +231,6 @@ public class SaisirHeureArriveParking extends JFrame {
 		JLabel lblTitle = new JLabel(title);
 		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		lblTitle.setForeground(new Color(70, 70, 70));
-		lblTitle.setPreferredSize(new Dimension(340, 40));
 		header.add(lblTitle);
 
 		card.add(header, BorderLayout.NORTH);
@@ -213,25 +239,19 @@ public class SaisirHeureArriveParking extends JFrame {
 		parent.add(card);
 		parent.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
+	
+
 
 	public JButton getBtnPayment() {
-		return this.btnStart;
+		return this.btnConfirmer;
+	}
+
+	public JButton getBtnConfirmer() {
+		return this.btnConfirmer;
 	}
 
 	public JTextField getTextField() {
 		return this.textField;
-	}
-
-	public JButton getBtnMaintenant() {
-		return this.btnNow;
-	}
-	
-	public JLabel getLblParkingInfo() {
-	    return this.lblParkingInfo;
-	}
-	
-	public JTextField getPlaque() {
-		return this.plaque;
 	}
 
 }

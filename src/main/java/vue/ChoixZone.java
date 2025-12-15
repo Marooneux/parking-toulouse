@@ -214,7 +214,7 @@ public class ChoixZone extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
+                	SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
                     frameDureeStationnement.setVisible(true);
                     ChoixZone.this.dispose(); 
                 } catch (Exception ex) {
