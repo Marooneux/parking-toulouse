@@ -21,6 +21,7 @@ public class ControleurChoixParking {
         MySQLDataSource.creerAcces("root", "$iutinfo"); 
 
         chargerParkings();
+        vue.setVisible(true);
     }
 
     private void chargerParkings() {

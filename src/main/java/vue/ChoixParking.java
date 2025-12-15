@@ -24,10 +24,6 @@ public class ChoixParking extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel gridPanel;
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ChoixParking().setVisible(true));
-    }
     
     public ChoixParking() {
         initialize();
