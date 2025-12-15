@@ -11,9 +11,10 @@ import javax.swing.JOptionPane;
 
 import modele.StationnementVoirie;
 import modele.StationnementVoirie.Couleur;
-import vue.ChoixMoyenPaiement;
+import vue.ChoixMoyenPaiementParking;
+import vue.ChoixMoyenPaiementVoirie;
 import vue.PaiementVoirie;
-import vue.SaisirDureeStationnement;
+import vue.SaisirHeureArriveParking;
 import vue.TicketVoirie;
 
 public class ControleurSaisirDureeStationnement implements ActionListener {
@@ -23,9 +24,9 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	}
 
 	private Etat etat;
-	private SaisirDureeStationnement vue;
+	private SaisirHeureArriveParking vue;
 
-	public ControleurSaisirDureeStationnement(SaisirDureeStationnement vue) {
+	public ControleurSaisirDureeStationnement(SaisirHeureArriveParking vue) {
 		this.vue = vue;
 		this.etat = Etat.ATTENTE_DUREE;
 		vue.getBtnConfirmer().addActionListener(this);
@@ -46,8 +47,8 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
     }
 
 	public static double calculerPrixTotal(StationnementVoirie zone, int duree) {
-		LocalTime actuel = LocalTime.of(6, 0);
-		if ((actuel.isBefore(zone.getHorairePayantFin()) && actuel.isAfter(zone.getHorairePayantDebut())) || LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
+		LocalTime actuel = LocalTime.now();
+		if ((actuel.isAfter(zone.getHorairePayantFin()) || actuel.isBefore(zone.getHorairePayantDebut())) || LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
 			return 0;
 		}
 		
@@ -79,7 +80,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
     }
 
     public static void ouvrirPaiement(StationnementVoirie zone, String immatriculation, int intDuree, double prix) {
-		ChoixMoyenPaiement frameChoixPaiementVoirie = new ChoixMoyenPaiement(zone, immatriculation, intDuree, prix);
+    	ChoixMoyenPaiementVoirie frameChoixPaiementVoirie = new ChoixMoyenPaiementVoirie(zone, immatriculation, intDuree, prix);
         frameChoixPaiementVoirie.setVisible(true);
     }
     

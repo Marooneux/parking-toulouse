@@ -21,11 +21,9 @@ public class AdministrateurSystemeTest {
 	@Before
 	public void setUp() {
 		this.adminSysteme = new AdministrateurSysteme("Martin", "Paul", "paul.martin@example.com", "admin123");
-		Parking.setTarif(2.0);
-		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 50, 1.8, LocalTime.of(9, 0),
+		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 1.0, 50, 1.8, LocalTime.of(9, 0),
 				LocalTime.of(21, 0), true);
-		Parking.setTarif(3.0);
-		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 80, 1.75, LocalTime.of(6, 30),
+		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 1.5, 80, 1.75, LocalTime.of(6, 30),
 				LocalTime.of(23, 0), true);
 	}
 

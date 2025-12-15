@@ -3,6 +3,9 @@ package vue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import controleur.ControleurChoixParking;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -64,8 +67,7 @@ public class ChoixTypeStationnement extends JFrame {
                 "Trouver un parking",
                 e -> {
                     try {
-                        ChoixParking frameChoixParking = new ChoixParking();
-                        frameChoixParking.setVisible(true);
+                        ControleurChoixParking frameChoixParking = new ControleurChoixParking();
                         dispose();
                     } catch (Exception ex) {
                         ex.printStackTrace();

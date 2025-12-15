@@ -11,23 +11,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ChoixMoyenPaiement extends JFrame {
+public class ChoixMoyenPaiementParking extends JFrame {
 
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color CARD_COLOR = Color.WHITE;
     private final Color TEXT_COLOR = new Color(33, 37, 41);
     private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private final Color BUTTON_TEXT_COLOR = Color.WHITE;
-    private StationnementVoirie zone;
-    private String immatriculation;
-    private int duree;
+    private final Color BUTTON_TEXT_COLOR = Color.WHITE;;
     private double prix;
 
-    public ChoixMoyenPaiement(StationnementVoirie zone, String immatriculation, int duree, double prix) {
-    	this.zone = zone;
-    	this.immatriculation = immatriculation;
-    	this.duree = duree;
+    public ChoixMoyenPaiementParking(double prix) {
     	this.prix = prix;
     	
         setTitle("Moyen de Paiement");
@@ -56,7 +50,7 @@ public class ChoixMoyenPaiement extends JFrame {
                 new IconCard(),
                 e -> {
                     try {
-                        PaiementVoirie pagePaiementCB = new PaiementVoirie(zone, immatriculation, duree, prix);
+                        PaiementParking pagePaiementCB = new PaiementParking(prix);
                         pagePaiementCB.setVisible(true);
                         dispose();
                     } catch (Exception ex) {
@@ -72,7 +66,7 @@ public class ChoixMoyenPaiement extends JFrame {
                 new IconBank(),
                 e -> {
                     try {
-                        PaiementVirement pageVirement = new PaiementVirement(zone, immatriculation, duree, prix);
+                    	PaiementVirementParking pageVirement = new PaiementVirementParking(prix);
                         pageVirement.setVisible(true);
                         dispose();
                     } catch (Exception ex) {
