@@ -20,8 +20,7 @@ public class ParkingTest {
 
 	@Before
 	public void setUp() {
-		Parking.setTarif(2.5);
-		this.parking = new Parking("Parking Central", "Rue Victor Hugo", 100, 1.8, LocalTime.of(9, 0),
+		this.parking = new Parking("Parking Central", "Rue Victor Hugo", 2.5, 100, 1.8, LocalTime.of(9, 0),
 				LocalTime.of(21, 0), true);
 		this.voiture1 = new Voiture(150, "AB-123-CD", true, false);
 		this.voiture2 = new Voiture(140, "EF-456-GH", false, true);
@@ -31,7 +30,7 @@ public class ParkingTest {
 	public void testConstructor() {
 		assertEquals("Parking Central", this.parking.getNom());
 		assertEquals("Rue Victor Hugo", this.parking.getAdresse());
-		assertEquals(2.5, Parking.getTarif(), 0.001);
+		assertEquals(2.5, this.parking.getTarif(), 0.001);
 		assertEquals(100, this.parking.getNbPlacesMax());
 		assertEquals(0, this.parking.getNbPlacesOccupees());
 		assertEquals(1.8, this.parking.getHauteur(), 0.01);
@@ -43,7 +42,7 @@ public class ParkingTest {
 	public void testSetters() {
 		this.parking.setNom("Parking Sud");
 		this.parking.setAdresse("Boulevard Carnot");
-		Parking.setTarif(3.0);
+		this.parking.setTarif(2.0);
 		this.parking.setNbPlacesMax(80);
 		this.parking.setNbPlacesOccupees(10);
 		this.parking.setHauteur(2.0);
@@ -52,7 +51,7 @@ public class ParkingTest {
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Boulevard Carnot", this.parking.getAdresse());
-		assertEquals(3.0, Parking.getTarif(), 0.001);
+		assertEquals(2.0, this.parking.getTarif(), 0.001);
 		assertEquals(80, this.parking.getNbPlacesMax());
 		assertEquals(10, this.parking.getNbPlacesOccupees());
 		assertEquals(2.0, this.parking.getHauteur(), 0.01);

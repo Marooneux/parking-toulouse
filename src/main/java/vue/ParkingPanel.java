@@ -88,7 +88,7 @@ class ParkingPanel extends JPanel {
         centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesMax() - parking.getNbPlacesOccupees()) + " places"));
         
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()/100.0) + "m"));
+        centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()) + "m"));
 
         add(centerPanel, BorderLayout.CENTER);
 

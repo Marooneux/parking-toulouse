@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import javax.swing.JOptionPane;
 
+import modele.Parking;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
 
@@ -18,12 +21,14 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     private Etat etat;
     private final SaisirHeureArriveParking vue;
     private final DateTimeFormatter formatHeure = DateTimeFormatter.ofPattern("HH:mm");
-
+    
+    
+    
     public ControleurSaisirHeureArriveParking(SaisirHeureArriveParking vue) {
         this.vue = vue;
         this.etat = Etat.ATTENTE_HEURE;
 
-        // Set parking name in view
+        /*
         if (vue.parking != null) {
             vue.getLblParkingInfo().setText(vue.parking.getNom());
         } else {
@@ -33,12 +38,27 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         // Attach controller as listener
         vue.getBtnPayment().addActionListener(this);
         vue.getBtnMaintenant().addActionListener(this);
+        */
     }
 
+    
+    public static double calculerPrixTotal(Parking parking, String strHeureArrivee) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    	LocalTime heureArrivee = LocalTime.parse(strHeureArrivee, formatter);
+    	
+    	long minutesGarees = ChronoUnit.MINUTES.between(heureArrivee, LocalTime.now());
+    	long nbQuartsHeure = (long) Math.ceil(minutesGarees / 15.0);
+    	return nbQuartsHeure*parking.getTarif();
+    }
+    
+    
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-
+        /*
         if (src == vue.getBtnMaintenant()) {
             handleBtnMaintenant();
             return;
@@ -47,6 +67,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         if (src == vue.getBtnPayment()) {
             handleBtnPayment();
         }
+        */
     }
 
     private void handleBtnMaintenant() {
@@ -83,7 +104,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     }
 
     private boolean verifierPlaque() {
-        String plaque = vue.getPlaque().getText().trim();
+        /*String plaque = vue.getPlaque().getText().trim();
 
         if (plaque.isEmpty()) {
             JOptionPane.showMessageDialog(vue, "La plaque ne peut pas être vide.");
@@ -94,12 +115,13 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         if (!plaque.matches("(?i)[A-Z]{2}-\\d{3}-[A-Z]{2}")) {
             JOptionPane.showMessageDialog(vue, "Format de plaque invalide. Exemple : AB-123-CD");
             return false;
-        }
+        } */
 
         return true;
     }
 
     private void ouvrirTicket() {
+    	/*
         String plaque = vue.getPlaque().getText().trim();
         String heure = vue.getTextField().getText().trim();
         String nomParking = vue.getLblParkingInfo().getText();
@@ -109,5 +131,6 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         ticket.setVisible(true);
 
         vue.dispose();
+        */
     }
 }

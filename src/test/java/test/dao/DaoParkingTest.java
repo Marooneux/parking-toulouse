@@ -30,7 +30,7 @@ public class DaoParkingTest {
     @Test
     @DisplayName("Test create")
     public void testCreate() throws SQLException {
-        Parking p = new Parking("TestCreate", "AdresseTest", 100, 2.0,
+        Parking p = new Parking("TestCreate", "AdresseTest", 1.5, 100, 2.0,
                 Time.valueOf("08:00:00").toLocalTime(),
                 Time.valueOf("18:30:00").toLocalTime(),
                 true);
@@ -46,7 +46,7 @@ public class DaoParkingTest {
     @Test
     @DisplayName("Test update")
     public void testUpdate() throws SQLException {
-        Parking p = new Parking("TestUpdate", "AdresseTest", 100, 2.0,
+        Parking p = new Parking("TestUpdate", "AdresseTest", 1.5, 100, 2.0,
                 Time.valueOf("08:00:00").toLocalTime(),
                 Time.valueOf("18:30:00").toLocalTime(),
                 true);
@@ -65,7 +65,7 @@ public class DaoParkingTest {
     @Test
     @DisplayName("Test delete")
     public void testDelete() throws SQLException {
-        Parking p = new Parking("TestDelete", "AdresseTest", 100, 2.0,
+        Parking p = new Parking("TestDelete", "AdresseTest", 1.5, 100, 2.0,
                 Time.valueOf("08:00:00").toLocalTime(),
                 Time.valueOf("18:30:00").toLocalTime(),
                 true);

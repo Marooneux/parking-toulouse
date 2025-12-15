@@ -12,20 +12,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PaiementVirement extends JFrame {
+public class PaiementVirementParking extends JFrame {
     
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private StationnementVoirie zone;
-    private String immatriculation;
-    private int duree;
     private double prix;
 
-
-    public PaiementVirement(StationnementVoirie zone, String immatriculation, int duree, double prix) {
-    	this.zone = zone;
-    	this.immatriculation = immatriculation;
-    	this.duree = duree;
+    public PaiementVirementParking(double prix) {
     	this.prix = prix;
     	
         setTitle("Virement Bancaire");
@@ -65,7 +58,7 @@ public class PaiementVirement extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            try {
-	            	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone, immatriculation, duree, prix, "Virement bancaire");
+	            	ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(prix);
 	            	frameConfirmationPaiement.setVisible(true);
 	                dispose();
 	            } catch (Exception ex) {
