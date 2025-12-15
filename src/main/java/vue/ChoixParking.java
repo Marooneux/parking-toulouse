@@ -83,21 +83,11 @@ public class ChoixParking extends JFrame {
     public void addParking(Parking parking, Consumer<Parking> onSelect) {
         ParkingPanel card = new ParkingPanel(parking, onSelect);
         gridPanel.add(card);
+        gridPanel.revalidate();
+        gridPanel.repaint();
     }
     
-    public void populateDefaultParkings(Consumer<Parking> onSelect) {
-        addParking(new Parking("Parking Centre-Ville","12 Rue de la République",120,2.5,LocalTime.of(0, 0),LocalTime.of(0, 0),false), onSelect);
-
-        addParking(new Parking("Gare Saint-Roch","Place de la Gare",45,3.10,LocalTime.of(5, 0),LocalTime.of(1, 0),true), onSelect);
-
-        addParking(new Parking("Victor Hugo","Bd Victor Hugo",12,1.80,LocalTime.of(8, 0),LocalTime.of(20, 0),false), onSelect);
-
-        addParking(new Parking("Les Halles","Rue du Marché",230,2.20, LocalTime.of(6, 0),LocalTime.of(22, 0),false), onSelect);
-
-        addParking(new Parking("Polygone","Av. des États du Languedoc",1500,2.00,LocalTime.of(9, 0),LocalTime.of(21, 0),true), onSelect);
-
-        addParking(new Parking("Antigone","Place du Nombre d'Or",80,1.50,LocalTime.of(7, 0),LocalTime.of(23, 0),false), onSelect);
-    }
+   
 
 }
 

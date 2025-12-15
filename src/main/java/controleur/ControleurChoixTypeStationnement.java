@@ -46,7 +46,7 @@ public class ControleurChoixTypeStationnement {
                 break;
             case VOIRIE:
                 openVoiriePage();
-                break;
+                break; 
         }
     }
 
