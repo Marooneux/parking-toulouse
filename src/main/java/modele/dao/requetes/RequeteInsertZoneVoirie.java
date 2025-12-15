@@ -2,7 +2,7 @@ package modele.dao.requetes;
 
 import modele.Zone;
 
-public class RequeteDeleteZone extends Requete<Zone> {
+public class RequeteInsertZoneVoirie extends Requete<Zone> {
 
 	@Override
 	public String requete() {

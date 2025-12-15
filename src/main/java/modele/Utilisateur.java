@@ -4,11 +4,6 @@ public class Utilisateur extends Compte {
 	private int id;
 	private String abonnement;
 
-	public Utilisateur(String nom, String prenom, String email, String mdp, String abonnement) {
-		super(nom, prenom, email, mdp);
-		this.abonnement = abonnement;
-	}
-
 	public Utilisateur(int id, String nom, String prenom, String email, String mdp, String abonnement) {
 		super(nom, prenom, email, mdp);
 		this.id = id;
@@ -24,7 +19,7 @@ public class Utilisateur extends Compte {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {

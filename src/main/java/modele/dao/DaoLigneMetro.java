@@ -34,7 +34,7 @@ public class DaoLigneMetro extends DaoModele<LigneMetro> {
 	@Override
 	protected LigneMetro creerInstance(ResultSet curseur) throws SQLException {
 		return new LigneMetro(
-				curseur.getInt("id"),
+				curseur.getInt("id_ligne_metro"),
 				curseur.getString("nom"),
 				curseur.getString("couleur"));
 	}

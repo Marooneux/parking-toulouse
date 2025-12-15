@@ -15,7 +15,6 @@ public class Parking {
 	private LocalTime heureFermeture;
 	private boolean contientPlacesMoto;
 
-	// Constructeur sans id; l'id sera défini après insertion (clé auto) via setId.
 	public Parking(String nom, String adresse, int nbPlacesMax, double hauteur,
 			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto) {
 		this.nom = nom;
@@ -101,7 +100,7 @@ public class Parking {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {

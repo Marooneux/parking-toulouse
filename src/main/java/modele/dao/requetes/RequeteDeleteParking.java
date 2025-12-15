@@ -10,7 +10,7 @@ public class RequeteDeleteParking extends Requete<Parking> {
 	// TODO ajouter parametres
 	@Override
 	public String requete() {
-		return "DELETE FROM parkings WHERE idParking = ?";
+		return "DELETE FROM parkings WHERE id_parking = ?";
 	}
 
 	@Override

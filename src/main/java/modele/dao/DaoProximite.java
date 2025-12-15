@@ -32,10 +32,10 @@ public class DaoProximite extends DaoModele<Proximite> {
 	}
 
 	@Override
-	protected Proximite creerInstance(ResultSet c) throws SQLException {
+	protected Proximite creerInstance(ResultSet curseur) throws SQLException {
 		return new Proximite(
-				c.getInt("id_parking"),
-				c.getInt("id_ligne_metro"),
-				c.getInt("distance_metres"));
+				curseur.getInt("id_parking"),
+				curseur.getInt("id_ligne_metro"),
+				curseur.getInt("distance_metres"));
 	}
 }
