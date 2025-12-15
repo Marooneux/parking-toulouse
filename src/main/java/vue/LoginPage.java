@@ -12,10 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controleur.ControleurLoginPage;
-
 public class LoginPage extends JFrame {
-/*
+
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -37,7 +35,7 @@ public class LoginPage extends JFrame {
 			}
 		});
 	}
-
+	/*
 	public LoginPage() {
 		ControleurLoginPage controleur = new ControleurLoginPage(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

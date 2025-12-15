@@ -133,9 +133,13 @@ public class SaisirHeureArriveParking extends JFrame {
                     .withResolverStyle(ResolverStyle.STRICT);
 
             try {
-                LocalTime.parse(strHeureArrive, strictFormatter);
-                new TicketParking(parking, immatriculation, strHeureArrive).setVisible(true);
-        		dispose();
+            	LocalTime heureArrivee = LocalTime.parse(strHeureArrive, strictFormatter);
+            	if (heureArrivee.isBefore(LocalTime.now())) {
+            		new TicketParking(parking, immatriculation, strHeureArrive).setVisible(true);
+            		dispose();
+            	} else {
+            		JOptionPane.showMessageDialog(this, "L'heure entrée doit être inférieure à l'heure actuelle.");
+            	}
             } catch (DateTimeParseException ex) {
             	JOptionPane.showMessageDialog(this, "L'heure entrée n'est pas au bon format.");
             }

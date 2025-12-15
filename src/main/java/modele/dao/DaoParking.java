@@ -47,12 +47,13 @@ public class DaoParking extends DaoModele<Parking> {
 		int id = curseur.getInt("id_parking");
 		String nom = curseur.getString("nom");
 		String adresse = curseur.getString("adresse");
+		double tarif = curseur.getDouble("tarif");
 		int nbMax = curseur.getInt("nombre_places_max");
 		double hauteur = curseur.getDouble("hauteur_max");
 		Time ouv = curseur.getTime("horaire_ouverture");
 		Time ferm = curseur.getTime("horaire_fermeture");
 		boolean moto = curseur.getBoolean("contient_places_moto");
-		Parking p = new Parking(nom, adresse, nbMax,
+		Parking p = new Parking(nom, adresse, tarif, nbMax, 
 				hauteur,
 				ouv.toLocalTime(), ferm.toLocalTime(), moto);
 		p.setId(id);

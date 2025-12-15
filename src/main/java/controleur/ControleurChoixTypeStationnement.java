@@ -20,9 +20,10 @@ public class ControleurChoixTypeStationnement {
         this.vue = vue;
         this.etat = null;
 
-        // Connect buttons to controller
+        /*
         vue.getParkingButton().addActionListener(new ButtonListener(Etat.PARKING));
         vue.getVoirieButton().addActionListener(new ButtonListener(Etat.VOIRIE));
+        */
     }
 
     private class ButtonListener implements ActionListener {

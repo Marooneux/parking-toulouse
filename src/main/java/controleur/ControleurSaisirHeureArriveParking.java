@@ -58,7 +58,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-
+        /*
         if (src == vue.getBtnMaintenant()) {
             handleBtnMaintenant();
             return;
@@ -67,6 +67,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         if (src == vue.getBtnPayment()) {
             handleBtnPayment();
         }
+        */
     }
 
     private void handleBtnMaintenant() {
@@ -103,7 +104,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     }
 
     private boolean verifierPlaque() {
-        String plaque = vue.getPlaque().getText().trim();
+        /*String plaque = vue.getPlaque().getText().trim();
 
         if (plaque.isEmpty()) {
             JOptionPane.showMessageDialog(vue, "La plaque ne peut pas être vide.");
@@ -114,12 +115,13 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         if (!plaque.matches("(?i)[A-Z]{2}-\\d{3}-[A-Z]{2}")) {
             JOptionPane.showMessageDialog(vue, "Format de plaque invalide. Exemple : AB-123-CD");
             return false;
-        }
+        } */
 
         return true;
     }
 
     private void ouvrirTicket() {
+    	/*
         String plaque = vue.getPlaque().getText().trim();
         String heure = vue.getTextField().getText().trim();
         String nomParking = vue.getLblParkingInfo().getText();
@@ -129,5 +131,6 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         ticket.setVisible(true);
 
         vue.dispose();
+        */
     }
 }
