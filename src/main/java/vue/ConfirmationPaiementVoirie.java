@@ -1,5 +1,10 @@
 package vue;
 
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -13,19 +18,9 @@ import modele.StationnementVoirie;
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConfirmationPaiementVoirie extends JFrame {
 
@@ -55,41 +50,41 @@ public class ConfirmationPaiementVoirie extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
-		this.contentPane = new JPanel();
-		this.contentPane.setBackground(new Color(255, 255, 255));
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BorderLayout(0, 0));
+        JPanel panelCenterContainer = new JPanel();
+        panelCenterContainer.setBackground(new Color(255, 255, 255));
+        panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
+        contentPane.add(panelCenterContainer, BorderLayout.CENTER);
+        panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
-		JPanel panelCenterContainer = new JPanel();
-		panelCenterContainer.setBackground(new Color(255, 255, 255));
-		panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
-		this.contentPane.add(panelCenterContainer, BorderLayout.CENTER);
-		panelCenterContainer.setLayout(new BorderLayout(0, 0));
+        JPanel panelCard = new JPanel();
+        panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
+        panelCard.setBackground(new Color(255, 255, 255));
+        panelCenterContainer.add(panelCard);
+        panelCard.setLayout(new BorderLayout(0, 0));
 
-		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-		panelCard.setBackground(new Color(255, 255, 255));
-		panelCenterContainer.add(panelCard);
-		panelCard.setLayout(new BorderLayout(0, 0));
+        JPanel panelInnerContent = new JPanel();
+        panelInnerContent.setBackground(Color.WHITE);
+        panelInnerContent.setBorder(new EmptyBorder(30, 20, 30, 20));
+        panelCard.add(panelInnerContent, BorderLayout.CENTER);
+        panelInnerContent.setLayout(new GridLayout(5, 1, 0, 10));
 
-		JPanel panelInnerContent = new JPanel();
-		panelInnerContent.setBackground(Color.WHITE);
-		panelInnerContent.setBorder(new EmptyBorder(30, 20, 30, 20));
-		panelCard.add(panelInnerContent, BorderLayout.CENTER);
-		panelInnerContent.setLayout(new GridLayout(5, 1, 0, 10));
+        JLabel lblIconSuccess = new JLabel("✔");
+        lblIconSuccess.setForeground(new Color(40, 167, 69));
+        lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
+        lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
+        panelInnerContent.add(lblIconSuccess);
 
-		JLabel lblIconSuccess = new JLabel("✔");
-		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
-		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
-		panelInnerContent.add(lblIconSuccess);
+        JLabel lblTitre = new JLabel("Paiement Validé !");
+        lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitre.setForeground(new Color(40, 167, 69));
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        panelInnerContent.add(lblTitre);
 
-		JLabel lblTitre = new JLabel("Paiement Validé !");
-		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
-		panelInnerContent.add(lblTitre);
+        JLabel lblMerci = new JLabel("Merci de votre visite");
+        lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
+        lblMerci.setForeground(new Color(100, 100, 100));
+        lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        panelInnerContent.add(lblMerci);
 
         JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
         lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
