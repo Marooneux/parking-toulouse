@@ -67,7 +67,7 @@ public class ChoixTypeStationnement extends JFrame {
                 "Trouver un parking",
                 e -> {
                     try {
-                        ControleurChoixParking frameChoixParking = new ControleurChoixParking();
+                        ControleurChoixParking frameChoixParking = new ControleurChoixParking(new ChoixParking());
                         dispose();
                     } catch (Exception ex) {
                         ex.printStackTrace();
