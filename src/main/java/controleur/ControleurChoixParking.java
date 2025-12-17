@@ -18,7 +18,7 @@ public class ControleurChoixParking {
         this.vue = vue;
         this.daoParking = new DaoParking();
 
-        MySQLDataSource.creerAcces("root", "$iutinfo"); 
+        MySQLDataSource.creerAcces("root", "claudio"); 
 
         chargerParkings();
         vue.setVisible(true);
