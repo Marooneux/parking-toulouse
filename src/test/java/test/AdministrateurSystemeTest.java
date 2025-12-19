@@ -20,18 +20,16 @@ public class AdministrateurSystemeTest {
 
 	@Before
 	public void setUp() {
-		this.adminSysteme = new AdministrateurSysteme("Martin", "Paul", "paul.martin@example.com", "admin123");
-		Parking.setTarif(2.0);
-		this.parking1 = new Parking("Parking Nord", "Rue Victor Hugo", 50, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true);
-		Parking.setTarif(3.0);
-		this.parking2 = new Parking("Parking Sud", "Boulevard Carnot", 80, 1.75, LocalTime.of(6, 30),
-				LocalTime.of(23, 0), true);
+		this.adminSysteme = new AdministrateurSysteme(1, "Martin", "Paul", "paul.martin@example.com", "admin123");
+		this.parking1 = new Parking(1, "Parking Nord", "Rue Victor Hugo", 50, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0), true, 2.0);
+		this.parking2 = new Parking(2, "Parking Sud", "Boulevard Carnot", 80, 1.75, LocalTime.of(6, 30),
+				LocalTime.of(23, 0), true, 3.0);
 	}
 
 	@Test
 	public void testCreerCompteAdminParking() {
-		AdministrateurParking adminParking = this.adminSysteme.creerCompteAdminParking("Dupont", "Jean",
+		AdministrateurParking adminParking = this.adminSysteme.creerAdministrateurParking(1, "Dupont", "Jean",
 				"jean.dupont@example.com", "secret");
 		assertNotNull(adminParking);
 		assertEquals("Dupont", adminParking.getNom());
@@ -40,11 +38,11 @@ public class AdministrateurSystemeTest {
 		assertEquals("secret", adminParking.getMdp());
 	}
 
-/* 	@Ignore
-	public void testAjouterEtSupprimerParking_noInternalCheck() {
-		this.adminSysteme.ajouterParking(this.parking1);
-		this.adminSysteme.ajouterParking(this.parking2);
-		this.adminSysteme.supprimerParking(this.parking1);
-		this.adminSysteme.supprimerParking(this.parking2);
-	} */
+	/*
+	 * @Ignore public void testAjouterEtSupprimerParking_noInternalCheck() {
+	 * this.adminSysteme.ajouterParking(this.parking1);
+	 * this.adminSysteme.ajouterParking(this.parking2);
+	 * this.adminSysteme.supprimerParking(this.parking1);
+	 * this.adminSysteme.supprimerParking(this.parking2); }
+	 */
 }

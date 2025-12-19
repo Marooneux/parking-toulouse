@@ -9,10 +9,10 @@ import org.junit.Test;
 import modele.Utilisateur;
 
 public class UtilisateurTest {
-/* 
+
 	@Test
 	public void testConstructeurEtGetters() {
-		Utilisateur u = new Utilisateur("Cumbane", "Claudio", "claudio.cumbane@mail.com", "secure123");
+		Utilisateur u = new Utilisateur(1, "Cumbane", "Claudio", "claudio.cumbane@mail.com", "secure123", null);
 
 		assertEquals("Cumbane", u.getNom());
 		assertEquals("Claudio", u.getPrenom());
@@ -22,7 +22,7 @@ public class UtilisateurTest {
 
 	@Test
 	public void testSetters() {
-		Utilisateur u = new Utilisateur("A", "B", "a@b.com", "123");
+		Utilisateur u = new Utilisateur(1, "A", "B", "a@b.com", "123", null);
 
 		u.setNom("Cumbane");
 		u.setPrenom("Claudio");
@@ -37,25 +37,28 @@ public class UtilisateurTest {
 
 	@Test
 	public void testLoginSuccess() {
-		Utilisateur u = new Utilisateur("Wacker", "Luka", "luka@mail.com", "secure123");
+		Utilisateur u = new Utilisateur(1, "Wacker", "Luka", "luka@mail.com", "secure123", null);
 		assertTrue(u.connectionValide("luka@mail.com", "secure123"));
 	}
 
 	@Test
 	public void testLoginFail() {
-		Utilisateur u = new Utilisateur("Munkh-Erdene", "Dulguun", "dulguun@mail.com", "secure123");
+		Utilisateur u = new Utilisateur(1, "Munkh-Erdene", "Dulguun", "dulguun@mail.com", "secure123", null);
 		assertFalse(u.connectionValide("dulguun@mail.com", "wrongpass"));
 	}
 
 	@Test
 	public void testModifierProfil() {
-		Utilisateur u = new Utilisateur("A", "B", "a@b.com", "123");
-		u.modifierProfil("Nadiri", "Noam", "noam@mail.com", "123", "secure123");
+		Utilisateur u = new Utilisateur(1, "A", "B", "a@b.com", "123", null);
+		u.setNom("Nadiri");
+		u.setPrenom("Noam");
+		u.setEmail("noam@mail.com");
+		u.setMdp("123", "secure123");
 
 		assertEquals("Nadiri", u.getNom());
 		assertEquals("Noam", u.getPrenom());
 		assertEquals("noam@mail.com", u.getEmail());
-		assertEquals("secure123", u.getMdp());
-	} */
+		assertTrue(u.verifierMdp("secure123"));
+	}
 
 }

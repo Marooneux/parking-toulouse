@@ -3,8 +3,6 @@ package modele;
 import java.time.LocalTime;
 
 public class Parking {
-	private static double tarif; // prix pour 15mins de stationnement
-
 	private int id;
 	private String nom;
 	private String adresse;
@@ -14,9 +12,11 @@ public class Parking {
 	private LocalTime heureOuverture;
 	private LocalTime heureFermeture;
 	private boolean contientPlacesMoto;
+	private double tarif;
 
-	public Parking(String nom, String adresse, int nbPlacesMax, double hauteur,
-			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto) {
+	public Parking(int id, String nom, String adresse, int nbPlacesMax, double hauteur,
+			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto, double tarif) {
+		this.id = id;
 		this.nom = nom;
 		this.adresse = adresse;
 		this.nbPlacesMax = nbPlacesMax;
@@ -25,14 +25,15 @@ public class Parking {
 		this.heureOuverture = heureOuverture;
 		this.heureFermeture = heureFermeture;
 		this.contientPlacesMoto = contientPlacesMoto;
+		this.tarif = tarif;
 	}
 
-	public static double getTarif() {
-		return tarif;
+	public int getId() {
+		return this.id;
 	}
 
-	public static void setTarif(double tarif) {
-		Parking.tarif = tarif;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNom() {
@@ -99,45 +100,30 @@ public class Parking {
 		this.contientPlacesMoto = contientPlacesMoto;
 	}
 
-	public int getId() {
-		return this.id;
+	public double getTarif() {
+		return this.tarif;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int nbPlacesOccupees() {
-		return this.nbPlacesOccupees;
+	public void setTarif(double tarif) {
+		this.tarif = tarif;
 	}
 
 	public Boolean estOuvert(LocalTime heure) {
 		return (heure.isAfter(this.heureOuverture) && heure.isBefore(this.heureFermeture));
 	}
 
-	public void ajouterVehicule(Vehicule v) {
-		if (this.nbPlacesOccupees < this.nbPlacesMax) {
-			this.nbPlacesOccupees += 1;
-		}
-	}
-
-	public void enleverVehicule(Vehicule v) {
-		if (this.nbPlacesOccupees > 0) {
-			this.nbPlacesOccupees -= 1;
+	public void ajouterNbPlacesOccupes(int nb) {
+		if (this.nbPlacesOccupees + nb < this.nbPlacesMax && this.nbPlacesOccupees + nb > 0) {
+			this.nbPlacesOccupees += nb;
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "Parking{" +
-				"nom='" + this.nom + '\'' +
-				", adresse='" + this.adresse + '\'' +
-				", tarif=" + tarif +
-				", nbPlacesOccupees=" + this.nbPlacesOccupees +
-				", nbPlacesTotales=" + this.nbPlacesMax +
-				", hauteur=" + this.hauteur +
-				", heureOuverture=" + this.heureOuverture +
-				", heureFermeture=" + this.heureFermeture +
-				'}';
+		return "Parking [id=" + this.id + ", nom=" + this.nom + ", adresse=" + this.adresse + ", nbPlacesMax="
+				+ this.nbPlacesMax + ", nbPlacesOccupees=" + this.nbPlacesOccupees + ", hauteur=" + this.hauteur
+				+ ", heureOuverture=" + this.heureOuverture + ", heureFermeture=" + this.heureFermeture
+				+ ", contientPlacesMoto=" + this.contientPlacesMoto + "]";
 	}
+
 }

@@ -15,7 +15,7 @@ public class ZoneTest {
 	public void setUp() {
 		this.zone = new Zone(
 				"Centre-ville",
-				Zone.CouleurZone.ROUGE,
+				"Rouge",
 				2.5,
 				3.0);
 	}
@@ -23,7 +23,7 @@ public class ZoneTest {
 	@Test
 	public void testConstructeur() {
 		assertEquals("Centre-ville", this.zone.getNom());
-		assertEquals(Zone.CouleurZone.ROUGE, this.zone.getCouleur());
+		assertEquals("Rouge", this.zone.getZone());
 		assertEquals(2.5, this.zone.getTarifHoraire(), 0.0001);
 		assertEquals(3.0, this.zone.getDureeMax(), 0.0001);
 	}
@@ -31,20 +31,20 @@ public class ZoneTest {
 	@Test
 	public void testSetters() {
 		this.zone.setNom("Gare");
-		this.zone.setCouleur(Zone.CouleurZone.BLEU);
+		this.zone.setZone("Bleu");
 		this.zone.setTarifHoraire(1.8);
 		this.zone.setDureeMax(2.0);
 
 		assertEquals("Gare", this.zone.getNom());
-		assertEquals(Zone.CouleurZone.BLEU, this.zone.getCouleur());
+		assertEquals("Bleu", this.zone.getZone());
 		assertEquals(1.8, this.zone.getTarifHoraire(), 0.0001);
 		assertEquals(2.0, this.zone.getDureeMax(), 0.0001);
 	}
 
 	@Test
 	public void testCouleurEnum() {
-		Zone z = new Zone("Test", Zone.CouleurZone.JAUNE, 1.0, 1.0);
+		Zone zone = new Zone("Test", "Jaune", 1.0, 1.0);
 
-		assertEquals(Zone.CouleurZone.JAUNE, z.getCouleur());
+		assertEquals("Jaune", zone.getZone());
 	}
 }

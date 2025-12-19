@@ -18,10 +18,9 @@ public class AdministrateurParkingTest {
 
 	@Before
 	public void setUp() {
-		this.admin = new AdministrateurParking("Bold", "Bat", "Bold.bat@example.com", "secret");
-		Parking.setTarif(2.5);
-		this.parking = new Parking("Parking Central", "Rue de Paris", 100, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true);
+		this.admin = new AdministrateurParking(1, "Bold", "Bat", "Bold.bat@example.com", "secret");
+		this.parking = new Parking(1, "Parking Central", "Rue de Paris", 100, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0), true, 1.5);
 	}
 
 	@Test
@@ -39,7 +38,7 @@ public class AdministrateurParkingTest {
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Avenue Toulouse", this.parking.getAdresse());
-		assertEquals(3.0, Parking.getTarif(), 0.001);
+		assertEquals(3.0, this.parking.getTarif(), 0.001);
 		assertEquals(80, this.parking.getNbPlacesMax());
 		assertEquals(1.75, this.parking.getHauteur(), 0.01);
 		assertEquals(LocalTime.of(6, 30), this.parking.getHeureOuverture());

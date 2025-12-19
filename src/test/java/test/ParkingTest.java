@@ -10,28 +10,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modele.Parking;
-import modele.Voiture;
 
 public class ParkingTest {
 
 	private Parking parking;
-	private Voiture voiture1;
-	private Voiture voiture2;
 
 	@Before
 	public void setUp() {
-		Parking.setTarif(2.5);
-		this.parking = new Parking("Parking Central", "Rue Victor Hugo", 100, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true);
-		this.voiture1 = new Voiture(150, "AB-123-CD", true, false);
-		this.voiture2 = new Voiture(140, "EF-456-GH", false, true);
+		this.parking = new Parking(1, "Parking Central", "Rue Victor Hugo", 100, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0), true, 2.5);
 	}
 
 	@Test
 	public void testConstructor() {
 		assertEquals("Parking Central", this.parking.getNom());
 		assertEquals("Rue Victor Hugo", this.parking.getAdresse());
-		assertEquals(2.5, Parking.getTarif(), 0.001);
+		assertEquals(2.5, this.parking.getTarif(), 0.001);
 		assertEquals(100, this.parking.getNbPlacesMax());
 		assertEquals(0, this.parking.getNbPlacesOccupees());
 		assertEquals(1.8, this.parking.getHauteur(), 0.01);
@@ -43,7 +37,7 @@ public class ParkingTest {
 	public void testSetters() {
 		this.parking.setNom("Parking Sud");
 		this.parking.setAdresse("Boulevard Carnot");
-		Parking.setTarif(3.0);
+		this.parking.setTarif(3.0);
 		this.parking.setNbPlacesMax(80);
 		this.parking.setNbPlacesOccupees(10);
 		this.parking.setHauteur(2.0);
@@ -52,7 +46,7 @@ public class ParkingTest {
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Boulevard Carnot", this.parking.getAdresse());
-		assertEquals(3.0, Parking.getTarif(), 0.001);
+		assertEquals(3.0, this.parking.getTarif(), 0.001);
 		assertEquals(80, this.parking.getNbPlacesMax());
 		assertEquals(10, this.parking.getNbPlacesOccupees());
 		assertEquals(2.0, this.parking.getHauteur(), 0.01);
@@ -62,11 +56,10 @@ public class ParkingTest {
 
 	@Test
 	public void testAjouterEtEnleverVoiture() {
-		this.parking.ajouterVehicule(this.voiture1);
-		this.parking.ajouterVehicule(this.voiture2);
+		this.parking.ajouterNbPlacesOccupes(2);
 		assertEquals(2, this.parking.getNbPlacesOccupees());
 
-		this.parking.enleverVehicule(this.voiture1);
+		this.parking.ajouterNbPlacesOccupes(-1);
 		assertEquals(1, this.parking.getNbPlacesOccupees());
 	}
 

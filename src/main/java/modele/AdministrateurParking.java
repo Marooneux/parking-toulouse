@@ -4,8 +4,8 @@ import java.time.LocalTime;
 
 public class AdministrateurParking extends Compte {
 
-	public AdministrateurParking(String nom, String prenom, String email, String mdp) {
-		super(nom, prenom, email, mdp);
+	public AdministrateurParking(int id, String nom, String prenom, String email, String mdp) {
+		super(id, nom, prenom, email, mdp);
 	}
 
 	public void modifierInfoParking(Parking p, String nouveauNom, String nouvelleAdresse, double nouveauTarif,
@@ -19,12 +19,4 @@ public class AdministrateurParking extends Compte {
 		p.setHeureOuverture(nouvelleHeureOuverture);
 		p.setHeureFermeture(nouvelleHeureFermeture);
 	}
-
-	@Override
-	public String toString() {
-		return "AdministrateurParking [nom =" + this.getNom() + ", prenom ="
-				+ this.getPrenom()
-				+ ", email =" + this.getEmail() + "]";
-	}
-
 }

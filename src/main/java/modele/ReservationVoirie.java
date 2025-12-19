@@ -24,23 +24,51 @@ public class ReservationVoirie {
 		return this.immatriculation;
 	}
 
+	public void setImmatriculation(String immatriculation) {
+		this.immatriculation = immatriculation;
+	}
+
 	public String getTypeVehicule() {
 		return this.typeVehicule;
+	}
+
+	public void setTypeVehicule(String typeVehicule) {
+		this.typeVehicule = typeVehicule;
 	}
 
 	public LocalDateTime getDateDebut() {
 		return this.dateDebut;
 	}
 
+	public void setDateDebut(LocalDateTime dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
 	public int getDureeMinutes() {
 		return this.dureeMinutes;
+	}
+
+	public void setDureeMinutes(int dureeMinutes) {
+		this.dureeMinutes = dureeMinutes;
 	}
 
 	public int getIdZone() {
 		return this.idZone;
 	}
 
+	public void setIdZone(int idZone) {
+		this.idZone = idZone;
+	}
+
 	public int getIdUtilisateur() {
 		return this.idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
+
+	public static boolean immatriculationValide(String immatriculation) {
+		return immatriculation.matches("[A-Z]{2}-[0-9]{3}-[A-Z]{2}");
 	}
 }

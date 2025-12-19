@@ -39,6 +39,6 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 				curseur.getString("prenom"),
 				curseur.getString("email"),
 				curseur.getString("mot_de_passe"),
-				String.valueOf(curseur.getInt("id_abonnement")));
+				curseur.getString("abonnement"));
 	}
 }

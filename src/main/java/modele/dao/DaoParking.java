@@ -2,11 +2,14 @@ package modele.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
 
 import modele.Parking;
-import modele.dao.requetes.*;
+import modele.dao.requetes.RequeteDeleteParking;
+import modele.dao.requetes.RequeteInsertParking;
+import modele.dao.requetes.RequeteSelectParking;
+import modele.dao.requetes.RequeteSelectParkingById;
+import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
 	private static Iterateur<Parking> ite;
@@ -44,19 +47,15 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		int id = curseur.getInt("id_parking");
-		String nom = curseur.getString("nom");
-		String adresse = curseur.getString("adresse");
-		int nbMax = curseur.getInt("nombre_places_max");
-		double hauteur = curseur.getDouble("hauteur_max");
-		Time ouv = curseur.getTime("horaire_ouverture");
-		Time ferm = curseur.getTime("horaire_fermeture");
-		boolean moto = curseur.getBoolean("contient_places_moto");
-		Parking p = new Parking(nom, adresse, nbMax,
-				hauteur,
-				ouv.toLocalTime(), ferm.toLocalTime(), moto);
-		p.setId(id);
-		return p;
+		return new Parking(curseur.getInt("id_parking"),
+				curseur.getString("nom"),
+				curseur.getString("adresse"),
+				curseur.getInt("nombre_places_max"),
+				curseur.getDouble("hauteur_max"),
+				curseur.getTime("horaire_ouverture").toLocalTime(),
+				curseur.getTime("horaire_fermeture").toLocalTime(),
+				curseur.getBoolean("contient_places_moto"),
+				curseur.getDouble("tarif"));
 	}
 
 	public static boolean hasNext() {

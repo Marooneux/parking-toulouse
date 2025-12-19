@@ -2,12 +2,12 @@ package modele;
 
 public class AdministrateurSysteme extends Compte {
 
-	public AdministrateurSysteme(String nom, String prenom, String email, String mdp) {
-		super(nom, prenom, email, mdp);
+	public AdministrateurSysteme(int id, String nom, String prenom, String email, String mdp) {
+		super(id, nom, prenom, email, mdp);
 	}
 
-	public AdministrateurParking creerCompteAdminParking(String nom, String prenom, String email,
+	public AdministrateurParking creerAdministrateurParking(int id, String nom, String prenom, String email,
 			String motDePasse) {
-        return new AdministrateurParking(nom, prenom, email, motDePasse);
-    }
+		return new AdministrateurParking(id, nom, prenom, email, motDePasse);
+	}
 }

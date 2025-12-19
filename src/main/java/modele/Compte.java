@@ -1,20 +1,26 @@
 package modele;
 
 public abstract class Compte {
+	private int id;
 	private String nom;
 	private String prenom;
-	private String mdp;
+	private String mdpHash;
 	private String email;
 
-	public Compte(String nom, String prenom, String email, String mdp) {
+	public Compte(int id, String nom, String prenom, String email, String mdpHash) {
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.mdp = mdp;
+		this.mdpHash = mdpHash;
 	}
 
-	public boolean connectionValide(String email, String motDePasse) {
-		return this.email.equals(email) && this.mdp.equals(motDePasse);
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNom() {
@@ -41,13 +47,17 @@ public abstract class Compte {
 		this.email = email;
 	}
 
+	public boolean verifierMdp(String mdpAVerifier) {
+		return GestionMotDePasse.verifierMdp(mdpAVerifier, this.mdpHash);
+	}
+
 	public String getMdp() {
-		return this.mdp;
+		return this.mdpHash;
 	}
 
 	public void setMdp(String ancienMdp, String nouveauMdp) {
-		if (this.mdp == ancienMdp) {
-			this.mdp = nouveauMdp;
+		if (GestionMotDePasse.verifierMdp(nouveauMdp, ancienMdp)) {
+			this.mdpHash = GestionMotDePasse.hashMdp(nouveauMdp);
 		}
 	}
 

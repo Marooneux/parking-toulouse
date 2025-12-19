@@ -10,7 +10,7 @@ import modele.dao.requetes.RequeteInsertZoneVoirie;
 import modele.dao.requetes.RequeteSelectZoneVoirie;
 import modele.dao.requetes.RequeteUpdateZoneVoirie;
 
-public class DaoZonesVoirie extends DaoModele<Zone> {
+public class DaoZoneVoirie extends DaoModele<Zone> {
 	@Override
 	public void create(Zone donnee) throws SQLException {
 		this.miseAJour(new RequeteInsertZoneVoirie(), donnee);

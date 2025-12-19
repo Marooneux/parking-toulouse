@@ -1,98 +1,91 @@
 package test.dao;
 
-import modele.Parking;
-import modele.dao.DaoParking;
-import modele.dao.MySQLDataSource;
-import modele.dao.Iterateur;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+
+import modele.Parking;
+import modele.dao.DaoParking;
+import modele.dao.Iterateur;
+import modele.dao.MySQLDataSource;
 
 public class DaoParkingTest {
 
-    private DaoParking daoParking;
+	private DaoParking daoParking;
+	private Parking parking;
 
-    @Before
-    public void setup() throws SQLException {
-        // Inicializa acesso ao banco de dados
-        MySQLDataSource.creerAcces("root", "claudio");
-        this.daoParking = new DaoParking();
-    }
+	@Before
+	public void setUp() throws SQLException {
+		MySQLDataSource.creerAcces("root", "claudio");
+		this.daoParking = new DaoParking();
+		this.parking = new Parking(1, "NomTest", "AdresseTest", 100, 2.0,
+				Time.valueOf("08:00:00").toLocalTime(),
+				Time.valueOf("18:30:00").toLocalTime(),
+				true,
+				1.5);
+		this.daoParking.create(this.parking);
+	}
 
-    @Test
-    @DisplayName("Test create")
-    public void testCreate() throws SQLException {
-        Parking p = new Parking("TestCreate", "AdresseTest", 100, 2.0,
-                Time.valueOf("08:00:00").toLocalTime(),
-                Time.valueOf("18:30:00").toLocalTime(),
-                true);
-        daoParking.create(p);
+	@After
+	public void tearDown() throws SQLException {
+		this.daoParking.delete(this.parking);
+		MySQLDataSource.deconnecter();
+	}
 
-        List<Parking> parkings = daoParking.findAll();
-        assertTrue(parkings.stream().anyMatch(parking -> parking.getNom().equals("TestCreate")));
+	@Test
+	@DisplayName("Test create")
+	public void testCreate() throws SQLException {
+		List<Parking> parkings = this.daoParking.findAll();
+		assertEquals(1, parkings.size());
+		assertTrue(parkings.stream().anyMatch(parking -> parking.getNom().equals("NomTest")));
+	}
 
-        // Cleanup
-        daoParking.delete(p);
-    }
+	@Test
+	@DisplayName("Test update")
+	public void testUpdate() throws SQLException {
+		this.parking.setNom("NouveauNomTest");
+		this.daoParking.update(this.parking);
 
-    @Test
-    @DisplayName("Test update")
-    public void testUpdate() throws SQLException {
-        Parking p = new Parking("TestUpdate", "AdresseTest", 100, 2.0,
-                Time.valueOf("08:00:00").toLocalTime(),
-                Time.valueOf("18:30:00").toLocalTime(),
-                true);
-        daoParking.create(p);
+		List<Parking> parkings = this.daoParking.findAll();
+		assertTrue(parkings.stream().anyMatch(parking -> parking.getNom().equals("TestUpdateModified")));
+	}
 
-        p.setNom("TestUpdateModified");
-        daoParking.update(p);
+	@Test
+	@DisplayName("Test delete")
+	public void testDelete() throws SQLException {
+		this.daoParking.delete(this.parking);
+		List<Parking> parkings = this.daoParking.findAll();
+		assertFalse(parkings.stream().anyMatch(parking -> parking.getNom().equals("TestDelete")));
+	}
 
-        List<Parking> parkings = daoParking.findAll();
-        assertTrue(parkings.stream().anyMatch(parking -> parking.getNom().equals("TestUpdateModified")));
+	@Test
+	@DisplayName("Test findAll")
+	public void testFindAll() throws SQLException {
+		this.daoParking.delete(this.parking);
+		List<Parking> parkings = this.daoParking.findAll();
+		assertNotNull(parkings, "La liste des parkings ne doit pas être nulle");
+		assertTrue("La liste peut être vide mais non nulle", parkings.size() >= 0);
+	}
 
-        // Cleanup
-        daoParking.delete(p);
-    }
-
-    @Test
-    @DisplayName("Test delete")
-    public void testDelete() throws SQLException {
-        Parking p = new Parking("TestDelete", "AdresseTest", 100, 2.0,
-                Time.valueOf("08:00:00").toLocalTime(),
-                Time.valueOf("18:30:00").toLocalTime(),
-                true);
-        daoParking.create(p);
-
-        daoParking.delete(p);
-        List<Parking> parkings = daoParking.findAll();
-        assertFalse(parkings.stream().anyMatch(parking -> parking.getNom().equals("TestDelete")));
-    }
-
-    @Test
-    @DisplayName("Test findAll")
-    public void testFindAll() throws SQLException {
-        List<Parking> parkings = daoParking.findAll();
-        assertNotNull(parkings, "La liste des parkings ne doit pas être nulle");
-        assertTrue("La liste peut être vide mais non nulle", parkings.size() >= 0);
-    }
-
-    @Test
-    @DisplayName("Test findAllIte / Iterateur")
-    public void testIterateur() throws SQLException {
-        Iterateur<Parking> ite = daoParking.findAllIte();
-        if (ite != null) {
-            while (ite.hasNext()) {
-                Parking p = ite.next();
-                assertNotNull(p, "Chaque parking retourné par l'iterateur ne doit pas être null");
-            }
-        }
-    }
+	@Test
+	@DisplayName("Test findAllIte / Iterateur")
+	public void testIterateur() throws SQLException {
+		Iterateur<Parking> ite = this.daoParking.findAllIte();
+		if (ite != null) {
+			while (ite.hasNext()) {
+				Parking p = ite.next();
+				assertNotNull(p, "Chaque parking retourné par l'iterateur ne doit pas être null");
+			}
+		}
+	}
 }

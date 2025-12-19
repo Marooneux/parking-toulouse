@@ -1,24 +1,15 @@
 package modele;
 
 public class Zone {
-
-	public enum CouleurZone {
-		BLEU,
-		ROUGE,
-		JAUNE,
-		VERTE,
-		ORANGE
-	}
-
 	private int id;
 	private String nom;
-	private CouleurZone couleur;
+	private String zone;
 	private double tarifHoraire;
 	private double dureeMax; // Durée de stationnement max en minutes
 
-	public Zone(String nom, CouleurZone couleur, double tarifHoraire, double dureeMax) {
+	public Zone(String nom, String zone, double tarifHoraire, double dureeMax) {
 		this.nom = nom;
-		this.couleur = couleur;
+		this.zone = zone;
 		this.tarifHoraire = tarifHoraire;
 		this.dureeMax = dureeMax;
 	}
@@ -45,12 +36,12 @@ public class Zone {
 		this.nom = nom;
 	}
 
-	public CouleurZone getCouleur() {
-		return this.couleur;
+	public String getZone() {
+		return this.zone;
 	}
 
-	public void setCouleur(CouleurZone couleur) {
-		this.couleur = couleur;
+	public void setZone(String zone) {
+		this.zone = zone;
 	}
 
 	public double getTarifHoraire() {
