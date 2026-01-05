@@ -12,7 +12,7 @@ import modele.AdministrateurParking;
 import modele.AdministrateurSysteme;
 import modele.Parking;
 
-public class AdministrateurSystemeTest {
+public class TestAdministrateurSysteme {
 
 	private AdministrateurSysteme adminSysteme;
 	private Parking parking1;
@@ -37,12 +37,4 @@ public class AdministrateurSystemeTest {
 		assertEquals("jean.dupont@example.com", adminParking.getEmail());
 		assertEquals("secret", adminParking.getMdp());
 	}
-
-	/*
-	 * @Ignore public void testAjouterEtSupprimerParking_noInternalCheck() {
-	 * this.adminSysteme.ajouterParking(this.parking1);
-	 * this.adminSysteme.ajouterParking(this.parking2);
-	 * this.adminSysteme.supprimerParking(this.parking1);
-	 * this.adminSysteme.supprimerParking(this.parking2); }
-	 */
 }

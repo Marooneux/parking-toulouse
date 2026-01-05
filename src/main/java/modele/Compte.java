@@ -61,4 +61,10 @@ public abstract class Compte {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Compte [id=" + this.id + ", nom=" + this.nom + ", prenom=" + this.prenom + ", mdpHash=" + this.mdpHash
+				+ ", email=" + this.email + "]";
+	}
+
 }

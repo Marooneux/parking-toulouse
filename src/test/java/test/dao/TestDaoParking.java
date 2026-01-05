@@ -19,7 +19,7 @@ import modele.dao.DaoParking;
 import modele.dao.Iterateur;
 import modele.dao.MySQLDataSource;
 
-public class DaoParkingTest {
+public class TestDaoParking {
 
 	private DaoParking daoParking;
 	private Parking parking;

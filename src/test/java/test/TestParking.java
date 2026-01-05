@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import modele.Parking;
 
-public class ParkingTest {
+public class TestParking {
 
 	private Parking parking;
 

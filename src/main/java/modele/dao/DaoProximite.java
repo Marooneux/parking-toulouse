@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import modele.LigneMetro;
+import modele.Parking;
 import modele.Proximite;
 import modele.dao.requetes.RequeteDeleteProximite;
 import modele.dao.requetes.RequeteInsertProximite;
@@ -33,9 +35,13 @@ public class DaoProximite extends DaoModele<Proximite> {
 
 	@Override
 	protected Proximite creerInstance(ResultSet curseur) throws SQLException {
+		int idParking = curseur.getInt("id_parking");
+		Parking parking = new DaoParking().findById(idParking);
+		int idLigneMetro = curseur.getInt("id_ligne_metro");
+		LigneMetro ligneMetro = new DaoLigneMetro().findById(idLigneMetro);
 		return new Proximite(
-				curseur.getInt("id_parking"),
-				curseur.getInt("id_ligne_metro"),
+				parking,
+				ligneMetro,
 				curseur.getInt("distance_metres"));
 	}
 }

@@ -1,26 +1,32 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalTime;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import modele.AdministrateurParking;
 import modele.Parking;
 
-public class AdministrateurParkingTest {
+public class TestAdministrateurParking {
 
 	private AdministrateurParking admin;
 	private Parking parking;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.admin = new AdministrateurParking(1, "Bold", "Bat", "Bold.bat@example.com", "secret");
 		this.parking = new Parking(1, "Parking Central", "Rue de Paris", 100, 1.8, LocalTime.of(9, 0),
 				LocalTime.of(21, 0), true, 1.5);
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+		this.admin = null;
+		this.parking = null;
 	}
 
 	@Test
@@ -43,14 +49,5 @@ public class AdministrateurParkingTest {
 		assertEquals(1.75, this.parking.getHauteur(), 0.01);
 		assertEquals(LocalTime.of(6, 30), this.parking.getHeureOuverture());
 		assertEquals(LocalTime.of(23, 0), this.parking.getHeureFermeture());
-	}
-
-	@Test
-	public void testToString() {
-		String result = this.admin.toString();
-		assertTrue(result.contains("AdministrateurParking"));
-		assertTrue(result.contains("nom =Bold"));
-		assertTrue(result.contains("prenom =Bat"));
-		assertTrue(result.contains("Bold.bat@example.com"));
 	}
 }

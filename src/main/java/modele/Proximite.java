@@ -1,30 +1,30 @@
 package modele;
 
 public class Proximite {
-	private int idParking;
-	private int idLigneMetro;
+	private Parking parking;
+	private LigneMetro ligneMetro;
 	private int distanceMetres;
 
-	public Proximite(int idParking, int idLigneMetro, int distanceMetres) {
-		this.idParking = idParking;
-		this.idLigneMetro = idLigneMetro;
+	public Proximite(Parking parking, LigneMetro ligneMetro, int distanceMetres) {
+		this.parking = parking;
+		this.ligneMetro = ligneMetro;
 		this.distanceMetres = distanceMetres;
 	}
 
-	public int getIdParking() {
-		return this.idParking;
+	public Parking getParking() {
+		return this.parking;
 	}
 
-	public void setIdParking(int idParking) {
-		this.idParking = idParking;
+	public void setParking(Parking parking) {
+		this.parking = parking;
 	}
 
-	public int getIdLigneMetro() {
-		return this.idLigneMetro;
+	public LigneMetro getLigneMetro() {
+		return this.ligneMetro;
 	}
 
-	public void setIdLigneMetro(int idLigneMetro) {
-		this.idLigneMetro = idLigneMetro;
+	public void setLigneMetro(LigneMetro ligneMetro) {
+		this.ligneMetro = ligneMetro;
 	}
 
 	public int getDistanceMetres() {

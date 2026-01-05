@@ -7,6 +7,7 @@ import java.util.List;
 import modele.LigneMetro;
 import modele.dao.requetes.RequeteDeleteLigneMetro;
 import modele.dao.requetes.RequeteInsertLigneMetro;
+import modele.dao.requetes.RequeteSelectLigneMetroById;
 import modele.dao.requetes.RequeteSelectLignesMetro;
 import modele.dao.requetes.RequeteUpdateLigneMetro;
 
@@ -29,6 +30,10 @@ public class DaoLigneMetro extends DaoModele<LigneMetro> {
 	@Override
 	public List<LigneMetro> findAll() throws SQLException {
 		return this.find(new RequeteSelectLignesMetro());
+	}
+
+	public LigneMetro findById(int id) throws SQLException {
+		return this.findById(new RequeteSelectLigneMetroById(), String.valueOf(id));
 	}
 
 	@Override

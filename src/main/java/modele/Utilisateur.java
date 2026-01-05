@@ -15,4 +15,8 @@ public class Utilisateur extends Compte {
 	public void setAbonnement(String abonnement) {
 		this.abonnement = abonnement;
 	}
+
+	public boolean estAbonne() {
+		return !this.abonnement.isBlank();
+	}
 }
