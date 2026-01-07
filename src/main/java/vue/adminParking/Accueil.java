@@ -58,14 +58,14 @@ public class Accueil extends JFrame {
         layeredPane.add(sidebarPanel, JLayeredPane.PALETTE_LAYER);
 
         btnToggle = new JButton("\u2630"); 
-        btnToggle.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        btnToggle.setFont(new Font("Segoe UI Symbol", Font.BOLD, 30));
         btnToggle.setFocusPainted(false);
         btnToggle.setBorderPainted(false);
         btnToggle.setContentAreaFilled(false);
         btnToggle.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnToggle.setForeground(Color.LIGHT_GRAY); 
         btnToggle.setBounds(10, 10, 50, 40);
-        
+        btnToggle.setMargin(new Insets(0, 0, 0, 0));
         btnToggle.addActionListener(e -> toggleSidebarState());
        
         layeredPane.add(btnToggle, JLayeredPane.MODAL_LAYER);
@@ -134,7 +134,6 @@ public class Accueil extends JFrame {
         JButton btnStats = createMenuButton("Statistiques");
         btnStats.addActionListener(e -> {
             cardLayout.show(mainContentPanel, "STATS");
-            // toggleSidebarState(); 
         });
         sidebar.add(btnStats);
 
