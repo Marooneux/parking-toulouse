@@ -8,15 +8,15 @@ import javax.swing.JOptionPane;
 import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
-import vue.ChoixParking;
+import vue.adminParking.Accueil;
 import vue.SaisirHeureArriveParking;
 
-public class ControleurChoixParking {
+public class ControleurAccueilAdmin{
 
-    private ChoixParking vue;
+    private Accueil vue;
     private DaoParking daoParking;
 
-    public ControleurChoixParking(ChoixParking vue) {
+    public ControleurAccueilAdmin(Accueil vue) {
         this.vue = vue;
         this.daoParking = new DaoParking();
 
@@ -56,8 +56,8 @@ public class ControleurChoixParking {
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            ChoixParking vue = new ChoixParking();
-            new ControleurChoixParking(vue);
+            Accueil vue = new Accueil();
+            new ControleurAccueilAdmin(vue);
             vue.setVisible(true);
         });
     }

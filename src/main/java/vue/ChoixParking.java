@@ -94,10 +94,7 @@ public class ChoixParking extends JFrame {
         gridPanel.revalidate();
         gridPanel.repaint();
     }
-    
-<<<<<<< HEAD
-   
-=======
+
     public void populateDefaultParkings(Consumer<Parking> onSelect) {
         addParking(new Parking("Parking Centre-Ville","12 Rue de la République",2.5, 120,2.5,LocalTime.of(0, 0),LocalTime.of(0, 0),false), onSelect);
 
@@ -111,7 +108,7 @@ public class ChoixParking extends JFrame {
 
         addParking(new Parking("Antigone","Place du Nombre d'Or",1.9, 80,1.50,LocalTime.of(7, 0),LocalTime.of(23, 0),false), onSelect);
     }
->>>>>>> 98a7ad91c9f46795889a0e865480c6fa664eadf1
+
 
 }
 

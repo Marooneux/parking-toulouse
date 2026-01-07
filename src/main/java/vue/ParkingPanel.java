@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
-class ParkingPanel extends JPanel {
+public class ParkingPanel extends JPanel {
     private Parking parking;
     private Consumer<Parking> onClick;
     private Color normalBorder = new Color(230, 230, 230);

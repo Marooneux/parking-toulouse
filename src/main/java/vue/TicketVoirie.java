@@ -8,12 +8,18 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 import modele.StationnementVoirie;
+import modele.StationnementVoirie.Couleur;
 
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
@@ -30,12 +36,17 @@ public class TicketVoirie extends JFrame {
     private String immatriculation; 
     private int duree;
     private String moyenPaiement;
+    private JLabel nomZone;
 
     public TicketVoirie(StationnementVoirie zone, String immatriculation, int duree, String moyenPaiement) {
     	this.zone = zone;
     	this.immatriculation = immatriculation;
     	this.duree = duree;
     	this.moyenPaiement = moyenPaiement;
+    	this.nomZone = new JLabel(zone.couleurZoneToString());
+    	nomZone.setForeground(ControleurTicketVoirie.getRgb(zone.getCouleur()));
+    	
+    	
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 750, 600);
@@ -52,13 +63,11 @@ public class TicketVoirie extends JFrame {
         contentPane.add(panelHeader, BorderLayout.NORTH);
         panelHeader.setLayout(new BorderLayout(20, 0));
 
-        JLabel lblIcon = new JLabel("P");
-        lblIcon.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        lblIcon.setForeground(new Color(60, 60, 60));
-        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIcon.setPreferredSize(new Dimension(60, 60));
-        lblIcon.setBorder(new LineBorder(new Color(60, 60, 60), 2, true));
-        panelHeader.add(lblIcon, BorderLayout.WEST);
+        iconCircle.setOpaque(false);
+        iconCircle.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        iconCircle.setBounds(25, 25, 40, 40);
+        iconCircle.setPreferredSize(new Dimension(60, 60));
+        panelHeader.add(iconCircle, BorderLayout.WEST);
 
         JPanel panelTextHeader = new JPanel();
         panelTextHeader.setBackground(Color.WHITE);
@@ -92,14 +101,15 @@ public class TicketVoirie extends JFrame {
         panelInfoGrid.setBorder(new EmptyBorder(20, 30, 20, 30));
         panelCard.add(panelInfoGrid, BorderLayout.CENTER);
         panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
+        
+        createInfoRow(panelInfoGrid, "Numéro de Ticket :", new JLabel("#V-00001"));
+        createInfoRow(panelInfoGrid, "Zone :", nomZone);
+        createInfoRow(panelInfoGrid, "Immatriculation :", new JLabel(immatriculation));
+        createInfoRow(panelInfoGrid, "Heure d'arrivée :", new JLabel(ControleurTicketVoirie.getHeureActuelle()));
+        createInfoRow(panelInfoGrid, "Heure départ max :", new JLabel(ControleurTicketVoirie.calculerHeureDepart(duree)));
+        createInfoRow(panelInfoGrid, "Moyen de paiement :", new JLabel(moyenPaiement));
 
-        createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#V-00001");
-        createInfoRow(panelInfoGrid, "Zone :", zone.couleurZoneToString());
-        createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
-        createInfoRow(panelInfoGrid, "Heure d'arrivée :", ControleurTicketVoirie.getHeureActuelle());
-        createInfoRow(panelInfoGrid, "Heure départ max :", ControleurTicketVoirie.calculerHeureDepart(duree));
-        createInfoRow(panelInfoGrid, "Moyen de paiement :", moyenPaiement);
-
+        
         JPanel panelFooter = new JPanel();
         panelFooter.setBackground(new Color(255, 255, 255));
         panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -130,9 +140,10 @@ public class TicketVoirie extends JFrame {
             System.exit(0);
         }
     });
+        
     }
 
-    private void createInfoRow(JPanel parent, String label, String valeur) {
+    private void createInfoRow(JPanel parent, String label, JLabel lblVal) {
         JPanel row = new JPanel();
         row.setBackground(Color.WHITE);
         row.setLayout(new BorderLayout());
@@ -141,9 +152,9 @@ public class TicketVoirie extends JFrame {
         lblKey.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         lblKey.setForeground(new Color(100, 100, 100));
         
-        JLabel lblVal = new JLabel(valeur);
+
         lblVal.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblVal.setForeground(new Color(50, 50, 50));
+
         lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
         
         row.add(lblKey, BorderLayout.WEST);
@@ -156,4 +167,26 @@ public class TicketVoirie extends JFrame {
         
         parent.add(row);
     }
+
+    JPanel iconCircle = new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g); 
+            
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(ControleurTicketVoirie.getRgb(zone.getCouleur()));
+            g2.fillOval(0, 0, getWidth(), getHeight());
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Segoe UI", Font.BOLD, 25));
+            String texte = "P";
+            FontMetrics metrics = g2.getFontMetrics();
+
+            int x = (getWidth() - metrics.stringWidth(texte)) / 2;
+            int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+
+            g2.drawString(texte, x, y);
+        }
+    };
+
 }
