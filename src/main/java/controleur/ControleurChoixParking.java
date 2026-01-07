@@ -10,6 +10,8 @@ import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
 import vue.SaisirHeureArriveParking;
+import vue.ModifierParking;
+
 
 public class ControleurChoixParking {
 
@@ -34,7 +36,9 @@ public class ControleurChoixParking {
 
             for (Parking p : parkings) {
                 //System.out.println("Parking: " + p.getNom());
-                vue.addParking(p, this::onParkingSelected);
+            	vue.addParking(p, this::onParkingSelected, 
+            			this::ouvrirPageModification, 
+            			this::supprimerParking );
             }
 
         } catch (SQLException e) {
@@ -51,6 +55,32 @@ public class ControleurChoixParking {
         vueSuivante.setVisible(true);
         vue.dispose();
     }
+    
+    private void ouvrirPageModification(Parking parking) {
+        ModifierParking vueModif = new ModifierParking(parking);  // nouvelle page pour modification
+        new ControleurModifierParking(vueModif, parking);                 // crée son contrôleur
+        vueModif.setVisible(true);
+        vue.dispose();
+    }
+
+    // not finished
+    private void supprimerParking(Parking parking) {
+        int confirm = JOptionPane.showConfirmDialog(vue,
+                "Voulez-vous vraiment supprimer ce parking ?",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                daoParking.delete(parking); // assuming Parking has getId() and DaoParking has delete(id)
+                    // remove from UI
+                JOptionPane.showMessageDialog(vue, "Parking supprimé avec succès !");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(vue, "Erreur lors de la suppression du parking.");
+            }
+        }
+    }
+    //---
     
 
     public static void main(String[] args) {

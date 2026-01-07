@@ -111,4 +111,8 @@ public class ModifierParking extends JFrame {
     public int getPlacesMax() {
         return Integer.parseInt(txtPlacesMax.getText().trim());
     }
+    
+    public Parking getParking() {
+        return parking;
+    }
 }

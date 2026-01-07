@@ -1,6 +1,7 @@
 package vue;
 
-import javax.swing.BoxLayout; 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurChoixParking;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.*;
 import java.time.LocalTime;
 import java.util.function.Consumer;
@@ -23,6 +26,8 @@ public class ChoixParking extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel gridPanel;
+	private List<ParkingPanel> parkingPanels;
+
 
     
     public ChoixParking() {
@@ -84,12 +89,37 @@ public class ChoixParking extends JFrame {
         
     }
 
-    public void addParking(Parking parking, Consumer<Parking> onSelect) {
-        ParkingPanel card = new ParkingPanel(parking, onSelect);
-        gridPanel.add(card);
+    public void addParking(Parking parking, Consumer<Parking> onSelect, Consumer<Parking> onModify, Consumer<Parking> onDelete) {
+        ParkingPanel panel = new ParkingPanel(parking, onSelect);
+
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(panel, BorderLayout.CENTER);
+
+        JButton btnSupprimer = new JButton("Supprimer");
+        btnSupprimer.setFocusPainted(false);
+        btnSupprimer.setBackground(new Color(0, 128, 255));
+        btnSupprimer.setForeground(Color.WHITE);
+        btnSupprimer.setPreferredSize(new Dimension(100, 30));
+        
+        JButton btnModifier = new JButton("Modifier");
+        btnModifier.setFocusPainted(false);
+        btnModifier.setBackground(new Color(0, 128, 255));
+        btnModifier.setForeground(Color.WHITE);
+        btnModifier.setPreferredSize(new Dimension(100, 30));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(btnSupprimer);
+        bottomPanel.add(btnModifier);
+        container.add(bottomPanel, BorderLayout.SOUTH);
+
+        btnModifier.addActionListener(e -> onModify.accept(parking));
+
+        gridPanel.add(container);
         gridPanel.revalidate();
         gridPanel.repaint();
     }
+
     
 
 
