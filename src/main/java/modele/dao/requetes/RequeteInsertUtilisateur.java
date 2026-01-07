@@ -4,11 +4,12 @@ import modele.Utilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import utils.PasswordUtil;
 
 public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
     @Override
     public String requete() {
-        return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, id_abonnement) VALUES (?,?,?,?,?)";
+        return "INSERT INTO utilisateurs (nom, prenom, email, mdp) VALUES (?,?,?,?)";
     }
 
     @Override
@@ -16,7 +17,7 @@ public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
         ps.setString(1, u.getNom());
         ps.setString(2, u.getPrenom());
         ps.setString(3, u.getEmail());
-        ps.setString(4, u.getMdp());
-        ps.setInt(5, Integer.parseInt(u.getAbonnement()));
+        // Store password as BCrypt hash
+        ps.setString(4, PasswordUtil.hashMdp(u.getMdp()));
     }
 }

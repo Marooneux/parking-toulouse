@@ -2,25 +2,11 @@ package modele;
 
 public class Utilisateur extends Compte {
 	private int id;
-	private String abonnement;
+    private String type;
 
-	public Utilisateur(String nom, String prenom, String email, String mdp, String abonnement) {
-		super(nom, prenom, email, mdp);
-		this.abonnement = abonnement;
-	}
-
-	public Utilisateur(int id, String nom, String prenom, String email, String mdp, String abonnement) {
-		super(nom, prenom, email, mdp);
-		this.id = id;
-		this.abonnement = abonnement;
-	}
-
-	public String getAbonnement() {
-		return this.abonnement;
-	}
-
-	public void setAbonnement(String abonnement) {
-		this.abonnement = abonnement;
+	public Utilisateur(String nom, String prenom, String email, String passwd, String type) {
+		super(nom, prenom, email, passwd);
+        this.type = type;
 	}
 
 	public int getId() {
@@ -31,4 +17,11 @@ public class Utilisateur extends Compte {
 		this.id = id;
 	}
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
