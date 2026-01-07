@@ -15,6 +15,5 @@ public class RequeteDeleteParking extends Requete<Parking> {
 	@Override
 	public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
 		statement.setInt(1, donnee.getId());
-	};
-
+	}
 }

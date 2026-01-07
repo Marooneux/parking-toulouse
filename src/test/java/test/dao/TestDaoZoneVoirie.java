@@ -1,24 +1,83 @@
 package test.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import java.sql.SQLException;
+import java.util.List;
 
-class TestDaoZoneVoirie {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-	@BeforeEach
-	void setUp() throws Exception {
+import modele.ZoneVoirie;
+import modele.dao.DaoZoneVoirie;
+import modele.dao.MySQLDataSource;
+
+public class TestDaoZoneVoirie {
+
+	private DaoZoneVoirie dao;
+	private ZoneVoirie zoneTest;
+
+	@Before
+	public void setUp() throws SQLException {
+		MySQLDataSource.creerAcces("user", "password");
+		this.dao = new DaoZoneVoirie();
+		this.zoneTest = new ZoneVoirie(0, "ZoneTest", 120.0, 180.0);
+		this.dao.create(this.zoneTest);
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
+	@After
+	public void tearDown() throws SQLException {
+		if (this.zoneTest != null && this.zoneTest.getId() != 0) {
+			this.dao.delete(this.zoneTest);
+		}
+		this.dao = null;
+		this.zoneTest = null;
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void testCreateAndFindById() throws SQLException {
+		ZoneVoirie z = this.dao.findById(this.zoneTest.getId());
+		assertNotNull(z);
+		assertEquals("ZoneTest", z.getNom());
+		assertEquals(120.0, z.getTarifHoraire(), 0.01);
+		assertEquals(180.0, z.getDureeMax(), 0.01);
 	}
 
+	@Test
+	public void testUpdate() throws SQLException {
+		this.zoneTest.setNom("ZoneModifiee");
+		this.zoneTest.setTarifHoraire(150.0);
+		this.zoneTest.setDureeMax(240.0);
+		this.dao.update(this.zoneTest);
+
+		ZoneVoirie z = this.dao.findById(this.zoneTest.getId());
+		assertNotNull(z);
+		assertEquals("ZoneModifiee", z.getNom());
+		assertEquals(150.0, z.getTarifHoraire(), 0.01);
+		assertEquals(240.0, z.getDureeMax(), 0.01);
+	}
+
+	@Test
+	public void testDelete() throws SQLException {
+		ZoneVoirie zTemp = new ZoneVoirie(0, "TempZone", 50.0, 60.0);
+		this.dao.create(zTemp);
+		int idTemp = zTemp.getId();
+
+		this.dao.delete(zTemp);
+		ZoneVoirie z = this.dao.findById(idTemp);
+		assertNull(z);
+	}
+
+	@Test
+	public void testFindAll() throws SQLException {
+		List<ZoneVoirie> zones = this.dao.findAll();
+		assertNotNull(zones);
+		assertTrue(zones.size() >= 1);
+		boolean trouve = zones.stream().anyMatch(z -> z.getId() == this.zoneTest.getId());
+		assertTrue(trouve);
+	}
 }

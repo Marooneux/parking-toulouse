@@ -2,6 +2,8 @@ package modele.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import modele.Parking;
@@ -47,15 +49,26 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		return new Parking(curseur.getInt("id_parking"),
+		Time tOuverture = curseur.getTime("horaire_ouverture");
+		Time tFermeture = curseur.getTime("horaire_fermeture");
+
+		LocalTime ouverture = (tOuverture != null) ? tOuverture.toLocalTime() : null;
+		LocalTime fermeture = (tFermeture != null) ? tFermeture.toLocalTime() : null;
+
+		Parking p = new Parking(
+				curseur.getInt("id_parking"),
 				curseur.getString("nom"),
 				curseur.getString("adresse"),
 				curseur.getInt("nombre_places_max"),
 				curseur.getDouble("hauteur_max"),
-				curseur.getTime("horaire_ouverture").toLocalTime(),
-				curseur.getTime("horaire_fermeture").toLocalTime(),
+				ouverture,
+				fermeture,
 				curseur.getBoolean("contient_places_moto"),
 				curseur.getDouble("tarif"));
+
+		p.setNbPlacesOccupees(curseur.getInt("nb_places_occupees"));
+
+		return p;
 	}
 
 	public static boolean hasNext() {

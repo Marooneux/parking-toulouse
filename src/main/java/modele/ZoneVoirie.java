@@ -1,23 +1,16 @@
 package modele;
 
-public class Zone {
+public class ZoneVoirie {
 	private int id;
 	private String nom;
-	private String zone;
 	private double tarifHoraire;
-	private double dureeMax; // Durée de stationnement max en minutes
+	private double dureeMax;
 
-	public Zone(String nom, String zone, double tarifHoraire, double dureeMax) {
-		this.nom = nom;
-		this.zone = zone;
-		this.tarifHoraire = tarifHoraire;
-		this.dureeMax = dureeMax;
-	}
-
-	public Zone(int id, String nom, double tarifHoraire) {
+	public ZoneVoirie(int id, String nom, double tarifHoraire, double dureeMax) {
 		this.id = id;
 		this.nom = nom;
 		this.tarifHoraire = tarifHoraire;
+		this.dureeMax = dureeMax;
 	}
 
 	public int getId() {
@@ -34,14 +27,6 @@ public class Zone {
 
 	public void setNom(String nom) {
 		this.nom = nom;
-	}
-
-	public String getZone() {
-		return this.zone;
-	}
-
-	public void setZone(String zone) {
-		this.zone = zone;
 	}
 
 	public double getTarifHoraire() {

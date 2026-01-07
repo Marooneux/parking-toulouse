@@ -3,13 +3,13 @@ package modele.dao.requetes;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import modele.Parking;
+import modele.LigneMetro;
 
-public class RequeteSelectParkingById extends Requete<Parking> {
+public class RequeteSelectLignesMetroById extends Requete<LigneMetro> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM parkings WHERE id_parking = ?";
+		return "SELECT * FROM lignes_metro WHERE id_ligne_metro = ?";
 	}
 
 	@Override

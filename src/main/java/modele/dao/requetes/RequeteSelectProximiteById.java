@@ -3,18 +3,18 @@ package modele.dao.requetes;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import modele.ReservationParking;
+import modele.Proximite;
 
-public class RequeteSelectReservationParkingById extends Requete<ReservationParking> {
+public class RequeteSelectProximiteById extends Requete<Proximite> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM reservations_parking WHERE immatriculation = ? AND id_parking = ?";
+		return "SELECT * FROM est_proche_de WHERE id_parking = ? AND id_ligne_metro = ?";
 	}
 
 	@Override
 	public void parametres(PreparedStatement statement, String... id) throws SQLException {
-		statement.setString(1, id[0]);
+		statement.setInt(1, Integer.parseInt(id[0]));
 		statement.setInt(2, Integer.parseInt(id[1]));
 	}
 }

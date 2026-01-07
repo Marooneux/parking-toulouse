@@ -4,37 +4,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import modele.Zone;
+import modele.ZoneVoirie;
 import modele.dao.requetes.RequeteDeleteZoneVoirie;
 import modele.dao.requetes.RequeteInsertZoneVoirie;
 import modele.dao.requetes.RequeteSelectZoneVoirie;
+import modele.dao.requetes.RequeteSelectZoneVoirieById;
 import modele.dao.requetes.RequeteUpdateZoneVoirie;
 
-public class DaoZoneVoirie extends DaoModele<Zone> {
+public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
 	@Override
-	public void create(Zone donnee) throws SQLException {
-		this.miseAJour(new RequeteInsertZoneVoirie(), donnee);
+	public void create(ZoneVoirie donnee) throws SQLException {
+		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertZoneVoirie(), donnee);
+		if (id > 0) {
+			donnee.setId(id);
+		}
 	}
 
 	@Override
-	public void update(Zone donnee) throws SQLException {
+	public void update(ZoneVoirie donnee) throws SQLException {
 		this.miseAJour(new RequeteUpdateZoneVoirie(), donnee);
 	}
 
 	@Override
-	public void delete(Zone donnee) throws SQLException {
+	public void delete(ZoneVoirie donnee) throws SQLException {
 		this.miseAJour(new RequeteDeleteZoneVoirie(), donnee);
 	}
 
 	@Override
-	public List<Zone> findAll() throws SQLException {
+	public List<ZoneVoirie> findAll() throws SQLException {
 		return this.find(new RequeteSelectZoneVoirie());
 	}
 
+	public ZoneVoirie findById(int id) throws SQLException {
+		return this.findById(new RequeteSelectZoneVoirieById(), String.valueOf(id));
+	}
+
 	@Override
-	protected Zone creerInstance(ResultSet curseur) throws SQLException {
-		return new Zone(curseur.getInt("id_zone"),
+	protected ZoneVoirie creerInstance(ResultSet curseur) throws SQLException {
+		return new ZoneVoirie(curseur.getInt("id_zone"),
 				curseur.getString("nom"),
-				curseur.getDouble("tarif_horaire"));
+				curseur.getDouble("tarif_horaire"),
+				curseur.getDouble("duree_max"));
 	}
 }

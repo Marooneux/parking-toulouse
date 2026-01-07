@@ -1,13 +1,19 @@
 package modele.dao.requetes;
 
-import modele.Zone;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-public class RequeteDeleteZoneVoirie extends Requete<Zone> {
+import modele.ZoneVoirie;
+
+public class RequeteDeleteZoneVoirie extends Requete<ZoneVoirie> {
 
 	@Override
 	public String requete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "DELETE FROM zones_voirie WHERE id_zone = ?";
 	}
 
+	@Override
+	public void parametres(PreparedStatement statement, ZoneVoirie donnee) throws SQLException {
+		statement.setInt(1, donnee.getId());
+	}
 }

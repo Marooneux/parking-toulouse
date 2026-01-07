@@ -1,10 +1,11 @@
 package modele.dao.requetes;
 
-import modele.Zone;
+import modele.ZoneVoirie;
 
-public class RequeteSelectZoneVoirie extends Requete<Zone> {
-    @Override
-    public String requete() {
-        return "SELECT * FROM zones_voirie";
-    }
+public class RequeteSelectZoneVoirie extends Requete<ZoneVoirie> {
+
+	@Override
+	public String requete() {
+		return "SELECT * FROM zones_voirie";
+	}
 }

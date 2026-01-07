@@ -9,13 +9,15 @@ public class ReservationParking {
 	private LocalDateTime dateArrivee;
 	private LocalDateTime dateDepart;
 	private boolean estPayee;
+	private int idUtilisateur;
 
-	public ReservationParking(String immatriculation, Parking parking, LocalDateTime dateArrivee) {
+	public ReservationParking(String immatriculation, Parking parking, LocalDateTime dateArrivee, int idUtilisateur) {
 		this.immatriculation = immatriculation;
 		this.parking = parking;
 		this.dateArrivee = dateArrivee;
 		this.dateDepart = null;
 		this.estPayee = false;
+		this.idUtilisateur = idUtilisateur;
 	}
 
 	public double calculerPrixTotal() {
@@ -83,6 +85,14 @@ public class ReservationParking {
 
 	public void setEstPayee(boolean estPayee) {
 		this.estPayee = estPayee;
+	}
+
+	public int getIdUtilisateur() {
+		return this.idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 
 	public static boolean immatriculationValide(String immatriculation) {

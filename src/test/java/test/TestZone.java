@@ -5,15 +5,15 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import modele.Zone;
+import modele.ZoneVoirie;
 
 public class TestZone {
 
-	private Zone zone;
+	private ZoneVoirie zone;
 
 	@Before
 	public void setUp() {
-		this.zone = new Zone(
+		this.zone = new ZoneVoirie(
 				"Peripherique",
 				"Blanc",
 				2.5,
@@ -43,7 +43,7 @@ public class TestZone {
 
 	@Test
 	public void testCouleurEnum() {
-		Zone zone = new Zone("Test", "Jaune", 1.0, 1.0);
+		ZoneVoirie zone = new ZoneVoirie("Test", "Jaune", 1.0, 1.0);
 
 		assertEquals("Jaune", zone.getZone());
 	}

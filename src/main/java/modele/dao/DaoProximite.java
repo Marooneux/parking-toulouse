@@ -10,6 +10,7 @@ import modele.Proximite;
 import modele.dao.requetes.RequeteDeleteProximite;
 import modele.dao.requetes.RequeteInsertProximite;
 import modele.dao.requetes.RequeteSelectProximite;
+import modele.dao.requetes.RequeteSelectProximiteById;
 import modele.dao.requetes.RequeteUpdateProximite;
 
 public class DaoProximite extends DaoModele<Proximite> {
@@ -31,6 +32,11 @@ public class DaoProximite extends DaoModele<Proximite> {
 	@Override
 	public List<Proximite> findAll() throws SQLException {
 		return this.find(new RequeteSelectProximite());
+	}
+
+	public Proximite findById(int idParking, int idLigneMetro) throws SQLException {
+		return this.findById(new RequeteSelectProximiteById(),
+				String.valueOf(idParking), String.valueOf(idLigneMetro));
 	}
 
 	@Override

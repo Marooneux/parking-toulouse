@@ -1,10 +1,11 @@
 package test.dao;
 
-import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-@Suite
-@SelectClasses({ TestDaoLigneMetro.class, TestDaoParking.class, TestDaoProximite.class, TestDaoReservationParking.class,
+@RunWith(Suite.class)
+@SuiteClasses({ TestDaoLigneMetro.class, TestDaoParking.class, TestDaoProximite.class, TestDaoReservationParking.class,
 		TestDaoReservationVoirie.class, TestDaoUtilisateur.class, TestDaoZoneVoirie.class })
 public class AllTests {
 

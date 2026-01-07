@@ -1,10 +1,11 @@
 package test;
 
-import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-@Suite
-@SelectClasses({ TestAdministrateurParking.class, TestAdministrateurSysteme.class, TestCompte.class,
+@RunWith(Suite.class)
+@SuiteClasses({ TestAdministrateurParking.class, TestAdministrateurSysteme.class, TestCompte.class,
 		TestLigneMetro.class, TestPaiement.class, TestParking.class, TestProximite.class, TestReservationParking.class,
 		TestReservationVoirie.class, TestUtilisateur.class, TestZone.class })
 public class AllTests {

@@ -1,97 +1,122 @@
 package test.dao;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 
 import modele.Parking;
 import modele.ReservationParking;
+import modele.Utilisateur;
 import modele.dao.DaoParking;
 import modele.dao.DaoReservationParking;
+import modele.dao.DaoUtilisateur;
 import modele.dao.MySQLDataSource;
 
 public class TestDaoReservationParking {
 
-	private DaoReservationParking daoReservation;
+	private static Connection cn;
 	private DaoParking daoParking;
+	private DaoUtilisateur daoUtilisateur;
+	private DaoReservationParking daoReservation;
+
+	private Parking parkingTest;
+	private Utilisateur utilisateurTest;
+	private ReservationParking reservationTest;
+
+	@BeforeClass
+	public static void initConnexion() {
+		MySQLDataSource.creerAcces("user", "password");
+	}
 
 	@Before
-	public void setup() throws SQLException {
-		MySQLDataSource.creerAcces("root", "claudio");
-		this.daoReservation = new DaoReservationParking();
+	public void setUp() throws SQLException {
+		cn = MySQLDataSource.getConnexion();
+		cn.setAutoCommit(false);
+
 		this.daoParking = new DaoParking();
+		this.daoUtilisateur = new DaoUtilisateur();
+		this.daoReservation = new DaoReservationParking();
+
+		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 2.5,
+				java.time.LocalTime.of(7, 0), java.time.LocalTime.of(23, 0), true, 2.5);
+		this.daoParking.create(this.parkingTest);
+
+		this.utilisateurTest = new Utilisateur(0, "Nom", "Prenom", "user@test.com", "password", null);
+		this.daoUtilisateur.create(this.utilisateurTest);
+
+		this.reservationTest = new ReservationParking("AB-123-CD", this.parkingTest,
+				LocalDateTime.of(2026, 1, 7, 10, 0),
+				this.utilisateurTest.getId());
 	}
 
-	private Parking ensureParking() throws SQLException {
-		List<Parking> parkings = this.daoParking.findAll();
-		if (parkings.isEmpty()) {
-			Parking p = new Parking(1, "TestResvPark", "AdresseTest", 100, 2.0,
-					Time.valueOf("08:00:00").toLocalTime(),
-					Time.valueOf("18:30:00").toLocalTime(), true, 1.5);
-			this.daoParking.create(p);
-			return p;
+	@After
+	public void tearDown() throws SQLException {
+		if (cn != null) {
+			cn.rollback();
+			MySQLDataSource.deconnecter();
 		}
-		return parkings.get(0);
+		this.daoParking = null;
+		this.daoUtilisateur = null;
+		this.daoReservation = null;
+		this.parkingTest = null;
+		this.utilisateurTest = null;
+		this.reservationTest = null;
 	}
 
 	@Test
-	@DisplayName("Test create reservation")
-	public void testCreate() throws SQLException {
-		Parking p = this.ensureParking();
-		ReservationParking r = new ReservationParking("AB-123-CD", p, LocalDateTime.now().minusHours(2));
-		r.setDateDepart(LocalDateTime.now());
-		this.daoReservation.create(r);
+	public void testCreateAndFindById() throws SQLException {
+		this.daoReservation.create(this.reservationTest);
 
-		List<ReservationParking> reservations = this.daoReservation.findAll();
-		assertNotNull(reservations);
-		assertTrue(reservations.stream().anyMatch(x -> x.getImmatriculation().equals("AB-123-CD")));
-
-		this.daoReservation.delete(r);
+		ReservationParking r = this.daoReservation.findById(this.reservationTest.getImmatriculation(),
+				this.parkingTest.getId());
+		assertNotNull(r);
+		assertEquals("AB-123-CD", r.getImmatriculation());
+		assertEquals(this.parkingTest.getId(), r.getParking().getId());
+		assertEquals(this.utilisateurTest.getId(), r.getIdUtilisateur());
 	}
 
 	@Test
-	@DisplayName("Test update reservation")
 	public void testUpdate() throws SQLException {
-		Parking p = this.ensureParking();
-		ReservationParking r = new ReservationParking("EF-456-GH", p, LocalDateTime.now().minusHours(3));
-		r.setDateDepart(LocalDateTime.now().minusHours(1));
-		this.daoReservation.create(r);
+		this.daoReservation.create(this.reservationTest);
 
-		r.setImmatriculation("EF-456-XX");
-		this.daoReservation.update(r);
+		// modifier la date de départ
+		LocalDateTime depart = LocalDateTime.of(2026, 1, 7, 12, 0);
+		this.reservationTest.setDateDepart(depart);
+		this.daoReservation.update(this.reservationTest);
 
-		List<ReservationParking> reservations = this.daoReservation.findAll();
-		assertTrue(reservations.stream().anyMatch(x -> x.getImmatriculation().equals("EF-456-XX")));
-
-		this.daoReservation.delete(r);
+		ReservationParking r = this.daoReservation.findById(this.reservationTest.getImmatriculation(),
+				this.parkingTest.getId());
+		assertEquals(depart, r.getDateDepart());
 	}
 
 	@Test
-	@DisplayName("Test delete reservation")
 	public void testDelete() throws SQLException {
-		Parking p = this.ensureParking();
-		ReservationParking r = new ReservationParking("ZZ-999-ZZ", p, LocalDateTime.now().minusHours(1));
-		r.setDateDepart(LocalDateTime.now());
-		this.daoReservation.create(r);
+		this.daoReservation.create(this.reservationTest);
 
-		this.daoReservation.delete(r);
-		List<ReservationParking> reservations = this.daoReservation.findAll();
-		assertFalse(reservations.stream().anyMatch(x -> x.getImmatriculation().equals("ZZ-999-ZZ")));
+		this.daoReservation.delete(this.reservationTest);
+
+		ReservationParking r = this.daoReservation.findById(this.reservationTest.getImmatriculation(),
+				this.parkingTest.getId());
+		assertNull(r);
 	}
 
 	@Test
-	@DisplayName("Test findAll reservations")
 	public void testFindAll() throws SQLException {
-		List<ReservationParking> reservations = this.daoReservation.findAll();
-		assertNotNull(reservations);
+		int avant = this.daoReservation.findAll().size();
+
+		this.daoReservation.create(this.reservationTest);
+
+		List<ReservationParking> liste = this.daoReservation.findAll();
+		assertEquals(avant + 1, liste.size());
 	}
 }

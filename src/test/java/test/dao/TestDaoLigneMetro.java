@@ -1,72 +1,99 @@
 package test.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import modele.LigneMetro;
 import modele.dao.DaoLigneMetro;
 import modele.dao.MySQLDataSource;
 
-class TestDaoLigneMetro {
+public class TestDaoLigneMetro {
+
 	private DaoLigneMetro daoLigneMetro;
-	private LigneMetro ligneMetro;
+	private Connection cn;
+	private LigneMetro ligneTest;
+
+	@BeforeClass
+	public static void initConnexion() {
+		MySQLDataSource.creerAcces("user", "password");
+	}
 
 	@Before
 	public void setUp() throws SQLException {
-		MySQLDataSource.creerAcces("root", "claudio");
+		this.cn = MySQLDataSource.getConnexion();
+		this.cn.setAutoCommit(false);
+
 		this.daoLigneMetro = new DaoLigneMetro();
-		this.ligneMetro = new LigneMetro(1, "NomTest", "CouleurTest");
-		this.daoLigneMetro.create(this.ligneMetro);
+
+		this.ligneTest = new LigneMetro(0, "Ligne Test", "Bleu");
 	}
 
 	@After
 	public void tearDown() throws SQLException {
-		this.daoLigneMetro.delete(this.ligneMetro);
-		MySQLDataSource.deconnecter();
+		if (this.cn != null) {
+			this.cn.rollback();
+			MySQLDataSource.deconnecter();
+		}
+
+		this.daoLigneMetro = null;
+		this.ligneTest = null;
 	}
 
 	@Test
-	@DisplayName("Test create")
-	public void testCreate() throws SQLException {
-		List<LigneMetro> lignesMetro = this.daoLigneMetro.findAll();
-		assertEquals(1, lignesMetro.size());
-		assertTrue(lignesMetro.stream().anyMatch(ligneMetro -> ligneMetro.getNom().equals("NomTest")));
+	public void testCreateAndFindById() throws SQLException {
+		this.daoLigneMetro.create(this.ligneTest);
+
+		assertTrue(this.ligneTest.getId() > 0);
+
+		LigneMetro l = this.daoLigneMetro.findById(this.ligneTest.getId());
+		assertNotNull(l);
+		assertEquals("Ligne Test", l.getNom());
+		assertEquals("Bleu", l.getCouleur());
 	}
 
 	@Test
-	@DisplayName("Test update")
 	public void testUpdate() throws SQLException {
-		this.ligneMetro.setNom("NouveauNomTest");
-		this.daoLigneMetro.update(this.ligneMetro);
+		this.daoLigneMetro.create(this.ligneTest);
 
-		List<LigneMetro> lignesMetro = this.daoLigneMetro.findAll();
-		assertTrue(lignesMetro.stream().anyMatch(ligneMetro -> ligneMetro.getNom().equals("TestUpdateModified")));
+		this.ligneTest.setNom("Ligne Modifiée");
+		this.ligneTest.setCouleur("Rouge");
+
+		this.daoLigneMetro.update(this.ligneTest);
+
+		LigneMetro l = this.daoLigneMetro.findById(this.ligneTest.getId());
+		assertEquals("Ligne Modifiée", l.getNom());
+		assertEquals("Rouge", l.getCouleur());
 	}
 
 	@Test
-	@DisplayName("Test delete")
 	public void testDelete() throws SQLException {
-		this.daoLigneMetro.delete(this.ligneMetro);
-		List<LigneMetro> lignesMetro = this.daoLigneMetro.findAll();
-		assertFalse(lignesMetro.stream().anyMatch(ligneMetro -> ligneMetro.getNom().equals("TestDelete")));
+		this.daoLigneMetro.create(this.ligneTest);
+
+		int id = this.ligneTest.getId();
+		this.daoLigneMetro.delete(this.ligneTest);
+
+		LigneMetro l = this.daoLigneMetro.findById(id);
+		assertNull(l);
 	}
 
 	@Test
-	@DisplayName("Test findAll")
 	public void testFindAll() throws SQLException {
-		this.daoLigneMetro.delete(this.ligneMetro);
+		int avant = this.daoLigneMetro.findAll().size();
+
+		this.daoLigneMetro.create(this.ligneTest);
+
 		List<LigneMetro> lignes = this.daoLigneMetro.findAll();
-		assertNotNull(lignes, "La liste des lignes de métro ne doit pas être nulle");
-		assertTrue("La liste peut être vide mais non nulle", lignes.size() >= 0);
+		assertEquals(avant + 1, lignes.size());
 	}
 }
