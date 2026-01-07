@@ -114,7 +114,7 @@ public class ChoixParking extends JFrame {
         container.add(bottomPanel, BorderLayout.SOUTH);
 
         btnModifier.addActionListener(e -> onModify.accept(parking));
-
+        btnSupprimer.addActionListener(e -> onDelete.accept(parking));
         gridPanel.add(container);
         gridPanel.revalidate();
         gridPanel.repaint();

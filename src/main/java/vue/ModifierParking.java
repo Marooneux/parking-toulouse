@@ -3,6 +3,7 @@ package vue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.time.LocalTime;
 
 import modele.Parking;
 
@@ -15,6 +16,10 @@ public class ModifierParking extends JFrame {
     private JTextField txtTarif;
     private JTextField txtHauteur;
     private JTextField txtPlacesMax;
+    private JTextField txtHeureOuverture;
+    private JTextField txtHeureFermeture;
+    private JCheckBox chkMoto;
+
 
     private JButton btnValider;
     private JButton btnAnnuler;
@@ -48,6 +53,13 @@ public class ModifierParking extends JFrame {
         txtTarif = new JTextField();
         txtHauteur = new JTextField();
         txtPlacesMax = new JTextField();
+        
+        txtHeureOuverture = new JTextField(parking.getHeureOuverture().toString());
+        txtHeureFermeture = new JTextField(parking.getHeureFermeture().toString());
+
+        chkMoto = new JCheckBox("Places moto");
+        chkMoto.setSelected(parking.isContientPlacesMoto());
+
 
         form.add(new JLabel("Nom"));
         form.add(txtNom);
@@ -115,4 +127,18 @@ public class ModifierParking extends JFrame {
     public Parking getParking() {
         return parking;
     }
+    
+    public LocalTime getHeureOuverture() {
+        return LocalTime.parse(txtHeureOuverture.getText());
+    }
+
+    public LocalTime getHeureFermeture() {
+        return LocalTime.parse(txtHeureFermeture.getText());
+    }
+    
+    public boolean isContientPlacesMoto() {
+        return chkMoto.isSelected();
+    }
+
+
 }

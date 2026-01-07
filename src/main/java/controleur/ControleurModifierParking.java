@@ -36,38 +36,32 @@ public class ControleurModifierParking {
     }
 
     private void valider() {
-        try {
-            // 1. Récupération des valeurs depuis la vue
-            parking.setNom(vue.getNom());
-            parking.setAdresse(vue.getAdresse());
-            parking.setTarif(vue.getTarif());
-            parking.setNbPlacesMax(vue.getPlacesMax());
-
-            // 2. UPDATE en base
+    	try {
+    		System.out.println("UPDATE parking ID = " + parking.getId());
+    		parking.setNom(vue.getNom());
+    		parking.setAdresse(vue.getAdresse());
+    		parking.setTarif(vue.getTarif());
+    		parking.setNbPlacesMax(vue.getPlacesMax());
+    		
+    		parking.setHauteur(vue.getHauteur());
+    		parking.setHeureOuverture(vue.getHeureOuverture());
+            parking.setHeureFermeture(vue.getHeureFermeture());
+            parking.setContientPlacesMoto(vue.isContientPlacesMoto());
+            
             daoParking.update(parking);
-
-            // 3. Feedback utilisateur
-            JOptionPane.showMessageDialog(
-                    vue,
-                    "Parking modifié avec succès",
-                    "Succès",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-
-            // 4. Retour à ChoixParking
+            
+            JOptionPane.showMessageDialog(vue, "Parking modifié avec succès");
+    		
             vue.dispose();
             ChoixParking vueChoix = new ChoixParking();
             new ControleurChoixParking(vueChoix);
             vueChoix.setVisible(true);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(
-                    vue,
-                    "Erreur lors de la modification",
-                    "Erreur",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+            
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    		JOptionPane.showMessageDialog(vue, "Erreur lors de la modification");
+    	}
+    	
     }
+    
 }

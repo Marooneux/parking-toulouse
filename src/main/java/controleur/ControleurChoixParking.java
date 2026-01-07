@@ -62,6 +62,8 @@ public class ControleurChoixParking {
         vueModif.setVisible(true);
         vue.dispose();
     }
+    
+    
 
     // not finished
     private void supprimerParking(Parking parking) {
@@ -71,8 +73,8 @@ public class ControleurChoixParking {
                 JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                daoParking.delete(parking); // assuming Parking has getId() and DaoParking has delete(id)
-                    // remove from UI
+                daoParking.delete(parking); // assuming Parking has getId() and DaoParking has delete(id)  
+                // remove from UI
                 JOptionPane.showMessageDialog(vue, "Parking supprimé avec succès !");
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -83,6 +85,7 @@ public class ControleurChoixParking {
     //---
     
 
+    
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             ChoixParking vue = new ChoixParking();
