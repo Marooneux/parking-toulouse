@@ -9,6 +9,7 @@ import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 import vue.adminParking.Accueil;
+import vue.adminParking.GestionParking;
 import vue.SaisirHeureArriveParking;
 
 public class ControleurAccueilAdmin{
@@ -28,12 +29,9 @@ public class ControleurAccueilAdmin{
 
     private void chargerParkings() {
         try {
-            //System.out.println("Tentative chargement parkings...");
-            List<Parking> parkings = daoParking.findAll();
-            //System.out.println("Nombre de parkings trouvés = " + parkings.size());
+            List<Parking> parkings = daoParking.findByAdminId(1);
 
             for (Parking p : parkings) {
-                //System.out.println("Parking: " + p.getNom());
                 vue.addParking(p, this::onParkingSelected);
             }
 
@@ -46,11 +44,9 @@ public class ControleurAccueilAdmin{
     
 
     private void onParkingSelected(Parking parking) {
-        SaisirHeureArriveParking vueSuivante =
-                new SaisirHeureArriveParking(parking);
+        GestionParking vueSuivante = new GestionParking(parking);
 
         vueSuivante.setVisible(true);
-        vue.dispose();
     }
     
 
