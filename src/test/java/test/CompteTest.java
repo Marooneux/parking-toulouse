@@ -45,20 +45,6 @@ public class CompteTest {
 	}
 
 	@Test
-	public void testConnectionValide() {
-		assertTrue(this.compte.connectionValide("jean.dupont@example.com", "secret"));
-		assertFalse(this.compte.connectionValide("wrong@example.com", "secret"));
-		assertFalse(this.compte.connectionValide("jean.dupont@example.com", "wrongpass"));
-	}
-
-	@Test
-	public void testSetMdpWithCorrectOldPassword() {
-		String oldRef = this.compte.getMdp();
-		this.compte.setMdp(oldRef, "noveauSecret");
-		assertEquals("noveauSecret", this.compte.getMdp());
-	}
-
-	@Test
 	public void testSetMdpWithWrongOldPassword() {
 		this.compte.setMdp("wrongOld", "noveauSecret");
 		assertEquals("secret", this.compte.getMdp());

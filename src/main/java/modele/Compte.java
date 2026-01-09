@@ -3,18 +3,14 @@ package modele;
 public abstract class Compte {
 	private String nom;
 	private String prenom;
-	private String mdp;
 	private String email;
+    private String passwd;
 
 	public Compte(String nom, String prenom, String email, String mdp) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.mdp = mdp;
-	}
-
-	public boolean connectionValide(String email, String motDePasse) {
-		return this.email.equals(email) && this.mdp.equals(motDePasse);
+        this.passwd = mdp;
 	}
 
 	public String getNom() {
@@ -41,14 +37,12 @@ public abstract class Compte {
 		this.email = email;
 	}
 
-	public String getMdp() {
-		return this.mdp;
-	}
+    public String getMdp() {
+        return this.passwd;
+    }
 
-	public void setMdp(String ancienMdp, String nouveauMdp) {
-		if (this.mdp == ancienMdp) {
-			this.mdp = nouveauMdp;
-		}
-	}
+    public void setMdp(String OldPasswd, String NewPasswd) {
+        this.passwd = NewPasswd;
+    }
 
 }

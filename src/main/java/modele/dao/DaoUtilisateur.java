@@ -5,26 +5,29 @@ import java.sql.SQLException;
 import java.util.List;
 
 import modele.Utilisateur;
+import modele.dao.requetes.RequeteDeleteUtilisateur;
+import modele.dao.requetes.RequeteInsertUtilisateur;
 import modele.dao.requetes.RequeteSelectUtilisateurs;
 
 public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
 	public void create(Utilisateur donnees) throws SQLException {
-		this.miseAJour(new modele.dao.requetes.RequeteInsertUtilisateur(), donnees);
-
+        int id = this.miseAJourAvecKeyGeneration(new RequeteInsertUtilisateur(), donnees);
+        System.out.println("Generated id = " + id);
+        if(id > 0) {
+            donnees.setId(id);
+        }
 	}
 
 	@Override
 	public void update(Utilisateur donnees) throws SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void delete(Utilisateur donnees) throws SQLException {
-		// TODO Auto-generated method stub
-
+		this.miseAJour(new RequeteDeleteUtilisateur(), donnees);
 	}
 
 	@Override
@@ -34,12 +37,11 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 
 	@Override
 	protected Utilisateur creerInstance(ResultSet curseur) throws SQLException {
-		int id = curseur.getInt("id");
 		String nom = curseur.getString("nom");
 		String prenom = curseur.getString("prenom");
 		String email = curseur.getString("email");
-		String mdp = curseur.getString("mot_de_passe");
-		int idAb = curseur.getInt("id_abonnement");
-		return new Utilisateur(id, nom, prenom, email, mdp, String.valueOf(idAb));
+        String mdp = curseur.getString("mdp");
+        String user_type = curseur.getString("user_type");
+		return new Utilisateur(nom, prenom, email, mdp, user_type);
 	}
 }

@@ -1,5 +1,7 @@
 package vue;
 
+import controleur.ControleurLoginPage;
+
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,7 +37,7 @@ public class LoginPage extends JFrame {
 			}
 		});
 	}
-	/*
+
 	public LoginPage() {
 		ControleurLoginPage controleur = new ControleurLoginPage(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,5 +109,4 @@ public class LoginPage extends JFrame {
 	public void viderChampMdp() {
 		this.passwdField.setText("");
 	}
-	*/
 }
