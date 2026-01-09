@@ -6,8 +6,9 @@ import java.awt.*;
 import java.time.LocalTime;
 
 import modele.Parking;
+import vue.ChoixTypeStationnement;
 
-public class ModifierParking extends JFrame {
+public class AjouterParking extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,21 +21,16 @@ public class ModifierParking extends JFrame {
     private JTextField txtHeureFermeture;
     private JCheckBox chkMoto;
 
-
     private JButton btnValider;
     private JButton btnAnnuler;
 
-    private Parking parking;
-
-    public ModifierParking(Parking parking) {
-        this.parking = parking;
+    public AjouterParking() {
         initialize();
-        remplirChamps();
     }
 
     private void initialize() {
-        setTitle("Modifier un parking");
-        setSize(450, 500);
+        setTitle("Ajouter un nouveau parking");
+        setSize(450, 450);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -42,7 +38,7 @@ public class ModifierParking extends JFrame {
         content.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(content);
 
-        JLabel title = new JLabel("Modification du parking");
+        JLabel title = new JLabel("Ajout d'un nouveau parking");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
         content.add(title, BorderLayout.NORTH);
 
@@ -54,12 +50,10 @@ public class ModifierParking extends JFrame {
         txtHauteur = new JTextField();
         txtPlacesMax = new JTextField();
         
-        txtHeureOuverture = new JTextField(parking.getHeureOuverture().toString());
-        txtHeureFermeture = new JTextField(parking.getHeureFermeture().toString());
+        txtHeureOuverture = new JTextField();
+        txtHeureFermeture = new JTextField();
 
-        chkMoto = new JCheckBox("Places de motos ?");
-        chkMoto.setSelected(false);
-        
+
         form.add(new JLabel("Nom"));
         form.add(txtNom);
 
@@ -80,7 +74,9 @@ public class ModifierParking extends JFrame {
         
         form.add(new JLabel("Horaire de fermeture (hh:mm:ss)"));
         form.add(txtHeureFermeture);
-
+        
+        chkMoto = new JCheckBox("Places moto");
+        chkMoto.setSelected(false);
         form.add(chkMoto);
 
         content.add(form, BorderLayout.CENTER);
@@ -93,14 +89,6 @@ public class ModifierParking extends JFrame {
         actions.add(btnValider);
 
         content.add(actions, BorderLayout.SOUTH);
-    }
-
-    private void remplirChamps() {
-        txtNom.setText(parking.getNom());
-        txtAdresse.setText(parking.getAdresse());
-        txtTarif.setText(String.valueOf(parking.getTarif()));
-        txtHauteur.setText(String.valueOf(parking.getHauteur()));
-        txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
     }
 
     public JButton getBtnValider() {
@@ -129,10 +117,6 @@ public class ModifierParking extends JFrame {
 
     public int getPlacesMax() {
         return Integer.parseInt(txtPlacesMax.getText().trim());
-    }
-    
-    public Parking getParking() {
-        return parking;
     }
     
     public LocalTime getHeureOuverture() {

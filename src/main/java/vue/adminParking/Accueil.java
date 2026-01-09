@@ -23,8 +23,7 @@ public class Accueil extends JFrame {
     private static final int SIDEBAR_WIDTH = 200;
 
     private JPanel gridPanel;
-    private JButton btnValiderAjout;
-    private JButton btnAnnulerAjout;
+    private JButton btnAjouter;
 
     private JTextField txtNom;
     private JTextField txtAdresse;
@@ -211,15 +210,17 @@ public class Accueil extends JFrame {
         scrollPane.setViewportView(gridPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Boutons globaux (Ajouter un nouveau, etc.)
-        btnAnnulerAjout = new JButton("Annuler");
-        btnValiderAjout = new JButton("Ajouter un parking");
+        btnAjouter = new JButton("Ajouter un parking");
+        btnAjouter.addActionListener(e -> {
+            ControleurAccueilAdminParking.ouvrirPageAjouter();
+            this.dispose();
+           
+        });
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         actions.setBackground(new Color(248, 249, 250));
         actions.setBorder(new EmptyBorder(10, 50, 30, 50));
-        actions.add(btnAnnulerAjout);
-        actions.add(btnValiderAjout);
+        actions.add(btnAjouter);
 
         panel.add(actions, BorderLayout.SOUTH);
 
@@ -366,8 +367,7 @@ public class Accueil extends JFrame {
     }
 
     // Getters
-    public JButton getBtnValiderAjout() { return btnValiderAjout; }
-    public JButton getBtnAnnulerAjout() { return btnAnnulerAjout; }
+    public JButton getBtnValiderAjout() { return btnAjouter; }
     public JButton getBtnEnregistrerModification() { return btnEnregistrerModification; }
     public Parking getParkingEnEdition() { return parkingEnEdition; }
 

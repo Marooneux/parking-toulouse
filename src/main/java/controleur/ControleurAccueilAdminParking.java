@@ -9,6 +9,7 @@ import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 import vue.adminParking.Accueil;
+import vue.adminParking.AjouterParking;
 import vue.adminParking.GestionParking;
 import vue.adminParking.ModifierParking;
 import vue.SaisirHeureArriveParking;
@@ -48,6 +49,12 @@ public class ControleurAccueilAdminParking{
         GestionParking vueSuivante = new GestionParking(parking);
 
         vueSuivante.setVisible(true);
+    }
+    
+    public static void ouvrirPageAjouter() {
+    	AjouterParking vueAjout = new AjouterParking();
+    	new ControleurAjouterParking(vueAjout);
+    	vueAjout.setVisible(true);
     }
     
     private void ouvrirPageModification(Parking parking) {

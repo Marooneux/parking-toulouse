@@ -5,15 +5,14 @@ import javax.swing.JOptionPane;
 import modele.Parking;
 import modele.dao.DaoParking;
 import vue.adminParking.Accueil;
-import vue.adminParking.ModifierParking;
+import vue.adminParking.AjouterParking;
 
-public class ControleurModifierParking {
+public class ControleurAjouterParking {
 
-    private ModifierParking vue;
-    private Parking parking;
+    private AjouterParking vue;
     private DaoParking daoParking;
 
-    public ControleurModifierParking(ModifierParking vue, Parking parking) {
+    public ControleurAjouterParking(AjouterParking vue) {
         this.vue = vue;
         this.daoParking = new DaoParking();
         initListeners();
@@ -36,20 +35,20 @@ public class ControleurModifierParking {
 
     private void valider() {
     	try {
-    		
-    		parking.setNom(vue.getNom());
-    		parking.setAdresse(vue.getAdresse());
-    		parking.setTarif(vue.getTarif());
-    		parking.setNbPlacesMax(vue.getPlacesMax());
-    		
-    		parking.setHauteur(vue.getHauteur());
-    		parking.setHeureOuverture(vue.getHeureOuverture());
-            parking.setHeureFermeture(vue.getHeureFermeture());
-            parking.setContientPlacesMoto(vue.isContientPlacesMoto());
+    		Parking parking = new Parking(
+    				vue.getNom(), 
+    				vue.getAdresse(), 
+    				vue.getTarif(), 
+    				vue.getPlacesMax(), 
+    				vue.getHauteur(),
+    				vue.getHeureOuverture(),
+    				vue.getHeureFermeture(),
+    				vue.isContientPlacesMoto()
+    				);
+
+            daoParking.create(parking);
             
-            daoParking.update(parking);
-            
-            JOptionPane.showMessageDialog(vue, "Parking modifié avec succès");
+            JOptionPane.showMessageDialog(vue, "Parking ajouté avec succès");
     		
             vue.dispose();
             Accueil vueChoix = new Accueil();
@@ -58,7 +57,7 @@ public class ControleurModifierParking {
             
     	} catch (Exception ex) {
     		ex.printStackTrace();
-    		JOptionPane.showMessageDialog(vue, "Erreur lors de la modification");
+    		JOptionPane.showMessageDialog(vue, "Erreur lors de l'ajout");
     	}
     	
     }
