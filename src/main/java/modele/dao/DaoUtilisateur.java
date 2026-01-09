@@ -6,6 +6,7 @@ import java.util.List;
 
 import modele.Abonnement;
 import modele.Utilisateur;
+import modele.Utilisateur.Type;
 import modele.dao.requetes.RequeteDeleteUtilisateur;
 import modele.dao.requetes.RequeteInsertUtilisateur;
 import modele.dao.requetes.RequeteSelectUtilisateur;
@@ -49,11 +50,13 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 		String email = curseur.getString("email");
 		String mdpHash = curseur.getString("mot_de_passe");
 		int idAbonnement = curseur.getInt("id_abonnement");
+
 		Abonnement abonnement = null;
 		if (!curseur.wasNull()) {
 			abonnement = this.daoAbonnement.findById(idAbonnement);
 		}
+		Type type = Type.valueOf(curseur.getString("type").toUpperCase());
 
-		return new Utilisateur(id, nom, prenom, email, mdpHash, abonnement);
+		return new Utilisateur(id, nom, prenom, email, mdpHash, abonnement, type);
 	}
 }

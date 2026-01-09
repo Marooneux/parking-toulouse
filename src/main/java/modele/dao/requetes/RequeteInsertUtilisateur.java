@@ -10,19 +10,20 @@ public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, id_abonnement) VALUES (?, ?, ?, ?, ?)";
+		return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, id_abonnement, type) VALUES (?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
-	public void parametres(PreparedStatement statement, Utilisateur u) throws SQLException {
-		statement.setString(1, u.getNom());
-		statement.setString(2, u.getPrenom());
-		statement.setString(3, u.getEmail());
-		statement.setString(4, u.getMdp());
-		if (u.getAbonnement() != null) {
-			statement.setInt(5, u.getAbonnement().getId());
+	public void parametres(PreparedStatement statement, Utilisateur donnee) throws SQLException {
+		statement.setString(1, donnee.getNom());
+		statement.setString(2, donnee.getPrenom());
+		statement.setString(3, donnee.getEmail());
+		statement.setString(4, donnee.getMdp());
+		if (donnee.getAbonnement() != null) {
+			statement.setInt(5, donnee.getAbonnement().getId());
 		} else {
 			statement.setNull(5, Types.INTEGER);
 		}
+		statement.setString(6, donnee.getType().name().toLowerCase());
 	}
 }

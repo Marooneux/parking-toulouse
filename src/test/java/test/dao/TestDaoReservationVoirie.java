@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import modele.ReservationVoirie;
 import modele.Utilisateur;
+import modele.Utilisateur.Type;
 import modele.ZoneVoirie;
 import modele.dao.DaoReservationVoirie;
 import modele.dao.DaoUtilisateur;
@@ -46,7 +47,7 @@ public class TestDaoReservationVoirie {
 		this.daoUser = new DaoUtilisateur();
 		this.daoZone = new DaoZoneVoirie();
 
-		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "jean.dupont@test.com", "mdp123", null);
+		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "jean.dupont@test.com", "mdp123", null, Type.CLIENT);
 		this.daoUser.create(this.utilisateur);
 
 		this.zone = new ZoneVoirie(0, "Zone Test", 2.5, 120);

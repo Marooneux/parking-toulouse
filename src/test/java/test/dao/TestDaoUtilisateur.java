@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import modele.Abonnement;
 import modele.Utilisateur;
+import modele.Utilisateur.Type;
 import modele.dao.DaoAbonnement;
 import modele.dao.DaoUtilisateur;
 import modele.dao.MySQLDataSource;
@@ -26,6 +27,7 @@ public class TestDaoUtilisateur {
 	private DaoUtilisateur daoUtilisateur;
 	private DaoAbonnement daoAbonnement;
 	private Abonnement abonnement;
+	private Utilisateur utilisateur;
 
 	@BeforeClass
 	public static void initConnexion() {
@@ -37,10 +39,13 @@ public class TestDaoUtilisateur {
 		cn = MySQLDataSource.getConnexion();
 		cn.setAutoCommit(false);
 
-		this.daoUtilisateur = new DaoUtilisateur();
 		this.daoAbonnement = new DaoAbonnement();
 		this.abonnement = new Abonnement(0, "Premium", "Abonnement premium test");
 		this.daoAbonnement.create(this.abonnement);
+		this.daoUtilisateur = new DaoUtilisateur();
+		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement,
+				Type.CLIENT);
+		this.daoUtilisateur.create(this.utilisateur);
 	}
 
 	@After
@@ -51,56 +56,48 @@ public class TestDaoUtilisateur {
 		}
 		this.daoUtilisateur = null;
 		this.daoAbonnement = null;
+		this.utilisateur = null;
+		this.abonnement = null;
 	}
 
 	@Test
 	public void testCreateAndFindById() throws SQLException {
-		Utilisateur u = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement);
-		this.daoUtilisateur.create(u);
-		assertTrue(u.getId() > 0);
-
-		Utilisateur u2 = this.daoUtilisateur.findById(u.getId());
-		assertNotNull(u2);
-		assertEquals(u.getNom(), u2.getNom());
-		assertEquals(u.getPrenom(), u2.getPrenom());
-		assertEquals(u.getEmail(), u2.getEmail());
-		assertEquals(u.getAbonnement().getId(), u2.getAbonnement().getId());
+		assertTrue(this.utilisateur.getId() > 0);
+		Utilisateur utilisateur2 = this.daoUtilisateur.findById(this.utilisateur.getId());
+		assertNotNull(utilisateur2);
+		assertEquals(this.utilisateur.getNom(), utilisateur2.getNom());
+		assertEquals(this.utilisateur.getPrenom(), utilisateur2.getPrenom());
+		assertEquals(this.utilisateur.getEmail(), utilisateur2.getEmail());
+		assertEquals(this.utilisateur.getAbonnement().getId(), utilisateur2.getAbonnement().getId());
 	}
 
 	@Test
 	public void testUpdate() throws SQLException {
-		Utilisateur u = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement);
-		this.daoUtilisateur.create(u);
+		this.utilisateur.setNom("Durand");
+		this.utilisateur.setPrenom("Paul");
+		this.daoUtilisateur.update(this.utilisateur);
 
-		u.setNom("Durand");
-		u.setPrenom("Paul");
-		this.daoUtilisateur.update(u);
-
-		Utilisateur u2 = this.daoUtilisateur.findById(u.getId());
+		Utilisateur u2 = this.daoUtilisateur.findById(this.utilisateur.getId());
 		assertEquals("Durand", u2.getNom());
 		assertEquals("Paul", u2.getPrenom());
 	}
 
 	@Test
 	public void testDelete() throws SQLException {
-		Utilisateur u = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement);
-		this.daoUtilisateur.create(u);
-
-		this.daoUtilisateur.delete(u);
-		Utilisateur u2 = this.daoUtilisateur.findById(u.getId());
-		assertNull(u2);
+		this.daoUtilisateur.delete(this.utilisateur);
+		Utilisateur utilisateur2 = this.daoUtilisateur.findById(this.utilisateur.getId());
+		assertNull(utilisateur2);
 	}
 
 	@Test
 	public void testFindAll() throws SQLException {
-		Utilisateur u1 = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement);
-		Utilisateur u2 = new Utilisateur(0, "Durand", "Paul", "p.durand@example.com", "mdp456", this.abonnement);
-		this.daoUtilisateur.create(u1);
-		this.daoUtilisateur.create(u2);
+		Utilisateur utilisateur2 = new Utilisateur(0, "Durand", "Paul", "p.durand@example.com", "mdp456",
+				this.abonnement, Type.CLIENT);
+		this.daoUtilisateur.create(utilisateur2);
 
 		List<Utilisateur> all = this.daoUtilisateur.findAll();
 		assertTrue(all.size() >= 2);
-		assertTrue(all.stream().anyMatch(u -> u.getId() == u1.getId()));
-		assertTrue(all.stream().anyMatch(u -> u.getId() == u2.getId()));
+		assertTrue(all.stream().anyMatch(u -> u.getId() == this.utilisateur.getId()));
+		assertTrue(all.stream().anyMatch(u -> u.getId() == utilisateur2.getId()));
 	}
 }

@@ -17,6 +17,7 @@ import org.junit.Test;
 import modele.Parking;
 import modele.ReservationParking;
 import modele.Utilisateur;
+import modele.Utilisateur.Type;
 import modele.dao.DaoParking;
 import modele.dao.DaoReservationParking;
 import modele.dao.DaoUtilisateur;
@@ -51,7 +52,7 @@ public class TestDaoReservationParking {
 				java.time.LocalTime.of(7, 0), java.time.LocalTime.of(23, 0), true, 2.5);
 		this.daoParking.create(this.parkingTest);
 
-		this.utilisateurTest = new Utilisateur(0, "Nom", "Prenom", "user@test.com", "password", null);
+		this.utilisateurTest = new Utilisateur(0, "Nom", "Prenom", "user@test.com", "password", null, Type.CLIENT);
 		this.daoUtilisateur.create(this.utilisateurTest);
 
 		this.reservationTest = new ReservationParking("AB-123-CD", this.parkingTest,
