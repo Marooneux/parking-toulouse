@@ -8,5 +8,4 @@ public class RequeteSelectParking extends Requete<Parking> {
 	public String requete() {
 		return "SELECT * FROM parkings";
 	}
-
 }

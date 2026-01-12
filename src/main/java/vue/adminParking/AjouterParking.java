@@ -1,138 +1,150 @@
 package vue.adminParking;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.time.LocalTime;
 
-import modele.Parking;
-import vue.ChoixTypeStationnement;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class AjouterParking extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private JTextField txtNom;
-    private JTextField txtAdresse;
-    private JTextField txtTarif;
-    private JTextField txtHauteur;
-    private JTextField txtPlacesMax;
-    private JTextField txtHeureOuverture;
-    private JTextField txtHeureFermeture;
-    private JCheckBox chkMoto;
+	private JTextField txtNom;
+	private JTextField txtAdresse;
+	private JTextField txtTarif;
+	private JTextField txtHauteur;
+	private JTextField txtPlacesMax;
+	private JTextField txtPlacesOccupees;
+	private JTextField txtHeureOuverture;
+	private JTextField txtHeureFermeture;
+	private JCheckBox chkMoto;
 
-    private JButton btnValider;
-    private JButton btnAnnuler;
-    
-    private int idAdmin;
+	private JButton btnValider;
+	private JButton btnAnnuler;
 
-    public AjouterParking(int idAdmin) {
-        initialize();
-        this.idAdmin = idAdmin;
-    }
+	private int idAdmin;
 
-    private void initialize() {
-        setTitle("Ajouter un nouveau parking");
-        setSize(450, 450);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	public AjouterParking(int idAdmin) {
+		this.initialize();
+		this.idAdmin = idAdmin;
+	}
 
-        JPanel content = new JPanel(new BorderLayout(10, 10));
-        content.setBorder(new EmptyBorder(15, 15, 15, 15));
-        setContentPane(content);
+	private void initialize() {
+		this.setTitle("Ajouter un nouveau parking");
+		this.setSize(450, 450);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JLabel title = new JLabel("Ajout d'un nouveau parking");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        content.add(title, BorderLayout.NORTH);
+		JPanel content = new JPanel(new BorderLayout(10, 10));
+		content.setBorder(new EmptyBorder(15, 15, 15, 15));
+		this.setContentPane(content);
 
-        JPanel form = new JPanel(new GridLayout(0, 2, 10, 10));
+		JLabel title = new JLabel("Ajout d'un nouveau parking");
+		title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		content.add(title, BorderLayout.NORTH);
 
-        txtNom = new JTextField();
-        txtAdresse = new JTextField();
-        txtTarif = new JTextField();
-        txtHauteur = new JTextField();
-        txtPlacesMax = new JTextField();
-        
-        txtHeureOuverture = new JTextField();
-        txtHeureFermeture = new JTextField();
+		JPanel form = new JPanel(new GridLayout(0, 2, 10, 10));
 
+		this.txtNom = new JTextField();
+		this.txtAdresse = new JTextField();
+		this.txtTarif = new JTextField();
+		this.txtHauteur = new JTextField();
+		this.txtPlacesMax = new JTextField();
 
-        form.add(new JLabel("Nom"));
-        form.add(txtNom);
+		this.txtHeureOuverture = new JTextField();
+		this.txtHeureFermeture = new JTextField();
 
-        form.add(new JLabel("Adresse"));
-        form.add(txtAdresse);
+		form.add(new JLabel("Nom"));
+		form.add(this.txtNom);
 
-        form.add(new JLabel("Tarif (€/h)"));
-        form.add(txtTarif);
+		form.add(new JLabel("Adresse"));
+		form.add(this.txtAdresse);
 
-        form.add(new JLabel("Hauteur max (m)"));
-        form.add(txtHauteur);
+		form.add(new JLabel("Tarif (€/h)"));
+		form.add(this.txtTarif);
 
-        form.add(new JLabel("Places max"));
-        form.add(txtPlacesMax);
-        
-        form.add(new JLabel("Horaire d'ouverture (hh:mm:ss)"));
-        form.add(txtHeureOuverture);
-        
-        form.add(new JLabel("Horaire de fermeture (hh:mm:ss)"));
-        form.add(txtHeureFermeture);
-        
-        chkMoto = new JCheckBox("Places moto");
-        chkMoto.setSelected(false);
-        form.add(chkMoto);
+		form.add(new JLabel("Hauteur max (m)"));
+		form.add(this.txtHauteur);
 
-        content.add(form, BorderLayout.CENTER);
+		form.add(new JLabel("Places max"));
+		form.add(this.txtPlacesMax);
 
-        btnValider = new JButton("Valider");
-        btnAnnuler = new JButton("Annuler");
+		form.add(new JLabel("Places occupées"));
+		form.add(this.txtPlacesMax);
 
-        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        actions.add(btnAnnuler);
-        actions.add(btnValider);
+		form.add(new JLabel("Horaire d'ouverture (hh:mm:ss)"));
+		form.add(this.txtHeureOuverture);
 
-        content.add(actions, BorderLayout.SOUTH);
-    }
+		form.add(new JLabel("Horaire de fermeture (hh:mm:ss)"));
+		form.add(this.txtHeureFermeture);
 
-    public JButton getBtnValider() {
-        return btnValider;
-    }
+		this.chkMoto = new JCheckBox("Places moto");
+		this.chkMoto.setSelected(false);
+		form.add(this.chkMoto);
 
-    public JButton getBtnAnnuler() {
-        return btnAnnuler;
-    }
+		content.add(form, BorderLayout.CENTER);
 
-    public String getNom() {
-        return txtNom.getText().trim();
-    }
+		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButton("Annuler");
 
-    public String getAdresse() {
-        return txtAdresse.getText().trim();
-    }
+		JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		actions.add(this.btnAnnuler);
+		actions.add(this.btnValider);
 
-    public double getTarif() {
-        return Double.parseDouble(txtTarif.getText().trim());
-    }
+		content.add(actions, BorderLayout.SOUTH);
+	}
 
-    public double getHauteur() {
-        return Double.parseDouble(txtHauteur.getText().trim());
-    }
+	public JButton getBtnValider() {
+		return this.btnValider;
+	}
 
-    public int getPlacesMax() {
-        return Integer.parseInt(txtPlacesMax.getText().trim());
-    }
-    
-    public LocalTime getHeureOuverture() {
-        return LocalTime.parse(txtHeureOuverture.getText());
-    }
+	public JButton getBtnAnnuler() {
+		return this.btnAnnuler;
+	}
 
-    public LocalTime getHeureFermeture() {
-        return LocalTime.parse(txtHeureFermeture.getText());
-    }
-    
-    public boolean isContientPlacesMoto() {
-        return chkMoto.isSelected();
-    }
+	public String getNom() {
+		return this.txtNom.getText().trim();
+	}
 
+	public String getAdresse() {
+		return this.txtAdresse.getText().trim();
+	}
+
+	public double getTarif() {
+		return Double.parseDouble(this.txtTarif.getText().trim());
+	}
+
+	public double getHauteur() {
+		return Double.parseDouble(this.txtHauteur.getText().trim());
+	}
+
+	public int getPlacesMax() {
+		return Integer.parseInt(this.txtPlacesMax.getText().trim());
+	}
+
+	public int getPlacesOccupees() {
+		return Integer.parseInt(this.txtPlacesOccupees.getText().trim());
+	}
+
+	public LocalTime getHeureOuverture() {
+		return LocalTime.parse(this.txtHeureOuverture.getText());
+	}
+
+	public LocalTime getHeureFermeture() {
+		return LocalTime.parse(this.txtHeureFermeture.getText());
+	}
+
+	public boolean isContientPlacesMoto() {
+		return this.chkMoto.isSelected();
+	}
 
 }

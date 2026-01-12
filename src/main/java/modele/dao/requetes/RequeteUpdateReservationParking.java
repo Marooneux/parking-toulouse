@@ -1,32 +1,26 @@
 package modele.dao.requetes;
 
-import modele.ReservationParking;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import modele.ReservationParking;
+
 public class RequeteUpdateReservationParking extends Requete<ReservationParking> {
-    @Override
-    public String requete() {
-        return "UPDATE reservations_parking SET immatriculation = ?, date_depart = ? WHERE id_parking = ?";
-    }
 
-    @Override
-    public void parametres(PreparedStatement statement, String... id) throws SQLException {
-        // new immatriculation, date_depart, where id_parking
-        statement.setString(1, id[0]);
-        statement.setTimestamp(2, java.sql.Timestamp.valueOf(id[1]));
-        statement.setInt(3, Integer.parseInt(id[2]));
-    }
+	@Override
+	public String requete() {
+		return "UPDATE reservations_parking SET date_depart = ?, est_payee = ? WHERE immatriculation = ? AND id_parking = ?";
+	}
 
-    @Override
-    public void parametres(PreparedStatement statement, ReservationParking donnee) throws SQLException {
-        statement.setString(1, donnee.getImmatriculation());
-        java.time.LocalDateTime depart = donnee.getDateDepart();
-        if (depart != null) {
-            statement.setTimestamp(2, java.sql.Timestamp.valueOf(depart));
-        } else {
-            statement.setTimestamp(2, null);
-        }
-        statement.setInt(3, donnee.getParking().getId());
-    }
+	@Override
+	public void parametres(PreparedStatement ps, ReservationParking r) throws SQLException {
+		if (r.getDateDepart() != null) {
+			ps.setTimestamp(1, java.sql.Timestamp.valueOf(r.getDateDepart()));
+		} else {
+			ps.setTimestamp(1, null);
+		}
+		ps.setBoolean(2, r.estPayee());
+		ps.setString(3, r.getImmatriculation());
+		ps.setInt(4, r.getParking().getId());
+	}
 }

@@ -2,8 +2,6 @@ package controleur;
 
 import javax.swing.JOptionPane;
 
-import com.sun.nio.sctp.Association;
-
 import modele.Parking;
 import modele.dao.DaoAdminParking;
 import modele.dao.DaoParking;
@@ -13,65 +11,66 @@ import vue.adminParking.AjouterParking;
 
 public class ControleurAjouterParking {
 
-    private AjouterParking vue;
-    private DaoParking daoParking;
-    private DaoAdminParking daoAdminParking;
-    private int idAdmin;
+	private AjouterParking vue;
+	private DaoParking daoParking;
+	private DaoAdminParking daoAdminParking;
+	private int idAdmin;
 
-    public ControleurAjouterParking(AjouterParking vue, int idAdmin) {
-        this.vue = vue;
-        this.daoParking = new DaoParking();
-        this.daoAdminParking = new DaoAdminParking();
-        this.idAdmin = idAdmin;
-        initListeners();
-    }
+	public ControleurAjouterParking(AjouterParking vue, int idAdmin) {
+		this.vue = vue;
+		this.daoParking = new DaoParking();
+		this.daoAdminParking = new DaoAdminParking();
+		this.idAdmin = idAdmin;
+		this.initListeners();
+	}
 
-    private void initListeners() {
+	private void initListeners() {
 
-        vue.getBtnAnnuler().addActionListener(e -> fermer());
+		this.vue.getBtnAnnuler().addActionListener(e -> this.fermer());
 
-        vue.getBtnValider().addActionListener(e -> valider());
-    }
+		this.vue.getBtnValider().addActionListener(e -> this.valider());
+	}
 
-    private void fermer() {
-    	 vue.dispose(); // ferme la page modifier
+	private void fermer() {
+		this.vue.dispose(); // ferme la page modifier
 
-    	 Accueil vueChoix = new Accueil(idAdmin);
-    	 new ControleurAccueilAdminParking(vueChoix, idAdmin);
-    	 vueChoix.setVisible(true);
-    }
+		Accueil vueChoix = new Accueil(this.idAdmin);
+		new ControleurAccueilAdminParking(vueChoix, this.idAdmin);
+		vueChoix.setVisible(true);
+	}
 
-    private void valider() {
-    	try {
-    		Parking parking = new Parking(
-    				vue.getNom(), 
-    				vue.getAdresse(), 
-    				vue.getTarif(), 
-    				vue.getPlacesMax(), 
-    				vue.getHauteur(),
-    				vue.getHeureOuverture(),
-    				vue.getHeureFermeture(),
-    				vue.isContientPlacesMoto()
-    				);
-    		
-    		
-    		System.out.println(idAdmin);
-            daoParking.create(parking);
-            RequeteInsertAdminParking.Association asso = new modele.dao.requetes.RequeteInsertAdminParking.Association(idAdmin, parking.getId());
-            daoAdminParking.create(asso);
-            
-            JOptionPane.showMessageDialog(vue, "Parking ajouté avec succès");
-    		
-            vue.dispose();
-            Accueil vueChoix = new Accueil(idAdmin);
-            new ControleurAccueilAdminParking(vueChoix, idAdmin);
-            vueChoix.setVisible(true);
-            
-    	} catch (Exception ex) {
-    		ex.printStackTrace();
-    		JOptionPane.showMessageDialog(vue, "Erreur lors de l'ajout");
-    	}
-    	
-    }
-    
+	private void valider() {
+		try {
+			Parking parking = new Parking(
+					0, // l'id va être défini dans le dao
+					this.vue.getNom(),
+					this.vue.getAdresse(),
+					this.vue.getPlacesMax(),
+					this.vue.getPlacesOccupees(),
+					this.vue.getHauteur(),
+					this.vue.getHeureOuverture(),
+					this.vue.getHeureFermeture(),
+					this.vue.isContientPlacesMoto(),
+					this.vue.getTarif());
+
+			System.out.println(this.idAdmin);
+			this.daoParking.create(parking);
+			RequeteInsertAdminParking.Association asso = new modele.dao.requetes.RequeteInsertAdminParking.Association(
+					this.idAdmin, parking.getId());
+			this.daoAdminParking.create(asso);
+
+			JOptionPane.showMessageDialog(this.vue, "Parking ajouté avec succès");
+
+			this.vue.dispose();
+			Accueil vueChoix = new Accueil(this.idAdmin);
+			new ControleurAccueilAdminParking(vueChoix, this.idAdmin);
+			vueChoix.setVisible(true);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this.vue, "Erreur lors de l'ajout");
+		}
+
+	}
+
 }

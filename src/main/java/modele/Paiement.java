@@ -53,11 +53,4 @@ public class Paiement {
 			return false;
 		}
 	}
-
-	@Override
-	public String toString() {
-		return "Paiement [reservation=" + this.reservation + ", moyenPaiement=" + this.moyenPaiement
-				+ ", montant=" + this.montant + ", datePaiement=" + this.datePaiement + "]";
-	}
-
 }

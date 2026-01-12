@@ -38,8 +38,8 @@ public class PaiementParking extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
-				//PaiementParking frame = new PaiementParking();
-				//frame.setVisible(true);
+				// PaiementParking frame = new PaiementParking();
+				// frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

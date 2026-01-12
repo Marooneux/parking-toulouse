@@ -1,25 +1,41 @@
 package modele;
 
 public class Abonnement {
-    private int id;
-    private String nom;
-    private String description;
+	private int id;
+	private String nom;
+	private String description;
 
-    public Abonnement(int id, String nom, String description) {
-        this.id = id;
-        this.nom = nom;
-        this.description = description;
-    }
+	public Abonnement(int id, String nom, String description) {
+		this.id = id;
+		this.nom = nom;
+		this.description = description;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return this.id;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getNom() {
+		return this.nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean estValide() {
+		return this.nom != null && !this.nom.isBlank();
+	}
 }

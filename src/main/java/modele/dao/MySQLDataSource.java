@@ -8,7 +8,7 @@ public class MySQLDataSource {
 	private static Connection connexion = null;
 	private static String login;
 	private static String motDePasse;
-	private static final String URL = "jdbc:mysql://localhost:3306/sae_parking?serverTimezone=UTC";
+	private static final String URL = "jdbc:mysql://localhost:3306/sae?serverTimezone=UTC";
 
 	private MySQLDataSource() {
 	}

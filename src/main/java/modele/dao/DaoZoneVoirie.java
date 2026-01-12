@@ -1,32 +1,49 @@
 package modele.dao;
 
-import modele.Zone;
-import modele.dao.requetes.RequeteSelectZonesVoirie;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DaoZoneVoirie extends DaoModele<Zone> {
-    @Override
-    public void create(Zone donnees) throws SQLException {}
+import modele.ZoneVoirie;
+import modele.dao.requetes.RequeteDeleteZoneVoirie;
+import modele.dao.requetes.RequeteInsertZoneVoirie;
+import modele.dao.requetes.RequeteSelectZoneVoirie;
+import modele.dao.requetes.RequeteSelectZoneVoirieById;
+import modele.dao.requetes.RequeteUpdateZoneVoirie;
 
-    @Override
-    public void update(Zone donnees) throws SQLException {}
+public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
+	@Override
+	public void create(ZoneVoirie donnee) throws SQLException {
+		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertZoneVoirie(), donnee);
+		if (id > 0) {
+			donnee.setId(id);
+		}
+	}
 
-    @Override
-    public void delete(Zone donnees) throws SQLException {}
+	@Override
+	public void update(ZoneVoirie donnee) throws SQLException {
+		this.miseAJour(new RequeteUpdateZoneVoirie(), donnee);
+	}
 
-    @Override
-    public List<Zone> findAll() throws SQLException {
-        return this.find(new RequeteSelectZonesVoirie());
-    }
+	@Override
+	public void delete(ZoneVoirie donnee) throws SQLException {
+		this.miseAJour(new RequeteDeleteZoneVoirie(), donnee);
+	}
 
-    @Override
-    protected Zone creerInstance(ResultSet curseur) throws SQLException {
-        int id = curseur.getInt("id");
-        String nom = curseur.getString("nom");
-        double tarif = curseur.getDouble("tarif_horaire");
-        return new Zone(id, nom, tarif);
-    }
+	@Override
+	public List<ZoneVoirie> findAll() throws SQLException {
+		return this.find(new RequeteSelectZoneVoirie());
+	}
+
+	public ZoneVoirie findById(int id) throws SQLException {
+		return this.findById(new RequeteSelectZoneVoirieById(), String.valueOf(id));
+	}
+
+	@Override
+	protected ZoneVoirie creerInstance(ResultSet curseur) throws SQLException {
+		return new ZoneVoirie(curseur.getInt("id_zone"),
+				curseur.getString("nom"),
+				curseur.getDouble("tarif_horaire"),
+				curseur.getDouble("duree_max"));
+	}
 }
