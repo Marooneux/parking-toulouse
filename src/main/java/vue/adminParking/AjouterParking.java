@@ -23,9 +23,12 @@ public class AjouterParking extends JFrame {
 
     private JButton btnValider;
     private JButton btnAnnuler;
+    
+    private int idAdmin;
 
-    public AjouterParking() {
+    public AjouterParking(int idAdmin) {
         initialize();
+        this.idAdmin = idAdmin;
     }
 
     private void initialize() {

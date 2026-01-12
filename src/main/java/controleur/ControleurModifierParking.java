@@ -12,10 +12,13 @@ public class ControleurModifierParking {
     private ModifierParking vue;
     private Parking parking;
     private DaoParking daoParking;
+    private int idAdmin;
 
-    public ControleurModifierParking(ModifierParking vue, Parking parking) {
+    public ControleurModifierParking(ModifierParking vue, Parking parking, int idAdmin) {
         this.vue = vue;
+        this.parking = parking;
         this.daoParking = new DaoParking();
+        this.idAdmin = idAdmin;
         initListeners();
     }
 
@@ -29,8 +32,8 @@ public class ControleurModifierParking {
     private void fermer() {
     	 vue.dispose(); // ferme la page modifier
 
-    	 Accueil vueChoix = new Accueil();
-    	 new ControleurAccueilAdminParking(vueChoix);
+    	 Accueil vueChoix = new Accueil(idAdmin);
+    	 new ControleurAccueilAdminParking(vueChoix, idAdmin);
     	 vueChoix.setVisible(true);
     }
 
@@ -52,8 +55,8 @@ public class ControleurModifierParking {
             JOptionPane.showMessageDialog(vue, "Parking modifié avec succès");
     		
             vue.dispose();
-            Accueil vueChoix = new Accueil();
-            new ControleurAccueilAdminParking(vueChoix);
+            Accueil vueChoix = new Accueil(idAdmin);
+            new ControleurAccueilAdminParking(vueChoix, idAdmin);
             vueChoix.setVisible(true);
             
     	} catch (Exception ex) {

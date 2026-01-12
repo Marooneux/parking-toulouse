@@ -38,13 +38,17 @@ public class Accueil extends JFrame {
     private JButton btnRetourListe;
     
     private Parking parkingEnEdition;
+    private int idAdmin;
+    private ControleurAccueilAdminParking controleur;
 
     public static void main(String[] args) {
-        new ControleurAccueilAdminParking(new Accueil());
+    	new Accueil(1);
     }
 
-    public Accueil() {
-        initialize();
+    public Accueil(int idAdmin) {
+    	this.idAdmin = idAdmin;
+    	initialize();
+    	this.controleur = new ControleurAccueilAdminParking(this, idAdmin);
     }
 
     private void initialize() {
@@ -163,12 +167,10 @@ public class Accueil extends JFrame {
         return btn;
     }
 
-    // --- VUE LISTE (Inspirée de ChoixParking) ---
     private JPanel createParkingView() {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBackground(new Color(248, 249, 250));
 
-        // En-tête style ChoixParking
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(new Color(248, 249, 250));
@@ -212,7 +214,8 @@ public class Accueil extends JFrame {
 
         btnAjouter = new JButton("Ajouter un parking");
         btnAjouter.addActionListener(e -> {
-            ControleurAccueilAdminParking.ouvrirPageAjouter();
+           // ControleurAccueilAdminParking controleurAccueilAdminParking = new ControleurAccueilAdminParking(this, idAdmin);
+            controleur.ouvrirPageAjouter(idAdmin);
             this.dispose();
            
         });
@@ -227,10 +230,6 @@ public class Accueil extends JFrame {
         return panel;
     }
 
-    /**
-     * Méthode principale pour ajouter une carte dans la grille.
-     * Intègre la logique de ChoixParking (boutons Modifier/Supprimer).
-     */
     public void addParking(Parking parking, Consumer<Parking> onSelect, Consumer<Parking> onModify, Consumer<Parking> onDelete) {
         // Utilisation de AdminParkingPanel ou ParkingPanel selon votre projet
         // Ici on suppose un panel simple qui affiche les infos
@@ -271,8 +270,6 @@ public class Accueil extends JFrame {
         btnSupprimer.addActionListener(e -> onDelete.accept(parking));
 
         gridPanel.add(container);
-        gridPanel.revalidate();
-        gridPanel.repaint();
     }
 
     // --- VUE EDITION (Formulaire) ---
@@ -364,6 +361,19 @@ public class Accueil extends JFrame {
         panel.setBackground(new Color(248, 249, 250));
         panel.add(new JLabel("Statistiques à implémenter..."));
         return panel;
+    }
+
+    public void videListe() {
+        if (this.gridPanel != null) {
+            this.gridPanel.removeAll();
+        }
+    }
+    
+    public void actualiserAffichage() {
+        if (this.gridPanel != null) {
+            this.gridPanel.revalidate();
+            this.gridPanel.repaint();
+        }
     }
 
     // Getters
