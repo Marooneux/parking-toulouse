@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.JTextComponent;
 
 import modele.Parking;
 import modele.StationnementVoirie;
@@ -35,11 +36,11 @@ public class SaisirHeureArriveParking extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnConfirmer;
-	private JTextField textField;
-	private JTextField textFieldDuree;
 	private JTextField textFieldPlaque;
-    private JTextField textFieldNom;
+	private JTextField textFieldHeure;
 	private Parking parking;
+	private JButton btnMaintenant;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -60,7 +61,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
 		this.btnConfirmer = new JButton("Démarrer le stationnement");
-		
+
 		
 		this.contentPane = new JPanel(new BorderLayout(15, 15));
 		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -117,34 +118,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
-        this.btnConfirmer.addActionListener(e -> {
-            String strHeureArrive= this.textFieldNom.getText();
-            String immatriculation = this.textFieldPlaque.getText();
-            if (immatriculation == null || immatriculation.trim().isEmpty()) {
-            	JOptionPane.showMessageDialog(this, "Veuillez saisir votre plaque d'immatriculation de continuer.");
-                return;
-            }
-            if (strHeureArrive == null || strHeureArrive.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une heure d'arrivée avant de continuer.");
-                return;
-            }
-            
-            DateTimeFormatter strictFormatter = DateTimeFormatter.ofPattern("HH:mm")
-                    .withResolverStyle(ResolverStyle.STRICT);
-
-            try {
-            	LocalTime heureArrivee = LocalTime.parse(strHeureArrive, strictFormatter);
-            	if (heureArrivee.isBefore(LocalTime.now())) {
-            		new TicketParking(parking, immatriculation, strHeureArrive).setVisible(true);
-            		dispose();
-            	} else {
-            		JOptionPane.showMessageDialog(this, "L'heure entrée doit être inférieure à l'heure actuelle.");
-            	}
-            } catch (DateTimeParseException ex) {
-            	JOptionPane.showMessageDialog(this, "L'heure entrée n'est pas au bon format.");
-            }
-            
-    	});
+        
  
 		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
@@ -214,12 +188,29 @@ public class SaisirHeureArriveParking extends JFrame {
 
 		// Todo : Rendre le texte field changeable par méthode pour pouvoir manipuler sa
 		// valeur
-        textFieldNom = new PlaceholderTextField("hh:mm", 4);
-        ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-        textFieldNom.setPreferredSize(new Dimension(250, 30)); 
-		p.add(this.textFieldNom);
+		// Panel to hold textFieldHeure + button
+		JPanel heurePanel = new JPanel();
+		heurePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		heurePanel.setBackground(Color.WHITE);
 
+		// TextField for heure
+		textFieldHeure = new PlaceholderTextField("hh:mm", 5);
+		((AbstractDocument) textFieldHeure.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
+		textFieldHeure.setPreferredSize(new Dimension(200, 30)); 
+		heurePanel.add(textFieldHeure);
+
+		// Button "Maintenant"
+		btnMaintenant = new JButton("Maintenant");
+		btnMaintenant.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnMaintenant.setBackground(new Color(220, 220, 220));
+		btnMaintenant.setFocusPainted(false);
+		btnMaintenant.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnMaintenant.setPreferredSize(new Dimension(100, 30));
+		heurePanel.add(btnMaintenant);
+
+		p.add(heurePanel);
 		return p;
+
 	}
 
 	private void ajouterCarteDeDétails(JPanel parent, String title, JPanel innerContent) {
@@ -254,8 +245,20 @@ public class SaisirHeureArriveParking extends JFrame {
 		return this.btnConfirmer;
 	}
 
-	public JTextField getTextField() {
-		return this.textField;
+	public JTextField getTextFieldHeure() {
+	    return this.textFieldHeure;
 	}
 
+	
+	public JTextComponent getPlaque() {
+	    return textFieldPlaque;
+	}
+	
+	public JButton getBtnMaintenant() {
+	    return btnMaintenant;
+	}
+
+	public void addConfirmerListener(java.awt.event.ActionListener listener) {
+        btnConfirmer.addActionListener(listener);
+    }
 }

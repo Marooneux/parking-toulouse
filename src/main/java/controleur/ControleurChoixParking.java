@@ -49,12 +49,10 @@ public class ControleurChoixParking {
     
 
     private void onParkingSelected(Parking parking) {
-        SaisirHeureArriveParking vueSuivante =
-                new SaisirHeureArriveParking(parking);
-
-        vueSuivante.setVisible(true);
-        vue.dispose();
+        new ControleurSaisirHeureArriveParking(parking); 
+        vue.dispose(); 
     }
+
     
     private void ouvrirPageModification(Parking parking) {
         ModifierParking vueModif = new ModifierParking(parking);  // nouvelle page pour modification

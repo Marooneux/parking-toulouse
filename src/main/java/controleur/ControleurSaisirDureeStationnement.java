@@ -71,7 +71,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	
 	
     private boolean verifierDuree() {
-        String duree = vue.getTextField().getText().trim();
+        String duree = vue.getTextFieldHeure().getText().trim();
         if (duree.isEmpty()) {
             JOptionPane.showMessageDialog(vue, "Veuillez saisir une durée avant de payer.");
             return false;
