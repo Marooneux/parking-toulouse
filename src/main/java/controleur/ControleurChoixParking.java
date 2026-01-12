@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
@@ -30,10 +32,9 @@ public class ControleurChoixParking {
         this.listeComplete = new ArrayList<>();
         this.listeAffichee = new ArrayList<>();
 
-        MySQLDataSource.creerAcces("root", "admin");
+        MySQLDataSource.creerAcces("root", "claudio"); 
 
-        chargerDonneesInitiales();
-        initialiserEcouteurs();
+        chargerParkings();
         vue.setVisible(true);
     }
 
@@ -101,12 +102,14 @@ public class ControleurChoixParking {
             }
         }
     }
+    
 
     private void onParkingSelected(Parking parking) {
         SaisirHeureArriveParking vueSuivante = new SaisirHeureArriveParking(parking);
         vueSuivante.setVisible(true);
         vue.dispose();
     }
+    
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {

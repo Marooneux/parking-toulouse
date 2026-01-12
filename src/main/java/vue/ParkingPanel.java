@@ -1,6 +1,6 @@
 package vue;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 public class ParkingPanel extends JPanel {
     private Parking parking;
     private Consumer<Parking> onClick;
+    private JButton btnModifier;
+
     private Color normalBorder = new Color(230, 230, 230);
     private Color hoverBorder = new Color(100, 100, 100);
 
@@ -113,6 +115,18 @@ public class ParkingPanel extends JPanel {
         bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
         bottomPanel.add(lblPrice, BorderLayout.EAST);
 
+        btnModifier = new JButton("Modifier");
+        btnModifier.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btnModifier.setFocusPainted(false);
+        btnModifier.setBackground(new Color(240, 240, 240));
+        btnModifier.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        actionsPanel.setOpaque(false);
+        actionsPanel.add(btnModifier);
+
+        bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
+
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
@@ -156,5 +170,9 @@ public class ParkingPanel extends JPanel {
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
             g2.drawString(text, x, y - 2);
         }
+    }
+    
+    public JButton getBtnModifier() {
+        return btnModifier;
     }
 }
