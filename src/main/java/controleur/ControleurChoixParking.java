@@ -1,61 +1,60 @@
 package controleur;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException; 
+import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import modele.Parking;
+import modele.dao.DaoParking;
+import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
-import vue.ParkingPanel;
 import vue.SaisirHeureArriveParking;
 
-public class ControleurChoixParking implements ActionListener {
+public class ControleurChoixParking {
 
-    private final ChoixParking vue;
-    private final JButton btnChoisirParking;
+    private ChoixParking vue;
+    private DaoParking daoParking;
 
     public ControleurChoixParking(ChoixParking vue) {
         this.vue = vue;
-        this.btnChoisirParking = vue.getBtnChoisirParking();
-        this.btnChoisirParking.addActionListener(this);
+        this.daoParking = new DaoParking();
+
+        MySQLDataSource.creerAcces("root", "claudio"); 
+
+        chargerParkings();
+        vue.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() != btnChoisirParking) return;
+    private void chargerParkings() {
+        try {
+            //System.out.println("Tentative chargement parkings...");
+            List<Parking> parkings = daoParking.findAll();
+            //System.out.println("Nombre de parkings trouvés = " + parkings.size());
 
-        handleEtatHeure();
-    }
+            for (Parking p : parkings) {
+                //System.out.println("Parking: " + p.getNom());
+                vue.addParking(p, this::onParkingSelected);
+            }
 
-    private void handleEtatHeure() {
-        ParkingPanel selectedParking = vue.getParkingSelectionne();
-
-        if (!isParkingSelected(selectedParking)) return;
-
-        ouvrirSaisirHeure(selectedParking);
-    }
-
-    private boolean isParkingSelected(ParkingPanel parking) {
-        if (parking == null) {
-            JOptionPane.showMessageDialog(vue, "Veuillez sélectionner un parking.");
-            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement des parkings. Vérifiez la connexion à la base de données.");
         }
-        return true;
     }
+    
 
-    private void ouvrirSaisirHeure(ParkingPanel parking) {
-        SaisirHeureArriveParking nextVue = new SaisirHeureArriveParking(parking);
-        nextVue.getLblParkingInfo().setText(parking.getNomPlace());
+    private void onParkingSelected(Parking parking) {
+        SaisirHeureArriveParking vueSuivante =
+                new SaisirHeureArriveParking(parking);
 
-        new ControleurSaisirHeureArriveParking(nextVue);
-        nextVue.setVisible(true);
+        vueSuivante.setVisible(true);
         vue.dispose();
     }
+    
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
+        javax.swing.SwingUtilities.invokeLater(() -> {
             ChoixParking vue = new ChoixParking();
             new ControleurChoixParking(vue);
             vue.setVisible(true);

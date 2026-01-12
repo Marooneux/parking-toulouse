@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,29 +17,34 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-public class ConfirmationPaiementVoirie extends JFrame {
+import modele.ZoneVoirie;
 
+public class ConfirmationPaiementVoirie extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private ZoneVoirie zone;
+	private String immatriculation;
+	private int duree;
+	private double prix;
+	private String moyenPaiement;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public ConfirmationPaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix,
+			String moyenPaiement) {
+		this.zone = zone2;
+		this.immatriculation = immatriculation;
+		this.duree = duree;
+		this.prix = prix;
+		this.moyenPaiement = moyenPaiement;
 
-	public ConfirmationPaiementVoirie(double d) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 750, 550);
 		this.setTitle("Paiement validé");
+
+		this.contentPane = new JPanel();
+		this.contentPane.setBackground(new Color(255, 255, 255));
+		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.setContentPane(this.contentPane);
+		this.contentPane.setLayout(new BorderLayout(0, 0));
 
 		this.contentPane = new JPanel();
 		this.contentPane.setBackground(new Color(255, 255, 255));
@@ -78,13 +82,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
 		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
 		panelInnerContent.add(lblTitre);
 
-		JLabel lblMerci = new JLabel("Merci de votre visite");
-		lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMerci.setForeground(new Color(100, 100, 100));
-		lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		panelInnerContent.add(lblMerci);
-
-		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", d));
+		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMontant.setForeground(new Color(33, 37, 41));
 		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -101,7 +99,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					TicketVoirie framePaiement = new TicketVoirie();
+					TicketVoirie framePaiement = new TicketVoirie(zone2, immatriculation, duree, moyenPaiement);
 					framePaiement.setVisible(true);
 					ConfirmationPaiementVoirie.this.dispose();
 				} catch (Exception ex) {

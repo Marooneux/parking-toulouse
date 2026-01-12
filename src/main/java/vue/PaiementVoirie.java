@@ -25,36 +25,40 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import modele.StationnementVoirie;
+import modele.ZoneVoirie;
 
 public class PaiementVoirie extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField textFieldNom;
-    private JTextField textFieldNumCarte;
-    private JTextField textFieldExpiration;
-    private JTextField textFieldCVC;
-    private StationnementVoirie zone;
-    private int duree;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textFieldNom;
+	private JTextField textFieldNumCarte;
+	private JTextField textFieldExpiration;
+	private JTextField textFieldCVC;
+	private ZoneVoirie zone;
+	private String immatriculation;
+	private int duree;
+	private double prix;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                //PaiementVoirie frame = new PaiementVoirie();
-                //frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+	public static void main(String[] args) {
+		EventQueue.invokeLater(() -> {
+			try {
+				// PaiementVoirie frame = new PaiementVoirie();
+				// frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
-    public PaiementVoirie(StationnementVoirie zone, int duree) {
-    	this.zone = zone;
-    	this.duree = duree;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(520, 480);
-        setLocationRelativeTo(null);
+	public PaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
+		this.zone = zone2;
+		this.immatriculation = immatriculation;
+		this.duree = duree;
+		this.prix = prix;
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(520, 480);
+		this.setLocationRelativeTo(null);
 
 		this.contentPane = new JPanel();
 		this.contentPane.setLayout(new BorderLayout(20, 20));
@@ -96,22 +100,13 @@ public class PaiementVoirie extends JFrame {
 		card.setLayout(new GridLayout(4, 1, 15, 15));
 		this.contentPane.add(card, BorderLayout.CENTER);
 
-        // --- CHAMP NOM ---
-        textFieldNom = new PlaceholderTextField("Nom Prénom", 20);
-        ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-        textFieldNom.setPreferredSize(new Dimension(250, 30)); 
-        
-        JPanel blocNom = creerBlocChamps("Numéro de carte", textFieldNom);
-        card.add(blocNom);
+		// --- CHAMP NOM ---
+		this.textFieldNom = new PlaceholderTextField("Nom Prénom", 20);
+		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		this.textFieldNom.setPreferredSize(new Dimension(250, 30));
 
-        // --- NUMÉRO DE CARTE ---
-        textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 20);
-        ((AbstractDocument) textFieldNumCarte.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
-        
-        textFieldNumCarte.setPreferredSize(new Dimension(250, 30)); 
-        
-        JPanel blocCarte = creerBlocChamps("Numéro de carte", textFieldNumCarte);
-        card.add(blocCarte);
+		JPanel blocNom = this.creerBlocChamps("Numéro de carte", this.textFieldNom);
+		card.add(blocNom);
 
 		// --- NUMÉRO DE CARTE ---
 		this.textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 20);
@@ -119,15 +114,8 @@ public class PaiementVoirie extends JFrame {
 
 		this.textFieldNumCarte.setPreferredSize(new Dimension(250, 30));
 
-        textFieldExpiration = new PlaceholderTextField("MM/YY", 10);
-        ((AbstractDocument) textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
-        textFieldExpiration.setPreferredSize(new Dimension(100, 28));
-        JPanel blocExp = creerBlocChamps("Date d'expiration", textFieldExpiration);
-        
-        textFieldCVC = new PlaceholderTextField("123", 8);
-        ((AbstractDocument) textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
-        textFieldCVC.setPreferredSize(new Dimension(100, 28));
-        JPanel blocCVC = creerBlocChamps("CVC", textFieldCVC);
+		JPanel blocCarte = this.creerBlocChamps("Numéro de carte", this.textFieldNumCarte);
+		card.add(blocCarte);
 
 		// --- CHAINE EXPIRATION + CVC ---
 		JPanel row = new JPanel(new GridLayout(1, 2, 20, 0));
@@ -136,37 +124,22 @@ public class PaiementVoirie extends JFrame {
 		this.textFieldExpiration = new PlaceholderTextField("MM/YY", 10);
 		((AbstractDocument) this.textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
 		this.textFieldExpiration.setPreferredSize(new Dimension(100, 28));
-		JPanel blocExp = this.criarBlocChamp("Date d'expiration", this.textFieldExpiration);
+		JPanel blocExp = this.creerBlocChamps("Date d'expiration", this.textFieldExpiration);
 
-        JButton btnPayer = new JButton("Payer - " + zone.calculerPrixTotal(duree) + "€");
-        btnPayer.setBackground(new Color(0, 128, 255));
-        btnPayer.setForeground(Color.WHITE);
-        btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        btnPayer.setFocusPainted(false);
-        btnPayer.setPreferredSize(new Dimension(160, 40));
-        panelBtn.add(btnPayer);  
-        btnPayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone.calculerPrixTotal(duree));
-                	frameConfirmationPaiement.setVisible(true);
-                    dispose();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+		this.textFieldCVC = new PlaceholderTextField("123", 8);
+		((AbstractDocument) this.textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
+		this.textFieldCVC.setPreferredSize(new Dimension(100, 28));
+		JPanel blocCVC = this.creerBlocChamps("CVC", this.textFieldCVC);
 
 		row.add(blocExp);
 		row.add(blocCVC);
 		card.add(row);
 
-    private JPanel creerBlocChamps(String labelText, JTextField textField) {
-        JPanel bloc = new JPanel();
-        bloc.setOpaque(false);
-        bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
+		// --- BOUTON ---
+		JPanel panelBtn = new JPanel();
+		panelBtn.setBackground(Color.WHITE);
 
-		JButton btnPayer = new JButton("Payer - 15€");
+		JButton btnPayer = new JButton("Payer - " + prix + "€");
 		btnPayer.setBackground(new Color(0, 128, 255));
 		btnPayer.setForeground(Color.WHITE);
 		btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -177,7 +150,8 @@ public class PaiementVoirie extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(15);
+					ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone2,
+							immatriculation, duree, prix, "Carte bancaire");
 					frameConfirmationPaiement.setVisible(true);
 					PaiementVoirie.this.dispose();
 				} catch (Exception ex) {
@@ -189,7 +163,7 @@ public class PaiementVoirie extends JFrame {
 		card.add(panelBtn);
 	}
 
-	private JPanel criarBlocChamp(String labelText, JTextField textField) {
+	private JPanel creerBlocChamps(String labelText, JTextField textField) {
 		JPanel bloc = new JPanel();
 		bloc.setOpaque(false);
 		bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));

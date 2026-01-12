@@ -42,6 +42,7 @@ public class TestDaoParking {
 				"Parking Test",
 				"1 rue du Test",
 				120,
+				50,
 				2.20,
 				LocalTime.of(7, 0),
 				LocalTime.of(23, 0),

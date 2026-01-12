@@ -60,6 +60,7 @@ public class DaoParking extends DaoModele<Parking> {
 				curseur.getString("nom"),
 				curseur.getString("adresse"),
 				curseur.getInt("nombre_places_max"),
+				curseur.getInt("nb_places_occupees"),
 				curseur.getDouble("hauteur_max"),
 				ouverture,
 				fermeture,
@@ -67,7 +68,6 @@ public class DaoParking extends DaoModele<Parking> {
 				curseur.getDouble("tarif"));
 
 		p.setNbPlacesOccupees(curseur.getInt("nb_places_occupees"));
-
 		return p;
 	}
 

@@ -47,7 +47,7 @@ public class TestDaoProximite {
 		this.daoProximite = new DaoProximite();
 
 		// créer un parking
-		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 2.5,
+		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 50, 2.5,
 				java.time.LocalTime.of(7, 0), java.time.LocalTime.of(23, 0), true, 2.5);
 		this.daoParking.create(this.parkingTest);
 

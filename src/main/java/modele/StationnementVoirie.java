@@ -1,6 +1,7 @@
 package modele;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -16,6 +17,12 @@ public class StationnementVoirie {
 	}
 
 	public double calculerPrixTotal(int duree) {
+		LocalTime actuel = LocalTime.of(6, 0);
+		if ((actuel.isBefore(this.HorairePayantFin) && actuel.isAfter(this.HorairePayantDebut))
+				|| LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return 0;
+		}
+
 		double prixTotal = 0;
 		int heures = duree / 60;
 		int minutes = duree % 60;
@@ -63,6 +70,30 @@ public class StationnementVoirie {
 
 	public Boolean isDimanche() {
 		return (LocalDateTime.now().getDayOfWeek() == DayOfWeek.SUNDAY);
+	}
+
+	public ZoneVoirie getZone() {
+		return this.zone;
+	}
+
+	public void setZone(ZoneVoirie zone) {
+		this.zone = zone;
+	}
+
+	public LocalTime getHorairePayantDebut() {
+		return this.HorairePayantDebut;
+	}
+
+	public void setHorairePayantDebut(LocalTime horairePayantDebut) {
+		this.HorairePayantDebut = horairePayantDebut;
+	}
+
+	public LocalTime getHorairePayantFin() {
+		return this.HorairePayantFin;
+	}
+
+	public void setHorairePayantFin(LocalTime horairePayantFin) {
+		this.HorairePayantFin = horairePayantFin;
 	}
 
 }

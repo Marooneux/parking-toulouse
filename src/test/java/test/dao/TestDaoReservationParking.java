@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.After;
@@ -48,8 +49,8 @@ public class TestDaoReservationParking {
 		this.daoUtilisateur = new DaoUtilisateur();
 		this.daoReservation = new DaoReservationParking();
 
-		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 2.5,
-				java.time.LocalTime.of(7, 0), java.time.LocalTime.of(23, 0), true, 2.5);
+		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 50, 2.5,
+				LocalTime.of(7, 0), LocalTime.of(23, 0), true, 2.5);
 		this.daoParking.create(this.parkingTest);
 
 		this.utilisateurTest = new Utilisateur(0, "Nom", "Prenom", "user@test.com", "password", null, Type.CLIENT);

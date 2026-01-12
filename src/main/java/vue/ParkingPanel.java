@@ -1,6 +1,6 @@
 package vue;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -13,14 +13,21 @@ import java.awt.geom.Ellipse2D;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
+import utils.AuthManager;
 
-class ParkingCard extends JPanel {
-    private Parking parking;
+class ParkingPanel extends JPanel {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Parking parking;
     private Consumer<Parking> onClick;
+    private JButton btnModifier;
+
     private Color normalBorder = new Color(230, 230, 230);
     private Color hoverBorder = new Color(100, 100, 100);
 
-    public ParkingCard(Parking parking, Consumer<Parking> onClick) {
+    public ParkingPanel(Parking parking, Consumer<Parking> onClick) {
         this.parking = parking;
         this.onClick = onClick;
 
@@ -85,10 +92,10 @@ class ParkingCard extends JPanel {
         centerPanel.add(createDetailRow("🕒", horaireText));
         
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesTotales() - parking.getNbPlacesOccupees()) + " places"));
+        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesMax() - parking.getNbPlacesOccupees()) + " places"));
         
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()/100.0) + "m"));
+        centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()) + "m"));
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -112,6 +119,27 @@ class ParkingCard extends JPanel {
 
         bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
         bottomPanel.add(lblPrice, BorderLayout.EAST);
+
+        btnModifier = new JButton("Modifier");
+        btnModifier.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btnModifier.setFocusPainted(false);
+        btnModifier.setBackground(new Color(240, 240, 240));
+        btnModifier.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        actionsPanel.setOpaque(false);
+        actionsPanel.add(btnModifier);
+
+        btnModifier.addActionListener(e -> {
+            // Only sysadmin or parkingadmin can modify parking
+            if (!AuthManager.ensureAuthorized("sysadmin", "parkingadmin")) {
+                return;
+            }
+            ModifierParking modifier = new ModifierParking(parking);
+            modifier.setVisible(true);
+        });
+
+        bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
         add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -156,5 +184,9 @@ class ParkingCard extends JPanel {
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
             g2.drawString(text, x, y - 2);
         }
+    }
+    
+    public JButton getBtnModifier() {
+        return btnModifier;
     }
 }

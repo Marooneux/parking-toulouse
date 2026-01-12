@@ -33,19 +33,21 @@ public class PaiementParking extends JFrame {
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
 	private JTextField textFieldCVC;
+	private double prix;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
-				PaiementParking frame = new PaiementParking();
-				frame.setVisible(true);
+				// PaiementParking frame = new PaiementParking();
+				// frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 	}
 
-	public PaiementParking() {
+	public PaiementParking(double prix) {
+		this.prix = prix;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(520, 480);
 		this.setLocationRelativeTo(null);
@@ -129,7 +131,7 @@ public class PaiementParking extends JFrame {
 		JPanel panelBtn = new JPanel();
 		panelBtn.setBackground(Color.WHITE);
 
-		JButton btnPayer = new JButton("Payer - 15€");
+		JButton btnPayer = new JButton("Payer - " + prix + "€");
 		btnPayer.setBackground(new Color(0, 128, 255));
 		btnPayer.setForeground(Color.WHITE);
 		btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -140,7 +142,7 @@ public class PaiementParking extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(15);
+					ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(prix);
 					frameConfirmationPaiement.setVisible(true);
 					PaiementParking.this.dispose();
 				} catch (Exception ex) {

@@ -34,5 +34,4 @@ public class Proximite {
 	public void setDistanceMetres(int distanceMetres) {
 		this.distanceMetres = distanceMetres;
 	}
-
 }

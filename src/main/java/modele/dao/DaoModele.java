@@ -32,12 +32,12 @@ public abstract class DaoModele<T> implements Dao<T> {
 	}
 
 	public int miseAJourAvecKeyGeneration(Requete<T> req, T donnee) throws SQLException {
+		int id = 0;
 		Connection cn = MySQLDataSource.getConnexion();
 		PreparedStatement ps = cn.prepareStatement(req.requete(), Statement.RETURN_GENERATED_KEYS);
 		req.parametres(ps, donnee);
 		ps.executeUpdate();
 		ResultSet keys = ps.getGeneratedKeys();
-		int id = 0;
 		if (keys != null && keys.next()) {
 			id = keys.getInt(1);
 		}

@@ -28,5 +28,4 @@ public class RequeteInsertReservationParking extends Requete<ReservationParking>
 		statement.setInt(5, donnee.getParking().getId());
 		statement.setInt(6, donnee.getIdUtilisateur());
 	}
-
 }

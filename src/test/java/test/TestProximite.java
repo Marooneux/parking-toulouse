@@ -1,18 +1,18 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-class TestProximite {
+public class TestProximite {
 
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 	}
 
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 	}
 

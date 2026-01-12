@@ -14,13 +14,13 @@ public class Parking {
 	private boolean contientPlacesMoto;
 	private double tarif;
 
-	public Parking(int id, String nom, String adresse, int nbPlacesMax, double hauteur,
+	public Parking(int id, String nom, String adresse, int nbPlacesMax, int nbPlacesOccupees, double hauteur,
 			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto, double tarif) {
 		this.id = id;
 		this.nom = nom;
 		this.adresse = adresse;
 		this.nbPlacesMax = nbPlacesMax;
-		this.nbPlacesOccupees = 0;
+		this.nbPlacesOccupees = nbPlacesOccupees;
 		this.hauteur = hauteur;
 		this.heureOuverture = heureOuverture;
 		this.heureFermeture = heureFermeture;
@@ -118,12 +118,7 @@ public class Parking {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "Parking [id=" + this.id + ", nom=" + this.nom + ", adresse=" + this.adresse + ", nbPlacesMax="
-				+ this.nbPlacesMax + ", nbPlacesOccupees=" + this.nbPlacesOccupees + ", hauteur=" + this.hauteur
-				+ ", heureOuverture=" + this.heureOuverture + ", heureFermeture=" + this.heureFermeture
-				+ ", contientPlacesMoto=" + this.contientPlacesMoto + "]";
+	public void enleverNbPlacesOccupes(int nb) {
+		this.ajouterNbPlacesOccupes(-nb);
 	}
-
 }

@@ -18,6 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurSaisirHeureArriveParking;
+import modele.Parking;
+
 public class TicketParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -27,9 +30,16 @@ public class TicketParking extends JFrame {
 	private JLabel lblParking;
     private JLabel lblPlaque;
     private JLabel lblHeure;
-    private JLabel lblMoyenPaiement;
+    private JLabel lblAdresse;
+    private Parking parking;
+    private String immatriculation;
+    private String heureArrivee;
 
-	public TicketParking() {
+	public TicketParking(Parking parking, String immatriculation, String heureArrivee) {
+		this.parking = parking;
+		this.immatriculation = immatriculation;
+		this.heureArrivee = heureArrivee;
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 750, 600);
 		this.setTitle("Ticket de sortie");
@@ -86,11 +96,11 @@ public class TicketParking extends JFrame {
 		panelCard.add(panelInfoGrid, BorderLayout.CENTER);
 		panelInfoGrid.setLayout(new GridLayout(5, 1, 0, 10));
 
-		this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "");
-		this.lblParking = createInfoRow(panelInfoGrid, "Parking :", "");
-		this.lblPlaque  = createInfoRow(panelInfoGrid, "Immatriculation :", "");
-		this.lblHeure   = createInfoRow(panelInfoGrid, "Heure d'arrivée :", "");
-		this.lblMoyenPaiement = createInfoRow(panelInfoGrid, "Moyen de paiement :", "");
+		this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
+		this.lblParking = createInfoRow(panelInfoGrid, "Parking :", parking.getNom());
+		this.lblAdresse = createInfoRow(panelInfoGrid, "Adresse :", parking.getAdresse());
+		this.lblPlaque  = createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
+		this.lblHeure   = createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
 		
 
 		JPanel panelFooter = new JPanel();
@@ -110,6 +120,11 @@ public class TicketParking extends JFrame {
 		panelFooter.add(panelButtonContainer);
 
 		btnPaiement = new JButton("Aller au paiement");
+		btnPaiement.addActionListener(e -> {
+			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(parking, heureArrivee);
+			new ChoixMoyenPaiementParking(prix).setVisible(true);
+			dispose();
+		});
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
@@ -151,12 +166,12 @@ public class TicketParking extends JFrame {
 	    return this.btnPaiement;
 	}
 	
-	public void remplirInfos(String numéroTicket, String parking, String plaque, String heure, String moyenPaiement) {
+	public void remplirInfos(String numéroTicket, String parking, String plaque, String heure, String adresse) {
 		lblNumeroTicket.setText(numéroTicket);
 	    lblParking.setText(parking);
 	    lblPlaque.setText(plaque);
 	    lblHeure.setText(heure);
-	    lblMoyenPaiement.setText(moyenPaiement);
+	    lblAdresse.setText(adresse);
 	}
 
 

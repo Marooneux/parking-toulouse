@@ -1,5 +1,7 @@
 package modele;
 
+import utils.PasswordUtil;
+
 public class Utilisateur {
 	public enum Type {
 		PARKINGADMIN, SYSADMIN, CLIENT
@@ -57,7 +59,7 @@ public class Utilisateur {
 	}
 
 	public boolean verifierMdp(String mdpAVerifier) {
-		return GestionMotDePasse.verifierMdp(mdpAVerifier, this.mdpHash);
+		return PasswordUtil.checkMdp(mdpAVerifier, this.mdpHash);
 	}
 
 	public String getMdp() {
@@ -65,8 +67,8 @@ public class Utilisateur {
 	}
 
 	public void setMdp(String ancienMdp, String nouveauMdp) {
-		if (GestionMotDePasse.verifierMdp(nouveauMdp, ancienMdp)) {
-			this.mdpHash = GestionMotDePasse.hashMdp(nouveauMdp);
+		if (PasswordUtil.checkMdp(nouveauMdp, ancienMdp)) {
+			this.mdpHash = PasswordUtil.hashMdp(nouveauMdp);
 		}
 	}
 

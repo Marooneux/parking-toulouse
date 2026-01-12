@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -13,13 +14,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 
-import modele.StationnementVoirie;
-import modele.StationnementVoirie.Couleur;
+import controleur.ControleurSaisirDureeStationnement;
+import modele.ZoneVoirie;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
 
 public class SaisirDureeStationnement extends JFrame {
@@ -30,33 +32,33 @@ public class SaisirDureeStationnement extends JFrame {
 	private JTextField textField;
 	private JTextField textFieldDuree;
 	private JTextField textFieldPlaque;
-    private JTextField textFieldNom;
-	private StationnementVoirie zone;
+	private JTextField textFieldNom;
+	private ZoneVoirie zone;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
-				//SaisirDureeStationnement frame = new SaisirDureeStationnement();
-				//frame.setVisible(true);
+				// SaisirDureeStationnement frame = new SaisirDureeStationnement();
+				// frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 	}
 
-	public SaisirDureeStationnement(StationnementVoirie zone) {
-		this.zone = zone;
-		
+	public SaisirDureeStationnement(ZoneVoirie zone2) {
+		this.zone = zone2;
+
 		this.setTitle("Démarrer le Stationnement");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
-		if (zone.getCouleur() == Couleur.BLEU) {
+		if (zone2.getNom() == "bleu") {
 			this.btnConfirmer = new JButton("Confirmer votre stationnement");
 		} else {
 			this.btnConfirmer = new JButton("Continuer vers le paiement");
 		}
-		
+
 		this.contentPane = new JPanel(new BorderLayout(15, 15));
 		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.contentPane.setBackground(new Color(250, 250, 250));
@@ -112,40 +114,40 @@ public class SaisirDureeStationnement extends JFrame {
 		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
-        this.btnConfirmer.addActionListener(e -> {
-            String strDuree = this.textFieldNom.getText();
-            String immatriculation = this.textFieldPlaque.getText();
-            if (immatriculation == null || immatriculation.trim().isEmpty()) {
-            	JOptionPane.showMessageDialog(this, "Veuillez saisir votre plaque d'immatriculation avant de payer.");
-                return;
-            }
-            if (strDuree == null || strDuree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
-                return;
-            }
-            int intDuree;
-            try {
-            	intDuree = Integer.parseInt(strDuree);
-                if (intDuree > zone.getDureeMax()) {
-                	JOptionPane.showMessageDialog(this, "La durée saisie est supérieure à la durée maximum de cette zone.");
-                    return;
-                }
-                if ((zone.getCouleur() == Couleur.BLEU) || (zone.getCouleur() == Couleur.ROUGE && intDuree <= 30)) {
-                	// Créer une reservation ici
-                    TicketVoirie frameTicketVoirie = new TicketVoirie();
-                    frameTicketVoirie.setVisible(true);
-	                dispose();
-            	} else {
-            		ChoixMoyenPaiement frameChoixPaiementVoirie = new ChoixMoyenPaiement(zone, intDuree);
-	                frameChoixPaiementVoirie.setVisible(true);
-	                dispose();
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Veuillez entrer une durée en minutes uniquement.");
-                return;
-            }
-        });
-	 
+		this.btnConfirmer.addActionListener(e -> {
+			String strDuree = this.textFieldNom.getText();
+			String immatriculation = this.textFieldPlaque.getText();
+			if (immatriculation == null || immatriculation.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez saisir votre plaque d'immatriculation avant de payer.");
+				return;
+			}
+			if (strDuree == null || strDuree.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
+				return;
+			}
+			int intDuree;
+			try {
+				intDuree = Integer.parseInt(strDuree);
+				if (intDuree > zone2.getDureeMax()) {
+					JOptionPane.showMessageDialog(this,
+							"La durée saisie est supérieure à la durée maximum de cette zone.");
+					return;
+				} else {
+					double prix = ControleurSaisirDureeStationnement.calculerPrixTotal(zone2, intDuree);
+					if (prix == 0) {
+						ControleurSaisirDureeStationnement.ouvrirTicket(zone2, immatriculation, intDuree);
+						this.dispose();
+					} else {
+						ControleurSaisirDureeStationnement.ouvrirPaiement(zone2, immatriculation, intDuree, prix);
+						this.dispose();
+					}
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Veuillez entrer une durée en minutes uniquement.");
+				return;
+			}
+		});
+
 		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
 	}
@@ -155,17 +157,17 @@ public class SaisirDureeStationnement extends JFrame {
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.setBackground(Color.WHITE);
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
-		
+
 		String minsGratuites = "";
-		if (zone.getCouleur() == Couleur.ROUGE) {
+		if (this.zone.getNom() == "rouge") {
 			minsGratuites = " (30 minutes gratuites)";
 		}
-		JLabel lblZone = new JLabel(zone.couleurZoneToString() + minsGratuites);
+		JLabel lblZone = new JLabel(this.zone.getNom() + minsGratuites);
 		lblZone.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblZone.setForeground(new Color(50, 50, 50));
 		p.add(lblZone);
-		
-		JLabel lblDureeMax = new JLabel("Durée maximum : " + zone.dureeMaxToString());
+
+		JLabel lblDureeMax = new JLabel("Durée maximum : " + this.zone.getDureeMax());
 		lblDureeMax.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblDureeMax.setForeground(new Color(50, 50, 50));
 		p.add(lblDureeMax);
@@ -179,15 +181,16 @@ public class SaisirDureeStationnement extends JFrame {
 		p.setBackground(Color.WHITE);
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-		JLabel lblInfoVehicule = new JLabel("Entrez la plaque d'immatriculation de votre véhicule avec le format suivant");
+		JLabel lblInfoVehicule = new JLabel(
+				"Entrez la plaque d'immatriculation de votre véhicule avec le format suivant");
 		lblInfoVehicule.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
-        textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
-        ((AbstractDocument) textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-        textFieldPlaque.setPreferredSize(new Dimension(250, 30)); 
-		p.add(textFieldPlaque);
+		this.textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
+		((AbstractDocument) this.textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		this.textFieldPlaque.setPreferredSize(new Dimension(250, 30));
+		p.add(this.textFieldPlaque);
 
 		JLabel lblInfoImatricule = new JLabel(
 				"Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
@@ -214,9 +217,9 @@ public class SaisirDureeStationnement extends JFrame {
 
 		// Todo : Rendre le texte field changeable par méthode pour pouvoir manipuler sa
 		// valeur
-        textFieldNom = new PlaceholderTextField("minutes", 4);
-        ((AbstractDocument) textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-        textFieldNom.setPreferredSize(new Dimension(250, 30)); 
+		this.textFieldNom = new PlaceholderTextField("minutes", 4);
+		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		this.textFieldNom.setPreferredSize(new Dimension(250, 30));
 		p.add(this.textFieldNom);
 
 		return p;
@@ -243,20 +246,19 @@ public class SaisirDureeStationnement extends JFrame {
 		parent.add(card);
 		parent.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
-	
-	
-    public String dureeMaxToString(int dureeMax) {
-    	String duree = " heures";
-    	int heures = dureeMax / 60;
-    	int minutes = dureeMax % 60;
-    	if (heures <= 1) {
-    		duree = duree.substring(0, duree.length() - 1);
-    	}
-    	if (minutes > 0) {
-    		duree = duree + " " + minutes + " minutes";
-    	}
-    	return (heures + duree);
-    }
+
+	public String dureeMaxToString(int dureeMax) {
+		String duree = " heures";
+		int heures = dureeMax / 60;
+		int minutes = dureeMax % 60;
+		if (heures <= 1) {
+			duree = duree.substring(0, duree.length() - 1);
+		}
+		if (minutes > 0) {
+			duree = duree + " " + minutes + " minutes";
+		}
+		return (heures + duree);
+	}
 
 	public JButton getBtnPayment() {
 		return this.btnConfirmer;

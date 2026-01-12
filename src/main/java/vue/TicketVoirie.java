@@ -2,15 +2,10 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,26 +13,24 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurTicketVoirie;
+import modele.ZoneVoirie;
+
 public class TicketVoirie extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private ZoneVoirie zone;
+	private String immatriculation;
+	private int duree;
+	private String moyenPaiement;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					TicketVoirie frame = new TicketVoirie();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public TicketVoirie(ZoneVoirie zone2, String immatriculation, int duree, String moyenPaiement) {
+		this.zone = zone2;
+		this.immatriculation = immatriculation;
+		this.duree = duree;
+		this.moyenPaiement = moyenPaiement;
 
-	public TicketVoirie() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 750, 600);
 		this.setTitle("Ticket de voirie");
@@ -93,6 +86,12 @@ public class TicketVoirie extends JFrame {
 		panelInfoGrid.setBorder(new EmptyBorder(20, 30, 20, 30));
 		panelCard.add(panelInfoGrid, BorderLayout.CENTER);
 		panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
+		this.createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#V-00001");
+		this.createInfoRow(panelInfoGrid, "Zone :", zone2.getNom());
+		this.createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
+		this.createInfoRow(panelInfoGrid, "Heure d'arrivée :", ControleurTicketVoirie.getHeureActuelle());
+		this.createInfoRow(panelInfoGrid, "Heure départ max :", ControleurTicketVoirie.calculerHeureDepart(duree));
+		this.createInfoRow(panelInfoGrid, "Moyen de paiement :", moyenPaiement);
 
 		this.createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#V-00001");
 		this.createInfoRow(panelInfoGrid, "Zone :", "Zone Rouge");
@@ -112,26 +111,6 @@ public class TicketVoirie extends JFrame {
 		lblWarning.setForeground(new Color(33, 37, 41));
 		lblWarning.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		panelFooter.add(lblWarning);
-
-		JPanel panelButtonContainer = new JPanel();
-		panelButtonContainer.setBackground(Color.WHITE);
-		panelFooter.add(panelButtonContainer);
-
-		JButton btnPaiement = new JButton("Confirmer le départ");
-		panelButtonContainer.add(btnPaiement);
-		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPaiement.setForeground(Color.WHITE);
-		btnPaiement.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnPaiement.setBackground(new Color(0, 123, 255));
-		btnPaiement.setFocusPainted(false);
-		btnPaiement.setBorderPainted(false);
-		btnPaiement.setPreferredSize(new Dimension(200, 45));
-		btnPaiement.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
 	}
 
 	private void createInfoRow(JPanel parent, String label, String valeur) {
