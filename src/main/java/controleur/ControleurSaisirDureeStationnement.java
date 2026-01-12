@@ -48,7 +48,8 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 
 	public static double calculerPrixTotal(StationnementVoirie zone, int duree) {
 		LocalTime actuel = LocalTime.now();
-		if ((actuel.isAfter(zone.getHorairePayantFin()) || actuel.isBefore(zone.getHorairePayantDebut())) || LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
+		if ((actuel.isAfter(zone.getHorairePayantFin()) || actuel.isBefore(zone.getHorairePayantDebut())) || 
+				LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY || (zone.getCouleur() == Couleur.ROUGE && duree <= 30)) {
 			return 0;
 		}
 		

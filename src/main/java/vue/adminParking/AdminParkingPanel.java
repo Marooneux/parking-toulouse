@@ -1,6 +1,6 @@
-package vue;
+package vue.adminParking;
 
-import javax.swing.*; 
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -10,29 +10,28 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
-public class ParkingPanel extends JPanel {
+public class AdminParkingPanel extends JPanel {
     private Parking parking;
     private Consumer<Parking> onClick;
-    private JButton btnModifier;
-
+    
     private Color normalBorder = new Color(230, 230, 230);
-    private Color hoverBorder = new Color(100, 100, 100);
+    private Color hoverBorder = new Color(52, 58, 64);
 
-    public ParkingPanel(Parking parking, Consumer<Parking> onClick) {
+    public AdminParkingPanel(Parking parking, Consumer<Parking> onClick) {
         this.parking = parking;
         this.onClick = onClick;
 
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(300, 260));
+        
         setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(normalBorder, 1),
                 new EmptyBorder(20, 20, 20, 20)
         ));
+        
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         addMouseListener(new MouseAdapter() {
@@ -43,8 +42,8 @@ public class ParkingPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setBorder(BorderFactory.createCompoundBorder(
-                    new LineBorder(hoverBorder, 1),
-                    new EmptyBorder(20, 20, 20, 20)
+                    new LineBorder(hoverBorder, 2),
+                    new EmptyBorder(19, 19, 19, 19)
                 ));
             }
             @Override
@@ -59,7 +58,7 @@ public class ParkingPanel extends JPanel {
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         topPanel.setOpaque(false);
         
-        CircleIcon pIcon = new CircleIcon("P");
+        CircleIcon pIcon = new CircleIcon("P"); 
         topPanel.add(pIcon);
         
         JLabel space = new JLabel();
@@ -87,7 +86,7 @@ public class ParkingPanel extends JPanel {
         centerPanel.add(createDetailRow("🕒", horaireText));
         
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesMax() - parking.getNbPlacesOccupees()) + " places"));
+        centerPanel.add(createDetailRow("🚗", (parking.getNbPlacesMax() - parking.getNbPlacesOccupees()) + " places dispo"));
         
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(createDetailRow("📏", "Max " + (parking.getHauteur()) + "m"));
@@ -102,30 +101,13 @@ public class ParkingPanel extends JPanel {
         borderTop.setPreferredSize(new Dimension(100, 1));
         bottomPanel.add(borderTop, BorderLayout.NORTH);
         
-        JLabel lblTarifLabel = new JLabel("Tarif");
-        lblTarifLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        lblTarifLabel.setForeground(Color.GRAY);
-        lblTarifLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
-        
         JLabel lblPrice = new JLabel(String.format("%.2f€/h", parking.getTarif()));
-        lblPrice.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblPrice.setForeground(new Color(33, 37, 41));
-        lblPrice.setBorder(new EmptyBorder(5, 0, 0, 0));
+        lblPrice.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblPrice.setForeground(Color.GRAY);
+        lblPrice.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-        bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
-        bottomPanel.add(lblPrice, BorderLayout.EAST);
 
-        btnModifier = new JButton("Modifier");
-        btnModifier.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        btnModifier.setFocusPainted(false);
-        btnModifier.setBackground(new Color(240, 240, 240));
-        btnModifier.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        actionsPanel.setOpaque(false);
-        actionsPanel.add(btnModifier);
-
-        bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
+        bottomPanel.add(lblPrice, BorderLayout.WEST);
 
         add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -170,9 +152,5 @@ public class ParkingPanel extends JPanel {
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
             g2.drawString(text, x, y - 2);
         }
-    }
-    
-    public JButton getBtnModifier() {
-        return btnModifier;
     }
 }

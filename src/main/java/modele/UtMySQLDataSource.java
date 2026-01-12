@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class UtMySQLDataSource {
-    private static final String NOM_SCHEMA = "parking";
+    private static final String NOM_SCHEMA = "sae_parking";
     private static Connection connexion = null;
 
     private static String login;

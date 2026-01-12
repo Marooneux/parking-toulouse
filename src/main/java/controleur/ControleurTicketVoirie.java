@@ -1,7 +1,10 @@
 package controleur;
 
+import java.awt.Color;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import modele.StationnementVoirie.Couleur;
 
 public class ControleurTicketVoirie {
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -17,5 +20,25 @@ public class ControleurTicketVoirie {
 		LocalTime heureDepart = LocalTime.now();
 		String str = heureDepart.format(formatter);
 		return str;
+	}
+	
+	public static Color getRgb(Couleur couleur) {
+		Color col = Color.black;
+		if (couleur == Couleur.ROUGE) {
+			col = Color.red;
+		}
+		if (couleur == Couleur.VERTE) {
+			col = Color.green;
+		}
+		if (couleur == Couleur.JAUNE) {
+			col = Color.yellow;
+		}
+		if (couleur == Couleur.ORANGE) {
+			col = Color.orange;
+		}
+		if (couleur == Couleur.BLEU) {
+			col = Color.blue;
+		}
+		return col;
 	}
 }
