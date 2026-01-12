@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,16 +32,16 @@ public abstract class DaoModele<T> implements Dao<T> {
 	}
 
 	public int miseAJourAvecKeyGeneration(Requete<T> req, T donnee) throws SQLException {
-		int generatedId = -1;
+		int id = 0;
 		Connection cn = MySQLDataSource.getConnexion();
-		PreparedStatement ps = cn.prepareStatement(req.requete(), java.sql.Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = cn.prepareStatement(req.requete(), Statement.RETURN_GENERATED_KEYS);
 		req.parametres(ps, donnee);
 		ps.executeUpdate();
 		ResultSet keys = ps.getGeneratedKeys();
 		if (keys != null && keys.next()) {
-			generatedId = keys.getInt(1);
+			id = keys.getInt(1);
 		}
-		return generatedId;
+		return id;
 	}
 
 	public List<T> find(Requete<T> req, String... id) throws SQLException {

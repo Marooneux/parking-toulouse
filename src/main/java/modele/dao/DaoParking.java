@@ -3,11 +3,16 @@ package modele.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
 
 import modele.Parking;
-import modele.dao.requetes.*;
+import modele.dao.requetes.RequeteDeleteParking;
+import modele.dao.requetes.RequeteInsertParking;
+import modele.dao.requetes.RequeteSelectParking;
+import modele.dao.requetes.RequeteSelectParkingByAdminId;
+import modele.dao.requetes.RequeteSelectParkingById;
+import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
 	private static Iterateur<Parking> ite;
@@ -34,12 +39,11 @@ public class DaoParking extends DaoModele<Parking> {
 	public List<Parking> findAll() throws SQLException {
 		return this.find(new RequeteSelectParking());
 	}
-	
 
 	public Parking findById(int id) throws SQLException {
 		return this.findById(new RequeteSelectParkingById(), String.valueOf(id));
 	}
-	
+
 	public List<Parking> findByAdminId(int adminId) throws SQLException {
 		return this.find(new RequeteSelectParkingByAdminId(), String.valueOf(adminId));
 	}
@@ -50,19 +54,25 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		int id = curseur.getInt("id_parking");
-		String nom = curseur.getString("nom");
-		String adresse = curseur.getString("adresse");
-		double tarif = curseur.getDouble("tarif");
-		int nbMax = curseur.getInt("nombre_places_max");
-		double hauteur = curseur.getDouble("hauteur_max");
-		Time ouv = curseur.getTime("horaire_ouverture");
-		Time ferm = curseur.getTime("horaire_fermeture");
-		boolean moto = curseur.getBoolean("contient_places_moto");
-		Parking p = new Parking(nom, adresse, tarif, nbMax, 
-				hauteur,
-				ouv.toLocalTime(), ferm.toLocalTime(), moto);
-		p.setId(id);
+		Time tOuverture = curseur.getTime("horaire_ouverture");
+		Time tFermeture = curseur.getTime("horaire_fermeture");
+
+		LocalTime ouverture = (tOuverture != null) ? tOuverture.toLocalTime() : null;
+		LocalTime fermeture = (tFermeture != null) ? tFermeture.toLocalTime() : null;
+
+		Parking p = new Parking(
+				curseur.getInt("id_parking"),
+				curseur.getString("nom"),
+				curseur.getString("adresse"),
+				curseur.getInt("nombre_places_max"),
+				curseur.getInt("nb_places_occupees"),
+				curseur.getDouble("hauteur_max"),
+				ouverture,
+				fermeture,
+				curseur.getBoolean("contient_places_moto"),
+				curseur.getDouble("tarif"));
+
+		p.setNbPlacesOccupees(curseur.getInt("nb_places_occupees"));
 		return p;
 	}
 

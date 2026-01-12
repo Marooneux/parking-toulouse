@@ -13,6 +13,7 @@ import java.awt.geom.Ellipse2D;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
+import utils.AuthManager;
 
 public class ParkingPanel extends JPanel {
     private Parking parking;
@@ -124,6 +125,15 @@ public class ParkingPanel extends JPanel {
         JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         actionsPanel.setOpaque(false);
         actionsPanel.add(btnModifier);
+
+        btnModifier.addActionListener(e -> {
+            // Only sysadmin or parkingadmin can modify parking
+            if (!AuthManager.ensureAuthorized("sysadmin", "parkingadmin")) {
+                return;
+            }
+            ModifierParking modifier = new ModifierParking(parking);
+            modifier.setVisible(true);
+        });
 
         bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
