@@ -212,9 +212,12 @@ public class Accueil extends JFrame {
         scrollPane.setViewportView(gridPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        btnAjouter = new JButton("Ajouter un parking");
+        JButton btnAjouter = new JButton("Ajouter un parking");
+        btnAjouter.setFocusPainted(false);
+        btnAjouter.setBackground(new Color(0, 0, 0));
+        btnAjouter.setForeground(Color.WHITE);
+        btnAjouter.setPreferredSize(new Dimension(150, 30));
         btnAjouter.addActionListener(e -> {
-           // ControleurAccueilAdminParking controleurAccueilAdminParking = new ControleurAccueilAdminParking(this, idAdmin);
             controleur.ouvrirPageAjouter(idAdmin);
             this.dispose();
            
