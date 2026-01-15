@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import modele.Adresse;
 import modele.Parking;
 
 public class TestParking {
@@ -17,8 +18,8 @@ public class TestParking {
 
 	@Before
 	public void setUp() {
-		this.parking = new Parking(1, "Parking Central", "Rue Victor Hugo", 100, 50, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true, 2.5);
+		this.parking = new Parking(1, "Parking Central", 100, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0), true, new Adresse(0, null, null, null, null));
 	}
 
 	@Test
@@ -26,11 +27,11 @@ public class TestParking {
 		assertEquals("Parking Central", this.parking.getNom());
 		assertEquals("Rue Victor Hugo", this.parking.getAdresse());
 		assertEquals(2.5, this.parking.getTarif(), 0.001);
-		assertEquals(100, this.parking.getNbPlacesMax());
+		assertEquals(100, this.parking.getCapacite());
 		assertEquals(50, this.parking.getNbPlacesOccupees());
-		assertEquals(1.8, this.parking.getHauteur(), 0.01);
-		assertEquals(LocalTime.of(9, 0), this.parking.getHeureOuverture());
-		assertEquals(LocalTime.of(21, 0), this.parking.getHeureFermeture());
+		assertEquals(1.8, this.parking.getHauteurMax(), 0.01);
+		assertEquals(LocalTime.of(9, 0), this.parking.getHoraireOuverture());
+		assertEquals(LocalTime.of(21, 0), this.parking.getHoraireFermeture());
 	}
 
 	@Test
@@ -41,17 +42,17 @@ public class TestParking {
 		this.parking.setNbPlacesMax(80);
 		this.parking.setNbPlacesOccupees(10);
 		this.parking.setHauteur(2.0);
-		this.parking.setHeureOuverture(LocalTime.of(8, 0));
-		this.parking.setHeureFermeture(LocalTime.of(22, 0));
+		this.parking.setHoraireOuverture(LocalTime.of(8, 0));
+		this.parking.setHoraireFermeture(LocalTime.of(22, 0));
 
 		assertEquals("Parking Sud", this.parking.getNom());
 		assertEquals("Boulevard Carnot", this.parking.getAdresse());
 		assertEquals(2.0, this.parking.getTarif(), 0.001);
-		assertEquals(80, this.parking.getNbPlacesMax());
+		assertEquals(80, this.parking.getCapacite());
 		assertEquals(10, this.parking.getNbPlacesOccupees());
-		assertEquals(2.0, this.parking.getHauteur(), 0.01);
-		assertEquals(LocalTime.of(8, 0), this.parking.getHeureOuverture());
-		assertEquals(LocalTime.of(22, 0), this.parking.getHeureFermeture());
+		assertEquals(2.0, this.parking.getHauteurMax(), 0.01);
+		assertEquals(LocalTime.of(8, 0), this.parking.getHoraireOuverture());
+		assertEquals(LocalTime.of(22, 0), this.parking.getHoraireFermeture());
 	}
 
 	@Test
@@ -65,7 +66,7 @@ public class TestParking {
 
 	@Test
 	public void testEstOuvert() {
-		assertTrue(this.parking.estOuvert(LocalTime.of(15, 0)));
-		assertFalse(this.parking.estOuvert(LocalTime.of(6, 0)));
+		assertTrue(this.parking.estOuvertApres(LocalTime.of(15, 0)));
+		assertFalse(this.parking.estOuvertApres(LocalTime.of(6, 0)));
 	}
 }

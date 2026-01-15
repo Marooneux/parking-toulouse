@@ -1,9 +1,12 @@
 package controleur;
 
-import java.sql.SQLException; 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import modele.Parking;
 import modele.dao.DaoParking;
@@ -13,51 +16,102 @@ import vue.SaisirHeureArriveParking;
 
 public class ControleurChoixParking {
 
-    private ChoixParking vue;
-    private DaoParking daoParking;
+	private ChoixParking vue;
+	private DaoParking daoParking;
 
-    public ControleurChoixParking(ChoixParking vue) {
-        this.vue = vue;
-        this.daoParking = new DaoParking();
+	// Liste complète chargée au démarrage
+	private List<Parking> listeComplete;
+	// Liste actuellement affichée (filtrée et triée)
+	private List<Parking> listeAffichee;
 
-        MySQLDataSource.creerAcces("root", "claudio"); 
+	public ControleurChoixParking(ChoixParking vue) {
+		this.vue = vue;
+		this.daoParking = new DaoParking();
+		this.listeComplete = new ArrayList<>();
+		this.listeAffichee = new ArrayList<>();
 
-        chargerParkings();
-        vue.setVisible(true);
-    }
+		MySQLDataSource.creerAcces("root", "claudio");
 
-    private void chargerParkings() {
-        try {
-            //System.out.println("Tentative chargement parkings...");
-            List<Parking> parkings = daoParking.findAll();
-            //System.out.println("Nombre de parkings trouvés = " + parkings.size());
+		this.afficherParkings();
+		vue.setVisible(true);
+	}
 
-            for (Parking p : parkings) {
-                //System.out.println("Parking: " + p.getNom());
-                vue.addParking(p, this::onParkingSelected);
-            }
+	private void chargerDonneesInitiales() {
+		try {
+			this.listeComplete = this.daoParking.findAll();
+			// Au départ, on affiche tout
+			this.listeAffichee = new ArrayList<>(this.listeComplete);
+			this.afficherParkings();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Erreur de connexion");
+		}
+	}
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors du chargement des parkings. Vérifiez la connexion à la base de données.");
-        }
-    }
-    
+	private void initialiserEcouteurs() {
+		// Barre de recherche
+		this.vue.getTxtRecherche().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				ControleurChoixParking.this.filtrerParkings();
+			}
+		});
 
-    private void onParkingSelected(Parking parking) {
-        SaisirHeureArriveParking vueSuivante =
-                new SaisirHeureArriveParking(parking);
+		// Options de tri
+		this.vue.getItemAlpha().addActionListener(e -> {
+			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getNom));
+			this.afficherParkings();
+		});
 
-        vueSuivante.setVisible(true);
-        vue.dispose();
-    }
-    
+		this.vue.getItemPlaces().addActionListener(e -> {
+			Collections.sort(this.listeAffichee,
+					Comparator.comparingInt(p -> p.getCapacite() - p.getNbPlacesOccupees()));
+			this.afficherParkings();
+		});
 
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            ChoixParking vue = new ChoixParking();
-            new ControleurChoixParking(vue);
-            vue.setVisible(true);
-        });
-    }
+		this.vue.getItemFermeture().addActionListener(e -> {
+			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
+			this.afficherParkings();
+		});
+	}
+
+	private void filtrerParkings() {
+		String recherche = this.vue.getTxtRecherche().getText().toLowerCase().trim();
+
+		this.listeAffichee.clear();
+
+		if (recherche.isEmpty()) {
+			this.listeAffichee.addAll(this.listeComplete);
+		} else {
+			for (Parking p : this.listeComplete) {
+				if (p.getNom().toLowerCase().contains(recherche) ||
+						p.getAdresse().getRue().toLowerCase().contains(recherche)) {
+					this.listeAffichee.add(p);
+				}
+			}
+		}
+		this.afficherParkings();
+	}
+
+	private void afficherParkings() {
+		this.vue.viderGrille();
+		if (this.listeAffichee != null) {
+			for (Parking p : this.listeAffichee) {
+				this.vue.addParking(p, this::onParkingSelected);
+			}
+		}
+	}
+
+	private void onParkingSelected(Parking parking) {
+		SaisirHeureArriveParking vueSuivante = new SaisirHeureArriveParking(parking);
+		vueSuivante.setVisible(true);
+		this.vue.dispose();
+	}
+
+	public static void main(String[] args) {
+		javax.swing.SwingUtilities.invokeLater(() -> {
+			ChoixParking vue = new ChoixParking();
+			new ControleurChoixParking(vue);
+		});
+	}
 }

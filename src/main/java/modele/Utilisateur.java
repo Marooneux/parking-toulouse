@@ -3,7 +3,6 @@ package modele;
 import utils.PasswordUtil;
 
 public class Utilisateur {
-
 	public enum Type {
 		PARKINGADMIN, SYSADMIN, CLIENT
 	}

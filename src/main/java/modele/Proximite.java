@@ -1,7 +1,6 @@
 package modele;
 
 public class Proximite {
-
 	private Parking parking;
 	private LigneMetro ligneMetro;
 	private int distanceMetres;

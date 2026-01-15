@@ -48,7 +48,7 @@ public class ChoixZone extends JFrame {
 		ZoneVoirie zoneJaune = new ZoneVoirie(1, "jaune", 1.5, 150);
 		ZoneVoirie zoneOrange = new ZoneVoirie(2, "orange", 1, 300);
 		ZoneVoirie zoneRouge = new ZoneVoirie(3, "rouge", 1, 180);
-		ZoneVoirie zoneVerte = new ZoneVoirie(4, "vert", 0.5, 300);
+		ZoneVoirie zoneVerte = new ZoneVoirie(4, "verte", 0.5, 300);
 		ZoneVoirie zoneBleu = new ZoneVoirie(5, "bleu", 0, 90);
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));

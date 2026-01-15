@@ -59,6 +59,7 @@ public class TestDaoProximite {
 		// créer un parking avec l'adresse
 		this.parkingTest = new Parking(0, "Parking Test", 100, 2.5,
 				LocalTime.of(7, 0), LocalTime.of(23, 0), true, this.adresseTest);
+
 		this.daoParking.create(this.parkingTest);
 
 		// créer une ligne de métro

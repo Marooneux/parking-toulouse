@@ -44,7 +44,6 @@ public class DaoParking extends DaoModele<Parking> {
 
 	@Override
 	protected Parking creerInstance(ResultSet rs) throws SQLException {
-
 		int id = rs.getInt("id");
 		String nom = rs.getString("nom");
 		int capacite = rs.getInt("capacite");

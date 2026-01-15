@@ -104,7 +104,6 @@ public class TestDaoParking {
 	public void testDelete() throws SQLException {
 		this.daoParking.create(this.parkingTest);
 		int id = this.parkingTest.getId();
-
 		this.daoParking.delete(this.parkingTest);
 
 		Parking p = this.daoParking.findById(id);

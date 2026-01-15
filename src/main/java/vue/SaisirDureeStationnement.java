@@ -46,14 +46,14 @@ public class SaisirDureeStationnement extends JFrame {
 		});
 	}
 
-	public SaisirDureeStationnement(ZoneVoirie zone2) {
-		this.zone = zone2;
+	public SaisirDureeStationnement(ZoneVoirie zone) {
+		this.zone = zone;
 
 		this.setTitle("Démarrer le Stationnement");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
-		if (zone2.getNom() == "bleu") {
+		if (zone.getNom() == "bleu") {
 			this.btnConfirmer = new JButton("Confirmer votre stationnement");
 		} else {
 			this.btnConfirmer = new JButton("Continuer vers le paiement");
@@ -128,17 +128,17 @@ public class SaisirDureeStationnement extends JFrame {
 			int intDuree;
 			try {
 				intDuree = Integer.parseInt(strDuree);
-				if (intDuree > zone2.getDureeMax()) {
+				if (intDuree > zone.getDureeMax()) {
 					JOptionPane.showMessageDialog(this,
 							"La durée saisie est supérieure à la durée maximum de cette zone.");
 					return;
 				} else {
-					double prix = ControleurSaisirDureeStationnement.calculerPrixTotal(zone2, intDuree);
+					double prix = ControleurSaisirDureeStationnement.calculerPrixTotal(zone, intDuree);
 					if (prix == 0) {
-						ControleurSaisirDureeStationnement.ouvrirTicket(zone2, immatriculation, intDuree);
+						ControleurSaisirDureeStationnement.ouvrirTicket(zone, immatriculation, intDuree);
 						this.dispose();
 					} else {
-						ControleurSaisirDureeStationnement.ouvrirPaiement(zone2, immatriculation, intDuree, prix);
+						ControleurSaisirDureeStationnement.ouvrirPaiement(zone, immatriculation, intDuree, prix);
 						this.dispose();
 					}
 				}

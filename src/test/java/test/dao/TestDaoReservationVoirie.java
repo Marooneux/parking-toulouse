@@ -43,7 +43,6 @@ public class TestDaoReservationVoirie {
 	public void setUp() throws SQLException {
 		cn = MySQLDataSource.getConnexion();
 		cn.setAutoCommit(false);
-
 		this.daoRes = new DaoReservationVoirie();
 		this.daoUser = new DaoUtilisateur();
 		this.daoZone = new DaoZoneVoirie();
