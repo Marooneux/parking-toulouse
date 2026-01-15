@@ -1,6 +1,7 @@
 package modele;
 
 public class Proximite {
+
 	private Parking parking;
 	private LigneMetro ligneMetro;
 	private int distanceMetres;
@@ -34,4 +35,5 @@ public class Proximite {
 	public void setDistanceMetres(int distanceMetres) {
 		this.distanceMetres = distanceMetres;
 	}
+
 }

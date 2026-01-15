@@ -16,9 +16,7 @@ public class DaoLigneMetro extends DaoModele<LigneMetro> {
 	@Override
 	public void create(LigneMetro donnee) throws SQLException {
 		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertLignesMetro(), donnee);
-		if (id > 0) {
-			donnee.setId(id);
-		}
+		donnee.setId(id);
 	}
 
 	@Override
@@ -43,7 +41,7 @@ public class DaoLigneMetro extends DaoModele<LigneMetro> {
 	@Override
 	protected LigneMetro creerInstance(ResultSet curseur) throws SQLException {
 		return new LigneMetro(
-				curseur.getInt("id_ligne_metro"),
+				curseur.getInt("id"),
 				curseur.getString("nom"),
 				curseur.getString("couleur"));
 	}

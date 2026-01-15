@@ -15,15 +15,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import modele.Adresse;
 import modele.Parking;
+import modele.dao.DaoAdresse;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 
 public class TestDaoParking {
 
 	private DaoParking daoParking;
+	private DaoAdresse daoAdresse;
 	private Connection cn;
 	private Parking parkingTest;
+	private Adresse adresseTest;
 
 	@BeforeClass
 	public static void initConnexion() {
@@ -35,21 +39,21 @@ public class TestDaoParking {
 		this.cn = MySQLDataSource.getConnexion();
 		this.cn.setAutoCommit(false);
 
+		this.daoAdresse = new DaoAdresse();
 		this.daoParking = new DaoParking();
+
+		this.adresseTest = new Adresse(0, "1", "rue du Test", "31000", "Toulouse");
+		this.daoAdresse.create(this.adresseTest);
 
 		this.parkingTest = new Parking(
 				0,
 				"Parking Test",
-				"1 rue du Test",
 				120,
-				50,
 				2.20,
 				LocalTime.of(7, 0),
 				LocalTime.of(23, 0),
 				true,
-				2.50);
-
-		this.parkingTest.setNbPlacesOccupees(10);
+				this.adresseTest);
 	}
 
 	@After
@@ -58,43 +62,49 @@ public class TestDaoParking {
 			this.cn.rollback();
 			MySQLDataSource.deconnecter();
 		}
-
 		this.daoParking = null;
+		this.daoAdresse = null;
 		this.parkingTest = null;
+		this.adresseTest = null;
 	}
 
 	@Test
 	public void testCreateAndFindById() throws SQLException {
 		this.daoParking.create(this.parkingTest);
-
 		assertTrue(this.parkingTest.getId() > 0);
 
 		Parking p = this.daoParking.findById(this.parkingTest.getId());
 		assertNotNull(p);
 		assertEquals("Parking Test", p.getNom());
-		assertEquals(10, p.getNbPlacesOccupees());
-		assertEquals(2.50, p.getTarif(), 0.01);
+		assertEquals(120, p.getCapacite());
+		assertEquals(2.20, p.getHauteurMax(), 0.01);
+		assertEquals("rue du Test", p.getAdresse().getRue());
 	}
 
 	@Test
 	public void testUpdate() throws SQLException {
 		this.daoParking.create(this.parkingTest);
 
-		this.parkingTest.setNbPlacesOccupees(40);
-		this.parkingTest.setTarif(3.00);
+		this.parkingTest.setCapacite(150);
+		this.parkingTest.setHauteurMax(2.50);
+
+		// Mettre à jour l'adresse avant de mettre à jour le parking
+		this.parkingTest.getAdresse().setRue("Rue Modifiee");
+		this.daoAdresse.update(this.parkingTest.getAdresse());
 
 		this.daoParking.update(this.parkingTest);
 
 		Parking p = this.daoParking.findById(this.parkingTest.getId());
-		assertEquals(40, p.getNbPlacesOccupees());
-		assertEquals(3.00, p.getTarif(), 0.01);
+		assertEquals(150, p.getCapacite());
+		assertEquals(2.50, p.getHauteurMax(), 0.01);
+		assertEquals("Rue Modifiee", p.getAdresse().getRue());
 	}
 
 	@Test
 	public void testDelete() throws SQLException {
 		this.daoParking.create(this.parkingTest);
-
 		int id = this.parkingTest.getId();
+
 		this.daoParking.delete(this.parkingTest);
 
 		Parking p = this.daoParking.findById(id);

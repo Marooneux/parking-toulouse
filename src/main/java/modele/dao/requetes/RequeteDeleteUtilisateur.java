@@ -9,11 +9,11 @@ public class RequeteDeleteUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "DELETE FROM utilisateurs WHERE id_utilisateur = ?";
+		return "DELETE FROM utilisateurs WHERE id = ?";
 	}
 
 	@Override
-	public void parametres(PreparedStatement statement, Utilisateur u) throws SQLException {
-		statement.setInt(1, u.getId());
+	public void parametres(PreparedStatement statement, Utilisateur donnee) throws SQLException {
+		statement.setInt(1, donnee.getId());
 	}
 }

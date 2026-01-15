@@ -9,7 +9,7 @@ public class RequeteUpdateZoneVoirie extends Requete<ZoneVoirie> {
 
 	@Override
 	public String requete() {
-		return "UPDATE zones_voirie SET nom = ?, tarif_horaire = ?, duree_max = ? WHERE id_zone = ?";
+		return "UPDATE zones_voirie SET nom = ?, tarif_horaire = ?, duree_max = ? WHERE id = ?";
 	}
 
 	@Override

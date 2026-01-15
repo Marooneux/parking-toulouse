@@ -12,12 +12,11 @@ import modele.dao.requetes.RequeteSelectZoneVoirieById;
 import modele.dao.requetes.RequeteUpdateZoneVoirie;
 
 public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
+
 	@Override
 	public void create(ZoneVoirie donnee) throws SQLException {
 		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertZoneVoirie(), donnee);
-		if (id > 0) {
-			donnee.setId(id);
-		}
+		donnee.setId(id);
 	}
 
 	@Override
@@ -41,9 +40,11 @@ public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
 
 	@Override
 	protected ZoneVoirie creerInstance(ResultSet curseur) throws SQLException {
-		return new ZoneVoirie(curseur.getInt("id_zone"),
-				curseur.getString("nom"),
-				curseur.getDouble("tarif_horaire"),
-				curseur.getDouble("duree_max"));
+		int id = curseur.getInt("id");
+		String nom = curseur.getString("nom");
+		double tarifHoraire = curseur.getDouble("tarif_horaire");
+		int dureeMax = curseur.getInt("duree_max");
+
+		return new ZoneVoirie(id, nom, tarifHoraire, dureeMax);
 	}
 }

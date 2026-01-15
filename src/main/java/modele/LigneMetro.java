@@ -1,6 +1,7 @@
 package modele;
 
 public class LigneMetro {
+
 	private int id;
 	private String nom;
 	private String couleur;
@@ -34,4 +35,5 @@ public class LigneMetro {
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
+
 }

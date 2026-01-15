@@ -9,7 +9,7 @@ public class RequeteDeleteZoneVoirie extends Requete<ZoneVoirie> {
 
 	@Override
 	public String requete() {
-		return "DELETE FROM zones_voirie WHERE id_zone = ?";
+		return "DELETE FROM zones_voirie WHERE id = ?";
 	}
 
 	@Override

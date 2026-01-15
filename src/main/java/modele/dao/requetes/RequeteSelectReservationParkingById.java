@@ -9,12 +9,11 @@ public class RequeteSelectReservationParkingById extends Requete<ReservationPark
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM reservations_parking WHERE immatriculation = ? AND id_parking = ?";
+		return "SELECT * FROM reservations_parking WHERE id = ?";
 	}
 
 	@Override
 	public void parametres(PreparedStatement statement, String... id) throws SQLException {
-		statement.setString(1, id[0]);
-		statement.setInt(2, Integer.parseInt(id[1]));
+		statement.setInt(1, Integer.parseInt(id[0]));
 	}
 }

@@ -9,7 +9,7 @@ public class RequeteSelectAbonnementById extends Requete<Abonnement> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM abonnements WHERE id_abonnement = ?";
+		return "SELECT * FROM abonnements WHERE id = ?";
 	}
 
 	@Override

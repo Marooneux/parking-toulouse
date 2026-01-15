@@ -9,7 +9,7 @@ public class RequeteDeleteAbonnement extends Requete<Abonnement> {
 
 	@Override
 	public String requete() {
-		return "DELETE FROM abonnements WHERE id_abonnement = ?";
+		return "DELETE FROM abonnements WHERE id = ?";
 	}
 
 	@Override

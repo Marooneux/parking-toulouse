@@ -9,7 +9,7 @@ public class RequeteSelectUtilisateurById extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM utilisateurs WHERE id_utilisateur = ?";
+		return "SELECT * FROM utilisateurs WHERE id = ?";
 	}
 
 	@Override

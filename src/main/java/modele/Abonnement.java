@@ -1,6 +1,7 @@
 package modele;
 
 public class Abonnement {
+
 	private int id;
 	private String nom;
 	private String description;
@@ -33,9 +34,5 @@ public class Abonnement {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public boolean estValide() {
-		return this.nom != null && !this.nom.isBlank();
 	}
 }
