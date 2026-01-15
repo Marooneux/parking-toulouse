@@ -4,7 +4,7 @@ import utils.PasswordUtil;
 
 public class Utilisateur {
 	public enum Type {
-		PARKINGADMIN, SYSADMIN, CLIENT
+		SYSADMIN, PARKINGADMIN, CLIENT
 	}
 
 	private int id;

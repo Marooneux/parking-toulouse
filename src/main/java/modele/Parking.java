@@ -3,7 +3,6 @@ package modele;
 import java.time.LocalTime;
 
 public class Parking {
-
 	private int id;
 	private String nom;
 	private int capacite;

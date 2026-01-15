@@ -86,6 +86,7 @@ public class ControleurChoixParking {
 			for (Parking p : this.listeComplete) {
 				if (p.getNom().toLowerCase().contains(recherche) ||
 						p.getAdresse().getRue().toLowerCase().contains(recherche)) {
+
 					this.listeAffichee.add(p);
 				}
 			}

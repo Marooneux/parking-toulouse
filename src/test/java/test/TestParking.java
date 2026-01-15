@@ -39,9 +39,9 @@ public class TestParking {
 		this.parking.setNom("Parking Sud");
 		this.parking.setAdresse("Boulevard Carnot");
 		this.parking.setTarif(2.0);
-		this.parking.setNbPlacesMax(80);
+		this.parking.setCapacite(80);
 		this.parking.setNbPlacesOccupees(10);
-		this.parking.setHauteur(2.0);
+		this.parking.setHauteurMax(2.0);
 		this.parking.setHoraireOuverture(LocalTime.of(8, 0));
 		this.parking.setHoraireFermeture(LocalTime.of(22, 0));
 

@@ -51,7 +51,6 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 			 */
 		(LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY
 				|| (zone.getNom() == "rouge" && duree <= 30)) {
-
 			return 0;
 		}
 		double prixTotal = 0;
