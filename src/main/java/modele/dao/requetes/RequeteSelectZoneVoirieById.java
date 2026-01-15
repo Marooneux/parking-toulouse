@@ -9,7 +9,7 @@ public class RequeteSelectZoneVoirieById extends Requete<ZoneVoirie> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM zones_voirie WHERE id_zone = ?";
+		return "SELECT * FROM zones_voirie WHERE id = ?";
 	}
 
 	@Override

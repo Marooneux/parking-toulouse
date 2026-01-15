@@ -9,12 +9,11 @@ public class RequeteDeleteReservationParking extends Requete<ReservationParking>
 
 	@Override
 	public String requete() {
-		return "DELETE FROM reservations_parking WHERE immatriculation = ? AND id_parking = ?";
+		return "DELETE FROM reservations_parking WHERE id = ?";
 	}
 
 	@Override
 	public void parametres(PreparedStatement statement, ReservationParking donnee) throws SQLException {
-		statement.setString(1, donnee.getImmatriculation());
-		statement.setInt(2, donnee.getParking().getId());
+		statement.setInt(1, donnee.getId());
 	}
 }

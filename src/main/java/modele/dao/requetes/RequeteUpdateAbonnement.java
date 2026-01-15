@@ -9,7 +9,7 @@ public class RequeteUpdateAbonnement extends Requete<Abonnement> {
 
 	@Override
 	public String requete() {
-		return "UPDATE abonnements SET nom = ?, description = ? WHERE id_abonnement = ?";
+		return "UPDATE abonnements SET nom = ?, description = ? WHERE id = ?";
 	}
 
 	@Override

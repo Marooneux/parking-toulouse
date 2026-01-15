@@ -9,7 +9,7 @@ public class RequeteUpdateLignesMetro extends Requete<LigneMetro> {
 
 	@Override
 	public String requete() {
-		return "UPDATE lignes_metro SET nom = ?, couleur = ? WHERE id_ligne_metro = ?";
+		return "UPDATE lignes_metro SET nom = ?, couleur = ? WHERE id = ?";
 	}
 
 	@Override

@@ -80,8 +80,8 @@ public class ModifierParking extends JFrame {
         txtNom.setText(parking.getNom());
         txtAdresse.setText(parking.getAdresse());
         txtTarif.setText(String.valueOf(parking.getTarif()));
-        txtHauteur.setText(String.valueOf(parking.getHauteur()));
-        txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
+        txtHauteur.setText(String.valueOf(parking.getHauteurMax()));
+        txtPlacesMax.setText(String.valueOf(parking.getCapacite()));
     }
 
     public JButton getBtnValider() {

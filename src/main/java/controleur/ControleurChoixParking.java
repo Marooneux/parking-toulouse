@@ -65,12 +65,12 @@ public class ControleurChoixParking {
 
 		this.vue.getItemPlaces().addActionListener(e -> {
 			Collections.sort(this.listeAffichee,
-					Comparator.comparingInt(p -> p.getNbPlacesMax() - p.getNbPlacesOccupees()));
+					Comparator.comparingInt(p -> p.getCapacite() - p.getNbPlacesOccupees()));
 			this.afficherParkings();
 		});
 
 		this.vue.getItemFermeture().addActionListener(e -> {
-			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHeureFermeture));
+			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
 			this.afficherParkings();
 		});
 	}
@@ -85,7 +85,8 @@ public class ControleurChoixParking {
 		} else {
 			for (Parking p : this.listeComplete) {
 				if (p.getNom().toLowerCase().contains(recherche) ||
-						p.getAdresse().toLowerCase().contains(recherche)) {
+						p.getAdresse().getRue().toLowerCase().contains(recherche)) {
+
 					this.listeAffichee.add(p);
 				}
 			}

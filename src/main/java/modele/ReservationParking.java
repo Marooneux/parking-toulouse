@@ -1,59 +1,30 @@
 package modele;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ReservationParking {
-	private String immatriculation;
-	private Parking parking;
+
+	private int id;
 	private LocalDateTime dateArrivee;
 	private LocalDateTime dateDepart;
-	private boolean estPayee;
-	private int idUtilisateur;
+	private Parking parking;
+	private Utilisateur utilisateur;
 
-	public ReservationParking(String immatriculation, Parking parking, LocalDateTime dateArrivee, int idUtilisateur) {
-		this.immatriculation = immatriculation;
-		this.parking = parking;
+	public ReservationParking(int id, LocalDateTime dateArrivee, LocalDateTime dateDepart,
+			Parking parking, Utilisateur utilisateur) {
+		this.id = id;
 		this.dateArrivee = dateArrivee;
-		this.dateDepart = null;
-		this.estPayee = false;
-		this.idUtilisateur = idUtilisateur;
-	}
-
-	public double calculerPrixTotal() {
-		int nbQuartsHeures = 0;
-		Duration duree = Duration.between(this.dateArrivee, this.dateDepart);
-		long minutes = duree.toMinutes();
-
-		System.out.println(duree);
-		if (minutes % 15 != 0) {
-			nbQuartsHeures = (int) (minutes / 15 + 1);
-		} else {
-			nbQuartsHeures = (int) (minutes / 15);
-		}
-		return nbQuartsHeures * this.parking.getTarif();
-	}
-
-	@Override
-	public String toString() {
-		return "Réservation confirmée au parking " + this.parking.getNom() +
-				". Arrivée : " + this.dateArrivee + ". Prix horaire : " + this.parking.getTarif() + "€";
-	}
-
-	public String getImmatriculation() {
-		return this.immatriculation;
-	}
-
-	public void setImmatriculation(String immatriculation) {
-		this.immatriculation = immatriculation;
-	}
-
-	public Parking getParking() {
-		return this.parking;
-	}
-
-	public void setParking(Parking parking) {
+		this.dateDepart = dateDepart;
 		this.parking = parking;
+		this.utilisateur = utilisateur;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public LocalDateTime getDateArrivee() {
@@ -69,30 +40,23 @@ public class ReservationParking {
 	}
 
 	public void setDateDepart(LocalDateTime dateDepart) {
-		if (dateDepart == null) {
-			throw new IllegalArgumentException("La date de départ ne doit pas être 'null'");
-		} else if (dateDepart.isBefore(this.getDateArrivee())) {
-
-			throw new IllegalArgumentException("La date de départ doit être postérieure à la date d'arrivée");
-		}
-
 		this.dateDepart = dateDepart;
 	}
 
-	public boolean estPayee() {
-		return this.estPayee;
+	public Parking getParking() {
+		return this.parking;
 	}
 
-	public void setEstPayee(boolean estPayee) {
-		this.estPayee = estPayee;
+	public void setParking(Parking parking) {
+		this.parking = parking;
 	}
 
-	public int getIdUtilisateur() {
-		return this.idUtilisateur;
+	public Utilisateur getUtilisateur() {
+		return this.utilisateur;
 	}
 
-	public void setIdUtilisateur(int idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public static boolean immatriculationValide(String immatriculation) {

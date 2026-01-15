@@ -14,10 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import modele.Abonnement;
 import modele.Utilisateur;
 import modele.Utilisateur.Type;
-import modele.dao.DaoAbonnement;
 import modele.dao.DaoUtilisateur;
 import modele.dao.MySQLDataSource;
 
@@ -25,8 +23,6 @@ public class TestDaoUtilisateur {
 
 	private static Connection cn;
 	private DaoUtilisateur daoUtilisateur;
-	private DaoAbonnement daoAbonnement;
-	private Abonnement abonnement;
 	private Utilisateur utilisateur;
 
 	@BeforeClass
@@ -39,11 +35,8 @@ public class TestDaoUtilisateur {
 		cn = MySQLDataSource.getConnexion();
 		cn.setAutoCommit(false);
 
-		this.daoAbonnement = new DaoAbonnement();
-		this.abonnement = new Abonnement(0, "Premium", "Abonnement premium test");
-		this.daoAbonnement.create(this.abonnement);
 		this.daoUtilisateur = new DaoUtilisateur();
-		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123", this.abonnement,
+		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "j.dupont@example.com", "mdp123",
 				Type.CLIENT);
 		this.daoUtilisateur.create(this.utilisateur);
 	}
@@ -55,9 +48,7 @@ public class TestDaoUtilisateur {
 			MySQLDataSource.deconnecter();
 		}
 		this.daoUtilisateur = null;
-		this.daoAbonnement = null;
 		this.utilisateur = null;
-		this.abonnement = null;
 	}
 
 	@Test
@@ -68,7 +59,6 @@ public class TestDaoUtilisateur {
 		assertEquals(this.utilisateur.getNom(), utilisateur2.getNom());
 		assertEquals(this.utilisateur.getPrenom(), utilisateur2.getPrenom());
 		assertEquals(this.utilisateur.getEmail(), utilisateur2.getEmail());
-		assertEquals(this.utilisateur.getAbonnement().getId(), utilisateur2.getAbonnement().getId());
 	}
 
 	@Test
@@ -92,7 +82,7 @@ public class TestDaoUtilisateur {
 	@Test
 	public void testFindAll() throws SQLException {
 		Utilisateur utilisateur2 = new Utilisateur(0, "Durand", "Paul", "p.durand@example.com", "mdp456",
-				this.abonnement, Type.CLIENT);
+				Type.CLIENT);
 		this.daoUtilisateur.create(utilisateur2);
 
 		List<Utilisateur> all = this.daoUtilisateur.findAll();

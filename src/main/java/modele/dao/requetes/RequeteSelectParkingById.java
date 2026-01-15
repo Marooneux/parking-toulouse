@@ -9,7 +9,7 @@ public class RequeteSelectParkingById extends Requete<Parking> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM parkings WHERE id_parking = ?";
+		return "SELECT * FROM parkings WHERE id = ?";
 	}
 
 	@Override

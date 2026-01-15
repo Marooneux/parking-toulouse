@@ -43,11 +43,11 @@ public class ControleurModifierParking {
     		parking.setNom(vue.getNom());
     		parking.setAdresse(vue.getAdresse());
     		parking.setTarif(vue.getTarif());
-    		parking.setNbPlacesMax(vue.getPlacesMax());
+    		parking.setCapacite(vue.getPlacesMax());
     		
-    		parking.setHauteur(vue.getHauteur());
-    		parking.setHeureOuverture(vue.getHeureOuverture());
-            parking.setHeureFermeture(vue.getHeureFermeture());
+    		parking.setHauteurMax(vue.getHauteur());
+    		parking.setHoraireOuverture(vue.getHeureOuverture());
+            parking.setHoraireFermeture(vue.getHeureFermeture());
             parking.setContientPlacesMoto(vue.isContientPlacesMoto());
             
             daoParking.update(parking);

@@ -3,26 +3,24 @@ package modele.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.List;
 
+import modele.Adresse;
 import modele.Parking;
 import modele.dao.requetes.RequeteDeleteParking;
 import modele.dao.requetes.RequeteInsertParking;
 import modele.dao.requetes.RequeteSelectParking;
-import modele.dao.requetes.RequeteSelectParkingByAdminId;
 import modele.dao.requetes.RequeteSelectParkingById;
 import modele.dao.requetes.RequeteUpdateParking;
 
 public class DaoParking extends DaoModele<Parking> {
-	private static Iterateur<Parking> ite;
+
+	private DaoAdresse daoAdresse = new DaoAdresse();
 
 	@Override
 	public void create(Parking donnee) throws SQLException {
 		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertParking(), donnee);
-		if (id > 0) {
-			donnee.setId(id);
-		}
+		donnee.setId(id);
 	}
 
 	@Override
@@ -44,44 +42,33 @@ public class DaoParking extends DaoModele<Parking> {
 		return this.findById(new RequeteSelectParkingById(), String.valueOf(id));
 	}
 
-	public List<Parking> findByAdminId(int adminId) throws SQLException {
-		return this.find(new RequeteSelectParkingByAdminId(), String.valueOf(adminId));
-	}
-
-	public Iterateur<Parking> findAllIte() throws SQLException {
-		return DaoParking.ite;
-	}
-
 	@Override
-	protected Parking creerInstance(ResultSet curseur) throws SQLException {
-		Time tOuverture = curseur.getTime("horaire_ouverture");
-		Time tFermeture = curseur.getTime("horaire_fermeture");
+	protected Parking creerInstance(ResultSet rs) throws SQLException {
+		int id = rs.getInt("id");
+		String nom = rs.getString("nom");
+		int capacite = rs.getInt("capacite");
 
-		LocalTime ouverture = (tOuverture != null) ? tOuverture.toLocalTime() : null;
-		LocalTime fermeture = (tFermeture != null) ? tFermeture.toLocalTime() : null;
+		Double hauteurMax = rs.getDouble("hauteur_max");
+		if (rs.wasNull()) {
+			hauteurMax = null;
+		}
 
-		Parking p = new Parking(
-				curseur.getInt("id_parking"),
-				curseur.getString("nom"),
-				curseur.getString("adresse"),
-				curseur.getInt("nombre_places_max"),
-				curseur.getInt("nb_places_occupees"),
-				curseur.getDouble("hauteur_max"),
-				ouverture,
-				fermeture,
-				curseur.getBoolean("contient_places_moto"),
-				curseur.getDouble("tarif"));
+		Time ouverture = rs.getTime("horaire_ouverture");
+		Time fermeture = rs.getTime("horaire_fermeture");
 
-		p.setNbPlacesOccupees(curseur.getInt("nb_places_occupees"));
-		return p;
+		boolean contientPlacesMoto = rs.getBoolean("contient_places_moto");
+
+		int idAdresse = rs.getInt("id_adresse");
+		Adresse adresse = this.daoAdresse.findById(idAdresse);
+
+		return new Parking(
+				id,
+				nom,
+				capacite,
+				hauteurMax,
+				ouverture != null ? ouverture.toLocalTime() : null,
+				fermeture != null ? fermeture.toLocalTime() : null,
+				contientPlacesMoto,
+				adresse);
 	}
-
-	public static boolean hasNext() {
-		return ite.hasNext();
-	}
-
-	public static Parking next() {
-		return ite.next();
-	}
-
 }

@@ -9,11 +9,11 @@ public class RequeteSelectReservationVoirieById extends Requete<ReservationVoiri
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM reservations_voirie WHERE immatriculation = ?";
+		return "SELECT * FROM reservations_voirie WHERE id = ?";
 	}
 
 	@Override
 	public void parametres(PreparedStatement statement, String... id) throws SQLException {
-		statement.setString(1, id[0]);
+		statement.setInt(1, Integer.parseInt(id[0]));
 	}
 }

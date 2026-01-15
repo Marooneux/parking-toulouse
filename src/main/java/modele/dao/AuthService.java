@@ -39,7 +39,6 @@ public class AuthService {
 					rs.getString("prenom"),
 					rs.getString("email"),
 					rs.getString("mot_de_passe"),
-					null,
 					Type.valueOf(rs.getString("type")));
 		}
 		return null;

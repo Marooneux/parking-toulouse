@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.After;
@@ -13,9 +14,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import modele.Adresse;
 import modele.LigneMetro;
 import modele.Parking;
 import modele.Proximite;
+import modele.dao.DaoAdresse;
 import modele.dao.DaoLigneMetro;
 import modele.dao.DaoParking;
 import modele.dao.DaoProximite;
@@ -26,8 +29,10 @@ public class TestDaoProximite {
 	private DaoProximite daoProximite;
 	private DaoParking daoParking;
 	private DaoLigneMetro daoLigneMetro;
+	private DaoAdresse daoAdresse;
 	private Connection cn;
 
+	private Adresse adresseTest;
 	private Parking parkingTest;
 	private LigneMetro ligneTest;
 	private Proximite proximiteTest;
@@ -42,13 +47,19 @@ public class TestDaoProximite {
 		this.cn = MySQLDataSource.getConnexion();
 		this.cn.setAutoCommit(false);
 
+		this.daoAdresse = new DaoAdresse();
 		this.daoParking = new DaoParking();
 		this.daoLigneMetro = new DaoLigneMetro();
 		this.daoProximite = new DaoProximite();
 
-		// créer un parking
-		this.parkingTest = new Parking(0, "Parking Test", "1 rue du Test", 100, 50, 2.5,
-				java.time.LocalTime.of(7, 0), java.time.LocalTime.of(23, 0), true, 2.5);
+		// créer une adresse pour le parking
+		this.adresseTest = new Adresse(0, "1", "rue du Test", "31000", "Toulouse");
+		this.daoAdresse.create(this.adresseTest);
+
+		// créer un parking avec l'adresse
+		this.parkingTest = new Parking(0, "Parking Test", 100, 2.5,
+				LocalTime.of(7, 0), LocalTime.of(23, 0), true, this.adresseTest);
+
 		this.daoParking.create(this.parkingTest);
 
 		// créer une ligne de métro
@@ -66,9 +77,11 @@ public class TestDaoProximite {
 			MySQLDataSource.deconnecter();
 		}
 
+		this.daoAdresse = null;
 		this.daoParking = null;
 		this.daoLigneMetro = null;
 		this.daoProximite = null;
+		this.adresseTest = null;
 		this.parkingTest = null;
 		this.ligneTest = null;
 		this.proximiteTest = null;

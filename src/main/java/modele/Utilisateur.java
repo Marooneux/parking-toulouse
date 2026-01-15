@@ -4,25 +4,22 @@ import utils.PasswordUtil;
 
 public class Utilisateur {
 	public enum Type {
-		PARKINGADMIN, SYSADMIN, CLIENT
+		SYSADMIN, PARKINGADMIN, CLIENT
 	}
 
 	private int id;
 	private String nom;
 	private String prenom;
-	private String mdpHash;
 	private String email;
-	private Abonnement abonnement;
+	private String motDePasse;
 	private Type type;
 
-	public Utilisateur(int id, String nom, String prenom, String email, String mdpHash, Abonnement abonnement,
-			Type type) {
+	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Type type) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.mdpHash = mdpHash;
-		this.abonnement = abonnement;
+		this.motDePasse = motDePasse;
 		this.type = type;
 	}
 
@@ -58,37 +55,25 @@ public class Utilisateur {
 		this.email = email;
 	}
 
-	public boolean verifierMdp(String mdpAVerifier) {
-		return PasswordUtil.checkMdp(mdpAVerifier, this.mdpHash);
-	}
-
-	public String getMdp() {
-		return this.mdpHash;
-	}
-
-	public void setMdp(String ancienMdp, String nouveauMdp) {
-		if (PasswordUtil.checkMdp(nouveauMdp, ancienMdp)) {
-			this.mdpHash = PasswordUtil.hashMdp(nouveauMdp);
-		}
-	}
-
-	public Abonnement getAbonnement() {
-		return this.abonnement;
-	}
-
-	public void setAbonnement(Abonnement abonnement) {
-		this.abonnement = abonnement;
-	}
-
-	public boolean estAbonne() {
-		return this.abonnement != null && this.abonnement.estValide();
-	}
-
 	public Type getType() {
 		return this.type;
 	}
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public boolean verifierMdp(String mdpAVerifier) {
+		return PasswordUtil.checkMdp(mdpAVerifier, this.motDePasse);
+	}
+
+	public String getMdp() {
+		return this.motDePasse;
+	}
+
+	public void setMdp(String ancienMdp, String nouveauMdp) {
+		if (PasswordUtil.checkMdp(nouveauMdp, ancienMdp)) {
+			this.motDePasse = PasswordUtil.hashMdp(nouveauMdp);
+		}
 	}
 }

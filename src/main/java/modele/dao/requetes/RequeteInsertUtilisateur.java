@@ -2,7 +2,6 @@ package modele.dao.requetes;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import modele.Utilisateur;
 
@@ -10,7 +9,7 @@ public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, id_abonnement, type) VALUES (?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, user_type) VALUES (?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -19,11 +18,6 @@ public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
 		statement.setString(2, donnee.getPrenom());
 		statement.setString(3, donnee.getEmail());
 		statement.setString(4, donnee.getMdp());
-		if (donnee.getAbonnement() != null) {
-			statement.setInt(5, donnee.getAbonnement().getId());
-		} else {
-			statement.setNull(5, Types.INTEGER);
-		}
-		statement.setString(6, donnee.getType().name().toLowerCase());
+		statement.setString(5, donnee.getType().name().toLowerCase());
 	}
 }

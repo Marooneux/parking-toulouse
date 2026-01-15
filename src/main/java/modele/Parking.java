@@ -5,27 +5,24 @@ import java.time.LocalTime;
 public class Parking {
 	private int id;
 	private String nom;
-	private String adresse;
-	private int nbPlacesMax;
-	private int nbPlacesOccupees;
-	private double hauteur;
-	private LocalTime heureOuverture;
-	private LocalTime heureFermeture;
+	private int capacite;
+	private double hauteurMax;
+	private LocalTime horaireOuverture;
+	private LocalTime horaireFermeture;
 	private boolean contientPlacesMoto;
-	private double tarif;
+	private Adresse adresse;
 
-	public Parking(int id, String nom, String adresse, int nbPlacesMax, int nbPlacesOccupees, double hauteur,
-			LocalTime heureOuverture, LocalTime heureFermeture, boolean contientPlacesMoto, double tarif) {
+	public Parking(int id, String nom, int capacite, double hauteurMax,
+			LocalTime horaireOuverture, LocalTime horaireFermeture,
+			boolean contientPlacesMoto, Adresse adresse) {
 		this.id = id;
 		this.nom = nom;
-		this.adresse = adresse;
-		this.nbPlacesMax = nbPlacesMax;
-		this.nbPlacesOccupees = nbPlacesOccupees;
-		this.hauteur = hauteur;
-		this.heureOuverture = heureOuverture;
-		this.heureFermeture = heureFermeture;
+		this.capacite = capacite;
+		this.hauteurMax = hauteurMax;
+		this.horaireOuverture = horaireOuverture;
+		this.horaireFermeture = horaireFermeture;
 		this.contientPlacesMoto = contientPlacesMoto;
-		this.tarif = tarif;
+		this.adresse = adresse;
 	}
 
 	public int getId() {
@@ -44,52 +41,36 @@ public class Parking {
 		this.nom = nom;
 	}
 
-	public String getAdresse() {
-		return this.adresse;
+	public int getCapacite() {
+		return this.capacite;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
+	public void setCapacite(int capacite) {
+		this.capacite = capacite;
 	}
 
-	public int getNbPlacesMax() {
-		return this.nbPlacesMax;
+	public double getHauteurMax() {
+		return this.hauteurMax;
 	}
 
-	public void setNbPlacesMax(int nbPlacesMax) {
-		this.nbPlacesMax = nbPlacesMax;
+	public void setHauteurMax(double hauteurMax) {
+		this.hauteurMax = hauteurMax;
 	}
 
-	public int getNbPlacesOccupees() {
-		return this.nbPlacesOccupees;
+	public LocalTime getHoraireOuverture() {
+		return this.horaireOuverture;
 	}
 
-	public void setNbPlacesOccupees(int nbPlacesOccupees) {
-		this.nbPlacesOccupees = nbPlacesOccupees;
+	public void setHoraireOuverture(LocalTime horaireOuverture) {
+		this.horaireOuverture = horaireOuverture;
 	}
 
-	public double getHauteur() {
-		return this.hauteur;
+	public LocalTime getHoraireFermeture() {
+		return this.horaireFermeture;
 	}
 
-	public void setHauteur(double hauteur) {
-		this.hauteur = hauteur;
-	}
-
-	public LocalTime getHeureOuverture() {
-		return this.heureOuverture;
-	}
-
-	public void setHeureOuverture(LocalTime heureOuverture) {
-		this.heureOuverture = heureOuverture;
-	}
-
-	public LocalTime getHeureFermeture() {
-		return this.heureFermeture;
-	}
-
-	public void setHeureFermeture(LocalTime heureFermeture) {
-		this.heureFermeture = heureFermeture;
+	public void setHoraireFermeture(LocalTime horaireFermeture) {
+		this.horaireFermeture = horaireFermeture;
 	}
 
 	public boolean isContientPlacesMoto() {
@@ -100,25 +81,25 @@ public class Parking {
 		this.contientPlacesMoto = contientPlacesMoto;
 	}
 
-	public double getTarif() {
-		return this.tarif;
+	public Adresse getAdresse() {
+		return this.adresse;
 	}
 
-	public void setTarif(double tarif) {
-		this.tarif = tarif;
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
 	}
 
-	public Boolean estOuvert(LocalTime heure) {
-		return (heure.isAfter(this.heureOuverture) && heure.isBefore(this.heureFermeture));
+	public Boolean estOuvertApres(LocalTime heure) {
+		return (heure.isAfter(this.horaireOuverture) && heure.isBefore(this.horaireFermeture));
 	}
 
-	public void ajouterNbPlacesOccupes(int nb) {
-		if (this.nbPlacesOccupees + nb < this.nbPlacesMax && this.nbPlacesOccupees + nb > 0) {
-			this.nbPlacesOccupees += nb;
-		}
-	}
-
-	public void enleverNbPlacesOccupes(int nb) {
-		this.ajouterNbPlacesOccupes(-nb);
-	}
+//	public void ajouterNbPlacesOccupes(int nb) {
+//		if (this.nbPlacesOccupees + nb < this.capacite && this.nbPlacesOccupees + nb > 0) {
+//			this.nbPlacesOccupees += nb;
+//		}
+//	}
+//
+//	public void enleverNbPlacesOccupes(int nb) {
+//		this.ajouterNbPlacesOccupes(-nb);
+//	}
 }

@@ -47,19 +47,13 @@ public class TestDaoReservationVoirie {
 		this.daoUser = new DaoUtilisateur();
 		this.daoZone = new DaoZoneVoirie();
 
-		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "jean.dupont@test.com", "mdp123", null, Type.CLIENT);
+		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "jean.dupont@test.com", "mdp123", Type.CLIENT);
 		this.daoUser.create(this.utilisateur);
 
 		this.zone = new ZoneVoirie(0, "Zone Test", 2.5, 120);
 		this.daoZone.create(this.zone);
 
-		this.reservation = new ReservationVoirie(
-				"AB-123-CD",
-				"Voiture",
-				LocalDateTime.now(),
-				60,
-				this.zone.getId(),
-				this.utilisateur.getId());
+		this.reservation = new ReservationVoirie(0, LocalDateTime.now(), 60, this.zone, this.utilisateur);
 		this.daoRes.create(this.reservation);
 	}
 
@@ -78,32 +72,35 @@ public class TestDaoReservationVoirie {
 	}
 
 	@Test
-	public void testCreateAndFindById() throws Exception {
-		ReservationVoirie r = this.daoRes.findById(this.reservation.getImmatriculation());
+	public void testCreateAndFindById() throws SQLException {
+		ReservationVoirie r = this.daoRes.findById(this.reservation.getId());
 		assertNotNull(r);
-		assertEquals(this.reservation.getImmatriculation(), r.getImmatriculation());
-		assertEquals(this.reservation.getIdUtilisateur(), r.getIdUtilisateur());
-		assertEquals(this.reservation.getIdZone(), r.getIdZone());
+		assertEquals(this.reservation.getId(), r.getId());
+		assertEquals(this.reservation.getUtilisateur().getId(), r.getUtilisateur().getId());
+		assertEquals(this.reservation.getZone().getId(), r.getZone().getId());
+		assertEquals(this.reservation.getDureeMinutes(), r.getDureeMinutes());
 	}
 
 	@Test
-	public void testUpdate() throws Exception {
+	public void testUpdate() throws SQLException {
 		this.reservation.setDureeMinutes(90);
 		this.daoRes.update(this.reservation);
-		ReservationVoirie r = this.daoRes.findById(this.reservation.getImmatriculation());
+
+		ReservationVoirie r = this.daoRes.findById(this.reservation.getId());
 		assertEquals(90, r.getDureeMinutes());
 	}
 
 	@Test
-	public void testFindAll() throws Exception {
+	public void testFindAll() throws SQLException {
 		List<ReservationVoirie> list = this.daoRes.findAll();
 		assertTrue(list.size() > 0);
+		assertTrue(list.stream().anyMatch(r -> r.getId() == this.reservation.getId()));
 	}
 
 	@Test
-	public void testDelete() throws Exception {
+	public void testDelete() throws SQLException {
 		this.daoRes.delete(this.reservation);
-		ReservationVoirie r = this.daoRes.findById(this.reservation.getImmatriculation());
+		ReservationVoirie r = this.daoRes.findById(this.reservation.getId());
 		assertNull(r);
 		this.reservation = null;
 	}

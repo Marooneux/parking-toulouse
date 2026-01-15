@@ -1,12 +1,13 @@
 package modele;
 
 public class ZoneVoirie {
+
 	private int id;
 	private String nom;
 	private double tarifHoraire;
-	private double dureeMax;
+	private int dureeMax;
 
-	public ZoneVoirie(int id, String nom, double tarifHoraire, double dureeMax) {
+	public ZoneVoirie(int id, String nom, double tarifHoraire, int dureeMax) {
 		this.id = id;
 		this.nom = nom;
 		this.tarifHoraire = tarifHoraire;
@@ -37,11 +38,11 @@ public class ZoneVoirie {
 		this.tarifHoraire = tarifHoraire;
 	}
 
-	public double getDureeMax() {
+	public int getDureeMax() {
 		return this.dureeMax;
 	}
 
-	public void setDureeMax(double dureeMax) {
+	public void setDureeMax(int dureeMax) {
 		this.dureeMax = dureeMax;
 	}
 

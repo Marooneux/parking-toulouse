@@ -3,6 +3,7 @@ package modele.dao.requetes;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Types;
 
 import modele.Parking;
 
@@ -10,31 +11,35 @@ public class RequeteUpdateParking extends Requete<Parking> {
 
 	@Override
 	public String requete() {
-		return "UPDATE parkings "
-				+ "SET "
-				+ "    nom = ?,"
-				+ "    adresse = ?,"
-				+ "    nombre_places_max = ?,"
-				+ "    nb_places_occupees = ?,"
-				+ "    hauteur_max = ?,"
-				+ "    horaire_ouverture = ?,"
-				+ "    horaire_fermeture = ?,"
-				+ "    contient_places_moto = ?,"
-				+ "    tarif = ? "
-				+ "WHERE id_parking = ?";
+		return "UPDATE parkings SET nom = ?, capacite = ?, hauteur_max = ?, horaire_ouverture = ?, horaire_fermeture = ?, contient_places_moto = ?, id_adresse = ? WHERE id = ?";
 	}
 
 	@Override
-	public void parametres(PreparedStatement statement, Parking donnee) throws SQLException {
-		statement.setString(1, donnee.getNom());
-		statement.setString(2, donnee.getAdresse());
-		statement.setInt(3, donnee.getNbPlacesMax());
-		statement.setInt(4, donnee.getNbPlacesOccupees());
-		statement.setDouble(5, donnee.getHauteur());
-		statement.setTime(6, (donnee.getHeureOuverture() != null) ? Time.valueOf(donnee.getHeureOuverture()) : null);
-		statement.setTime(7, (donnee.getHeureFermeture() != null) ? Time.valueOf(donnee.getHeureFermeture()) : null);
-		statement.setBoolean(8, donnee.isContientPlacesMoto());
-		statement.setDouble(9, donnee.getTarif());
-		statement.setInt(10, donnee.getId());
+	public void parametres(PreparedStatement ps, Parking p) throws SQLException {
+
+		ps.setString(1, p.getNom());
+		ps.setInt(2, p.getCapacite());
+
+		if (p.getHauteurMax() != 0.0) {
+			ps.setDouble(3, p.getHauteurMax());
+		} else {
+			ps.setNull(3, Types.DECIMAL);
+		}
+
+		if (p.getHoraireOuverture() != null) {
+			ps.setTime(4, Time.valueOf(p.getHoraireOuverture()));
+		} else {
+			ps.setNull(4, Types.TIME);
+		}
+
+		if (p.getHoraireFermeture() != null) {
+			ps.setTime(5, Time.valueOf(p.getHoraireFermeture()));
+		} else {
+			ps.setNull(5, Types.TIME);
+		}
+
+		ps.setBoolean(6, p.isContientPlacesMoto());
+		ps.setInt(7, p.getAdresse().getId());
+		ps.setInt(8, p.getId());
 	}
 }

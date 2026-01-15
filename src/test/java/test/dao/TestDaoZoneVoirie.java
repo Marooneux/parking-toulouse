@@ -5,11 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import modele.ZoneVoirie;
@@ -18,21 +20,29 @@ import modele.dao.MySQLDataSource;
 
 public class TestDaoZoneVoirie {
 
+	private static Connection cn;
 	private DaoZoneVoirie dao;
 	private ZoneVoirie zoneTest;
 
+	@BeforeClass
+	public static void initConnexion() {
+		MySQLDataSource.creerAcces("user", "password");
+	}
+
 	@Before
 	public void setUp() throws SQLException {
-		MySQLDataSource.creerAcces("user", "password");
+		cn = MySQLDataSource.getConnexion();
+		cn.setAutoCommit(false);
 		this.dao = new DaoZoneVoirie();
-		this.zoneTest = new ZoneVoirie(0, "ZoneTest", 120.0, 180.0);
+		this.zoneTest = new ZoneVoirie(0, "ZoneTest", 120.0, 180);
 		this.dao.create(this.zoneTest);
 	}
 
 	@After
 	public void tearDown() throws SQLException {
-		if (this.zoneTest != null && this.zoneTest.getId() != 0) {
-			this.dao.delete(this.zoneTest);
+		if (cn != null) {
+			cn.rollback();
+			MySQLDataSource.deconnecter();
 		}
 		this.dao = null;
 		this.zoneTest = null;
@@ -51,7 +61,7 @@ public class TestDaoZoneVoirie {
 	public void testUpdate() throws SQLException {
 		this.zoneTest.setNom("ZoneModifiee");
 		this.zoneTest.setTarifHoraire(150.0);
-		this.zoneTest.setDureeMax(240.0);
+		this.zoneTest.setDureeMax(240);
 		this.dao.update(this.zoneTest);
 
 		ZoneVoirie z = this.dao.findById(this.zoneTest.getId());
@@ -63,7 +73,7 @@ public class TestDaoZoneVoirie {
 
 	@Test
 	public void testDelete() throws SQLException {
-		ZoneVoirie zTemp = new ZoneVoirie(0, "TempZone", 50.0, 60.0);
+		ZoneVoirie zTemp = new ZoneVoirie(0, "TempZone", 50.0, 60);
 		this.dao.create(zTemp);
 		int idTemp = zTemp.getId();
 

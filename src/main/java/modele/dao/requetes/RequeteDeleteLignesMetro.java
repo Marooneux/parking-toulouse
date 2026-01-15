@@ -9,7 +9,7 @@ public class RequeteDeleteLignesMetro extends Requete<LigneMetro> {
 
 	@Override
 	public String requete() {
-		return "DELETE FROM lignes_metro WHERE id_ligne_metro = ?";
+		return "DELETE FROM lignes_metro WHERE id = ?";
 	}
 
 	@Override

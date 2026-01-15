@@ -14,6 +14,10 @@ import modele.dao.requetes.RequeteSelectProximiteById;
 import modele.dao.requetes.RequeteUpdateProximite;
 
 public class DaoProximite extends DaoModele<Proximite> {
+
+	private DaoParking daoParking = new DaoParking();
+	private DaoLigneMetro daoLigneMetro = new DaoLigneMetro();
+
 	@Override
 	public void create(Proximite donnee) throws SQLException {
 		this.miseAJour(new RequeteInsertProximite(), donnee);
@@ -42,12 +46,12 @@ public class DaoProximite extends DaoModele<Proximite> {
 	@Override
 	protected Proximite creerInstance(ResultSet curseur) throws SQLException {
 		int idParking = curseur.getInt("id_parking");
-		Parking parking = new DaoParking().findById(idParking);
-		int idLigneMetro = curseur.getInt("id_ligne_metro");
-		LigneMetro ligneMetro = new DaoLigneMetro().findById(idLigneMetro);
-		return new Proximite(
-				parking,
-				ligneMetro,
-				curseur.getInt("distance_metres"));
+		int idLigne = curseur.getInt("id_ligne_metro");
+		int distance = curseur.getInt("distance_metres");
+
+		Parking parking = this.daoParking.findById(idParking);
+		LigneMetro ligneMetro = this.daoLigneMetro.findById(idLigne);
+
+		return new Proximite(parking, ligneMetro, distance);
 	}
 }

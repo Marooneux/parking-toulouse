@@ -9,7 +9,7 @@ public class RequeteSelectLignesMetroById extends Requete<LigneMetro> {
 
 	@Override
 	public String requete() {
-		return "SELECT * FROM lignes_metro WHERE id_ligne_metro = ?";
+		return "SELECT * FROM lignes_metro WHERE id = ?";
 	}
 
 	@Override

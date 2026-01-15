@@ -98,7 +98,7 @@ public class TicketParking extends JFrame {
 
 		this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
 		this.lblParking = createInfoRow(panelInfoGrid, "Parking :", parking.getNom());
-		this.lblAdresse = createInfoRow(panelInfoGrid, "Adresse :", parking.getAdresse());
+		this.lblAdresse = createInfoRow(panelInfoGrid, "Adresse :", parking.getAdresse().getRue());
 		this.lblPlaque  = createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
 		this.lblHeure   = createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
 		

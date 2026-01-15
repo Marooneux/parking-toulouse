@@ -161,7 +161,7 @@ public class SaisirHeureArriveParking extends JFrame {
 		lblDureeMax.setForeground(new Color(50, 50, 50));
 		p.add(lblDureeMax);
 
-		JLabel lblHauteur = new JLabel("Hauteur :" + this.parking.getHauteur() + "m");
+		JLabel lblHauteur = new JLabel("Hauteur :" + this.parking.getHauteurMax() + "m");
 		lblHauteur.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblHauteur.setForeground(new Color(50, 50, 50));
 		p.add(lblHauteur);
