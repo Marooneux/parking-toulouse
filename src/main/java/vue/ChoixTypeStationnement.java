@@ -4,12 +4,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurChoixParking;
+import controleur.ControleurButtonHover;
+import controleur.ControleurChoixTypeStationnementParking;
+import controleur.ControleurChoixTypeStationnementVoirie;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ChoixTypeStationnement extends JFrame {
 
@@ -65,29 +65,14 @@ public class ChoixTypeStationnement extends JFrame {
                 "Stationnement Parking",
                 "Stationner dans un parking sécurisé au choix.",
                 "Trouver un parking",
-                e -> {
-                    try {
-                        ControleurChoixParking frameChoixParking = new ControleurChoixParking(new ChoixParking());
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                new ControleurChoixTypeStationnementParking(this)
         );
 
         JPanel cardVoirie = createCard(
                 "Stationnement en Voirie",
                 "Stationner en voirie dans une zone au choix.",
                 "Trouver un emplacement",
-                e -> {
-                    try {
-                        ChoixZone frameChoixZone = new ChoixZone();
-                        frameChoixZone.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                new ControleurChoixTypeStationnementVoirie(this)
         );
 
         cardsContainer.add(cardParking);
@@ -131,16 +116,7 @@ public class ChoixTypeStationnement extends JFrame {
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         btn.addActionListener(action);
-
-        btn.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR.darker());
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR);
-            }
-        });
+        btn.addMouseListener(new ControleurButtonHover(btn, BUTTON_COLOR));
 
         card.add(lblTitle, gbc);
         gbc.insets = new Insets(5, 0, 20, 0);

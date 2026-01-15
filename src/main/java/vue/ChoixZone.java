@@ -11,8 +11,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalTime;
 
 import javax.swing.Box;
@@ -22,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
+import controleur.ControleurChoixZone;
 import modele.StationnementVoirie;
 import modele.StationnementVoirie.Couleur;
 import modele.StationnementVoirieBleu;
@@ -210,18 +210,8 @@ public class ChoixZone extends JFrame {
         lblPrix.setBounds(175, 270, 100, 20);
         card.add(lblPrix);
 
-        card.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                	SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
-                    frameDureeStationnement.setVisible(true);
-                    ChoixZone.this.dispose(); 
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+        ControleurChoixZone controleur = new ControleurChoixZone(this, zone);
+        card.addMouseListener(controleur);
 
         return card;
     }

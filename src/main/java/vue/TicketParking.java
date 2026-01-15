@@ -4,11 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurSaisirHeureArriveParking;
 import modele.Parking;
 
 public class TicketParking extends JFrame {
@@ -120,11 +116,7 @@ public class TicketParking extends JFrame {
 		panelFooter.add(panelButtonContainer);
 
 		btnPaiement = new JButton("Aller au paiement");
-		btnPaiement.addActionListener(e -> {
-			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(parking, heureArrivee);
-			new ChoixMoyenPaiementParking(prix).setVisible(true);
-			dispose();
-		});
+		new controleur.ControleurTicketParking(this);
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
@@ -174,6 +166,11 @@ public class TicketParking extends JFrame {
 	    lblAdresse.setText(adresse);
 	}
 
+	public modele.Parking getParking() {
+		return this.parking;
+	}
 
-
+	public String getHeureArrivee() {
+		return this.heureArrivee;
+	}
 }

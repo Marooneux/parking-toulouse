@@ -3,7 +3,6 @@ package controleur;
 import java.sql.SQLException; 
 import java.util.List;
 
-import javax.swing.JOptionPane;
 
 import modele.Parking;
 import modele.dao.DaoParking;
@@ -11,7 +10,7 @@ import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
 import vue.SaisirHeureArriveParking;
 
-public class ControleurChoixParking {
+public class ControleurChoixParking  {
 
     private ChoixParking vue;
     private DaoParking daoParking;

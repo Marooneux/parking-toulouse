@@ -1,6 +1,5 @@
 package vue;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,9 +16,6 @@ import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.time.LocalTime;
-import java.awt.event.ActionEvent;
 import controleur.ControleurTicketVoirie;
 
 public class TicketVoirie extends JFrame {
@@ -125,11 +121,7 @@ public class TicketVoirie extends JFrame {
         btnPaiement.setFocusPainted(false);
         btnPaiement.setBorderPainted(false);
         btnPaiement.setPreferredSize(new Dimension(200, 45));
-        btnPaiement.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            System.exit(0);
-        }
-    });
+        btnPaiement.addActionListener(new controleur.ControleurTicketVoirieDepart(this));
     }
 
     private void createInfoRow(JPanel parent, String label, String valeur) {

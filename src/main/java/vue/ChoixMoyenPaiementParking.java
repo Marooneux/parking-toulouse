@@ -4,12 +4,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.StationnementVoirie;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import controleur.ControleurButtonHover;
+import controleur.ControleurChoixMoyenPaiementParkingCB;
+import controleur.ControleurChoixMoyenPaiementParkingVirement;
 
 public class ChoixMoyenPaiementParking extends JFrame {
 
@@ -48,15 +48,7 @@ public class ChoixMoyenPaiementParking extends JFrame {
                 "Paiement immédiat par carte.",
                 "Payer par carte",
                 new IconCard(),
-                e -> {
-                    try {
-                        PaiementParking pagePaiementCB = new PaiementParking(prix);
-                        pagePaiementCB.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                new ControleurChoixMoyenPaiementParkingCB(this)
         );
 
         JPanel cardVirement = createCard(
@@ -64,15 +56,7 @@ public class ChoixMoyenPaiementParking extends JFrame {
                 "Saisir IBAN pour prélèvement SEPA.",
                 "Payer par virement",
                 new IconBank(),
-                e -> {
-                    try {
-                    	PaiementVirementParking pageVirement = new PaiementVirementParking(prix);
-                        pageVirement.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                new ControleurChoixMoyenPaiementParkingVirement(this)
         );
 
         cardsContainer.add(cardCB);
@@ -117,10 +101,7 @@ public class ChoixMoyenPaiementParking extends JFrame {
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn.addActionListener(action);
 
-        btn.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) { btn.setBackground(BUTTON_COLOR.darker()); }
-            public void mouseExited(MouseEvent e) { btn.setBackground(BUTTON_COLOR); }
-        });
+        btn.addMouseListener(new ControleurButtonHover(btn, BUTTON_COLOR));
 
         card.add(lblIcon, gbc);
         card.add(lblTitle, gbc);
@@ -130,6 +111,10 @@ public class ChoixMoyenPaiementParking extends JFrame {
         card.add(btn, gbc);
 
         return card;
+    }
+
+    public double getPrix() {
+    	return prix;
     }
 
     private class IconCard implements Icon {

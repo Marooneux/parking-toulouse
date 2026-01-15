@@ -2,13 +2,13 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import modele.Utilisateur;
 import utils.AuthManager;
 import modele.dao.MySQLDataSource;
 import vue.ChoixTypeStationnement;
 import vue.LoginPage;
+import vue.ChoixParking;
 
 import javax.swing.*;
 
@@ -32,8 +32,14 @@ public class ControleurLoginPage implements ActionListener {
         } else {
             Utilisateur user = AuthManager.getCurrentUser();
             JOptionPane.showMessageDialog(null, "bienvenue " + user.getNom());
-            ChoixTypeStationnement main = new ChoixTypeStationnement();
-            main.setVisible(true);
+            // Redirect based on role: admin parking -> ChoixParking; normal user -> ChoixTypeStationnement
+            if (AuthManager.hasRole("parkingadmin")) {
+                new ControleurChoixParking(new ChoixParking());
+            } else {
+                ChoixTypeStationnement main = new ChoixTypeStationnement();
+                main.setVisible(true);
+            }
+            vue.dispose();
         }
     }
 }

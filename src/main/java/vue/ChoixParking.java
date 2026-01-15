@@ -8,10 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import controleur.ControleurChoixParking;
 
 import java.awt.*;
-import java.time.LocalTime;
 import java.util.function.Consumer;
 
 import modele.Parking;

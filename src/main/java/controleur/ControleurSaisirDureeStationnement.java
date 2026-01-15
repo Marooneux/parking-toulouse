@@ -1,6 +1,5 @@
 package controleur;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
@@ -11,9 +10,7 @@ import javax.swing.JOptionPane;
 
 import modele.StationnementVoirie;
 import modele.StationnementVoirie.Couleur;
-import vue.ChoixMoyenPaiementParking;
 import vue.ChoixMoyenPaiementVoirie;
-import vue.PaiementVoirie;
 import vue.SaisirHeureArriveParking;
 import vue.TicketVoirie;
 

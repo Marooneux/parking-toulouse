@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.time.LocalTime;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +22,6 @@ import javax.swing.text.AbstractDocument;
 import modele.StationnementVoirie;
 import modele.StationnementVoirie.Couleur;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
-import controleur.ControleurSaisirDureeStationnement;
 
 public class SaisirDureeStationnement extends JFrame {
 
@@ -116,38 +113,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
-        this.btnConfirmer.addActionListener(e -> {
-            String strDuree = this.textFieldNom.getText();
-            String immatriculation = this.textFieldPlaque.getText();
-            if (immatriculation == null || immatriculation.trim().isEmpty()) {
-            	JOptionPane.showMessageDialog(this, "Veuillez saisir votre plaque d'immatriculation avant de payer.");
-                return;
-            }
-            if (strDuree == null || strDuree.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez saisir une durée avant de payer.");
-                return;
-            }
-            int intDuree;
-            try {
-            	intDuree = Integer.parseInt(strDuree);
-                if (intDuree > zone.getDureeMax()) {
-                	JOptionPane.showMessageDialog(this, "La durée saisie est supérieure à la durée maximum de cette zone.");
-                    return;
-                } else {
-                	double prix = ControleurSaisirDureeStationnement.calculerPrixTotal(zone, intDuree);
-                	if (prix == 0) {
-                		ControleurSaisirDureeStationnement.ouvrirTicket(zone, immatriculation, intDuree);
-                		dispose();
-                	} else {
-                		ControleurSaisirDureeStationnement.ouvrirPaiement(zone, immatriculation, intDuree, prix);
-                		dispose();
-                	}
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Veuillez entrer une durée en minutes uniquement.");
-                return;
-            }
-        });
+		this.btnConfirmer.addActionListener(new controleur.ControleurSaisirDureeStationnementVue(this, zone));
 	 
 		buttonPanel.add(this.btnConfirmer);
 		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
@@ -271,6 +237,14 @@ public class SaisirDureeStationnement extends JFrame {
 
 	public JTextField getTextField() {
 		return this.textField;
+	}
+
+	public String getDureeSaisie() {
+		return this.textFieldNom != null ? this.textFieldNom.getText() : null;
+	}
+
+	public String getPlaqueSaisie() {
+		return this.textFieldPlaque != null ? this.textFieldPlaque.getText() : null;
 	}
 
 }

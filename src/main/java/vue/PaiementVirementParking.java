@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.StationnementVoirie;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

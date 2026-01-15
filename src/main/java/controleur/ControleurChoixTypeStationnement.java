@@ -7,40 +7,26 @@ import vue.ChoixParking;
 import vue.ChoixTypeStationnement;
 import vue.ChoixZone;
 
-public class ControleurChoixTypeStationnement {
+public class ControleurChoixTypeStationnement implements ActionListener {
 
     public enum Etat {
         PARKING, VOIRIE
     }
 
-    private ChoixTypeStationnement vue;
-    private Etat etat;
+    private final ChoixTypeStationnement vue;
+    private final Etat etat;
 
-    public ControleurChoixTypeStationnement(ChoixTypeStationnement vue) {
+    public ControleurChoixTypeStationnement(ChoixTypeStationnement vue, Etat etat) {
         this.vue = vue;
-        this.etat = null;
-
-        /*
-        vue.getParkingButton().addActionListener(new ButtonListener(Etat.PARKING));
-        vue.getVoirieButton().addActionListener(new ButtonListener(Etat.VOIRIE));
-        */
+        this.etat = etat;
     }
 
-    private class ButtonListener implements ActionListener {
-        private Etat buttonEtat;
-
-        public ButtonListener(Etat etat) {
-            this.buttonEtat = etat;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            etat = buttonEtat;
-            processEtat();
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        processEtat(etat);
     }
 
-    private void processEtat() {
+    private void processEtat(Etat etat) {
         switch (etat) {
             case PARKING:
                 openParkingPage();
@@ -51,16 +37,15 @@ public class ControleurChoixTypeStationnement {
         }
     }
 
-    public static void openParkingPage() {
+    private void openParkingPage() {
         try {
             ChoixParking parkingPage = new ChoixParking();
             parkingPage.setVisible(true);
-            //vue.dispose();
+            vue.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 
     private void openVoiriePage() {
         try {

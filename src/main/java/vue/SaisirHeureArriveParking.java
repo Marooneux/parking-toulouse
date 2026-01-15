@@ -25,10 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 
 import modele.Parking;
-import modele.StationnementVoirie;
-import modele.StationnementVoirie.Couleur;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
-import controleur.ControleurSaisirDureeStationnement;
 
 public class SaisirHeureArriveParking extends JFrame {
 

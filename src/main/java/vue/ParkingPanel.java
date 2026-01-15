@@ -7,13 +7,8 @@ import javax.swing.border.LineBorder;
 import modele.Parking;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
-import utils.AuthManager;
 
 class ParkingPanel extends JPanel {
     /**
@@ -25,7 +20,6 @@ class ParkingPanel extends JPanel {
     private JButton btnModifier;
 
     private Color normalBorder = new Color(230, 230, 230);
-    private Color hoverBorder = new Color(100, 100, 100);
 
     public ParkingPanel(Parking parking, Consumer<Parking> onClick) {
         this.parking = parking;
@@ -40,26 +34,7 @@ class ParkingPanel extends JPanel {
         ));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (onClick != null) onClick.accept(parking);
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setBorder(BorderFactory.createCompoundBorder(
-                    new LineBorder(hoverBorder, 1),
-                    new EmptyBorder(20, 20, 20, 20)
-                ));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setBorder(BorderFactory.createCompoundBorder(
-                    new LineBorder(normalBorder, 1),
-                    new EmptyBorder(20, 20, 20, 20)
-                ));
-            }
-        });
+        addMouseListener(new controleur.ControleurParkingPanel(this, parking, onClick));
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         topPanel.setOpaque(false);
@@ -130,14 +105,7 @@ class ParkingPanel extends JPanel {
         actionsPanel.setOpaque(false);
         actionsPanel.add(btnModifier);
 
-        btnModifier.addActionListener(e -> {
-            // Only sysadmin or parkingadmin can modify parking
-            if (!AuthManager.ensureAuthorized("sysadmin", "parkingadmin")) {
-                return;
-            }
-            ModifierParking modifier = new ModifierParking(parking);
-            modifier.setVisible(true);
-        });
+        btnModifier.addActionListener(new controleur.ControleurParkingPanelModifier(parking));
 
         bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
