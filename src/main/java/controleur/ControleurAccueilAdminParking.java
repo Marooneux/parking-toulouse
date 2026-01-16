@@ -46,7 +46,14 @@ public class ControleurAccueilAdminParking implements ActionListener {
 		vue.addMenuParkingsListener(this);
 		vue.addMenuStatsListener(this);
 		vue.addAjouterListener(this);
-		vue.addRetourListener(this);
+		//vue.addRetourListener(this);
+		
+		vue.addShowListener(new java.awt.event.ComponentAdapter() {
+	        @Override
+	        public void componentShown(java.awt.event.ComponentEvent e) {
+	            chargerParkings(); // Recharge la liste à chaque affichage
+	        }
+	    });
 	}
 
 	private void chargerParkings() {

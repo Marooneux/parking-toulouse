@@ -63,11 +63,12 @@ public class Accueil extends JPanel {
         JPanel viewParkings = createParkingView();
         mainContentPanel.add(viewParkings, "PARKINGS");
 
-        JPanel viewEdition = createEditionView();
-        mainContentPanel.add(viewEdition, "EDITION");
-
         JPanel viewStats = createStatsView();
         mainContentPanel.add(viewStats, "STATS");
+        
+        // Initialisation de la vue d'édition
+        JPanel viewEdition = createEditionView();
+        mainContentPanel.add(viewEdition, "EDITION");
 
         layeredPane.add(mainContentPanel, JLayeredPane.DEFAULT_LAYER);
 
@@ -75,10 +76,8 @@ public class Accueil extends JPanel {
         sidebarPanel.setVisible(true);
         layeredPane.add(sidebarPanel, JLayeredPane.PALETTE_LAYER);
 
-        // Bouton Toggle Menu
         createToggleBtn();
 
-        // Gestion du redimensionnement
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -123,7 +122,6 @@ public class Accueil extends JPanel {
         updateLayoutBounds();
     }
 
-    // --- BARRE LATERALE ---
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
@@ -169,7 +167,7 @@ public class Accueil extends JPanel {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(new Color(248, 249, 250));
-        headerPanel.setBorder(new EmptyBorder(40, 70, 30, 50));
+        headerPanel.setBorder(new EmptyBorder(25, 70, 30, 50));
 
         JPanel titleContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         titleContainer.setBackground(new Color(248, 249, 250));
@@ -193,7 +191,6 @@ public class Accueil extends JPanel {
         headerPanel.add(lblSubtitle);
         panel.add(headerPanel, BorderLayout.NORTH);
 
-        // Grille Scrollable
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -224,25 +221,101 @@ public class Accueil extends JPanel {
         return panel;
     }
 
+    private JPanel createEditionView() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(248, 249, 250));
+        panel.setBorder(new EmptyBorder(40, 60, 40, 60));
+
+        JLabel lblTitre = new JLabel("Modifier le parking");
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitre.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(lblTitre);
+        panel.add(Box.createVerticalStrut(20));
+
+        // Initialisation des champs
+        txtNom = new JTextField();
+        txtAdresse = new JTextField();
+        txtTarif = new JTextField();
+        txtHauteur = new JTextField();
+        txtPlacesMax = new JTextField();
+        txtHeureOuverture = new JTextField();
+        txtHeureFermeture = new JTextField();
+        chkMoto = new JCheckBox("Accepte les motos");
+        chkMoto.setBackground(new Color(248, 249, 250));
+
+        // Construction du formulaire
+        addFormField(panel, "Nom du parking :", txtNom);
+        addFormField(panel, "Adresse :", txtAdresse);
+        addFormField(panel, "Tarif Horaire :", txtTarif);
+        addFormField(panel, "Hauteur Max :", txtHauteur);
+        addFormField(panel, "Places Max :", txtPlacesMax);
+        addFormField(panel, "Heure Ouverture :", txtHeureOuverture);
+        addFormField(panel, "Heure Fermeture :", txtHeureFermeture);
+        
+        JPanel pnlMoto = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlMoto.setBackground(new Color(248, 249, 250));
+        pnlMoto.add(chkMoto);
+        pnlMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
+        pnlMoto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        panel.add(pnlMoto);
+
+        panel.add(Box.createVerticalStrut(20));
+
+        // Boutons
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        btnPanel.setBackground(new Color(248, 249, 250));
+        btnPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+        btnRetourListe = new JButton("Annuler");
+        btnRetourListe.setBackground(new Color(108, 117, 125));
+        btnRetourListe.setForeground(Color.WHITE);
+        
+        btnEnregistrerModification = new JButton("Enregistrer");
+        btnEnregistrerModification.setBackground(new Color(40, 167, 69));
+        btnEnregistrerModification.setForeground(Color.WHITE);
+
+        btnPanel.add(btnRetourListe);
+        btnPanel.add(btnEnregistrerModification);
+        panel.add(btnPanel);
+
+        return panel;
+    }
+
+    private void addFormField(JPanel panel, String label, JComponent component) {
+        JPanel row = new JPanel(new BorderLayout(10, 0));
+        row.setBackground(new Color(248, 249, 250));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        row.setBorder(new EmptyBorder(5, 0, 5, 0));
+        row.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lbl = new JLabel(label);
+        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lbl.setPreferredSize(new Dimension(150, 30));
+        
+        row.add(lbl, BorderLayout.WEST);
+        row.add(component, BorderLayout.CENTER);
+        
+        panel.add(row);
+    }
+
     public void addParking(Parking parking, Consumer<Parking> onSelect, Consumer<Parking> onModify, Consumer<Parking> onDelete) {
-        // Utilisation de AdminParkingPanel ou ParkingPanel selon votre projet
-        // Ici on suppose un panel simple qui affiche les infos
         AdminParkingPanel panelInfo = new AdminParkingPanel(parking, onSelect);
 
         JPanel container = new JPanel(new BorderLayout());
         container.setBackground(Color.WHITE);
         container.add(panelInfo, BorderLayout.CENTER);
 
-        // Boutons Modifier / Supprimer
         JButton btnSupprimer = new JButton("Supprimer");
         btnSupprimer.setFocusPainted(false);
-        btnSupprimer.setBackground(new Color(220, 53, 69)); // Rouge
+        btnSupprimer.setBackground(new Color(220, 53, 69)); 
         btnSupprimer.setForeground(Color.WHITE);
         btnSupprimer.setPreferredSize(new Dimension(100, 30));
         
         JButton btnModifier = new JButton("Modifier");
         btnModifier.setFocusPainted(false);
-        btnModifier.setBackground(new Color(0, 128, 255)); // Bleu
+        btnModifier.setBackground(new Color(0, 128, 255));
         btnModifier.setForeground(Color.WHITE);
         btnModifier.setPreferredSize(new Dimension(100, 30));
 
@@ -253,11 +326,8 @@ public class Accueil extends JPanel {
         
         container.add(bottomPanel, BorderLayout.SOUTH);
 
-        // Listeners
         btnModifier.addActionListener(e -> {
-            // Remplir le formulaire et changer de vue
             afficherFormulaireEdition(parking);
-            // Appeler le consumer si logique supplémentaire requise
             if(onModify != null) onModify.accept(parking);
         });
         
@@ -266,86 +336,8 @@ public class Accueil extends JPanel {
         gridPanel.add(container);
     }
 
-    // --- VUE EDITION (Formulaire) ---
-    private JPanel createEditionView() {
-        JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(new Color(248, 249, 250));
-        
-        // Header simple
-        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        header.setBackground(new Color(248, 249, 250));
-        header.setBorder(new EmptyBorder(20, 50, 20, 50));
-        JLabel title = new JLabel("Modifier les informations");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        header.add(title);
-        panel.add(header, BorderLayout.NORTH);
-
-        // Formulaire
-        JPanel form = new JPanel(new GridLayout(0, 2, 10, 20));
-        form.setBackground(Color.WHITE);
-        form.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-        txtNom = new JTextField();
-        txtAdresse = new JTextField();
-        txtTarif = new JTextField();
-        txtHauteur = new JTextField();
-        txtPlacesMax = new JTextField();
-        txtHeureOuverture = new JTextField();
-        txtHeureFermeture = new JTextField();
-        chkMoto = new JCheckBox("Places moto");
-        chkMoto.setBackground(Color.WHITE);
-
-        addFormField(form, "Nom", txtNom);
-        addFormField(form, "Adresse", txtAdresse);
-        addFormField(form, "Tarif (€/h)", txtTarif);
-        addFormField(form, "Hauteur max (m)", txtHauteur);
-        addFormField(form, "Places max", txtPlacesMax);
-        addFormField(form, "Heure Ouverture", txtHeureOuverture);
-        addFormField(form, "Heure Fermeture", txtHeureFermeture);
-        form.add(new JLabel("Options"));
-        form.add(chkMoto);
-
-        JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setBackground(new Color(248, 249, 250));
-        wrapper.setBorder(new EmptyBorder(0, 50, 0, 50));
-        wrapper.add(form, BorderLayout.NORTH);
-        
-        panel.add(new JScrollPane(wrapper), BorderLayout.CENTER);
-
-        // Actions du formulaire
-        btnRetourListe = new JButton("Retour");
-        btnEnregistrerModification = new JButton("Enregistrer");
-        btnEnregistrerModification.setBackground(new Color(40, 167, 69));
-        btnEnregistrerModification.setForeground(Color.WHITE);
-
-        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        actions.setBackground(new Color(248, 249, 250));
-        actions.add(btnRetourListe);
-        actions.add(btnEnregistrerModification);
-        panel.add(actions, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private void addFormField(JPanel panel, String label, JComponent component) {
-        JLabel lbl = new JLabel(label);
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        panel.add(lbl);
-        panel.add(component);
-    }
-
     public void afficherFormulaireEdition(Parking parking) {
-        this.parkingEnEdition = parking;
-        txtNom.setText(parking.getNom());
-        txtAdresse.setText(parking.getAdresse() != null ? parking.getAdresse().getRue() : "");
-        txtTarif.setText(String.valueOf(parking.getTarif()));
-        txtHauteur.setText(String.valueOf(parking.getHauteur()));
-        txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
-        txtHeureOuverture.setText(parking.getHeureOuverture() != null ? parking.getHeureOuverture().toString() : "00:00");
-        txtHeureFermeture.setText(parking.getHeureFermeture() != null ? parking.getHeureFermeture().toString() : "23:59");
-        chkMoto.setSelected(parking.isContientPlacesMoto());
-        
-        cardLayout.show(mainContentPanel, "EDITION");
+
     }
 
     private JPanel createStatsView() {
@@ -392,7 +384,12 @@ public class Accueil extends JPanel {
     public void addMenuParkingsListener(ActionListener listener) { btnSidebarParkings.addActionListener(listener); }
     public void addMenuStatsListener(ActionListener listener) { btnSidebarStats.addActionListener(listener); }
     public void addAjouterListener(ActionListener listener) { btnAjouter.addActionListener(listener); }
-    public void addRetourListener(ActionListener listener) { btnRetourListe.addActionListener(listener); }
+    public void addRetourListener(ActionListener listener) { 
+        if(btnRetourListe != null) btnRetourListe.addActionListener(listener); 
+    }
+    public void addShowListener(java.awt.event.ComponentListener l) {
+        this.addComponentListener(l);
+    }
 
     public void showParkings() { cardLayout.show(mainContentPanel, "PARKINGS"); }
     public void showStats() { cardLayout.show(mainContentPanel, "STATS"); }

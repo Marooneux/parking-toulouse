@@ -4,15 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import modele.Parking;
+import modele.Adresse; 
 
 public class ModifierParking extends JPanel {
 
@@ -20,11 +21,16 @@ public class ModifierParking extends JPanel {
 
     private final Parking parking;
 
-    private JTextField txtNom;
-    private JTextField txtAdresse;
-    private JTextField txtTarif;
-    private JTextField txtHauteur;
-    private JTextField txtPlacesMax;
+    private TemplateSaisie groupNom;
+    
+    private TemplateSaisie groupNumero;
+    private TemplateSaisie groupRue;
+    private TemplateSaisie groupCP;
+    private TemplateSaisie groupVille;
+
+    private TemplateSaisie groupTarif;
+    private TemplateSaisie groupHauteur;
+    private TemplateSaisie groupPlacesMax;
 
     private JButton btnValider;
     private JButton btnAnnuler;
@@ -38,37 +44,66 @@ public class ModifierParking extends JPanel {
     private void initialize() {
         setLayout(new BorderLayout(10, 10));
         setBorder(new EmptyBorder(15, 15, 15, 15));
-        setPreferredSize(new Dimension(450, 350));
+        setPreferredSize(new Dimension(500, 600)); 
 
         JLabel title = new JLabel("Modification du parking");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
         add(title, BorderLayout.NORTH);
 
-        JPanel form = new JPanel(new GridLayout(0, 2, 10, 10));
+        JPanel form = new JPanel();
+        form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
 
-        txtNom = new JTextField();
-        txtAdresse = new JTextField();
-        txtTarif = new JTextField();
-        txtHauteur = new JTextField();
-        txtPlacesMax = new JTextField();
+        groupNom = new TemplateSaisie("Nom du parking", "Ex: Parking Central");
+        form.add(groupNom);
+        form.add(Box.createVerticalStrut(10));
 
-        form.add(new JLabel("Nom"));
-        form.add(txtNom);
+        JPanel rowAdresse1 = new JPanel();
+        rowAdresse1.setLayout(new BoxLayout(rowAdresse1, BoxLayout.X_AXIS));
+        rowAdresse1.setAlignmentX(LEFT_ALIGNMENT);
+        
+        groupNumero = new TemplateSaisie("N°", "Ex: 10");
+        groupNumero.setMaximumSize(new Dimension(80, 60)); 
+        
+        groupRue = new TemplateSaisie("Rue", "Ex: Rue de la République");
+        
+        rowAdresse1.add(groupNumero);
+        rowAdresse1.add(Box.createHorizontalStrut(10));
+        rowAdresse1.add(groupRue);
+        
+        form.add(rowAdresse1);
+        form.add(Box.createVerticalStrut(10));
 
-        form.add(new JLabel("Adresse"));
-        form.add(txtAdresse);
+        JPanel rowAdresse2 = new JPanel();
+        rowAdresse2.setLayout(new BoxLayout(rowAdresse2, BoxLayout.X_AXIS));
+        rowAdresse2.setAlignmentX(LEFT_ALIGNMENT);
 
-        form.add(new JLabel("Tarif (€/h)"));
-        form.add(txtTarif);
+        groupCP = new TemplateSaisie("Code Postal", "Ex: 75000");
+        groupCP.setMaximumSize(new Dimension(100, 60));
+        
+        groupVille = new TemplateSaisie("Ville", "Ex: Paris");
 
-        form.add(new JLabel("Hauteur max (m)"));
-        form.add(txtHauteur);
+        rowAdresse2.add(groupCP);
+        rowAdresse2.add(Box.createHorizontalStrut(10));
+        rowAdresse2.add(groupVille);
 
-        form.add(new JLabel("Places max"));
-        form.add(txtPlacesMax);
+        form.add(rowAdresse2);
+        form.add(Box.createVerticalStrut(10));
+
+        // 4. Autres infos
+        groupTarif = new TemplateSaisie("Tarif (€/h)", "");
+        form.add(groupTarif);
+        form.add(Box.createVerticalStrut(10));
+
+        groupHauteur = new TemplateSaisie("Hauteur max (m)", "");
+        form.add(groupHauteur);
+        form.add(Box.createVerticalStrut(10));
+
+        groupPlacesMax = new TemplateSaisie("Places max", "");
+        form.add(groupPlacesMax);
 
         add(form, BorderLayout.CENTER);
 
+        // --- Boutons ---
         btnValider = new JButton("Valider");
         btnAnnuler = new JButton("Annuler");
 
@@ -80,38 +115,46 @@ public class ModifierParking extends JPanel {
     }
 
     private void remplirChamps() {
-        txtNom.setText(parking.getNom());
-        txtAdresse.setText(parking.getAdresse() != null ? parking.getAdresse().getRue() : "");
-        txtTarif.setText(String.valueOf(parking.getTarif()));
-        txtHauteur.setText(String.valueOf(parking.getHauteur()));
-        txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
+        if (parking != null) {
+            groupNom.setText(parking.getNom());
+            
+            Adresse adr = parking.getAdresse();
+            if (adr != null) {
+                groupNumero.setText(String.valueOf(adr.getNumero())); 
+                groupRue.setText(adr.getRue());
+                groupCP.setText(String.valueOf(adr.getCodePostal()));
+                groupVille.setText(adr.getVille());
+            }
+
+            groupTarif.setText(String.valueOf(parking.getTarif()));
+            groupHauteur.setText(String.valueOf(parking.getHauteur()));
+            groupPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
+        }
     }
 
-    public JButton getBtnValider() {
-        return btnValider;
-    }
+    // --- Getters ---
 
-    public JButton getBtnAnnuler() {
-        return btnAnnuler;
-    }
+    public JButton getBtnValider() { return btnValider; }
+    public JButton getBtnAnnuler() { return btnAnnuler; }
 
-    public String getNom() {
-        return txtNom.getText().trim();
-    }
-
-    public String getAdresse() {
-        return txtAdresse.getText().trim();
-    }
+    public String getNom() { return groupNom.getText().trim(); }
+    public String getNumero() { return groupNumero.getText().trim(); }
+    public String getRue() { return groupRue.getText().trim(); }
+    public String getCodePostal() { return groupCP.getText().trim(); }
+    public String getVille() { return groupVille.getText().trim(); }
 
     public double getTarif() {
-        return Double.parseDouble(txtTarif.getText().trim());
+        try { return Double.parseDouble(groupTarif.getText().trim()); } 
+        catch (NumberFormatException e) { return 0.0; }
     }
 
     public double getHauteur() {
-        return Double.parseDouble(txtHauteur.getText().trim());
+        try { return Double.parseDouble(groupHauteur.getText().trim()); }
+        catch (NumberFormatException e) { return 0.0; }
     }
 
     public int getPlacesMax() {
-        return Integer.parseInt(txtPlacesMax.getText().trim());
+        try { return Integer.parseInt(groupPlacesMax.getText().trim()); }
+        catch (NumberFormatException e) { return 0; }
     }
 }

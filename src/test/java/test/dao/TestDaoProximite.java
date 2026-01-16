@@ -53,7 +53,7 @@ public class TestDaoProximite {
 		this.daoProximite = new DaoProximite();
 
 		// créer une adresse pour le parking
-		this.adresseTest = new Adresse(0, "1", "rue du Test", "31000", "Toulouse");
+		this.adresseTest = new Adresse(1, "rue du Test", 31000, "Toulouse");
 		this.daoAdresse.create(this.adresseTest);
 
 		// créer un parking avec l'adresse

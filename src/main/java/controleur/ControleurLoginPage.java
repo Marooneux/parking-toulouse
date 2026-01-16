@@ -6,42 +6,65 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import modele.Utilisateur;
+import modele.Utilisateur.Type;
 import modele.dao.MySQLDataSource;
 import utils.AuthManager;
 import vue.ChoixTypeStationnement;
 import vue.LoginPage;
 import vue.NavigationFrame;
 import vue.adminParking.Accueil;
-import modele.Utilisateur.Type;
 
 public class ControleurLoginPage implements ActionListener {
-	private LoginPage vue;
+    private LoginPage vue;
 
-	public ControleurLoginPage(LoginPage vue) {
-		this.vue = vue;
-		MySQLDataSource.creerAcces();
-	}
+    public ControleurLoginPage(LoginPage vue) {
+        this.vue = vue;
+        MySQLDataSource.creerAcces();
+        
+        // --- CORRECTION 1 : AJOUT DU LISTENER ---
+        // Sans ça, le clic ne déclenche rien.
+        // Assure-toi que ta vue a bien un getter getBtnConnexion()
+        this.vue.getBtnConnexion().addActionListener(this);
+        
+        // Optionnel : Permet de valider avec "Entrée" dans le champ mot de passe
+        // this.vue.getChampMotDePasse().addActionListener(this); 
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String utilisateur = this.vue.getLogin();
-		String mdp = this.vue.getMdp();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Attention : vérifie que ta vue a bien getLogin() et pas getIdentifiant()
+        // (J'utilise les noms de ton code fourni)
+        String utilisateur = this.vue.getLogin(); 
+        
+        // Attention : getMdp() renvoie souvent un char[], s'assurer de la conversion
+        String mdp = this.vue.getMdp(); 
 
-		boolean ok = AuthManager.login(utilisateur, mdp);
-		if (!ok) {
-			JOptionPane.showMessageDialog(null, "Utilisateur ou mot de passe invalid");
-			this.vue.viderChampMdp();
-			return;
-		}
+        boolean ok = AuthManager.login(utilisateur, mdp);
+        if (!ok) {
+            JOptionPane.showMessageDialog(vue, "Utilisateur ou mot de passe invalide");
+            this.vue.viderChampMdp();
+            return;
+        }
 
-		Utilisateur user = AuthManager.getCurrentUser();
+        Utilisateur user = AuthManager.getCurrentUser();
 
-		if (AuthManager.hasRole(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
-			new Accueil(user.getId());
-			return;
-		}
+        // --- CORRECTION 2 : REDIRECTION ADMIN COMPLETE ---
+        if (AuthManager.hasRole(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
+            
+            // 1. Créer la vue
+            Accueil vueAdmin = new Accueil(user.getId());
+            
+            // 2. Créer le contrôleur (IMPORTANT : sinon les boutons de l'accueil ne feront rien)
+            new ControleurAccueilAdminParking(vueAdmin, user.getId());
+            
+            // 3. Afficher la page via le système de navigation
+            NavigationFrame.getInstance().showPage("admin-home", () -> vueAdmin, "Administration");
+            
+            return;
+        }
 
-		NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
-				"Stationnement");
-	}
+        // Redirection Utilisateur normal
+        NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
+                "Stationnement");
+    }
 }
