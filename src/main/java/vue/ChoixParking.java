@@ -31,18 +31,25 @@ import modele.Parking;
 public class ChoixParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
 	private JPanel gridPanel;
 	private JTextField txtRecherche;
 	private JMenuItem itemAlpha;
 	private JMenuItem itemPlaces;
 	private JMenuItem itemFermeture;
+	private int idUser;
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new ChoixParking().setVisible(true));
+	public ChoixParking(int idUser) {
+		this.idUser = idUser;
+		this.initialize();
 	}
 
 	public ChoixParking() {
 		this.initialize();
+	}
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new ChoixParking().setVisible(true));
 	}
 
 	private void initialize() {
@@ -120,18 +127,10 @@ public class ChoixParking extends JFrame {
 		this.gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
 		this.gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
-		// --- CORRECTION DU PROBLEME D'AFFICHAGE ---
-		// On crée un conteneur intermédiaire (wrapper)
 		JPanel wrapperPanel = new JPanel(new BorderLayout());
 		wrapperPanel.setBackground(new Color(248, 249, 250));
-
-		// On ajoute la grille au NORD de ce wrapper
-		// Cela force la grille à ne prendre que sa hauteur nécessaire et ne pas
-		// s'étirer
 		wrapperPanel.add(this.gridPanel, BorderLayout.NORTH);
 
-		// On met le wrapper dans le scrollPane au lieu de mettre directement la
-		// gridPanel
 		scrollPane.setViewportView(wrapperPanel);
 
 		this.getContentPane().add(scrollPane, BorderLayout.CENTER);

@@ -10,9 +10,9 @@ public class RequeteSelectParkingByAdminId extends Requete<Parking> {
     @Override
     public String requete() {
         return "SELECT p.* FROM parkings p " +
-                "JOIN admins_parkings ap ON p.id_parking = ap.id_parking " +
-                "JOIN utilisateurs u ON u.id_utilisateur = ap.id_utilisateur " +
-                "WHERE u.id_utilisateur = ? AND u.adminParking = 'adminParking'";
+                "JOIN admins_parkings ap ON p.id = ap.id_parking " +
+                "JOIN utilisateurs u ON u.id = ap.id_utilisateur " +
+                "WHERE u.id = ? AND u.user_type = 'parkingadmin'";
     }
 
     @Override

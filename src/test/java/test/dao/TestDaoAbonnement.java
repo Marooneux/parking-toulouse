@@ -25,7 +25,7 @@ public class TestDaoAbonnement {
 
 	@BeforeClass
 	public static void initConnexion() {
-		MySQLDataSource.creerAcces("user", "password");
+		MySQLDataSource.creerAcces();
 	}
 
 	@Before

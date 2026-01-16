@@ -5,11 +5,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurChoixParking;
+import controleur.ControleurChoixTypeStationnement;
+import modele.Utilisateur;
+import modele.dao.DaoUtilisateur;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class ChoixTypeStationnement extends JFrame {
 
@@ -19,8 +23,21 @@ public class ChoixTypeStationnement extends JFrame {
     private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
     private final Color BUTTON_TEXT_COLOR = Color.WHITE;
+    
+    private int idUser;
+    
+    public static void main(String[] args) {
+    	SwingUtilities.invokeLater(() -> new ChoixTypeStationnement(2).setVisible(true));
+    }
+
 
     public ChoixTypeStationnement() {
+    	this(0);
+    }
+    
+
+    public ChoixTypeStationnement(int idUser) {
+    	this.idUser = idUser;
         setTitle("Stationnement");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
@@ -51,7 +68,8 @@ public class ChoixTypeStationnement extends JFrame {
         profileButton.setMargin(new Insets(5, 15, 5, 15)); 
 
         profileButton.addActionListener(e -> {
-            // Redirection vers la page du profil
+            ControleurChoixTypeStationnement controleurChoixTypeStationnement = new ControleurChoixTypeStationnement(this);
+            controleurChoixTypeStationnement.openProfile(idUser);
         });
 
         headerPanel.add(titleLabel, BorderLayout.WEST);
@@ -67,7 +85,7 @@ public class ChoixTypeStationnement extends JFrame {
                 "Trouver un parking",
                 e -> {
                     try {
-                        ControleurChoixParking frameChoixParking = new ControleurChoixParking(new ChoixParking());
+                        ControleurChoixParking frameChoixParking = new ControleurChoixParking(new ChoixParking(idUser), idUser);
                         dispose();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -185,9 +203,5 @@ public class ChoixTypeStationnement extends JFrame {
 
         @Override
         public int getIconHeight() { return 24; }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ChoixTypeStationnement().setVisible(true));
     }
 }

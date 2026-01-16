@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import modele.ReservationParking;
 import modele.StationnementVoirie;
 
 import java.awt.*;
@@ -19,9 +20,12 @@ public class ChoixMoyenPaiementParking extends JFrame {
     private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
     private final Color BUTTON_TEXT_COLOR = Color.WHITE;;
+    
+    private ReservationParking reservation;
     private double prix;
 
-    public ChoixMoyenPaiementParking(double prix) {
+    public ChoixMoyenPaiementParking(ReservationParking reservation, double prix) {
+    	this.reservation = reservation;
     	this.prix = prix;
     	
         setTitle("Moyen de Paiement");
@@ -50,7 +54,7 @@ public class ChoixMoyenPaiementParking extends JFrame {
                 new IconCard(),
                 e -> {
                     try {
-                        PaiementParking pagePaiementCB = new PaiementParking(prix);
+                        PaiementParking pagePaiementCB = new PaiementParking(reservation, prix);
                         pagePaiementCB.setVisible(true);
                         dispose();
                     } catch (Exception ex) {
@@ -66,7 +70,7 @@ public class ChoixMoyenPaiementParking extends JFrame {
                 new IconBank(),
                 e -> {
                     try {
-                    	PaiementVirementParking pageVirement = new PaiementVirementParking(prix);
+                    	PaiementVirementParking pageVirement = new PaiementVirementParking(reservation, prix);
                         pageVirement.setVisible(true);
                         dispose();
                     } catch (Exception ex) {

@@ -42,7 +42,7 @@ public class Accueil extends JFrame {
     private ControleurAccueilAdminParking controleur;
 
     public static void main(String[] args) {
-    	new Accueil(1);
+    	new Accueil(3);
     }
 
     public Accueil(int idAdmin) {
@@ -348,7 +348,7 @@ public class Accueil extends JFrame {
     public void afficherFormulaireEdition(Parking parking) {
         this.parkingEnEdition = parking;
         txtNom.setText(parking.getNom());
-        txtAdresse.setText(parking.getAdresse());
+        txtAdresse.setText(parking.getAdresse() != null ? parking.getAdresse().getRue() : "");
         txtTarif.setText(String.valueOf(parking.getTarif()));
         txtHauteur.setText(String.valueOf(parking.getHauteur()));
         txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));

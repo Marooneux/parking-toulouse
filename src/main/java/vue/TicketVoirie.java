@@ -33,14 +33,20 @@ public class TicketVoirie extends JFrame {
 	private int duree;
 	private String moyenPaiement;
 	private JLabel nomZone;
+	
+	private Color couleur;
 
 	public TicketVoirie(ZoneVoirie zone, String immatriculation, int duree, String moyenPaiement) {
 		this.zone = zone;
 		this.immatriculation = immatriculation;
 		this.duree = duree;
 		this.moyenPaiement = moyenPaiement;
-		this.nomZone = new JLabel(zone.getNom());
-		this.nomZone.setForeground(ControleurTicketVoirie.getRgb(zone.getNom()));
+		
+		this.couleur = convertirCouleur(zone.getCouleur());
+
+		// 2. On applique la couleur au texte de la zone
+		this.nomZone = new JLabel(zone.getCouleur());
+		this.nomZone.setForeground(this.couleur); 
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 750, 600);
@@ -57,9 +63,8 @@ public class TicketVoirie extends JFrame {
 		this.contentPane.add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BorderLayout(20, 0));
 
+		// 3. Configuration du Rond P (défini plus bas)
 		this.iconCircle.setOpaque(false);
-		this.iconCircle.setFont(new Font("Segoe UI", Font.BOLD, 30));
-		this.iconCircle.setBounds(25, 25, 40, 40);
 		this.iconCircle.setPreferredSize(new Dimension(60, 60));
 		panelHeader.add(this.iconCircle, BorderLayout.WEST);
 
@@ -97,7 +102,7 @@ public class TicketVoirie extends JFrame {
 		panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
 
 		this.createInfoRow(panelInfoGrid, "Numéro de Ticket :", new JLabel("#V-00001"));
-		this.createInfoRow(panelInfoGrid, "Zone :", this.nomZone);
+		this.createInfoRow(panelInfoGrid, "Zone :", this.nomZone); // Ici le JLabel est déjà coloré
 		this.createInfoRow(panelInfoGrid, "Immatriculation :", new JLabel(immatriculation));
 		this.createInfoRow(panelInfoGrid, "Heure d'arrivée :", new JLabel(ControleurTicketVoirie.getHeureActuelle()));
 		this.createInfoRow(panelInfoGrid, "Heure départ max :",
@@ -138,6 +143,25 @@ public class TicketVoirie extends JFrame {
 
 	}
 
+	// --- Méthode pour récupérer la couleur (identique à celle de ChoixZone) ---
+	private Color convertirCouleur(String nomCouleur) {
+		if (nomCouleur == null) return Color.GRAY;
+		String clef = nomCouleur.toLowerCase().trim();
+
+		if (clef.startsWith("#")) {
+			try { return Color.decode(clef); } catch (Exception e) { return Color.GRAY; }
+		}
+		
+		switch (clef) {
+			case "jaune": return new Color(255, 204, 0);
+			case "orange": return new Color(255, 149, 0);
+			case "rouge": return new Color(255, 59, 48);
+			case "vert": case "verte": return new Color(0, 128, 0);
+			case "bleu": case "bleue": case "blue": return new Color(0, 122, 255);
+			default: return Color.GRAY;
+		}
+	}
+
 	private void createInfoRow(JPanel parent, String label, JLabel lblVal) {
 		JPanel row = new JPanel();
 		row.setBackground(Color.WHITE);
@@ -148,7 +172,6 @@ public class TicketVoirie extends JFrame {
 		lblKey.setForeground(new Color(100, 100, 100));
 
 		lblVal.setFont(new Font("Segoe UI", Font.BOLD, 16));
-
 		lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		row.add(lblKey, BorderLayout.WEST);
@@ -162,14 +185,20 @@ public class TicketVoirie extends JFrame {
 		parent.add(row);
 	}
 
+	// --- Le Rond P ---
 	JPanel iconCircle = new JPanel() {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(ControleurTicketVoirie.getRgb(TicketVoirie.this.zone.getNom()));
+			
+			// 4. On utilise la couleur calculée dans le constructeur
+			g2.setColor(TicketVoirie.this.couleur);
+			
 			g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 			g2.setColor(Color.WHITE);
 			g2.setFont(new Font("Segoe UI", Font.BOLD, 25));
@@ -182,5 +211,4 @@ public class TicketVoirie extends JFrame {
 			g2.drawString(texte, x, y);
 		}
 	};
-
 }

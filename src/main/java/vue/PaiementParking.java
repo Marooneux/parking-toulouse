@@ -25,6 +25,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+import modele.ReservationParking;
+
 public class PaiementParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -33,6 +35,8 @@ public class PaiementParking extends JFrame {
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
 	private JTextField textFieldCVC;
+	
+	private ReservationParking reservation;
 	private double prix;
 
 	public static void main(String[] args) {
@@ -46,7 +50,8 @@ public class PaiementParking extends JFrame {
 		});
 	}
 
-	public PaiementParking(double prix) {
+	public PaiementParking(ReservationParking reservation, double prix) {
+		this.reservation = reservation;
 		this.prix = prix;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(520, 480);
@@ -142,7 +147,7 @@ public class PaiementParking extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(prix);
+					ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(reservation, prix);
 					frameConfirmationPaiement.setVisible(true);
 					PaiementParking.this.dispose();
 				} catch (Exception ex) {

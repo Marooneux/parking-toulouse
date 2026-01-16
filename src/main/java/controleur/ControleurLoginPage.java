@@ -16,7 +16,7 @@ public class ControleurLoginPage implements ActionListener {
 
 	public ControleurLoginPage(LoginPage vue) {
 		this.vue = vue;
-		MySQLDataSource.creerAcces("root", "claudio");
+		MySQLDataSource.creerAcces();
 	}
 
 	@Override

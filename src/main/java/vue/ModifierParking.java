@@ -78,10 +78,10 @@ public class ModifierParking extends JFrame {
 
     private void remplirChamps() {
         txtNom.setText(parking.getNom());
-        txtAdresse.setText(parking.getAdresse());
+        txtAdresse.setText(parking.getAdresse() != null ? parking.getAdresse().getRue() : "");
         txtTarif.setText(String.valueOf(parking.getTarif()));
-        txtHauteur.setText(String.valueOf(parking.getHauteurMax()));
-        txtPlacesMax.setText(String.valueOf(parking.getCapacite()));
+        txtHauteur.setText(String.valueOf(parking.getHauteur()));
+        txtPlacesMax.setText(String.valueOf(parking.getNbPlacesMax()));
     }
 
     public JButton getBtnValider() {

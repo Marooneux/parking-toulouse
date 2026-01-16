@@ -18,14 +18,14 @@ public class TestParking {
 
 	@Before
 	public void setUp() {
-		this.parking = new Parking(1, "Parking Central", 100, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true, new Adresse(0, null, null, null, null));
+		this.parking = new Parking(1, "Parking Central", 100, 50, 1.8, LocalTime.of(9, 0),
+				LocalTime.of(21, 0), true, 2.5, new Adresse(0, null, "Rue Victor Hugo", null, null));
 	}
 
 	@Test
 	public void testConstructor() {
 		assertEquals("Parking Central", this.parking.getNom());
-		assertEquals("Rue Victor Hugo", this.parking.getAdresse());
+		assertEquals("Rue Victor Hugo", this.parking.getAdresse().getRue());
 		assertEquals(2.5, this.parking.getTarif(), 0.001);
 		assertEquals(100, this.parking.getCapacite());
 		assertEquals(50, this.parking.getNbPlacesOccupees());
@@ -46,7 +46,7 @@ public class TestParking {
 		this.parking.setHoraireFermeture(LocalTime.of(22, 0));
 
 		assertEquals("Parking Sud", this.parking.getNom());
-		assertEquals("Boulevard Carnot", this.parking.getAdresse());
+		assertEquals("Boulevard Carnot", this.parking.getAdresse().getRue());
 		assertEquals(2.0, this.parking.getTarif(), 0.001);
 		assertEquals(80, this.parking.getCapacite());
 		assertEquals(10, this.parking.getNbPlacesOccupees());

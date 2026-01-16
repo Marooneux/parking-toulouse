@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import modele.ReservationParking;
 import modele.StationnementVoirie;
 
 import java.awt.*;
@@ -16,9 +17,12 @@ public class PaiementVirementParking extends JFrame {
     
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
+    
+    private ReservationParking reservation;
     private double prix;
 
-    public PaiementVirementParking(double prix) {
+    public PaiementVirementParking(ReservationParking reservation, double prix) {
+    	this.reservation = reservation;
     	this.prix = prix;
     	
         setTitle("Virement Bancaire");
@@ -58,7 +62,7 @@ public class PaiementVirementParking extends JFrame {
         btnPayer.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            try {
-	            	ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(prix);
+	            	ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(reservation, prix);
 	            	frameConfirmationPaiement.setVisible(true);
 	                dispose();
 	            } catch (Exception ex) {

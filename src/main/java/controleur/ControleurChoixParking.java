@@ -23,17 +23,43 @@ public class ControleurChoixParking {
 	private List<Parking> listeComplete;
 	// Liste actuellement affichée (filtrée et triée)
 	private List<Parking> listeAffichee;
+	private int idUser;
 
 	public ControleurChoixParking(ChoixParking vue) {
+		this(vue, 0);
+	}
+
+	public ControleurChoixParking(ChoixParking vue, int idUser) {
 		this.vue = vue;
+		this.idUser = idUser;
 		this.daoParking = new DaoParking();
 		this.listeComplete = new ArrayList<>();
 		this.listeAffichee = new ArrayList<>();
 
-		MySQLDataSource.creerAcces("root", "claudio");
-
+		MySQLDataSource.creerAcces();
+		this.chargerDonneesInitiales();
+		this.initialiserEcouteurs();
 		this.afficherParkings();
 		vue.setVisible(true);
+	}
+
+	private void initialiserEcouteurs() {
+		vue.getTxtRecherche().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filtrerParkings();
+			}
+		});
+
+		vue.getItemAlpha().addActionListener(e -> {
+			Collections.sort(listeAffichee, Comparator.comparing(Parking::getNom));
+			afficherParkings();
+		});
+
+		vue.getItemFermeture().addActionListener(e -> {
+			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
+			this.afficherParkings();
+		});
 	}
 
 	private void chargerDonneesInitiales() {
@@ -46,33 +72,6 @@ public class ControleurChoixParking {
 			e.printStackTrace();
 			System.err.println("Erreur de connexion");
 		}
-	}
-
-	private void initialiserEcouteurs() {
-		// Barre de recherche
-		this.vue.getTxtRecherche().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				ControleurChoixParking.this.filtrerParkings();
-			}
-		});
-
-		// Options de tri
-		this.vue.getItemAlpha().addActionListener(e -> {
-			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getNom));
-			this.afficherParkings();
-		});
-
-		this.vue.getItemPlaces().addActionListener(e -> {
-			Collections.sort(this.listeAffichee,
-					Comparator.comparingInt(p -> p.getCapacite() - p.getNbPlacesOccupees()));
-			this.afficherParkings();
-		});
-
-		this.vue.getItemFermeture().addActionListener(e -> {
-			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
-			this.afficherParkings();
-		});
 	}
 
 	private void filtrerParkings() {

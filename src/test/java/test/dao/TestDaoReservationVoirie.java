@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.After;
@@ -36,7 +37,7 @@ public class TestDaoReservationVoirie {
 
 	@BeforeClass
 	public static void initConnexion() {
-		MySQLDataSource.creerAcces("user", "password");
+		MySQLDataSource.creerAcces(); 
 	}
 
 	@Before
@@ -50,7 +51,12 @@ public class TestDaoReservationVoirie {
 		this.utilisateur = new Utilisateur(0, "Dupont", "Jean", "jean.dupont@test.com", "mdp123", Type.CLIENT);
 		this.daoUser.create(this.utilisateur);
 
-		this.zone = new ZoneVoirie(0, "Zone Test", 2.5, 120);
+		LocalTime debutAm = LocalTime.of(9, 0);
+		LocalTime finAm = LocalTime.of(12, 0);
+		LocalTime debutPm = LocalTime.of(14, 0);
+		LocalTime finPm = LocalTime.of(19, 0);
+
+		this.zone = new ZoneVoirie(0, "rouge", 2.5, 120, debutAm, finAm, debutPm, finPm);
 		this.daoZone.create(this.zone);
 
 		this.reservation = new ReservationVoirie(0, LocalDateTime.now(), 60, this.zone, this.utilisateur);

@@ -40,12 +40,11 @@ public class Paiement {
 	}
 
 	public boolean estValide() {
-		return this.reservation.estPayee();
+		return this.reservation.getPrixPaye() > 0;
 	}
 
 	public boolean effectuerPaiement() {
-		if (this.montant > 0) {
-			this.reservation.setEstPayee(true);
+		if (estValide()) {
 			System.out.println("Paiement effectué avec succès : " + this.montant + " € via " + this.moyenPaiement);
 			return true;
 		} else {

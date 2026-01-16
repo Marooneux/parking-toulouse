@@ -93,7 +93,7 @@ public class ParkingPanel extends JPanel {
 		centerPanel.setOpaque(false);
 		centerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-		centerPanel.add(this.createDetailRow("📍", parking.getAdresse()));
+		centerPanel.add(this.createDetailRow("📍", parking.getAdresse() != null ? parking.getAdresse().getRue() : ""));
 		centerPanel.add(Box.createVerticalStrut(8));
 
 		String horaireText = (parking.getHoraireOuverture().equals(parking.getHoraireFermeture()))
@@ -130,25 +130,9 @@ public class ParkingPanel extends JPanel {
 
 		bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
 		bottomPanel.add(lblPrice, BorderLayout.EAST);
-
-		this.btnModifier = new JButton("Modifier");
-		this.btnModifier.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		this.btnModifier.setFocusPainted(false);
-		this.btnModifier.setBackground(new Color(240, 240, 240));
-		this.btnModifier.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
 		JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		actionsPanel.setOpaque(false);
-		actionsPanel.add(this.btnModifier);
 
-		this.btnModifier.addActionListener(e -> {
-			// Only sysadmin or parkingadmin can modify parking
-			if (!AuthManager.ensureAuthorized("sysadmin", "parkingadmin")) {
-				return;
-			}
-			ModifierParking modifier = new ModifierParking(parking);
-			modifier.setVisible(true);
-		});
 
 		bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
