@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 
 import modele.Utilisateur;
 import modele.ReservationParking;
+import modele.ReservationVoirie;
+import modele.ZoneVoirie;
 import controleur.ControleurHistorique;
 
 // 1. On hérite de JPanel au lieu de JFrame
@@ -84,10 +86,10 @@ public class HistoriquePanel extends JPanel {
         loadMoreButton.addActionListener(listener);
     }
 
-    public void afficherHistorique(List<ReservationParking> reservations) {
+    public void afficherHistorique(List<ReservationParking> reservationsParking, List<ReservationVoirie> reservationsVoirie) {
         reservationsPanel.removeAll();
 
-        if (reservations.isEmpty()) {
+        if (reservationsParking.isEmpty() && reservationsVoirie.isEmpty()) {
             JLabel empty = new JLabel("Aucun historique trouvé.");
             empty.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             empty.setForeground(Color.GRAY);
@@ -96,8 +98,13 @@ public class HistoriquePanel extends JPanel {
             reservationsPanel.add(empty);
         }
 
-        for (ReservationParking r : reservations) {
-            reservationsPanel.add(createReservationCard(r));
+        for (ReservationParking r : reservationsParking) {
+            reservationsPanel.add(createReservationCardParking(r));
+            reservationsPanel.add(Box.createRigidArea(new Dimension(0, 12)));
+        }
+
+        for (ReservationVoirie r : reservationsVoirie) {
+            reservationsPanel.add(createReservationCardVoirie(r));
             reservationsPanel.add(Box.createRigidArea(new Dimension(0, 12)));
         }
 
@@ -105,7 +112,7 @@ public class HistoriquePanel extends JPanel {
         reservationsPanel.repaint();
     }
 
-    private JPanel createReservationCard(ReservationParking r) {
+    private JPanel createReservationCardParking(ReservationParking r) {
         JPanel card = new JPanel(new BorderLayout(10, 10));
         card.setBackground(Color.WHITE);
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
@@ -155,6 +162,56 @@ public class HistoriquePanel extends JPanel {
         rightPanel.add(price);
         card.add(rightPanel, BorderLayout.EAST);
         
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                card.setBackground(new Color(250, 250, 250));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                card.setBackground(Color.WHITE);
+            }
+        });
+
+        return card;
+    }
+
+    private JPanel createReservationCardVoirie(ReservationVoirie r) {
+        JPanel card = new JPanel(new BorderLayout(10, 10));
+        card.setBackground(Color.WHITE);
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220)),
+                new EmptyBorder(12, 12, 12, 12)
+        ));
+
+        JLabel icon = new JLabel("\uD83D\uDEA7");
+        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
+        card.add(icon, BorderLayout.WEST);
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setBackground(Color.WHITE);
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+
+        ZoneVoirie zone = r.getZone();
+        JLabel name = new JLabel("Zone voirie " + (zone != null ? zone.getCouleur() : "?"));
+        name.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+        JLabel dates = new JLabel("Début " + r.getDateDebut() + " | Durée " + r.getDureeMinutes() + " min");
+        dates.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        dates.setForeground(new Color(100, 100, 150));
+
+        infoPanel.add(name);
+        infoPanel.add(Box.createVerticalStrut(5));
+        infoPanel.add(dates);
+        card.add(infoPanel, BorderLayout.CENTER);
+
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        rightPanel.setBackground(Color.WHITE);
+        JLabel price = new JLabel("Durée " + r.getDureeMinutes() + " min");
+        price.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        price.setForeground(new Color(0, 123, 255));
+        rightPanel.add(price);
+        card.add(rightPanel, BorderLayout.EAST);
+
         card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 card.setBackground(new Color(250, 250, 250));

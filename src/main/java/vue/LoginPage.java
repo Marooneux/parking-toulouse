@@ -137,6 +137,20 @@ public class LoginPage extends JPanel {
 		this.btnValider.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(this.btnValider);
 
+		formPanel.add(Box.createVerticalStrut(12));
+
+		JButton btnInscription = new JButton("Creer un compte");
+		btnInscription.setBackground(Color.WHITE);
+		btnInscription.setForeground(new Color(52, 58, 64));
+		btnInscription.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		btnInscription.setFocusPainted(false);
+		btnInscription.setBorder(BorderFactory.createCompoundBorder(
+				new LineBorder(new Color(222, 226, 230), 1),
+				new EmptyBorder(10, 14, 10, 14)));
+		btnInscription.setAlignmentX(LEFT_ALIGNMENT);
+		btnInscription.addActionListener(e -> NavigationFrame.getInstance().showPage("Inscription", InscriptionPage::new, "Creer un compte"));
+		formPanel.add(btnInscription);
+
 		formPanel.add(Box.createVerticalGlue());
 
 		ControleurLoginPage controleur = new ControleurLoginPage(this);

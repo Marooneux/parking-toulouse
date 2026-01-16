@@ -77,8 +77,8 @@ public class Utilisateur {
 		return this.motDePasse;
 	}
 
-	public void setMdp(String ancienMdp, String nouveauMdp) {
-		if (PasswordUtil.checkMdp(nouveauMdp, ancienMdp)) {
+	public void setMdp(String ignoredAncienMdp, String nouveauMdp) {
+		if (nouveauMdp != null && !nouveauMdp.isBlank()) {
 			this.motDePasse = PasswordUtil.hashMdp(nouveauMdp);
 		}
 	}

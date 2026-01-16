@@ -9,7 +9,7 @@ public class RequeteInsertUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, user_type) VALUES (?, ?, ?, ?, ?)";
+		return "INSERT INTO utilisateurs (nom, prenom, email, mdp, user_type) VALUES (?, ?, ?, ?, ?)";
 	}
 
 	@Override

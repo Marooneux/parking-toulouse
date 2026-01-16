@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 
 import modele.ReservationParking;
 import modele.dao.DaoReservationParking;
+import modele.dao.MySQLDataSource;
+import utils.AuthManager;
 import vue.ConfirmationPaiementParking;
 
 public class ControleurConfirmationPaiementParking implements ActionListener {
@@ -35,7 +37,16 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 		reservation.setPrixPaye(prix);
 		try {
 			DaoReservationParking dao = new DaoReservationParking();
-			dao.update(reservation);
+			MySQLDataSource.creerAcces();
+
+			if (reservation.getId() == 0) {
+				if (AuthManager.getCurrentUser() != null) {
+					reservation.setUtilisateur(AuthManager.getCurrentUser());
+				}
+				dao.create(reservation);
+			} else {
+				dao.update(reservation);
+			}
 			System.exit(0);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");

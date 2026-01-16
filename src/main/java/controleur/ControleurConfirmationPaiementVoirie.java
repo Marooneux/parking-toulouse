@@ -3,6 +3,14 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.time.LocalDateTime;
+
+import javax.swing.JOptionPane;
+
+import modele.ReservationVoirie;
+import modele.dao.DaoReservationVoirie;
+import modele.dao.MySQLDataSource;
+import utils.AuthManager;
 import vue.ConfirmationPaiementVoirie;
 import vue.NavigationFrame;
 import vue.TicketVoirie;
@@ -18,6 +26,21 @@ public class ControleurConfirmationPaiementVoirie implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (AuthManager.getCurrentUser() == null) {
+            JOptionPane.showMessageDialog(vue, "Connexion requise pour enregistrer la réservation.");
+            return;
+        }
+
+        ReservationVoirie reservation = new ReservationVoirie(0, LocalDateTime.now(), vue.getDuree(), vue.getZone(), AuthManager.getCurrentUser());
+        try {
+            MySQLDataSource.creerAcces();
+            new DaoReservationVoirie().create(reservation);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement de la réservation.");
+            ex.printStackTrace();
+            return;
+        }
+
         TicketVoirie ticket = new TicketVoirie(
                 vue.getZone(),
                 vue.getImmatriculation(),

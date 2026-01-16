@@ -12,6 +12,7 @@ import modele.dao.requetes.RequeteDeleteReservationVoirie;
 import modele.dao.requetes.RequeteInsertReservationVoirie;
 import modele.dao.requetes.RequeteSelectReservationVoirie;
 import modele.dao.requetes.RequeteSelectReservationVoirieById;
+import modele.dao.requetes.RequeteSelectReservationsVoirieByUserId;
 import modele.dao.requetes.RequeteUpdateReservationVoirie;
 
 public class DaoReservationVoirie extends DaoModele<ReservationVoirie> {
@@ -40,6 +41,10 @@ public class DaoReservationVoirie extends DaoModele<ReservationVoirie> {
 	public List<ReservationVoirie> findAll() throws SQLException {
 		return this.find(new RequeteSelectReservationVoirie());
 	}
+
+		public List<ReservationVoirie> findByUserId(int userId) throws SQLException {
+			return this.find(new RequeteSelectReservationsVoirieByUserId(), String.valueOf(userId));
+		}
 
 	public ReservationVoirie findById(int id) throws SQLException {
 		return this.findById(
