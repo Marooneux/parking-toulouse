@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,6 +26,9 @@ import modele.ZoneVoirie;
 public class PaiementVoirie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private static final Color BACKGROUND_COLOR = new Color(248, 249, 250);
+	private static final Color BORDER_COLOR = new Color(230, 230, 230);
+	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 	private JTextField textFieldNom;
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
@@ -42,27 +46,26 @@ public class PaiementVoirie extends JPanel {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(Color.WHITE);
+		this.setBackground(BACKGROUND_COLOR);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-		// HEADER
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(Color.WHITE);
+		header.setBackground(BACKGROUND_COLOR);
 
 		JLabel icon = new JLabel("💳");
 		icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
-		titreZone.setBackground(Color.WHITE);
+		titreZone.setOpaque(false);
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Paiement");
 		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblTitre.setForeground(new Color(40, 40, 40));
+		lblTitre.setForeground(new Color(33, 37, 41));
 		titreZone.add(lblTitre);
 
-		JLabel lblSousTitre = new JLabel("Entrez les informations de votre carte");
+		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
 		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		titreZone.add(lblSousTitre);
@@ -70,63 +73,86 @@ public class PaiementVoirie extends JPanel {
 		header.add(titreZone);
 		this.add(header, BorderLayout.NORTH);
 
-		// CARD CENTRAL
+		JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+		center.setOpaque(false);
+		this.add(center, BorderLayout.CENTER);
+
 		JPanel card = new JPanel();
 		card.setBackground(Color.WHITE);
 		card.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(new Color(220, 220, 220)),
-				new EmptyBorder(20, 20, 20, 20)));
-		card.setLayout(new GridLayout(4, 1, 15, 15));
-		this.add(card, BorderLayout.CENTER);
+				BorderFactory.createLineBorder(BORDER_COLOR),
+				new EmptyBorder(20, 20, 24, 20)));
+		card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+		card.setPreferredSize(new Dimension(480, 520));
+		card.setMaximumSize(new Dimension(520, 640));
 
-		// --- CHAMP NOM ---
-		this.textFieldNom = new PlaceholderTextField("Nom Prénom", 20);
-		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-		this.textFieldNom.setPreferredSize(new Dimension(250, 30));
+		JPanel brands = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
+		brands.setOpaque(false);
+		brands.add(createBadge("VISA", new Color(0, 86, 179), new Color(229, 239, 255)));
+		brands.add(createBadge("Mastercard", new Color(204, 0, 0), new Color(255, 235, 235)));
+		brands.add(createBadge("Amex", new Color(0, 102, 153), new Color(231, 243, 248)));
+		brands.add(createBadge("Discover", new Color(255, 102, 0), new Color(255, 242, 230)));
+		brands.setAlignmentX(Component.LEFT_ALIGNMENT);
+		card.add(brands);
+		card.add(Box.createVerticalStrut(8));
 
-		JPanel blocNom = this.creerBlocChamps("Numéro de carte", this.textFieldNom);
-		card.add(blocNom);
+		JPanel montantRow = new JPanel(new BorderLayout(8, 0));
+		montantRow.setOpaque(false);
+		JLabel lblMontant = new JLabel("Montant");
+		lblMontant.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblMontant.setForeground(new Color(90, 90, 90));
+		JButton pillMontant = new JButton(String.format("%.2f €", prix));
+		pillMontant.setEnabled(false);
+		pillMontant.setBackground(new Color(243, 246, 249));
+		pillMontant.setForeground(new Color(40, 40, 40));
+		pillMontant.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		pillMontant.setBorder(BorderFactory.createEmptyBorder(10, 14, 10, 14));
+		montantRow.add(lblMontant, BorderLayout.WEST);
+		montantRow.add(pillMontant, BorderLayout.EAST);
+		montantRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+		card.add(montantRow);
+		card.add(Box.createVerticalStrut(12));
 
-		// --- NUMÉRO DE CARTE ---
-		this.textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 20);
+		this.textFieldNom = new PlaceholderTextField("Nom Prenom", 40);
+		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(40));
+		styleField(this.textFieldNom);
+		card.add(this.creerBlocChamps("Nom sur la carte", this.textFieldNom));
+
+		this.textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 19);
 		((AbstractDocument) this.textFieldNumCarte.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
+		styleField(this.textFieldNumCarte);
+		card.add(this.creerBlocChamps("Numero de carte", this.textFieldNumCarte));
 
-		this.textFieldNumCarte.setPreferredSize(new Dimension(250, 30));
-
-		JPanel blocCarte = this.creerBlocChamps("Numéro de carte", this.textFieldNumCarte);
-		card.add(blocCarte);
-
-		// --- CHAINE EXPIRATION + CVC ---
-		JPanel row = new JPanel(new GridLayout(1, 2, 20, 0));
+		JPanel row = new JPanel(new GridLayout(1, 2, 12, 0));
 		row.setOpaque(false);
 
-		this.textFieldExpiration = new PlaceholderTextField("MM/YY", 10);
+		this.textFieldExpiration = new PlaceholderTextField("MM/YY", 5);
 		((AbstractDocument) this.textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
-		this.textFieldExpiration.setPreferredSize(new Dimension(100, 28));
-		JPanel blocExp = this.creerBlocChamps("Date d'expiration", this.textFieldExpiration);
+		styleField(this.textFieldExpiration, 120);
+		row.add(this.creerBlocChamps("Expiration", this.textFieldExpiration));
 
-		this.textFieldCVC = new PlaceholderTextField("123", 8);
+		this.textFieldCVC = new PlaceholderTextField("123", 3);
 		((AbstractDocument) this.textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
-		this.textFieldCVC.setPreferredSize(new Dimension(100, 28));
-		JPanel blocCVC = this.creerBlocChamps("CVC", this.textFieldCVC);
+		styleField(this.textFieldCVC, 120);
+		row.add(this.creerBlocChamps("CVC", this.textFieldCVC));
 
-		row.add(blocExp);
-		row.add(blocCVC);
+		row.setAlignmentX(Component.LEFT_ALIGNMENT);
 		card.add(row);
+		card.add(Box.createVerticalStrut(12));
 
-		// --- BOUTON ---
-		JPanel panelBtn = new JPanel();
-		panelBtn.setBackground(Color.WHITE);
-
-		btnPayer = new JButton("Payer - " + prix + "€");
-		btnPayer.setBackground(new Color(0, 128, 255));
+		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panelBtn.setOpaque(false);
+		btnPayer = new JButton(String.format("Payer - %.2f €", prix));
+		btnPayer.setBackground(PRIMARY_COLOR);
 		btnPayer.setForeground(Color.WHITE);
-		btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnPayer.setFocusPainted(false);
-		btnPayer.setPreferredSize(new Dimension(160, 40));
+		btnPayer.setPreferredSize(new Dimension(200, 44));
 		panelBtn.add(btnPayer);
-
+		panelBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
 		card.add(panelBtn);
+
+		center.add(card);
 	}
 
 	private JPanel creerBlocChamps(String labelText, JTextField textField) {
@@ -142,7 +168,7 @@ public class PaiementVoirie extends JPanel {
 		champPanel.setOpaque(false);
 
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		textField.setForeground(new Color(120, 120, 120));
+		textField.setForeground(new Color(60, 60, 60));
 
 		champPanel.add(textField);
 
@@ -150,6 +176,30 @@ public class PaiementVoirie extends JPanel {
 		bloc.add(champPanel);
 
 		return bloc;
+	}
+
+	private void styleField(JTextField field) {
+		styleField(field, 280);
+	}
+
+	private void styleField(JTextField field, int prefWidth) {
+		field.setPreferredSize(new Dimension(prefWidth, 34));
+		field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 34));
+		field.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(new Color(220, 223, 230)),
+				new EmptyBorder(6, 10, 6, 10)));
+	}
+
+	private JLabel createBadge(String text, Color fg, Color bg) {
+		JLabel tag = new JLabel(text);
+		tag.setOpaque(true);
+		tag.setBackground(bg);
+		tag.setForeground(fg);
+		tag.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		tag.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(new Color(220, 220, 220)),
+				new EmptyBorder(6, 10, 6, 10)));
+		return tag;
 	}
 
 	public JButton getBtnPayer() {

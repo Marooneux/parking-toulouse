@@ -9,6 +9,7 @@ import modele.Utilisateur.Type;
 import modele.dao.requetes.RequeteDeleteUtilisateur;
 import modele.dao.requetes.RequeteInsertUtilisateur;
 import modele.dao.requetes.RequeteSelectUtilisateur;
+import modele.dao.requetes.RequeteSelectUtilisateurByEmail;
 import modele.dao.requetes.RequeteSelectUtilisateurById;
 import modele.dao.requetes.RequeteUpdateUtilisateur;
 
@@ -39,13 +40,17 @@ public class DaoUtilisateur extends DaoModele<Utilisateur> {
 		return this.findById(new RequeteSelectUtilisateurById(), String.valueOf(id));
 	}
 
+	public Utilisateur findByEmail(String email) throws SQLException {
+		return this.findById(new RequeteSelectUtilisateurByEmail(), email);
+	}
+
 	@Override
 	protected Utilisateur creerInstance(ResultSet curseur) throws SQLException {
 		int id = curseur.getInt("id");
 		String nom = curseur.getString("nom");
 		String prenom = curseur.getString("prenom");
 		String email = curseur.getString("email");
-		String mdpHash = curseur.getString("mot_de_passe");
+		String mdpHash = curseur.getString("mdp");
 		Type type = Type.valueOf(curseur.getString("user_type").toUpperCase());
 
 		return new Utilisateur(id, nom, prenom, email, mdpHash, type);

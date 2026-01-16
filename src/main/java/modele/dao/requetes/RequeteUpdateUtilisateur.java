@@ -9,7 +9,7 @@ public class RequeteUpdateUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public String requete() {
-		return "UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, mot_de_passe = ?, user_type = ? WHERE id = ?";
+		return "UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, mdp = ?, user_type = ? WHERE id = ?";
 	}
 
 	@Override

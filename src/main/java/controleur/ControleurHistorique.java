@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import modele.ReservationParking;
+import modele.ReservationVoirie;
 import modele.dao.DaoReservationParking;
+import modele.dao.DaoReservationVoirie;
 import modele.dao.MySQLDataSource;
 import vue.HistoriquePanel;
 
@@ -14,6 +16,7 @@ public class ControleurHistorique implements ActionListener {
 
     private final HistoriquePanel vue;
     private final DaoReservationParking dao;
+    private final DaoReservationVoirie daoVoirie;
     private final int userId;
 
     public ControleurHistorique(HistoriquePanel vue, int userId) {
@@ -22,6 +25,7 @@ public class ControleurHistorique implements ActionListener {
         MySQLDataSource.creerAcces();
 
         this.dao = new DaoReservationParking();
+        this.daoVoirie = new DaoReservationVoirie();
         this.vue = vue;
 
         vue.addReloadListener(this);
@@ -37,7 +41,8 @@ public class ControleurHistorique implements ActionListener {
     public void chargerHistorique() {
         try {
             List<ReservationParking> reservations = dao.findByUserId(userId);
-            vue.afficherHistorique(reservations);
+            List<ReservationVoirie> voirie = daoVoirie.findByUserId(userId);
+            vue.afficherHistorique(reservations, voirie);
         } catch (SQLException e) {
             e.printStackTrace();
         }

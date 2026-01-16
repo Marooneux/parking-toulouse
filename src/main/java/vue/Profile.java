@@ -24,6 +24,7 @@ public class Profile extends JPanel {
 
     private JButton btnSidebarInfos;
     private JButton btnSidebarHistorique;
+    private JButton btnSidebarVehicules;
 
     private JLabel lblValNom;
     private JLabel lblValPrenom;
@@ -145,6 +146,11 @@ public class Profile extends JPanel {
 
         btnSidebarHistorique = createMenuButton("Historique");
         sidebar.add(btnSidebarHistorique);
+
+        sidebar.add(Box.createVerticalStrut(10));
+
+        btnSidebarVehicules = createMenuButton("Mes véhicules");
+        sidebar.add(btnSidebarVehicules);
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
@@ -369,6 +375,7 @@ public class Profile extends JPanel {
     public void addAnnulerEditListener(ActionListener l) { btnAnnulerEdit.addActionListener(l); }
     public void addMenuInfosListener(ActionListener l) { btnSidebarInfos.addActionListener(l); }
     public void addMenuHistoriqueListener(ActionListener l) { btnSidebarHistorique.addActionListener(l); }
+    public void addMenuVehiculesListener(ActionListener l) { btnSidebarVehicules.addActionListener(l); }
     public void addRetourListener(ActionListener l) { btnRetour.addActionListener(l); }
     public void addToggleSidebarListener(ActionListener l) { btnToggle.addActionListener(l); }
 
@@ -377,6 +384,7 @@ public class Profile extends JPanel {
     public JButton getBtnAnnulerEdit() { return btnAnnulerEdit; }
     public JButton getBtnSidebarInfos() { return btnSidebarInfos; }
     public JButton getBtnSidebarHistorique() { return btnSidebarHistorique; }
+    public JButton getBtnSidebarVehicules() { return btnSidebarVehicules; }
     public JButton getBtnRetour() { return btnRetour; }
     public JButton getBtnToggle() { return btnToggle; }
     

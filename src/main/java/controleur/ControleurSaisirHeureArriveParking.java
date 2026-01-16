@@ -8,11 +8,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import modele.Parking;
 import modele.ReservationParking;
+import modele.Vehicule;
+import modele.dao.DaoReservationParking;
+import modele.dao.DaoVehicule;
+import modele.dao.MySQLDataSource;
+import utils.AuthManager;
 import vue.NavigationFrame;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
@@ -29,6 +35,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
 
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
+        this.prefillPlaque();
 
         NavigationFrame.getInstance().showPage("parking-arrivee", () -> this.vue, "Démarrer le stationnement");
     }
@@ -73,7 +80,21 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
             }
 
             LocalDateTime dateArrivee = LocalDateTime.of(LocalDate.now(), heureArrivee);
-            ReservationParking reservation = new ReservationParking(dateArrivee, null, parking, null);
+            if (AuthManager.getCurrentUser() == null) {
+                JOptionPane.showMessageDialog(vue, "Vous devez être connecté pour réserver.");
+                return;
+            }
+
+            ReservationParking reservation = new ReservationParking(dateArrivee, null, parking, AuthManager.getCurrentUser());
+
+            try {
+                MySQLDataSource.creerAcces();
+                new DaoReservationParking().create(reservation);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement de la réservation.");
+                ex.printStackTrace();
+                return;
+            }
 
             TicketParking ticket = new TicketParking(reservation, plaque, heure);
             new ControleurTicketParking(ticket);
@@ -81,6 +102,24 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
 
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");
+        }
+    }
+
+    private void prefillPlaque() {
+        try {
+            if (AuthManager.getCurrentUser() == null) {
+                return;
+            }
+            MySQLDataSource.creerAcces();
+            DaoVehicule daoVehicule = new DaoVehicule();
+            int userId = AuthManager.getCurrentUser().getId();
+            List<Vehicule> vehicules = daoVehicule.findByUserId(userId);
+            Vehicule vehicule = vehicules.isEmpty() ? null : vehicules.getFirst();
+            if (vehicule != null) {
+                vue.getPlaque().setText(vehicule.getImmatriculation());
+            }
+        } catch (Exception ignored) {
+            // Pré-remplissage non bloquant
         }
     }
 

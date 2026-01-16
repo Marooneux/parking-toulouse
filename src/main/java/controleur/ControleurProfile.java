@@ -3,10 +3,13 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import modele.Utilisateur;
+import modele.dao.DaoUtilisateur;
+import modele.dao.MySQLDataSource;
 import vue.ChoixTypeStationnement;
 import vue.ModifierProfile;
 import vue.NavigationFrame;
 import vue.Profile;
+import vue.VehiculesPanel;
 
 public class ControleurProfile implements ActionListener {
 
@@ -27,6 +30,7 @@ public class ControleurProfile implements ActionListener {
         vue.addAnnulerEditListener(this);
         vue.addMenuInfosListener(this);
         vue.addMenuHistoriqueListener(this);
+        vue.addMenuVehiculesListener(this);
         vue.addRetourListener(this);
         vue.addToggleSidebarListener(this);
 
@@ -62,6 +66,11 @@ public class ControleurProfile implements ActionListener {
             return;
         }
 
+        if (source == vue.getBtnSidebarVehicules()) {
+            ouvrirVehicules();
+            return;
+        }
+
         if (source == vue.getBtnRetour()) {
             ouvrirChoixStationnement();
             return;
@@ -84,6 +93,17 @@ public class ControleurProfile implements ActionListener {
                 "Stationnement");
     }
 
+    public void ouvrirVehicules() {
+        NavigationFrame.getInstance().showPage(
+                "Vehicules",
+                () -> {
+                    VehiculesPanel panel = new VehiculesPanel(utilisateur);
+                    new ControleurVehicules(utilisateur, panel);
+                    return panel;
+                },
+                "Mes véhicules");
+    }
+
     private void rafraichirVueInfos() {
         vue.updateInfoDisplay(utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail());
     }
@@ -102,16 +122,19 @@ public class ControleurProfile implements ActionListener {
         utilisateur.setNom(nom);
         utilisateur.setPrenom(prenom);
         utilisateur.setEmail(email);
-        utilisateur.setMdp("temp", mdp);
+        if (!mdp.isBlank()) {
+            utilisateur.setMdp(utilisateur.getMdp(), mdp);
+        }
 
-        boolean ok = true;
-
-        if (ok) {
+        try {
+            MySQLDataSource.creerAcces();
+            new DaoUtilisateur().update(utilisateur);
             vue.afficherMessage("Profil mis à jour avec succès !");
             rafraichirVueInfos();
             vue.showInfosTab();
-        } else {
-            vue.afficherMessage("Erreur BDD");
+        } catch (Exception ex) {
+            vue.afficherMessage("Erreur lors de la mise à jour : " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
     

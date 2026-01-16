@@ -8,10 +8,14 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 import modele.ZoneVoirie;
+import modele.ReservationVoirie;
+import modele.dao.DaoReservationVoirie;
+import modele.dao.MySQLDataSource;
 import vue.ChoixMoyenPaiementVoirie;
 import vue.NavigationFrame;
 import vue.SaisirDureeStationnement;
 import vue.TicketVoirie;
+import utils.AuthManager;
 
 public class ControleurSaisirDureeStationnement implements ActionListener {
 
@@ -97,6 +101,21 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	}
 
 	public static void ouvrirTicket(ZoneVoirie zone, String immatriculation, int intDuree) {
+		if (AuthManager.getCurrentUser() == null) {
+			JOptionPane.showMessageDialog(null, "Connexion requise pour enregistrer la réservation.");
+			return;
+		}
+
+		ReservationVoirie reservation = new ReservationVoirie(0, java.time.LocalDateTime.now(), intDuree, zone, AuthManager.getCurrentUser());
+		try {
+			MySQLDataSource.creerAcces();
+			new DaoReservationVoirie().create(reservation);
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement de la réservation.");
+			ex.printStackTrace();
+			return;
+		}
+
 		TicketVoirie ticket = new TicketVoirie(zone, immatriculation, intDuree, "Gratuit");
 		new ControleurTicketVoirie(ticket);
 		String key = "voirie-ticket-" + immatriculation + "-" + intDuree;

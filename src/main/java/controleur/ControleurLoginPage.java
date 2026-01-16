@@ -35,7 +35,6 @@ public class ControleurLoginPage implements ActionListener {
 		}
 
 		Utilisateur user = AuthManager.getCurrentUser();
-		JOptionPane.showMessageDialog(null, "bienvenue " + user.getNom());
 
 		if (AuthManager.hasRole(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
 			new Accueil(user.getId());
