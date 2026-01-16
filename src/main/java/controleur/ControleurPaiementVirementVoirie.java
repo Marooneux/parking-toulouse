@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import vue.ConfirmationPaiementVoirie;
 import vue.PaiementVirementVoirie;
+import vue.NavigationFrame;
 
 public class ControleurPaiementVirementVoirie implements ActionListener {
 
@@ -26,8 +27,9 @@ public class ControleurPaiementVirementVoirie implements ActionListener {
                     vue.getDuree(),
                     vue.getPrix(),
                     "Virement bancaire");
-            confirmation.setVisible(true);
-            vue.dispose();
+            new ControleurConfirmationPaiementVoirie(confirmation);
+            String key = "voirie-confirmation-" + vue.getImmatriculation() + "-" + vue.getDuree();
+            NavigationFrame.getInstance().showPage(key, () -> confirmation, "Paiement validé");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
             ex.printStackTrace();

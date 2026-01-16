@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -13,7 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,9 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
-import controleur.ControleurPaiementVirementVoirie;
-
-public class PaiementVirementVoirie extends JFrame {
+public class PaiementVirementVoirie extends JPanel {
 
 	private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
 	private final Color BUTTON_COLOR = new Color(13, 110, 253);
@@ -38,11 +36,6 @@ public class PaiementVirementVoirie extends JFrame {
 		this.immatriculation = immatriculation;
 		this.duree = duree;
 		this.prix = prix;
-
-		this.setTitle("Virement Bancaire");
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(450, 500);
-		this.setLocationRelativeTo(null);
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		mainPanel.setBackground(this.BACKGROUND_COLOR);
@@ -89,9 +82,8 @@ public class PaiementVirementVoirie extends JFrame {
 		formCard.add(btnPayer);
 
 		mainPanel.add(formCard);
-		this.add(mainPanel);
-
-		new ControleurPaiementVirementVoirie(this);
+		this.setLayout(new BorderLayout());
+		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
 	private void addField(JPanel panel, String labelText) {

@@ -1,14 +1,24 @@
 package vue;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
 import modele.Parking;
 
-public class ModifierParking extends JFrame {
+public class ModifierParking extends JPanel {
 
     private static final long serialVersionUID = 1L;
+
+    private final Parking parking;
 
     private JTextField txtNom;
     private JTextField txtAdresse;
@@ -19,8 +29,6 @@ public class ModifierParking extends JFrame {
     private JButton btnValider;
     private JButton btnAnnuler;
 
-    private Parking parking;
-
     public ModifierParking(Parking parking) {
         this.parking = parking;
         initialize();
@@ -28,18 +36,13 @@ public class ModifierParking extends JFrame {
     }
 
     private void initialize() {
-        setTitle("Modifier un parking");
-        setSize(450, 350);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        JPanel content = new JPanel(new BorderLayout(10, 10));
-        content.setBorder(new EmptyBorder(15, 15, 15, 15));
-        setContentPane(content);
+        setLayout(new BorderLayout(10, 10));
+        setBorder(new EmptyBorder(15, 15, 15, 15));
+        setPreferredSize(new Dimension(450, 350));
 
         JLabel title = new JLabel("Modification du parking");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        content.add(title, BorderLayout.NORTH);
+        add(title, BorderLayout.NORTH);
 
         JPanel form = new JPanel(new GridLayout(0, 2, 10, 10));
 
@@ -64,7 +67,7 @@ public class ModifierParking extends JFrame {
         form.add(new JLabel("Places max"));
         form.add(txtPlacesMax);
 
-        content.add(form, BorderLayout.CENTER);
+        add(form, BorderLayout.CENTER);
 
         btnValider = new JButton("Valider");
         btnAnnuler = new JButton("Annuler");
@@ -73,7 +76,7 @@ public class ModifierParking extends JFrame {
         actions.add(btnAnnuler);
         actions.add(btnValider);
 
-        content.add(actions, BorderLayout.SOUTH);
+        add(actions, BorderLayout.SOUTH);
     }
 
     private void remplirChamps() {

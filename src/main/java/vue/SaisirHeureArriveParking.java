@@ -15,7 +15,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,11 +26,10 @@ import javax.swing.text.JTextComponent;
 import modele.Parking;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
 
-public class SaisirHeureArriveParking extends JFrame {
+public class SaisirHeureArriveParking extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel contentPane;
     private JButton btnConfirmer;
     private JTextField textFieldPlaque;
     private JTextField textFieldHeure;
@@ -41,17 +39,11 @@ public class SaisirHeureArriveParking extends JFrame {
     public SaisirHeureArriveParking(Parking parking) {
         this.parking = parking;
 
-        this.setTitle("Démarrer le Stationnement");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(600, 700);
-        this.setLocationRelativeTo(null);
+        this.setLayout(new BorderLayout(15, 15));
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setBackground(new Color(250, 250, 250));
 
         this.btnConfirmer = new JButton("Démarrer le stationnement");
-
-        this.contentPane = new JPanel(new BorderLayout(15, 15));
-        this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.contentPane.setBackground(new Color(250, 250, 250));
-        this.setContentPane(this.contentPane);
 
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
         header.setBackground(new Color(250, 250, 250));
@@ -75,13 +67,13 @@ public class SaisirHeureArriveParking extends JFrame {
         texte.add(lblSousTitre);
 
         header.add(texte);
-        this.contentPane.add(header, BorderLayout.NORTH);
+        this.add(header, BorderLayout.NORTH);
 
         JPanel body = new JPanel();
         body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
         body.setBackground(new Color(250, 250, 250));
         body.setBorder(new EmptyBorder(10, 0, 10, 0));
-        this.contentPane.add(body, BorderLayout.CENTER);
+        this.add(body, BorderLayout.CENTER);
 
         this.ajouterCarteDeDétails(body, "Parking selectionné", this.detailsZone());
         this.ajouterCarteDeDétails(body, "Informations du véhicule", this.detailsVoiture());
@@ -100,7 +92,7 @@ public class SaisirHeureArriveParking extends JFrame {
         this.btnConfirmer.setOpaque(true);
 
         buttonPanel.add(this.btnConfirmer);
-        this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private JPanel detailsZone() {

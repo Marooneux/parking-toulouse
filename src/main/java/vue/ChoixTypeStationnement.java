@@ -7,12 +7,10 @@ import javax.swing.border.LineBorder;
 import controleur.ControleurChoixTypeStationnement;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
-public class ChoixTypeStationnement extends JFrame {
+public class ChoixTypeStationnement extends JPanel {
 
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color CARD_COLOR = Color.WHITE;
@@ -20,8 +18,6 @@ public class ChoixTypeStationnement extends JFrame {
     private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
     private final Color BUTTON_TEXT_COLOR = Color.WHITE;
-    
-    private int idUser;
 
     private JButton profileButton;
     private JButton btnParking;
@@ -32,68 +28,65 @@ public class ChoixTypeStationnement extends JFrame {
     }
     
 
-    public ChoixTypeStationnement(int idUser) {
-    	this.idUser = idUser;
-        setTitle("Stationnement");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
-        setLocationRelativeTo(null);
+        public ChoixTypeStationnement(int idUser) {
+    		this.setLayout(new BorderLayout());
+    		this.setBackground(BACKGROUND_COLOR);
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(BACKGROUND_COLOR);
+    		JPanel mainPanel = new JPanel(new BorderLayout());
+    		mainPanel.setBackground(BACKGROUND_COLOR);
 
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setOpaque(false);
-        headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
+    		JPanel headerPanel = new JPanel(new BorderLayout());
+    		headerPanel.setOpaque(false);
+    		headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
 
-        JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titleLabel.setForeground(TEXT_COLOR);
-        titleLabel.setIcon(new IconP());
+    		JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
+    		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+    		titleLabel.setForeground(TEXT_COLOR);
+    		titleLabel.setIcon(new IconP());
         
-        profileButton = new JButton("Mon Profil");
-        profileButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        profileButton.setForeground(TEXT_COLOR);
-        profileButton.setBackground(Color.WHITE);
-        profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
-        profileButton.setFocusPainted(false);
-        profileButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        profileButton.setIcon(new IconProfile());
-        profileButton.setIconTextGap(10);
+    		profileButton = new JButton("Mon Profil");
+    		profileButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+    		profileButton.setForeground(TEXT_COLOR);
+    		profileButton.setBackground(Color.WHITE);
+    		profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
+    		profileButton.setFocusPainted(false);
+    		profileButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		profileButton.setIcon(new IconProfile());
+    		profileButton.setIconTextGap(10);
 
-        profileButton.setMargin(new Insets(5, 15, 5, 15)); 
+    		profileButton.setMargin(new Insets(5, 15, 5, 15)); 
 
-        headerPanel.add(titleLabel, BorderLayout.WEST);
-        headerPanel.add(profileButton, BorderLayout.EAST);
+    		headerPanel.add(titleLabel, BorderLayout.WEST);
+    		headerPanel.add(profileButton, BorderLayout.EAST);
 
-        JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
-        cardsContainer.setOpaque(false);
-        cardsContainer.setBorder(new EmptyBorder(20, 40, 40, 40));
+    		JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
+    		cardsContainer.setOpaque(false);
+    		cardsContainer.setBorder(new EmptyBorder(20, 40, 40, 40));
 
-        JPanel cardParking = createCard(
-                "Stationnement Parking",
-                "Stationner dans un parking sécurisé au choix.",
-                "Trouver un parking",
-                true
-        );
+    		JPanel cardParking = createCard(
+    		        "Stationnement Parking",
+    		        "Stationner dans un parking sécurisé au choix.",
+    		        "Trouver un parking",
+    		        true
+    		);
 
-        JPanel cardVoirie = createCard(
-                "Stationnement en Voirie",
-                "Stationner en voirie dans une zone au choix.",
-                "Trouver un emplacement",
-                false
-        );
+    		JPanel cardVoirie = createCard(
+    		        "Stationnement en Voirie",
+    		        "Stationner en voirie dans une zone au choix.",
+    		        "Trouver un emplacement",
+    		        false
+    		);
 
-        cardsContainer.add(cardParking);
-        cardsContainer.add(cardVoirie);
+    		cardsContainer.add(cardParking);
+    		cardsContainer.add(cardVoirie);
 
-        mainPanel.add(headerPanel, BorderLayout.NORTH);
-        mainPanel.add(cardsContainer, BorderLayout.CENTER);
+    		mainPanel.add(headerPanel, BorderLayout.NORTH);
+    		mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
-        add(mainPanel);
+    		this.add(mainPanel, BorderLayout.CENTER);
 
-        new ControleurChoixTypeStationnement(this, idUser);
-    }
+    		new ControleurChoixTypeStationnement(this, idUser);
+        }
 
     private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
         JPanel card = new JPanel();

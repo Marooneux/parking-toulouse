@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import modele.ZoneVoirie;
 import vue.ChoixMoyenPaiementVoirie;
+import vue.NavigationFrame;
 import vue.SaisirDureeStationnement;
 import vue.TicketVoirie;
 
@@ -21,6 +22,8 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		this.zone = zone;
 		this.vue = vue;
 		this.vue.getBtnConfirmer().addActionListener(this);
+
+		NavigationFrame.getInstance().showPage("voirie-duree", () -> this.vue, "Démarrer le stationnement");
 	}
 
 	@Override
@@ -47,10 +50,8 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		double prix = calculerPrixTotal(zone, dureeMinutes);
 		if (prix == 0) {
 			ouvrirTicket(zone, immatriculation, dureeMinutes);
-			vue.dispose();
 		} else {
 			ouvrirPaiement(zone, immatriculation, dureeMinutes, prix);
-			vue.dispose();
 		}
 	}
 
@@ -88,14 +89,17 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	}
 
 	public static void ouvrirPaiement(ZoneVoirie zone, String immatriculation, int intDuree, double prix) {
-		ChoixMoyenPaiementVoirie frameChoixPaiementVoirie = new ChoixMoyenPaiementVoirie(zone, immatriculation,
+		ChoixMoyenPaiementVoirie choix = new ChoixMoyenPaiementVoirie(zone, immatriculation,
 				intDuree, prix);
-		frameChoixPaiementVoirie.setVisible(true);
+		new ControleurChoixMoyenPaiementVoirie(choix, zone, immatriculation, intDuree, prix);
+		String key = "voirie-choix-paiement-" + immatriculation + "-" + intDuree;
+		NavigationFrame.getInstance().showPage(key, () -> choix, "Choisir le paiement");
 	}
 
 	public static void ouvrirTicket(ZoneVoirie zone, String immatriculation, int intDuree) {
-		TicketVoirie frameTicketVoirie = new TicketVoirie(zone, immatriculation, intDuree, "Gratuit");
-		new ControleurTicketVoirie(frameTicketVoirie);
-		frameTicketVoirie.setVisible(true);
+		TicketVoirie ticket = new TicketVoirie(zone, immatriculation, intDuree, "Gratuit");
+		new ControleurTicketVoirie(ticket);
+		String key = "voirie-ticket-" + immatriculation + "-" + intDuree;
+		NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie");
 	}
 }

@@ -21,6 +21,7 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 		this.vue = vue;
 		this.reservation = reservation;
 		this.prix = prix;
+		this.vue.getBtnTerminer().addActionListener(this);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import vue.ConfirmationPaiementVoirie;
+import vue.NavigationFrame;
 import vue.TicketVoirie;
 
 public class ControleurConfirmationPaiementVoirie implements ActionListener {
@@ -22,7 +23,8 @@ public class ControleurConfirmationPaiementVoirie implements ActionListener {
                 vue.getImmatriculation(),
                 vue.getDuree(),
                 vue.getMoyenPaiement());
-        ticket.setVisible(true);
-        vue.dispose();
+        new ControleurTicketVoirie(ticket);
+        String key = "voirie-ticket-" + vue.getImmatriculation() + "-" + vue.getDuree();
+        NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie");
     }
 }

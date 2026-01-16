@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import modele.Utilisateur;
 import vue.ChoixTypeStationnement;
 import vue.ModifierProfile;
+import vue.NavigationFrame;
 import vue.Profile;
 
 public class ControleurProfile implements ActionListener {
@@ -74,14 +75,13 @@ public class ControleurProfile implements ActionListener {
     public void modifierInfos() {
         ModifierProfile pageModif = new ModifierProfile();
         new ControleurModifierProfile(pageModif, utilisateur);
-        pageModif.setVisible(true);
-        vue.dispose();
+        NavigationFrame.getInstance().showPage("profile-edit", () -> pageModif, "Modifier le profil");
     }
 
     public void ouvrirChoixStationnement() {
-        ChoixTypeStationnement accueil = new ChoixTypeStationnement(utilisateur.getId());
-        accueil.setVisible(true);
-        vue.dispose();
+        NavigationFrame.getInstance().showPage("Stationnement",
+                () -> new ChoixTypeStationnement(utilisateur.getId()),
+                "Stationnement");
     }
 
     private void rafraichirVueInfos() {

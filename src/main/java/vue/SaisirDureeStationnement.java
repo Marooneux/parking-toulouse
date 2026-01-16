@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,10 +20,9 @@ import javax.swing.text.AbstractDocument;
 import modele.ZoneVoirie;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
 
-public class SaisirDureeStationnement extends JFrame {
+public class SaisirDureeStationnement extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JButton btnConfirmer;
 	private JTextField textFieldPlaque;
 	private JTextField textFieldNom;
@@ -32,21 +30,14 @@ public class SaisirDureeStationnement extends JFrame {
 
 	public SaisirDureeStationnement(ZoneVoirie zone) {
 		this.zone = zone;
-
-		this.setTitle("Démarrer le Stationnement");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600, 700);
-		this.setLocationRelativeTo(null);
+		this.setLayout(new BorderLayout(15, 15));
+		this.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.setBackground(new Color(250, 250, 250));
 		if (zone.getCouleur() == "bleue") {
 			this.btnConfirmer = new JButton("Confirmer votre stationnement");
 		} else {
 			this.btnConfirmer = new JButton("Continuer vers le paiement");
 		}
-
-		this.contentPane = new JPanel(new BorderLayout(15, 15));
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.contentPane.setBackground(new Color(250, 250, 250));
-		this.setContentPane(this.contentPane);
 
 		// Entête
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -71,14 +62,14 @@ public class SaisirDureeStationnement extends JFrame {
 		texte.add(lblSousTitre);
 
 		header.add(texte);
-		this.contentPane.add(header, BorderLayout.NORTH);
+		this.add(header, BorderLayout.NORTH);
 
 		// Corps
 		JPanel body = new JPanel();
 		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
 		body.setBackground(new Color(250, 250, 250));
 		body.setBorder(new EmptyBorder(10, 0, 10, 0));
-		this.contentPane.add(body, BorderLayout.CENTER);
+		this.add(body, BorderLayout.CENTER);
 
 		// Création des champs de details du stationnement
 		this.ajouterCarteDeDétails(body, "Zone Sélectionnée", this.detailsZone());
@@ -100,7 +91,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.btnConfirmer.setOpaque(true);
 
 		buttonPanel.add(this.btnConfirmer);
-		this.contentPane.add(buttonPanel, BorderLayout.SOUTH);
+		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 
 	private JPanel detailsZone() {

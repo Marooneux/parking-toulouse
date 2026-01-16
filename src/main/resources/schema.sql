@@ -3,7 +3,7 @@ CREATE TABLE utilisateurs (
    nom VARCHAR(50),
    prenom VARCHAR(50),
    email VARCHAR(100) NOT NULL UNIQUE,
-   mot_de_passe VARCHAR(255) NOT NULL,
+   mdp VARCHAR(255) NOT NULL,
    user_type ENUM('parkingadmin','sysadmin','client') NOT NULL DEFAULT 'client',
    PRIMARY KEY (id)
 );

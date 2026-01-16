@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import modele.Parking;
 import modele.ReservationParking;
+import vue.NavigationFrame;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
 
@@ -29,7 +30,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
 
-        this.vue.setVisible(true);
+        NavigationFrame.getInstance().showPage("parking-arrivee", () -> this.vue, "Démarrer le stationnement");
     }
 
     private void remplirHeureActuelle() {
@@ -76,8 +77,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
 
             TicketParking ticket = new TicketParking(reservation, plaque, heure);
             new ControleurTicketParking(ticket);
-            ticket.setVisible(true);
-            vue.dispose();
+            NavigationFrame.getInstance().showPage("parking-ticket", () -> ticket, "Ticket parking");
 
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");

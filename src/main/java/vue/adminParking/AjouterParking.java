@@ -8,13 +8,12 @@ import java.time.LocalTime;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class AjouterParking extends JFrame {
+public class AjouterParking extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,22 +30,17 @@ public class AjouterParking extends JFrame {
 	private JButton btnValider;
 	private JButton btnAnnuler;
 
-	private int idAdmin;
-
 	public AjouterParking(int idAdmin) {
 		this.initialize();
-		this.idAdmin = idAdmin;
 	}
 
 	private void initialize() {
-		this.setTitle("Ajouter un nouveau parking");
-		this.setSize(450, 450);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLayout(new BorderLayout(10, 10));
+		this.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		JPanel content = new JPanel(new BorderLayout(10, 10));
-		content.setBorder(new EmptyBorder(15, 15, 15, 15));
-		this.setContentPane(content);
+		content.setBorder(new EmptyBorder(0, 0, 0, 0));
+		this.add(content, BorderLayout.CENTER);
 
 		JLabel title = new JLabel("Ajout d'un nouveau parking");
 		title.setFont(new Font("Segoe UI", Font.BOLD, 18));

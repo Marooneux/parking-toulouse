@@ -9,6 +9,7 @@ import modele.dao.DaoParking;
 import modele.dao.requetes.RequeteInsertAdminParking;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
+import vue.NavigationFrame;
 
 public class ControleurAjouterParking {
 
@@ -33,11 +34,9 @@ public class ControleurAjouterParking {
 	}
 
 	private void fermer() {
-		this.vue.dispose(); // ferme la page modifier
-
 		Accueil vueChoix = new Accueil(this.idAdmin);
 		new ControleurAccueilAdminParking(vueChoix, this.idAdmin);
-		vueChoix.setVisible(true);
+		NavigationFrame.getInstance().showPage("admin-home", () -> vueChoix, "Administration");
 	}
 
 	private void valider() {
@@ -64,10 +63,10 @@ public class ControleurAjouterParking {
 
 			JOptionPane.showMessageDialog(this.vue, "Parking ajouté avec succès");
 
-			this.vue.dispose();
+
 			Accueil vueChoix = new Accueil(this.idAdmin);
 			new ControleurAccueilAdminParking(vueChoix, this.idAdmin);
-			vueChoix.setVisible(true);
+			NavigationFrame.getInstance().showPage("admin-home", () -> vueChoix, "Administration");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

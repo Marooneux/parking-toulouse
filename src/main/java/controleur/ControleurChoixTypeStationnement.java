@@ -9,6 +9,7 @@ import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
 import vue.ChoixTypeStationnement;
 import vue.ChoixZone;
+import vue.NavigationFrame;
 import vue.Profile;
 
 public class ControleurChoixTypeStationnement implements ActionListener {
@@ -46,10 +47,13 @@ public class ControleurChoixTypeStationnement implements ActionListener {
 
     private void openParkingPage(int idUser) {
         try {
-            ChoixParking parkingPage = new ChoixParking();
-            new ControleurChoixParking(parkingPage, idUser);
-            parkingPage.setVisible(true);
-            vue.dispose();
+            NavigationFrame.getInstance().showPage("Parkings",
+                    () -> {
+                        ChoixParking p = new ChoixParking();
+                        new ControleurChoixParking(p, idUser);
+                        return p;
+                    },
+                    "Parkings");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -58,9 +62,9 @@ public class ControleurChoixTypeStationnement implements ActionListener {
 
     private void openVoiriePage() {
         try {
-            ChoixZone voiriePage = new ChoixZone();
-            voiriePage.setVisible(true);
-            vue.dispose();
+            NavigationFrame.getInstance().showPage("Voirie",
+                    () -> new ChoixZone(),
+                    "Voirie");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -69,13 +73,12 @@ public class ControleurChoixTypeStationnement implements ActionListener {
     public void openProfile(int idUser) {
         try {
             MySQLDataSource.creerAcces();
-        	
         	DaoUtilisateur dao = new DaoUtilisateur();
     		Utilisateur user = dao.findById(idUser);
-    		
-            Profile profile = new Profile(user);
-            profile.setVisible(true);
-            vue.dispose();
+			
+            NavigationFrame.getInstance().showPage("Profil",
+                    () -> new Profile(user),
+                    "Profil");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.JOptionPane;
+
 import vue.TicketVoirie;
 
 public class ControleurTicketVoirie implements ActionListener {
@@ -19,7 +21,7 @@ public class ControleurTicketVoirie implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		vue.dispose();
+		JOptionPane.showMessageDialog(vue, "Stationnement terminé. Merci.");
 	}
 
 	public static String calculerHeureDepart(int duree) {

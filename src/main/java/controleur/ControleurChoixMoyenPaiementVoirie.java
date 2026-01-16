@@ -9,6 +9,7 @@ import modele.ZoneVoirie;
 import vue.ChoixMoyenPaiementVoirie;
 import vue.PaiementVirementVoirie;
 import vue.PaiementVoirie;
+import vue.NavigationFrame;
 
 public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
 
@@ -35,15 +36,17 @@ public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
         try {
             if ("CARTE".equals(command)) {
                 PaiementVoirie pagePaiementCB = new PaiementVoirie(zone, immatriculation, duree, prix);
-                pagePaiementCB.setVisible(true);
-                vue.dispose();
+                new ControleurPaiementVoirie(pagePaiementCB);
+                String key = "voirie-paiement-carte-" + immatriculation + "-" + duree;
+                NavigationFrame.getInstance().showPage(key, () -> pagePaiementCB, "Paiement par carte");
                 return;
             }
 
             if ("VIREMENT".equals(command)) {
                 PaiementVirementVoirie pageVirement = new PaiementVirementVoirie(zone, immatriculation, duree, prix);
-                pageVirement.setVisible(true);
-                vue.dispose();
+                new ControleurPaiementVirementVoirie(pageVirement);
+                String key = "voirie-paiement-virement-" + immatriculation + "-" + duree;
+                NavigationFrame.getInstance().showPage(key, () -> pageVirement, "Paiement par virement");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");

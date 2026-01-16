@@ -13,7 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -25,9 +24,7 @@ import javax.swing.border.LineBorder;
 
 import modele.Parking;
 
-public class ChoixParking extends JFrame {
-
-	private static final long serialVersionUID = 1L;
+public class ChoixParking extends JPanel {
 
 	private JPanel gridPanel;
 	private JTextField txtRecherche;
@@ -42,11 +39,8 @@ public class ChoixParking extends JFrame {
 	}
 
 	private void initialize() {
-		this.setTitle("Stationnement");
-		this.setBounds(100, 100, 1200, 750);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setBackground(new Color(248, 249, 250));
-		this.getContentPane().setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0));
+		this.setBackground(new Color(248, 249, 250));
 
 		JPanel headerPanel = new JPanel(new BorderLayout());
 		headerPanel.setBackground(new Color(248, 249, 250));
@@ -104,7 +98,7 @@ public class ChoixParking extends JFrame {
 
 		headerPanel.add(filterContainer, BorderLayout.EAST);
 
-		this.getContentPane().add(headerPanel, BorderLayout.NORTH);
+		this.add(headerPanel, BorderLayout.NORTH);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
@@ -122,7 +116,7 @@ public class ChoixParking extends JFrame {
 
 		scrollPane.setViewportView(wrapperPanel);
 
-		this.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 	}
 
 	private JButton createFilterButton() {

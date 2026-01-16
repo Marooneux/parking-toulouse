@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import controleur.ControleurAccueilAdminParking;
 import modele.Parking;
 
-public class Accueil extends JFrame {
+public class Accueil extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,12 +48,12 @@ public class Accueil extends JFrame {
     }
 
     private void initialize() {
-        setTitle("Stationnement - Administration");
-        setBounds(100, 100, 1350, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setBackground(new Color(248, 249, 250));
         
         layeredPane = new JLayeredPane();
-        setContentPane(layeredPane);
+        layeredPane.setLayout(null);
+        this.add(layeredPane, BorderLayout.CENTER);
 
         mainContentPanel = new JPanel();
         cardLayout = new CardLayout();
@@ -85,6 +85,8 @@ public class Accueil extends JFrame {
                 updateLayoutBounds();
             }
         });
+
+        updateLayoutBounds();
     }
 
     private void createToggleBtn() {
@@ -101,8 +103,8 @@ public class Accueil extends JFrame {
     }
 
     private void updateLayoutBounds() {
-        int w = getContentPane().getWidth();
-        int h = getContentPane().getHeight();
+        int w = this.getWidth();
+        int h = this.getHeight();
 
         if (sidebarPanel.isVisible()) {
             sidebarPanel.setBounds(0, 0, SIDEBAR_WIDTH, h);

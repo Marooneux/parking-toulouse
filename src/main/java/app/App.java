@@ -4,6 +4,7 @@ import javax.swing.SwingUtilities;
 
 import utils.AuthManager;
 import vue.LoginPage;
+import vue.NavigationFrame;
 
 public final class App {
     private App() {
@@ -13,8 +14,9 @@ public final class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             AuthManager.logout();
-            LoginPage login = new LoginPage();
-            login.setVisible(true);
+            NavigationFrame nav = NavigationFrame.getInstance();
+            nav.setVisible(true);
+            nav.showPage("Connexion", LoginPage::new, "Connexion");
         });
     }
 }

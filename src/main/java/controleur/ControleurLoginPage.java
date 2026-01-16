@@ -10,6 +10,7 @@ import modele.dao.MySQLDataSource;
 import utils.AuthManager;
 import vue.ChoixTypeStationnement;
 import vue.LoginPage;
+import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import modele.Utilisateur.Type;
 
@@ -35,14 +36,13 @@ public class ControleurLoginPage implements ActionListener {
 
 		Utilisateur user = AuthManager.getCurrentUser();
 		JOptionPane.showMessageDialog(null, "bienvenue " + user.getNom());
-		this.vue.dispose();
 
 		if (AuthManager.hasRole(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
 			new Accueil(user.getId());
 			return;
 		}
 
-		ChoixTypeStationnement main = new ChoixTypeStationnement(user.getId());
-		main.setVisible(true);
+		NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
+				"Stationnement");
 	}
 }
