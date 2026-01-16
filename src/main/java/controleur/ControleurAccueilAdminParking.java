@@ -1,5 +1,7 @@
 package controleur;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,11 +15,11 @@ import vue.adminParking.AjouterParking;
 import vue.adminParking.GestionParking;
 import vue.adminParking.ModifierParking;
 
-public class ControleurAccueilAdminParking {
+public class ControleurAccueilAdminParking implements ActionListener {
 
-	private Accueil vue;
-	private DaoParking daoParking;
-	private int idAdmin;
+	private final Accueil vue;
+	private final DaoParking daoParking;
+	private final int idAdmin;
 
 	public ControleurAccueilAdminParking(Accueil vue, int idAdmin) {
 		this.vue = vue;
@@ -26,8 +28,17 @@ public class ControleurAccueilAdminParking {
 
 		MySQLDataSource.creerAcces();
 
-		this.chargerParkings();
+		registerListeners();
+		chargerParkings();
 		vue.setVisible(true);
+	}
+
+	private void registerListeners() {
+		vue.addToggleListener(this);
+		vue.addMenuParkingsListener(this);
+		vue.addMenuStatsListener(this);
+		vue.addAjouterListener(this);
+		vue.addRetourListener(this);
 	}
 
 	private void chargerParkings() {
@@ -46,21 +57,21 @@ public class ControleurAccueilAdminParking {
 		}
 	}
 
-    public void ouvrirPageAjouter(int idAdmin) {
-    	AjouterParking vueAjout = new AjouterParking(idAdmin);
-    	new ControleurAjouterParking(vueAjout, idAdmin);
-    	vueAjout.setVisible(true);
-    }
+	public void ouvrirPageAjouter(int idAdmin) {
+		AjouterParking vueAjout = new AjouterParking(idAdmin);
+		new ControleurAjouterParking(vueAjout, idAdmin);
+		vueAjout.setVisible(true);
+	}
     
-    private void ouvrirPageModification(Parking parking) {
-        ModifierParking vueModif = new ModifierParking(parking);  // nouvelle page pour modification
-        new ControleurModifierParking(vueModif, parking, idAdmin);                 // crée son contrôleur
-        vueModif.setVisible(true);
-        vue.dispose();
-    }
+	private void ouvrirPageModification(Parking parking) {
+		ModifierParking vueModif = new ModifierParking(parking);
+		new ControleurModifierParking(vueModif, parking, idAdmin);
+		vueModif.setVisible(true);
+		vue.dispose();
+	}
+
 	private void onParkingSelected(Parking parking) {
 		GestionParking vueSuivante = new GestionParking(parking);
-
 		vueSuivante.setVisible(true);
 	}
 
@@ -74,9 +85,9 @@ public class ControleurAccueilAdminParking {
 				this.daoParking.delete(parking);
 				JOptionPane.showMessageDialog(this.vue, "Parking supprimé avec succès !");
 				this.vue.dispose();
-				Accueil vue = new Accueil(this.idAdmin);
-				new ControleurAccueilAdminParking(vue, this.idAdmin);
-				vue.setVisible(true);
+				Accueil nouvelleVue = new Accueil(this.idAdmin);
+				new ControleurAccueilAdminParking(nouvelleVue, this.idAdmin);
+				nouvelleVue.setVisible(true);
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 				JOptionPane.showMessageDialog(this.vue, "Erreur lors de la suppression du parking.");
@@ -84,4 +95,39 @@ public class ControleurAccueilAdminParking {
 		}
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+
+		if (source == vue.getBtnValiderAjout()) {
+			ouvrirPageAjouter(idAdmin);
+			vue.dispose();
+			return;
+		}
+
+		if (source == vue.getBtnEnregistrerModification()) {
+			// TODO: enregistrer modifications si nécessaire
+			vue.showParkings();
+			return;
+		}
+
+		if (source == vue.getBtnSidebarParkings()) {
+			vue.showParkings();
+			return;
+		}
+
+		if (source == vue.getBtnSidebarStats()) {
+			vue.showStats();
+			return;
+		}
+
+		if (source == vue.getBtnRetourListe()) {
+			vue.showParkings();
+			return;
+		}
+
+		if (source == vue.getBtnToggle()) {
+			vue.toggleSidebar();
+		}
+	}
 }

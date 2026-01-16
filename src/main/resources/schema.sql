@@ -46,11 +46,12 @@ CREATE TABLE parkings (
    nom VARCHAR(50),
    capacite INT NOT NULL,
    hauteur_max DECIMAL(5,2),
+   place_occupees INT DEFAULT 0,
    horaire_ouverture TIME,
    horaire_fermeture TIME,
    contient_places_moto BOOLEAN DEFAULT FALSE,
+   tarif DECIMAL(5,2),
    id_adresse INT NOT NULL,
-   tarif_horaire DECIMAL(5,2),
    PRIMARY KEY (id),
    FOREIGN KEY (id_adresse) REFERENCES adresse(id) ON DELETE RESTRICT,
    CHECK (capacite > 0)

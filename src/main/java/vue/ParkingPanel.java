@@ -26,19 +26,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.Parking;
-import utils.AuthManager;
 
 public class ParkingPanel extends JPanel {
-	private Parking parking;
-	private Consumer<Parking> onClick;
 	private JButton btnModifier;
 
 	private Color normalBorder = new Color(230, 230, 230);
 	private Color hoverBorder = new Color(100, 100, 100);
 
 	public ParkingPanel(Parking parking, Consumer<Parking> onClick) {
-		this.parking = parking;
-		this.onClick = onClick;
 
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);

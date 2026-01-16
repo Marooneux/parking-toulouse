@@ -4,10 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurChoixParking;
 import controleur.ControleurChoixTypeStationnement;
-import modele.Utilisateur;
-import modele.dao.DaoUtilisateur;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -25,6 +22,10 @@ public class ChoixTypeStationnement extends JFrame {
     private final Color BUTTON_TEXT_COLOR = Color.WHITE;
     
     private int idUser;
+
+    private JButton profileButton;
+    private JButton btnParking;
+    private JButton btnVoirie;
     
     public static void main(String[] args) {
     	SwingUtilities.invokeLater(() -> new ChoixTypeStationnement(2).setVisible(true));
@@ -55,7 +56,7 @@ public class ChoixTypeStationnement extends JFrame {
         titleLabel.setForeground(TEXT_COLOR);
         titleLabel.setIcon(new IconP());
         
-        JButton profileButton = new JButton("Mon Profil");
+        profileButton = new JButton("Mon Profil");
         profileButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         profileButton.setForeground(TEXT_COLOR);
         profileButton.setBackground(Color.WHITE);
@@ -66,11 +67,6 @@ public class ChoixTypeStationnement extends JFrame {
         profileButton.setIconTextGap(10);
 
         profileButton.setMargin(new Insets(5, 15, 5, 15)); 
-
-        profileButton.addActionListener(e -> {
-            ControleurChoixTypeStationnement controleurChoixTypeStationnement = new ControleurChoixTypeStationnement(this);
-            controleurChoixTypeStationnement.openProfile(idUser);
-        });
 
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(profileButton, BorderLayout.EAST);
@@ -83,29 +79,14 @@ public class ChoixTypeStationnement extends JFrame {
                 "Stationnement Parking",
                 "Stationner dans un parking sécurisé au choix.",
                 "Trouver un parking",
-                e -> {
-                    try {
-                        ControleurChoixParking frameChoixParking = new ControleurChoixParking(new ChoixParking(idUser), idUser);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                true
         );
 
         JPanel cardVoirie = createCard(
                 "Stationnement en Voirie",
                 "Stationner en voirie dans une zone au choix.",
                 "Trouver un emplacement",
-                e -> {
-                    try {
-                        ChoixZone frameChoixZone = new ChoixZone();
-                        frameChoixZone.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                false
         );
 
         cardsContainer.add(cardParking);
@@ -115,9 +96,11 @@ public class ChoixTypeStationnement extends JFrame {
         mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
         add(mainPanel);
+
+        new ControleurChoixTypeStationnement(this, idUser);
     }
 
-    private JPanel createCard(String title, String subtitle, String buttonText, ActionListener action) {
+    private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
         card.setBackground(CARD_COLOR);
@@ -147,8 +130,12 @@ public class ChoixTypeStationnement extends JFrame {
         btn.setFocusPainted(false);
         btn.setBorder(new EmptyBorder(10, 20, 10, 20));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        btn.addActionListener(action);
+
+        if (isParking) {
+            this.btnParking = btn;
+        } else {
+            this.btnVoirie = btn;
+        }
 
         btn.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
@@ -166,6 +153,18 @@ public class ChoixTypeStationnement extends JFrame {
         card.add(btn, gbc);
 
         return card;
+    }
+
+    public JButton getProfileButton() {
+        return this.profileButton;
+    }
+
+    public JButton getBtnParking() {
+        return this.btnParking;
+    }
+
+    public JButton getBtnVoirie() {
+        return this.btnVoirie;
     }
 
     private class IconP implements Icon {

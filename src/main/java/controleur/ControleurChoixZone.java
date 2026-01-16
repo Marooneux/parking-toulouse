@@ -26,7 +26,6 @@ public class ControleurChoixZone {
         try {
 			return dao.findAll();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

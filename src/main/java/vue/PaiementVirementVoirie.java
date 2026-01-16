@@ -6,8 +6,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
+import controleur.ControleurPaiementVirementVoirie;
 
 public class PaiementVirementVoirie extends JFrame {
 
@@ -32,6 +31,7 @@ public class PaiementVirementVoirie extends JFrame {
 	private String immatriculation;
 	private int duree;
 	private double prix;
+	private JButton btnPayer;
 
 	public PaiementVirementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
 		this.zone = zone2;
@@ -64,7 +64,7 @@ public class PaiementVirementVoirie extends JFrame {
 		this.addField(formCard, "Nom et Prénom");
 		this.addField(formCard, "IBAN");
 
-		JButton btnPayer = new JButton("Payer " + prix + "€");
+		btnPayer = new JButton("Payer " + prix + "€");
 		btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnPayer.setBackground(this.BUTTON_COLOR);
 		btnPayer.setForeground(Color.WHITE);
@@ -72,19 +72,6 @@ public class PaiementVirementVoirie extends JFrame {
 		btnPayer.setBorder(new EmptyBorder(12, 0, 12, 0));
 		btnPayer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
 		btnPayer.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnPayer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone2,
-							immatriculation, duree, prix, "Virement bancaire");
-					frameConfirmationPaiement.setVisible(true);
-					PaiementVirementVoirie.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
 
 		btnPayer.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,6 +90,8 @@ public class PaiementVirementVoirie extends JFrame {
 
 		mainPanel.add(formCard);
 		this.add(mainPanel);
+
+		new ControleurPaiementVirementVoirie(this);
 	}
 
 	private void addField(JPanel panel, String labelText) {
@@ -122,5 +111,25 @@ public class PaiementVirementVoirie extends JFrame {
 		panel.add(Box.createVerticalStrut(5));
 		panel.add(field);
 		panel.add(Box.createVerticalStrut(20));
+	}
+
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public ZoneVoirie getZone() {
+		return this.zone;
+	}
+
+	public String getImmatriculation() {
+		return this.immatriculation;
+	}
+
+	public int getDuree() {
+		return this.duree;
+	}
+
+	public double getPrix() {
+		return this.prix;
 	}
 }

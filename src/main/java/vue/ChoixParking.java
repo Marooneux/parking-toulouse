@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
@@ -37,12 +35,8 @@ public class ChoixParking extends JFrame {
 	private JMenuItem itemAlpha;
 	private JMenuItem itemPlaces;
 	private JMenuItem itemFermeture;
-	private int idUser;
-
-	public ChoixParking(int idUser) {
-		this.idUser = idUser;
-		this.initialize();
-	}
+	private JButton btnFilter;
+	private JPopupMenu popupMenu;
 
 	public ChoixParking() {
 		this.initialize();
@@ -110,7 +104,7 @@ public class ChoixParking extends JFrame {
 		filterContainer.add(this.txtRecherche);
 		filterContainer.add(Box.createHorizontalStrut(10));
 
-		JButton btnFilter = this.createFilterButton();
+		btnFilter = this.createFilterButton();
 		filterContainer.add(btnFilter);
 
 		headerPanel.add(filterContainer, BorderLayout.EAST);
@@ -148,7 +142,7 @@ public class ChoixParking extends JFrame {
 				new EmptyBorder(10, 20, 10, 20)));
 		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu = new JPopupMenu();
 		popupMenu.setBackground(Color.WHITE);
 		popupMenu.setBorder(new LineBorder(new Color(206, 212, 218), 1));
 
@@ -164,13 +158,6 @@ public class ChoixParking extends JFrame {
 		popupMenu.add(this.itemAlpha);
 		popupMenu.add(this.itemPlaces);
 		popupMenu.add(this.itemFermeture);
-
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				popupMenu.show(btn, 0, btn.getHeight());
-			}
-		});
 
 		return btn;
 	}
@@ -202,6 +189,16 @@ public class ChoixParking extends JFrame {
 
 	public JMenuItem getItemFermeture() {
 		return this.itemFermeture;
+	}
+
+	public JButton getBtnFilter() {
+		return this.btnFilter;
+	}
+
+	public void showFilterPopup() {
+		if (popupMenu != null && btnFilter != null) {
+			popupMenu.show(btnFilter, 0, btnFilter.getHeight());
+		}
 	}
 
 	public void addParking(Parking parking, Consumer<Parking> onSelect) {

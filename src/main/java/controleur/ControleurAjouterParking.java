@@ -2,6 +2,7 @@ package controleur;
 
 import javax.swing.JOptionPane;
 
+import modele.Adresse;
 import modele.Parking;
 import modele.dao.DaoAdminParking;
 import modele.dao.DaoParking;
@@ -41,16 +42,19 @@ public class ControleurAjouterParking {
 
 	private void valider() {
 		try {
+			// Todo : Ajouter le bon adresse.
+			Adresse adresse = null;
 			Parking parking = new Parking(
 					this.vue.getNom(),
-					this.vue.getAdresse(),
 					this.vue.getPlacesMax(),
-					this.vue.getPlacesOccupees(),
 					this.vue.getHauteur(),
+					// this.vue.getPlacesOccupees(),
 					this.vue.getHeureOuverture(),
 					this.vue.getHeureFermeture(),
 					this.vue.isContientPlacesMoto(),
-					this.vue.getTarif());
+					adresse,
+					this.vue.getTarif()
+			);
 
 			System.out.println(this.idAdmin);
 			this.daoParking.create(parking);

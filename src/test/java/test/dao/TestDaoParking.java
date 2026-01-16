@@ -46,14 +46,14 @@ public class TestDaoParking {
 		this.daoAdresse.create(this.adresseTest);
 
 		this.parkingTest = new Parking(
-				0,
 				"Parking Test",
 				120,
 				2.20,
 				LocalTime.of(7, 0),
 				LocalTime.of(23, 0),
 				true,
-				this.adresseTest);
+				this.adresseTest,
+				2.5);
 	}
 
 	@After

@@ -1,11 +1,26 @@
 package controleur;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class ControleurTicketVoirie {
+import vue.TicketVoirie;
+
+public class ControleurTicketVoirie implements ActionListener {
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+	private final TicketVoirie vue;
+
+	public ControleurTicketVoirie(TicketVoirie vue) {
+		this.vue = vue;
+		this.vue.getBtnConfirmer().addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		vue.dispose();
+	}
 
 	public static String calculerHeureDepart(int duree) {
 		LocalTime heureDepart = LocalTime.now().plusMinutes(duree);

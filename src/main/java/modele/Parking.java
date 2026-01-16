@@ -1,9 +1,5 @@
 package modele;
-
-import java.sql.SQLException;
 import java.time.LocalTime;
-
-import modele.dao.DaoParking;
 
 public class Parking {
 	private int id;
@@ -17,41 +13,22 @@ public class Parking {
 	private double tarif;
 	private Adresse adresse;
 
-	public Parking(int id, String nom, int capacite, double hauteurMax,
-			LocalTime horaireOuverture, LocalTime horaireFermeture,
-			boolean contientPlacesMoto, Adresse adresse) {
-		this(id, nom, capacite, 0, hauteurMax, horaireOuverture, horaireFermeture, contientPlacesMoto, 0.0, adresse);
-	}
-
-	public Parking(String nom, String adresseRue, int capacite, int nbPlacesOccupees, double hauteurMax,
-			LocalTime horaireOuverture, LocalTime horaireFermeture, boolean contientPlacesMoto, double tarif) {
-		this(0, nom, capacite, nbPlacesOccupees, hauteurMax, horaireOuverture, horaireFermeture, contientPlacesMoto, tarif,
-			new Adresse(0, null, adresseRue, null, null));
-	}
-
-	public Parking(int id, String nom, int capacite, int nbPlacesOccupees, double hauteurMax,
-			LocalTime horaireOuverture, LocalTime horaireFermeture, boolean contientPlacesMoto, double tarif,
-			Adresse adresse) {
-		this.id = id;
+	public Parking(String nom, 
+				   int capacite, 
+				   double hauteurMax,
+				   LocalTime horaireOuverture,
+				   LocalTime horaireFermeture,
+				   boolean contientPlacesMoto,
+				   Adresse adresse,
+				   double tarif) {
 		this.nom = nom;
 		this.capacite = capacite;
-		this.nbPlacesOccupees = nbPlacesOccupees;
 		this.hauteurMax = hauteurMax;
 		this.horaireOuverture = horaireOuverture;
 		this.horaireFermeture = horaireFermeture;
 		this.contientPlacesMoto = contientPlacesMoto;
-		this.tarif = tarif;
 		this.adresse = adresse;
-	}
-
-	public int calculerNbPlacesOccupees() {
-		DaoParking dao = new DaoParking();
-		try {
-			return dao.getNbPlacesOccupees(id);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return this.nbPlacesOccupees;
+		this.tarif = tarif;
 	}
 
 	public int getId() {

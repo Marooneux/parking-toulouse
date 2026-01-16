@@ -9,58 +9,47 @@ import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
 import vue.ChoixTypeStationnement;
 import vue.ChoixZone;
-import vue.ModifierProfile;
 import vue.Profile;
 
-public class ControleurChoixTypeStationnement {
+public class ControleurChoixTypeStationnement implements ActionListener {
 
     public enum Etat {
         PARKING, VOIRIE
     }
 
-    private ChoixTypeStationnement vue;
-    private Etat etat;
+    private final ChoixTypeStationnement vue;
+    private final int idUser;
 
-    public ControleurChoixTypeStationnement(ChoixTypeStationnement vue) {
+    public ControleurChoixTypeStationnement(ChoixTypeStationnement vue, int idUser) {
         this.vue = vue;
-        this.etat = null;
+        this.idUser = idUser;
 
-        /*
-        vue.getParkingButton().addActionListener(new ButtonListener(Etat.PARKING));
-        vue.getVoirieButton().addActionListener(new ButtonListener(Etat.VOIRIE));
-        */
+        this.vue.getProfileButton().addActionListener(this);
+        this.vue.getBtnParking().addActionListener(this);
+        this.vue.getBtnVoirie().addActionListener(this);
     }
 
-    private class ButtonListener implements ActionListener {
-        private Etat buttonEtat;
-
-        public ButtonListener(Etat etat) {
-            this.buttonEtat = etat;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == vue.getProfileButton()) {
+            openProfile(idUser);
+            return;
         }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            etat = buttonEtat;
-            //processEtat();
+        if (e.getSource() == vue.getBtnParking()) {
+            openParkingPage(idUser);
+            return;
         }
-    }
-
-    private void processEtat(int idUser) {
-        switch (etat) {
-            case PARKING:
-                openParkingPage(idUser);
-                break;
-            case VOIRIE:
-                openVoiriePage();
-                break;
+        if (e.getSource() == vue.getBtnVoirie()) {
+            openVoiriePage();
         }
     }
 
     private void openParkingPage(int idUser) {
         try {
-            ChoixParking parkingPage = new ChoixParking(idUser);
+            ChoixParking parkingPage = new ChoixParking();
+            new ControleurChoixParking(parkingPage, idUser);
             parkingPage.setVisible(true);
-            //vue.dispose();
+            vue.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

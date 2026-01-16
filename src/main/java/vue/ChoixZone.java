@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 
 import controleur.ControleurChoixZone;
 import modele.ZoneVoirie;
+import controleur.ControleurSaisirDureeStationnement;
 
 public class ChoixZone extends JFrame {
 	
@@ -221,6 +222,7 @@ public class ChoixZone extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
+					new ControleurSaisirDureeStationnement(zone, frameDureeStationnement);
 					frameDureeStationnement.setVisible(true);
 					ChoixZone.this.dispose();
 				} catch (Exception ex) {

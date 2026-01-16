@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -100,14 +98,9 @@ public class ConfirmationPaiementParking extends JFrame {
 
 		JButton btnTerminer = new JButton("Terminer et Quitter");
 		btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTerminer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ControleurConfirmationPaiementParking controleur = new ControleurConfirmationPaiementParking();
-				controleur.departConfirme(reservation, prix);
-				System.exit(0);
-			}
-		});
+
+		ControleurConfirmationPaiementParking controleur = new ControleurConfirmationPaiementParking(this, reservation, prix);
+		btnTerminer.addActionListener(controleur);
 		btnTerminer.setForeground(Color.WHITE);
 		btnTerminer.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		btnTerminer.setBackground(new Color(0, 123, 255));

@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurChoixMoyenPaiementParking;
 import modele.ReservationParking;
-import modele.StationnementVoirie;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -19,7 +19,10 @@ public class ChoixMoyenPaiementParking extends JFrame {
     private final Color TEXT_COLOR = new Color(33, 37, 41);
     private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private final Color BUTTON_TEXT_COLOR = Color.WHITE;;
+    private final Color BUTTON_TEXT_COLOR = Color.WHITE;
+    
+    private JButton btnCarte;
+    private JButton btnVirement;
     
     private ReservationParking reservation;
     private double prix;
@@ -47,36 +50,22 @@ public class ChoixMoyenPaiementParking extends JFrame {
         cardsContainer.setOpaque(false);
         cardsContainer.setBorder(new EmptyBorder(20, 60, 60, 60));
 
+        btnCarte = buildPaymentButton("Payer par carte");
+        btnCarte.setActionCommand("CARTE");
         JPanel cardCB = createCard(
                 "Carte Bancaire",
                 "Paiement immédiat par carte.",
-                "Payer par carte",
-                new IconCard(),
-                e -> {
-                    try {
-                        PaiementParking pagePaiementCB = new PaiementParking(reservation, prix);
-                        pagePaiementCB.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                btnCarte,
+                new IconCard()
         );
 
+        btnVirement = buildPaymentButton("Payer par virement");
+        btnVirement.setActionCommand("VIREMENT");
         JPanel cardVirement = createCard(
                 "Virement Bancaire",
                 "Saisir IBAN pour prélèvement SEPA.",
-                "Payer par virement",
-                new IconBank(),
-                e -> {
-                    try {
-                    	PaiementVirementParking pageVirement = new PaiementVirementParking(reservation, prix);
-                        pageVirement.setVisible(true);
-                        dispose();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
+                btnVirement,
+                new IconBank()
         );
 
         cardsContainer.add(cardCB);
@@ -86,9 +75,27 @@ public class ChoixMoyenPaiementParking extends JFrame {
         mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
         add(mainPanel);
+
+        new ControleurChoixMoyenPaiementParking(this, reservation, prix);
     }
 
-    private JPanel createCard(String title, String subtitle, String buttonText, Icon icon, ActionListener action) {
+    private JButton buildPaymentButton(String buttonText) {
+        JButton btn = new JButton(buttonText);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setBackground(BUTTON_COLOR);
+        btn.setForeground(BUTTON_TEXT_COLOR);
+        btn.setFocusPainted(false);
+        btn.setBorder(new EmptyBorder(12, 25, 12, 25));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        btn.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) { btn.setBackground(BUTTON_COLOR.darker()); }
+            public void mouseExited(MouseEvent e) { btn.setBackground(BUTTON_COLOR); }
+        });
+        return btn;
+    }
+
+    private JPanel createCard(String title, String subtitle, JButton btn, Icon icon) {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
         card.setBackground(CARD_COLOR);
@@ -112,20 +119,6 @@ public class ChoixMoyenPaiementParking extends JFrame {
         lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSubtitle.setForeground(SUBTEXT_COLOR);
 
-        JButton btn = new JButton(buttonText);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setBackground(BUTTON_COLOR);
-        btn.setForeground(BUTTON_TEXT_COLOR);
-        btn.setFocusPainted(false);
-        btn.setBorder(new EmptyBorder(12, 25, 12, 25));
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btn.addActionListener(action);
-
-        btn.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) { btn.setBackground(BUTTON_COLOR.darker()); }
-            public void mouseExited(MouseEvent e) { btn.setBackground(BUTTON_COLOR); }
-        });
-
         card.add(lblIcon, gbc);
         card.add(lblTitle, gbc);
         gbc.insets = new Insets(0, 0, 25, 0);
@@ -134,6 +127,22 @@ public class ChoixMoyenPaiementParking extends JFrame {
         card.add(btn, gbc);
 
         return card;
+    }
+
+    public void addCarteListener(ActionListener listener) {
+        btnCarte.addActionListener(listener);
+    }
+
+    public void addVirementListener(ActionListener listener) {
+        btnVirement.addActionListener(listener);
+    }
+
+    public ReservationParking getReservation() {
+        return reservation;
+    }
+
+    public double getPrix() {
+        return prix;
     }
 
     private class IconCard implements Icon {
