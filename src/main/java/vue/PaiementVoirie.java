@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -39,17 +38,6 @@ public class PaiementVoirie extends JFrame {
 	private String immatriculation;
 	private int duree;
 	private double prix;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				// PaiementVoirie frame = new PaiementVoirie();
-				// frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public PaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
 		this.zone = zone2;

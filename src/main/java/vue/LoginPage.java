@@ -1,6 +1,5 @@
 package vue;
 
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,20 +19,6 @@ public class LoginPage extends JFrame {
 	private JTextField loginField;
 	private JTextField passwdField;
 	private JButton btnValider;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					LoginPage frame = new LoginPage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public LoginPage() {
 		ControleurLoginPage controleur = new ControleurLoginPage(this);

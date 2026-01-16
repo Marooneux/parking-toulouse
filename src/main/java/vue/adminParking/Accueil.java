@@ -42,10 +42,6 @@ public class Accueil extends JFrame {
     
     private Parking parkingEnEdition;
 
-    public static void main(String[] args) {
-    	new Accueil(3);
-    }
-
     public Accueil(int idAdmin) {
     	initialize();
     	new ControleurAccueilAdminParking(this, idAdmin);

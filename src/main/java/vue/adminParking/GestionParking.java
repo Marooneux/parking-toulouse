@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.time.LocalTime;
@@ -37,17 +36,6 @@ public class GestionParking extends JFrame {
 	private JTextField textFieldPlaque;
     private JTextField textFieldNom;
 	private Parking parking;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				//SaisirDureeStationnement frame = new SaisirDureeStationnement();
-				//frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public GestionParking(Parking parking) {
 		this.parking = parking;
