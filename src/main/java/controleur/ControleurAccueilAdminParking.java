@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
+import modele.Utilisateur.Type;
+import utils.AuthManager;
+import vue.LoginPage;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
 import vue.adminParking.GestionParking;
@@ -25,6 +28,12 @@ public class ControleurAccueilAdminParking implements ActionListener {
 		this.vue = vue;
 		this.daoParking = new DaoParking();
 		this.idAdmin = idAdmin;
+
+		if (!AuthManager.ensureAuthorized(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
+			this.vue.dispose();
+			new LoginPage().setVisible(true);
+			return;
+		}
 
 		MySQLDataSource.creerAcces();
 

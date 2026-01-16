@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -30,17 +29,6 @@ public class SaisirDureeStationnement extends JFrame {
 	private JTextField textFieldPlaque;
 	private JTextField textFieldNom;
 	private ZoneVoirie zone;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				// SaisirDureeStationnement frame = new SaisirDureeStationnement();
-				// frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public SaisirDureeStationnement(ZoneVoirie zone) {
 		this.zone = zone;

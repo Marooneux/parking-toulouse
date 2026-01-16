@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -23,20 +22,6 @@ public class ConfirmationPaiementParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					//ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
-					//frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ConfirmationPaiementParking(ReservationParking reservation, double prix) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

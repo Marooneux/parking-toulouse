@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -30,20 +29,6 @@ import controleur.ControleurSaisirDureeStationnement;
 public class ChoixZone extends JFrame {
 	
 	private ControleurChoixZone controleur;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					ChoixZone frame = new ChoixZone();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ChoixZone() {
 		this.controleur = new ControleurChoixZone(this);

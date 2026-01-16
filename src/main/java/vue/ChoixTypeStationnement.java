@@ -27,11 +27,6 @@ public class ChoixTypeStationnement extends JFrame {
     private JButton btnParking;
     private JButton btnVoirie;
     
-    public static void main(String[] args) {
-    	SwingUtilities.invokeLater(() -> new ChoixTypeStationnement(2).setVisible(true));
-    }
-
-
     public ChoixTypeStationnement() {
     	this(0);
     }

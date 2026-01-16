@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -38,17 +37,6 @@ public class PaiementParking extends JFrame {
 	
 	private ReservationParking reservation;
 	private double prix;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				// PaiementParking frame = new PaiementParking();
-				// frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public PaiementParking(ReservationParking reservation, double prix) {
 		this.reservation = reservation;

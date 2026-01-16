@@ -125,11 +125,4 @@ public class ControleurChoixParking implements ActionListener {
 		new ControleurSaisirHeureArriveParking(parking);
 		this.vue.dispose();
 	}
-
-	public static void main(String[] args) {
-		javax.swing.SwingUtilities.invokeLater(() -> {
-			ChoixParking vue = new ChoixParking();
-			new ControleurChoixParking(vue);
-		});
-	}
 }

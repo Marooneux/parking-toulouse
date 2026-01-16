@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -40,10 +39,6 @@ public class ChoixParking extends JFrame {
 
 	public ChoixParking() {
 		this.initialize();
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new ChoixParking().setVisible(true));
 	}
 
 	private void initialize() {
