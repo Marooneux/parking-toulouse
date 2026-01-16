@@ -30,7 +30,7 @@ public class StationnementVoirie {
 			prixTotal += this.zone.getTarifHoraire();
 		}
 		prixTotal += heures * this.zone.getTarifHoraire();
-		if (this.zone.getNom() == "orange") {
+		if (this.zone.getCouleur() == "orange") {
 			if (duree > 180 && duree < 240) {
 				prixTotal = 4;
 			} else if (duree > 240) {
@@ -45,7 +45,7 @@ public class StationnementVoirie {
 	}
 
 	public String couleurZoneToString() {
-		return "Zone " + (this.zone.getNom().toString());
+		return "Zone " + (this.zone.getCouleur().toString());
 	}
 
 	public String dureeMaxToString() {

@@ -41,7 +41,7 @@ public class TestDaoReservationParking {
 
 	@BeforeClass
 	public static void initConnexion() {
-		MySQLDataSource.creerAcces("user", "password");
+		MySQLDataSource.creerAcces();
 	}
 
 	@Before
@@ -68,7 +68,7 @@ public class TestDaoReservationParking {
 		this.daoUtilisateur.create(this.utilisateurTest);
 
 		// Création d'une réservation
-		this.reservationTest = new ReservationParking(0,
+		this.reservationTest = new ReservationParking(
 				LocalDateTime.of(2026, 1, 7, 10, 0),
 				null,
 				this.parkingTest,

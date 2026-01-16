@@ -39,7 +39,7 @@ public class TestDaoProximite {
 
 	@BeforeClass
 	public static void initConnexion() {
-		MySQLDataSource.creerAcces("user", "password");
+		MySQLDataSource.creerAcces();
 	}
 
 	@Before

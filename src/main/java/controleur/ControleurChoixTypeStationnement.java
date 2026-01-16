@@ -3,9 +3,14 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import modele.Utilisateur;
+import modele.dao.DaoUtilisateur;
+import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
 import vue.ChoixTypeStationnement;
 import vue.ChoixZone;
+import vue.ModifierProfile;
+import vue.Profile;
 
 public class ControleurChoixTypeStationnement {
 
@@ -36,24 +41,24 @@ public class ControleurChoixTypeStationnement {
         @Override
         public void actionPerformed(ActionEvent e) {
             etat = buttonEtat;
-            processEtat();
+            //processEtat();
         }
     }
 
-    private void processEtat() {
+    private void processEtat(int idUser) {
         switch (etat) {
             case PARKING:
-                openParkingPage();
+                openParkingPage(idUser);
                 break;
             case VOIRIE:
                 openVoiriePage();
-                break; 
+                break;
         }
     }
 
-    public static void openParkingPage() {
+    private void openParkingPage(int idUser) {
         try {
-            ChoixParking parkingPage = new ChoixParking();
+            ChoixParking parkingPage = new ChoixParking(idUser);
             parkingPage.setVisible(true);
             //vue.dispose();
         } catch (Exception ex) {
@@ -71,4 +76,20 @@ public class ControleurChoixTypeStationnement {
             ex.printStackTrace();
         }
     }
+    
+    public void openProfile(int idUser) {
+        try {
+            MySQLDataSource.creerAcces();
+        	
+        	DaoUtilisateur dao = new DaoUtilisateur();
+    		Utilisateur user = dao.findById(idUser);
+    		
+            Profile profile = new Profile(user);
+            profile.setVisible(true);
+            vue.dispose();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

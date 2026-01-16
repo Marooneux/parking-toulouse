@@ -30,7 +30,6 @@ public class SaisirDureeStationnement extends JFrame {
 	private JPanel contentPane;
 	private JButton btnConfirmer;
 	private JTextField textField;
-	private JTextField textFieldDuree;
 	private JTextField textFieldPlaque;
 	private JTextField textFieldNom;
 	private ZoneVoirie zone;
@@ -53,7 +52,7 @@ public class SaisirDureeStationnement extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
-		if (zone.getNom() == "bleu") {
+		if (zone.getCouleur() == "bleue") {
 			this.btnConfirmer = new JButton("Confirmer votre stationnement");
 		} else {
 			this.btnConfirmer = new JButton("Continuer vers le paiement");
@@ -159,15 +158,15 @@ public class SaisirDureeStationnement extends JFrame {
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		String minsGratuites = "";
-		if (this.zone.getNom() == "rouge") {
+		if (this.zone.getCouleur() == "rouge") {
 			minsGratuites = " (30 minutes gratuites)";
 		}
-		JLabel lblZone = new JLabel(this.zone.getNom() + minsGratuites);
+		JLabel lblZone = new JLabel("Zone " + this.zone.getCouleur() + minsGratuites);
 		lblZone.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblZone.setForeground(new Color(50, 50, 50));
 		p.add(lblZone);
 
-		JLabel lblDureeMax = new JLabel("Durée maximum : " + this.zone.getDureeMax());
+		JLabel lblDureeMax = new JLabel("Durée maximum : " + this.zone.minsToHeures());
 		lblDureeMax.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblDureeMax.setForeground(new Color(50, 50, 50));
 		p.add(lblDureeMax);

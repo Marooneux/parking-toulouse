@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 
 import controleur.ControleurSaisirHeureArriveParking;
 import modele.Parking;
+import modele.ReservationParking;
 
 public class TicketParking extends JFrame {
 
@@ -35,9 +36,9 @@ public class TicketParking extends JFrame {
     private String immatriculation;
     private String heureArrivee;
 
-	public TicketParking(Parking parking, String immatriculation, String heureArrivee) {
-		this.parking = parking;
-		this.immatriculation = immatriculation;
+	public TicketParking(ReservationParking reservation, String plaque, String heureArrivee) {
+		this.parking = reservation.getParking();
+		this.immatriculation = plaque;
 		this.heureArrivee = heureArrivee;
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,7 +123,7 @@ public class TicketParking extends JFrame {
 		btnPaiement = new JButton("Aller au paiement");
 		btnPaiement.addActionListener(e -> {
 			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(parking, heureArrivee);
-			new ChoixMoyenPaiementParking(prix).setVisible(true);
+			new ChoixMoyenPaiementParking(reservation, prix).setVisible(true);
 			dispose();
 		});
 		panelButtonContainer.add(btnPaiement);

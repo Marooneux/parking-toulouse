@@ -13,14 +13,20 @@ public class Utilisateur {
 	private String email;
 	private String motDePasse;
 	private Type type;
+	private Abonnement abonnement;
 
 	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Type type) {
+		this(id, nom, prenom, email, motDePasse, null, type);
+	}
+
+	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Abonnement abonnement, Type type) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.motDePasse = motDePasse;
 		this.type = type;
+		this.abonnement = abonnement;
 	}
 
 	public int getId() {
@@ -75,5 +81,17 @@ public class Utilisateur {
 		if (PasswordUtil.checkMdp(nouveauMdp, ancienMdp)) {
 			this.motDePasse = PasswordUtil.hashMdp(nouveauMdp);
 		}
+	}
+
+	public void setAbonnement(Abonnement abonnement) {
+		this.abonnement = abonnement;
+	}
+
+	public Abonnement getAbonnement() {
+		return this.abonnement;
+	}
+
+	public boolean estAbonne() {
+		return this.abonnement != null;
 	}
 }

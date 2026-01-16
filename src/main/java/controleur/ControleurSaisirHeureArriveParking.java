@@ -2,135 +2,93 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 import javax.swing.JOptionPane;
 
 import modele.Parking;
+import modele.ReservationParking;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
 
 public class ControleurSaisirHeureArriveParking implements ActionListener {
 
-    public enum Etat {
-        ATTENTE_HEURE, DEMARRER_STATIONNEMENT
-    }
-
-    private Etat etat;
     private final SaisirHeureArriveParking vue;
+    private final Parking parking;
     private final DateTimeFormatter formatHeure = DateTimeFormatter.ofPattern("HH:mm");
-    
-    
-    
-    public ControleurSaisirHeureArriveParking(SaisirHeureArriveParking vue) {
-        this.vue = vue;
-        this.etat = Etat.ATTENTE_HEURE;
 
-        /*
-        if (vue.parking != null) {
-            vue.getLblParkingInfo().setText(vue.parking.getNom());
-        } else {
-            vue.getLblParkingInfo().setText("Aucun parking sélectionné");
-        }
+    public ControleurSaisirHeureArriveParking(Parking parking) {
+        this.parking = parking;
+        this.vue = new SaisirHeureArriveParking(parking);
 
-        // Attach controller as listener
-        vue.getBtnPayment().addActionListener(this);
-        vue.getBtnMaintenant().addActionListener(this);
-        */
+        this.vue.addConfirmerListener(this);
+        this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
+
+        this.vue.setVisible(true);
     }
 
-    
-    public static double calculerPrixTotal(Parking parking, String strHeureArrivee) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-    	LocalTime heureArrivee = LocalTime.parse(strHeureArrivee, formatter);
-    	
-    	long minutesGarees = ChronoUnit.MINUTES.between(heureArrivee, LocalTime.now());
-    	long nbQuartsHeure = (long) Math.ceil(minutesGarees / 15.0);
-    	return nbQuartsHeure*parking.getTarif();
+    private void remplirHeureActuelle() {
+        String now = LocalTime.now().format(formatHeure);
+        vue.getTextFieldHeure().setText(now);
     }
-    
-    
-    
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object src = e.getSource();
-        /*
-        if (src == vue.getBtnMaintenant()) {
-            handleBtnMaintenant();
-            return;
+        if (e.getSource() == vue.getBtnConfirmer()) {
+            valider();
         }
-
-        if (src == vue.getBtnPayment()) {
-            handleBtnPayment();
-        }
-        */
     }
 
-    private void handleBtnMaintenant() {
-        LocalTime now = LocalTime.now();
-        vue.getTextField().setText(now.format(formatHeure));
-    }
-
-    private void handleBtnPayment() {
-        if (!verifierPlaque() || !verifierHeure()) {
-            return;
-        }
-
-        etat = Etat.DEMARRER_STATIONNEMENT;
-        ouvrirTicket();
-    }
-
-    private boolean verifierHeure() {
-        String txt = vue.getTextField().getText().trim();
-        LocalTime saisie;
-
-        try {
-            saisie = LocalTime.parse(txt, formatHeure);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vue, "Format invalide. Exemple : 14:30");
-            return false;
-        }
-
-        if (saisie.isAfter(LocalTime.now())) {
-            JOptionPane.showMessageDialog(vue, "L'heure ne peut pas être supérieure à maintenant.");
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean verifierPlaque() {
-        /*String plaque = vue.getPlaque().getText().trim();
+    private void valider() {
+        String plaque = vue.getPlaque().getText().trim();
+        String heure = vue.getTextFieldHeure().getText().trim();
 
         if (plaque.isEmpty()) {
-            JOptionPane.showMessageDialog(vue, "La plaque ne peut pas être vide.");
-            return false;
+            JOptionPane.showMessageDialog(vue, "La plaque est obligatoire.");
+            return;
         }
 
-        // Format: AB-123-CD
         if (!plaque.matches("(?i)[A-Z]{2}-\\d{3}-[A-Z]{2}")) {
             JOptionPane.showMessageDialog(vue, "Format de plaque invalide. Exemple : AB-123-CD");
-            return false;
-        } */
+            return;
+        }
 
-        return true;
+        if (heure.isEmpty()) {
+            JOptionPane.showMessageDialog(vue, "L'heure d'arrivée est obligatoire.");
+            return;
+        }
+
+        try {
+            LocalTime heureArrivee = LocalTime.parse(heure, formatHeure);
+
+            if (heureArrivee.isAfter(LocalTime.now())) {
+                JOptionPane.showMessageDialog(vue, "L'heure doit être antérieure à maintenant.");
+                return;
+            }
+
+            LocalDateTime dateArrivee = LocalDateTime.of(LocalDate.now(), heureArrivee);
+            ReservationParking reservation = new ReservationParking(dateArrivee, null, parking, null);
+
+            new TicketParking(reservation, plaque, heure).setVisible(true);
+            vue.dispose();
+
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");
+        }
     }
 
-    private void ouvrirTicket() {
-    	/*
-        String plaque = vue.getPlaque().getText().trim();
-        String heure = vue.getTextField().getText().trim();
-        String nomParking = vue.getLblParkingInfo().getText();
+    // Calculate price based on quarter-hour increments
+    public static double calculerPrixTotal(Parking parking, String strHeureArrivee) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime heureArrivee = LocalTime.parse(strHeureArrivee, formatter);
 
-        TicketParking ticket = new TicketParking();
-        ticket.remplirInfos("#P-00001", nomParking, plaque, heure, "Carte Bancaire");
-        ticket.setVisible(true);
-
-        vue.dispose();
-        */
+        long minutesGarees = ChronoUnit.MINUTES.between(heureArrivee, LocalTime.now());
+        long nbQuartsHeure = (long) Math.ceil(minutesGarees / 15.0);
+        return nbQuartsHeure * parking.getTarif();
     }
 }

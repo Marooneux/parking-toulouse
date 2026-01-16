@@ -77,7 +77,7 @@ public class AdminParkingPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-        centerPanel.add(createDetailRow("📍", parking.getAdresse()));
+        centerPanel.add(createDetailRow("📍", parking.getAdresse() != null ? parking.getAdresse().getRue() : ""));
         centerPanel.add(Box.createVerticalStrut(8));
         
         String horaireText = (parking.getHeureOuverture().equals(parking.getHeureFermeture())) 

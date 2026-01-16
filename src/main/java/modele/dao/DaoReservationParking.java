@@ -12,17 +12,17 @@ import modele.dao.requetes.RequeteDeleteReservationParking;
 import modele.dao.requetes.RequeteInsertReservationParking;
 import modele.dao.requetes.RequeteSelectReservationParking;
 import modele.dao.requetes.RequeteSelectReservationParkingById;
+import modele.dao.requetes.RequeteSelectReservationsParkingByUserId;
 import modele.dao.requetes.RequeteUpdateReservationParking;
 
 public class DaoReservationParking extends DaoModele<ReservationParking> {
 
-	private DaoParking daoParking = new DaoParking();
-	private DaoUtilisateur daoUtilisateur = new DaoUtilisateur();
+	private final DaoParking daoParking = new DaoParking();
+	private final DaoUtilisateur daoUtilisateur = new DaoUtilisateur();
 
 	@Override
 	public void create(ReservationParking donnee) throws SQLException {
-		int id = this.miseAJourAvecKeyGeneration(
-				new RequeteInsertReservationParking(), donnee);
+		int id = this.miseAJourAvecKeyGeneration(new RequeteInsertReservationParking(), donnee);
 		donnee.setId(id);
 	}
 
@@ -41,15 +41,16 @@ public class DaoReservationParking extends DaoModele<ReservationParking> {
 		return this.find(new RequeteSelectReservationParking());
 	}
 
+	public List<ReservationParking> findByUserId(int userId) throws SQLException {
+		return this.find(new RequeteSelectReservationsParkingByUserId(), String.valueOf(userId));
+	}
+
 	public ReservationParking findById(int id) throws SQLException {
-		return this.findById(
-				new RequeteSelectReservationParkingById(),
-				String.valueOf(id));
+		return this.findById(new RequeteSelectReservationParkingById(), String.valueOf(id));
 	}
 
 	@Override
 	protected ReservationParking creerInstance(ResultSet curseur) throws SQLException {
-
 		int id = curseur.getInt("id");
 		Timestamp tsArrivee = curseur.getTimestamp("date_arrivee");
 		Timestamp tsDepart = curseur.getTimestamp("date_depart");
@@ -59,11 +60,12 @@ public class DaoReservationParking extends DaoModele<ReservationParking> {
 		Parking parking = this.daoParking.findById(idParking);
 		Utilisateur utilisateur = this.daoUtilisateur.findById(idUtilisateur);
 
-		return new ReservationParking(
-				id,
-				tsArrivee.toLocalDateTime(),
+		ReservationParking reservation = new ReservationParking(
+				tsArrivee != null ? tsArrivee.toLocalDateTime() : null,
 				tsDepart != null ? tsDepart.toLocalDateTime() : null,
 				parking,
 				utilisateur);
+		reservation.setId(id);
+		return reservation;
 	}
 }

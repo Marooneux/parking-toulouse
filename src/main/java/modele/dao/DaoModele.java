@@ -58,4 +58,21 @@ public abstract class DaoModele<T> implements Dao<T> {
 		return res.getFirst();
 	}
 
+	public int findCount(Requete<T> req, String... id) throws SQLException {
+	    Connection cn = MySQLDataSource.getConnexion();
+	    PreparedStatement ps = cn.prepareStatement(req.requete());
+	    req.parametres(ps, id);
+	    
+	    ResultSet rs = ps.executeQuery();
+	    int resultat = 0;
+	    
+	    if (rs.next()) {
+	        resultat = rs.getInt(1);
+	    }
+	    
+	    rs.close();
+	    ps.close();
+	    
+	    return resultat;
+	}
 }

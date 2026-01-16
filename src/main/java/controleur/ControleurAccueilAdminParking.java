@@ -24,7 +24,7 @@ public class ControleurAccueilAdminParking {
 		this.daoParking = new DaoParking();
 		this.idAdmin = idAdmin;
 
-		MySQLDataSource.creerAcces("root", "admin");
+		MySQLDataSource.creerAcces();
 
 		this.chargerParkings();
 		vue.setVisible(true);
@@ -46,24 +46,22 @@ public class ControleurAccueilAdminParking {
 		}
 	}
 
+    public void ouvrirPageAjouter(int idAdmin) {
+    	AjouterParking vueAjout = new AjouterParking(idAdmin);
+    	new ControleurAjouterParking(vueAjout, idAdmin);
+    	vueAjout.setVisible(true);
+    }
+    
+    private void ouvrirPageModification(Parking parking) {
+        ModifierParking vueModif = new ModifierParking(parking);  // nouvelle page pour modification
+        new ControleurModifierParking(vueModif, parking, idAdmin);                 // crée son contrôleur
+        vueModif.setVisible(true);
+        vue.dispose();
+    }
 	private void onParkingSelected(Parking parking) {
 		GestionParking vueSuivante = new GestionParking(parking);
 
 		vueSuivante.setVisible(true);
-	}
-
-	public void ouvrirPageAjouter(int idAdmin) {
-		System.out.println(idAdmin);
-		AjouterParking vueAjout = new AjouterParking(idAdmin);
-		new ControleurAjouterParking(vueAjout, idAdmin);
-		vueAjout.setVisible(true);
-	}
-
-	private void ouvrirPageModification(Parking parking) {
-		ModifierParking vueModif = new ModifierParking(parking); // nouvelle page pour modification
-		new ControleurModifierParking(vueModif, parking, this.idAdmin); // crée son contrôleur
-		vueModif.setVisible(true);
-		this.vue.dispose();
 	}
 
 	private void supprimerParking(Parking parking) {

@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,9 +23,12 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import controleur.ControleurChoixZone;
 import modele.ZoneVoirie;
 
 public class ChoixZone extends JFrame {
+	
+	private ControleurChoixZone controleur;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,15 +45,10 @@ public class ChoixZone extends JFrame {
 	}
 
 	public ChoixZone() {
+		this.controleur = new ControleurChoixZone(this);
 		this.setBounds(100, 100, 1100, 850);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout(0, 0));
-
-		ZoneVoirie zoneJaune = new ZoneVoirie(1, "jaune", 1.5, 150);
-		ZoneVoirie zoneOrange = new ZoneVoirie(2, "orange", 1, 300);
-		ZoneVoirie zoneRouge = new ZoneVoirie(3, "rouge", 1, 180);
-		ZoneVoirie zoneVerte = new ZoneVoirie(4, "verte", 0.5, 300);
-		ZoneVoirie zoneBleu = new ZoneVoirie(5, "bleu", 0, 90);
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
 		header.setBackground(new Color(250, 250, 250));
@@ -87,23 +86,33 @@ public class ChoixZone extends JFrame {
 
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
 		row1.setOpaque(false);
-		row1.add(this.createCard(zoneJaune, new Color(255, 204, 0)));
-		row1.add(this.createCard(zoneOrange, new Color(255, 149, 0)));
-		row1.add(this.createCard(zoneRouge, new Color(255, 59, 48)));
+		
+		JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
+		row2.setOpaque(false);
+
+		List<ZoneVoirie> zones = controleur.recupererZones();
+		
+		int compteur = 0;
+		for (ZoneVoirie zone : zones) {
+			Color couleurCarte = zone.convertirCouleur();
+			JPanel carte = this.createCard(zone, couleurCarte);
+			
+			if (compteur < 3) {
+				row1.add(carte);
+			} else {
+				row2.add(carte);
+			}
+			compteur++;
+		}
 
 		gridContainer.add(row1);
 		gridContainer.add(Box.createVerticalStrut(30));
-
-		JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
-		row2.setOpaque(false);
-		row2.add(this.createCard(zoneVerte, new Color(0, 128, 0)));
-		row2.add(this.createCard(zoneBleu, new Color(0, 122, 255)));
-
 		gridContainer.add(row2);
 
 		mainCenterPanel.add(gridContainer);
 		this.getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
 	}
+
 
 	private JPanel createCard(ZoneVoirie zone, Color themeColor) {
 
@@ -144,7 +153,7 @@ public class ChoixZone extends JFrame {
 		iconCircle.setOpaque(false);
 		card.add(iconCircle);
 
-		JLabel lblTitre = new JLabel(zone.getNom());
+		JLabel lblTitre = new JLabel("Zone " + zone.getCouleur());
 		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblTitre.setForeground(new Color(33, 33, 33));
 		lblTitre.setBounds(25, 80, 250, 25);
@@ -167,10 +176,10 @@ public class ChoixZone extends JFrame {
 		lblJoursVal.setBounds(50, 138, 150, 20);
 		card.add(lblJoursVal);
 
-		JLabel lblHorairesVal = new JLabel(String.valueOf(zone.getDureeMax()));
+		JLabel lblHorairesVal = new JLabel(zone.getHorairesAffiches());
 		lblHorairesVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblHorairesVal.setForeground(new Color(50, 50, 50));
-		lblHorairesVal.setBounds(50, 158, 180, 20);
+		lblHorairesVal.setBounds(50, 158, 220, 20);
 		card.add(lblHorairesVal);
 
 		JLabel iconSand = new JLabel("⏳");
@@ -184,7 +193,7 @@ public class ChoixZone extends JFrame {
 		lblDureeTitle.setBounds(50, 190, 120, 15);
 		card.add(lblDureeTitle);
 
-		JLabel lblDureeVal = new JLabel(String.valueOf(zone.getDureeMax()));
+		JLabel lblDureeVal = new JLabel(zone.minsToHeures());
 		lblDureeVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblDureeVal.setForeground(new Color(50, 50, 50));
 		lblDureeVal.setBounds(50, 208, 150, 20);
@@ -201,7 +210,7 @@ public class ChoixZone extends JFrame {
 		lblTarifTitle.setBounds(25, 270, 100, 20);
 		card.add(lblTarifTitle);
 
-		JLabel lblPrix = new JLabel(String.valueOf(zone.getTarifHoraire()));
+		JLabel lblPrix = new JLabel(String.valueOf(zone.getTarifHoraire()) + " €/h");
 		lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblPrix.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrix.setBounds(175, 270, 100, 20);
@@ -222,5 +231,4 @@ public class ChoixZone extends JFrame {
 
 		return card;
 	}
-
 }

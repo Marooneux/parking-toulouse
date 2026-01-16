@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.junit.After;
@@ -26,7 +27,7 @@ public class TestDaoZoneVoirie {
 
 	@BeforeClass
 	public static void initConnexion() {
-		MySQLDataSource.creerAcces("user", "password");
+		MySQLDataSource.creerAcces();
 	}
 
 	@Before
@@ -34,7 +35,13 @@ public class TestDaoZoneVoirie {
 		cn = MySQLDataSource.getConnexion();
 		cn.setAutoCommit(false);
 		this.dao = new DaoZoneVoirie();
-		this.zoneTest = new ZoneVoirie(0, "ZoneTest", 120.0, 180);
+		
+		LocalTime debAm = LocalTime.of(9, 0);
+		LocalTime finAm = LocalTime.of(12, 0);
+		LocalTime debPm = LocalTime.of(14, 0);
+		LocalTime finPm = LocalTime.of(19, 0);
+
+		this.zoneTest = new ZoneVoirie(0, "rouge", 120.0, 180, debAm, finAm, debPm, finPm);
 		this.dao.create(this.zoneTest);
 	}
 
@@ -52,28 +59,31 @@ public class TestDaoZoneVoirie {
 	public void testCreateAndFindById() throws SQLException {
 		ZoneVoirie z = this.dao.findById(this.zoneTest.getId());
 		assertNotNull(z);
-		assertEquals("ZoneTest", z.getNom());
+		assertEquals("rouge", z.getCouleur());
 		assertEquals(120.0, z.getTarifHoraire(), 0.01);
-		assertEquals(180.0, z.getDureeMax(), 0.01);
+		assertEquals(180, z.getDureeMax());
 	}
 
 	@Test
 	public void testUpdate() throws SQLException {
-		this.zoneTest.setNom("ZoneModifiee");
+		this.zoneTest.setCouleur("orange");
 		this.zoneTest.setTarifHoraire(150.0);
 		this.zoneTest.setDureeMax(240);
 		this.dao.update(this.zoneTest);
 
 		ZoneVoirie z = this.dao.findById(this.zoneTest.getId());
 		assertNotNull(z);
-		assertEquals("ZoneModifiee", z.getNom());
+		assertEquals("orange", z.getCouleur());
 		assertEquals(150.0, z.getTarifHoraire(), 0.01);
-		assertEquals(240.0, z.getDureeMax(), 0.01);
+		assertEquals(240, z.getDureeMax());
 	}
 
 	@Test
 	public void testDelete() throws SQLException {
-		ZoneVoirie zTemp = new ZoneVoirie(0, "TempZone", 50.0, 60);
+		LocalTime t1 = LocalTime.of(8, 0);
+		LocalTime t2 = LocalTime.of(20, 0);
+		
+		ZoneVoirie zTemp = new ZoneVoirie(0, "rouge", 50.0, 60, t1, t2, null, null);
 		this.dao.create(zTemp);
 		int idTemp = zTemp.getId();
 

@@ -18,6 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurConfirmationPaiementParking;
+import modele.ReservationParking;
+
 public class ConfirmationPaiementParking extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -28,8 +31,8 @@ public class ConfirmationPaiementParking extends JFrame {
 			@Override
 			public void run() {
 				try {
-					ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
-					frame.setVisible(true);
+					//ConfirmationPaiementParking frame = new ConfirmationPaiementParking(15);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,7 +40,7 @@ public class ConfirmationPaiementParking extends JFrame {
 		});
 	}
 
-	public ConfirmationPaiementParking(double d) {
+	public ConfirmationPaiementParking(ReservationParking reservation, double prix) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 750, 550);
 		this.setTitle("Paiement validé");
@@ -84,7 +87,7 @@ public class ConfirmationPaiementParking extends JFrame {
 		lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		panelInnerContent.add(lblMerci);
 
-		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", d));
+		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMontant.setForeground(new Color(33, 37, 41));
 		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -100,6 +103,8 @@ public class ConfirmationPaiementParking extends JFrame {
 		btnTerminer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ControleurConfirmationPaiementParking controleur = new ControleurConfirmationPaiementParking();
+				controleur.departConfirme(reservation, prix);
 				System.exit(0);
 			}
 		});

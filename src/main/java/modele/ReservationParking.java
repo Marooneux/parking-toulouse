@@ -1,6 +1,7 @@
 package modele;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class ReservationParking {
 
@@ -9,18 +10,17 @@ public class ReservationParking {
 	private LocalDateTime dateDepart;
 	private Parking parking;
 	private Utilisateur utilisateur;
+	private double prixPaye;
 
-	public ReservationParking(int id, LocalDateTime dateArrivee, LocalDateTime dateDepart,
-			Parking parking, Utilisateur utilisateur) {
-		this.id = id;
+	public ReservationParking(
+			LocalDateTime dateArrivee,
+			LocalDateTime dateDepart,
+			Parking parking,
+			Utilisateur utilisateur) {
 		this.dateArrivee = dateArrivee;
 		this.dateDepart = dateDepart;
 		this.parking = parking;
 		this.utilisateur = utilisateur;
-	}
-
-	public int getId() {
-		return this.id;
 	}
 
 	public void setId(int id) {
@@ -39,8 +39,13 @@ public class ReservationParking {
 		return this.dateDepart;
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
 	public void setDateDepart(LocalDateTime dateDepart) {
 		this.dateDepart = dateDepart;
+		this.prixPaye = calculerPrixTotal();
 	}
 
 	public Parking getParking() {
@@ -59,8 +64,22 @@ public class ReservationParking {
 		this.utilisateur = utilisateur;
 	}
 
-	public static boolean immatriculationValide(String immatriculation) {
-		return immatriculation.matches("[A-Z]{2}-[0-9]{3}-[A-Z]{2}");
+	public double getPrixPaye() {
+		return this.prixPaye;
+	}
+
+	public void setPrixPaye(double ignored) {
+		this.prixPaye = calculerPrixTotal();
+	}
+
+	public double calculerPrixTotal() {
+		if (parking == null) {
+			return 0.0;
+		}
+		LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
+		long minutes = ChronoUnit.MINUTES.between(this.dateArrivee, fin);
+		double heures = Math.max(0.0, minutes / 60.0);
+		return heures * parking.getTarif();
 	}
 
 }

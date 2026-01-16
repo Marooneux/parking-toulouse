@@ -1,0 +1,84 @@
+package controleur;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import modele.Utilisateur;
+import modele.dao.DaoUtilisateur;
+import vue.ModifierProfile;
+// Importez votre DAO ici, ex: import dao.DaoUtilisateur;
+import vue.Profile;
+
+public class ControleurModifierProfile {
+
+    private ModifierProfile vue;
+    private Utilisateur utilisateur;
+
+    public ControleurModifierProfile(ModifierProfile vue, Utilisateur utilisateur) {
+        this.vue = vue;
+        this.utilisateur = utilisateur;
+
+        // 1. Pré-remplissage immédiat à l'ouverture
+        this.vue.afficherUtilisateur(utilisateur);
+
+        // 2. Gestion du bouton Enregistrer
+        this.vue.addEnregistrerListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterEnregistrement();
+            }
+        });
+
+        // 3. Gestion du bouton Annuler
+        this.vue.addAnnulerListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Profile profile = new Profile(utilisateur);
+                profile.setVisible(true);
+                vue.dispose();
+            }
+        });
+
+        this.vue.setVisible(true);
+    }
+
+    private void traiterEnregistrement() {
+        String nouveauNom = vue.getNomInput();
+        String nouveauPrenom = vue.getPrenomInput();
+        String nouvelEmail = vue.getEmailInput();
+        String ancienMdp = vue.getAncienMdpInput();
+        String nouveauMdp = vue.getNouveauMdpInput();
+
+        // Validation basique
+        if (nouveauNom.isEmpty() || nouvelEmail.isEmpty()) {
+            vue.afficherMessage("Erreur : Le nom et l'email ne peuvent pas être vides.");
+            return;
+        }
+
+        if (!nouveauMdp.isEmpty()) {
+            if (!ancienMdp.equals(utilisateur.getMdp())) {
+                vue.afficherMessage("Erreur : L'ancien mot de passe est incorrect.");
+                return;
+            }
+            utilisateur.setMdp(ancienMdp, nouveauMdp);
+        }
+
+        // Mise à jour des autres infos dans l'objet
+        utilisateur.setNom(nouveauNom);
+        utilisateur.setPrenom(nouveauPrenom);
+        utilisateur.setEmail(nouvelEmail);
+
+        try {
+        	DaoUtilisateur daoUtilisateur = new DaoUtilisateur();
+			daoUtilisateur.update(utilisateur);
+
+        
+            vue.afficherMessage("Succès : Vos informations ont été mises à jour.");
+            Profile profile = new Profile(utilisateur);
+            profile.setVisible(true);
+            vue.dispose();
+        } catch (Exception e) {
+        	System.out.println(e);
+            vue.afficherMessage("Erreur : Impossible de mettre à jour la base de données.");
+        }
+    }
+}

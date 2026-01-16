@@ -42,7 +42,6 @@ public class ControleurAjouterParking {
 	private void valider() {
 		try {
 			Parking parking = new Parking(
-					0, // l'id va être défini dans le dao
 					this.vue.getNom(),
 					this.vue.getAdresse(),
 					this.vue.getPlacesMax(),

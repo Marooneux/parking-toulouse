@@ -9,7 +9,9 @@ import modele.Adresse;
 import modele.Parking;
 import modele.dao.requetes.RequeteDeleteParking;
 import modele.dao.requetes.RequeteInsertParking;
+import modele.dao.requetes.RequeteSelectCountReservations;
 import modele.dao.requetes.RequeteSelectParking;
+import modele.dao.requetes.RequeteSelectParkingByAdminId;
 import modele.dao.requetes.RequeteSelectParkingById;
 import modele.dao.requetes.RequeteUpdateParking;
 
@@ -40,6 +42,14 @@ public class DaoParking extends DaoModele<Parking> {
 
 	public Parking findById(int id) throws SQLException {
 		return this.findById(new RequeteSelectParkingById(), String.valueOf(id));
+	}
+
+	public List<Parking> findByAdminId(int adminId) throws SQLException {
+		return this.find(new RequeteSelectParkingByAdminId(), String.valueOf(adminId));
+	}
+
+	public int getNbPlacesOccupees(int parkingId) throws SQLException {
+		return this.findCount(new RequeteSelectCountReservations(), String.valueOf(parkingId));
 	}
 
 	@Override

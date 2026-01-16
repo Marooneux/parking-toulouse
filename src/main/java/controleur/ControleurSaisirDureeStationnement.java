@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.swing.JOptionPane;
 
@@ -43,14 +42,13 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	}
 
 	public static double calculerPrixTotal(ZoneVoirie zone, int duree) {
-		LocalTime actuel = LocalTime.now();
 		// Rajouter les deux horaires dans la table Zone? (
 		if /*
 			 * actuel.isAfter(zone.getHorairePayantFin()) ||
 			 * actuel.isBefore(zone.getHorairePayantDebut())) ||
 			 */
 		(LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY
-				|| (zone.getNom() == "rouge" && duree <= 30)) {
+				|| (zone.getCouleur() == "rouge" && duree <= 30)) {
 			return 0;
 		}
 		double prixTotal = 0;
@@ -60,7 +58,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 			prixTotal += zone.getTarifHoraire();
 		}
 		prixTotal += heures * zone.getTarifHoraire();
-		if (zone.getNom() == "orange") {
+		if (zone.getCouleur() == "orange") {
 			if (duree > 180 && duree < 240) {
 				prixTotal = 4;
 			} else if (duree > 240) {
@@ -71,7 +69,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 	}
 
 	private boolean verifierDuree() {
-		String duree = this.vue.getTextField().getText().trim();
+		String duree = this.vue.getTextFieldHeure().getText().trim();
 		if (duree.isEmpty()) {
 			JOptionPane.showMessageDialog(this.vue, "Veuillez saisir une durée avant de payer.");
 			return false;
