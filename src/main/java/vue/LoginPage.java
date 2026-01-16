@@ -126,6 +126,10 @@ public class LoginPage extends JPanel {
 		this.btnValider.addActionListener(controleur);
 		saisieMdp.getField().addActionListener(controleur);
 	}
+	
+	public javax.swing.JButton getBtnConnexion() {
+	    return btnValider; // ou le nom de ta variable bouton
+	}
 
 	public String getLogin() {
 		return this.saisieLogin.getText();

@@ -55,7 +55,7 @@ public class TestDaoReservationParking {
 		this.daoReservation = new DaoReservationParking();
 
 		// Création d'une adresse
-		this.adresseTest = new Adresse(0, "1", "rue du Test", "31000", "Toulouse");
+		this.adresseTest = new Adresse(1, "rue du Test", 31000, "Toulouse");
 		this.daoAdresse.create(this.adresseTest);
 
 		// Création d'un parking avec l'adresse

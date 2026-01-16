@@ -40,11 +40,14 @@ public class DaoAdresse extends DaoModele<Adresse> {
 	@Override
 	protected Adresse creerInstance(ResultSet curseur) throws SQLException {
 		int id = curseur.getInt("id");
-		String numero = curseur.getString("numero");
+		int numero = curseur.getInt("numero");
 		String rue = curseur.getString("rue");
-		String codePostal = curseur.getString("code_postal");
+		int codePostal = curseur.getInt("code_postal");
 		String ville = curseur.getString("ville");
 
-		return new Adresse(id, numero, rue, codePostal, ville);
+		Adresse adresse = new Adresse(numero, rue, codePostal, ville);
+		adresse.setId(id);
+		
+		return adresse;
 	}
 }

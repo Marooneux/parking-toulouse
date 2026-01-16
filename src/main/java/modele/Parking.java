@@ -120,7 +120,7 @@ public class Parking {
 	}
 
 	public void setAdresse(String rue) {
-		this.adresse = new Adresse(0, null, rue, null, null);
+		this.adresse = new Adresse(0, null, 0, null);
 	}
 
 	public LocalTime getHeureOuverture() {

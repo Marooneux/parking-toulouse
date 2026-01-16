@@ -14,9 +14,9 @@ public class RequeteUpdateAdresse extends Requete<Adresse> {
 
 	@Override
 	public void parametres(PreparedStatement statement, Adresse donnee) throws SQLException {
-		statement.setString(1, donnee.getNumero());
+		statement.setInt(1, donnee.getNumero());
 		statement.setString(2, donnee.getRue());
-		statement.setString(3, donnee.getCodePostal());
+		statement.setInt(3, donnee.getCodePostal());
 		statement.setString(4, donnee.getVille());
 		statement.setInt(5, donnee.getId());
 	}

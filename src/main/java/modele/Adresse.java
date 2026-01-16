@@ -3,13 +3,12 @@ package modele;
 public class Adresse {
 
 	private int id;
-	private String numero;
+	private int numero;
 	private String rue;
-	private String codePostal;
+	private int codePostal;
 	private String ville;
 
-	public Adresse(int id, String numero, String rue, String codePostal, String ville) {
-		this.id = id;
+	public Adresse(int numero, String rue, int codePostal, String ville) {
 		this.numero = numero;
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -24,12 +23,12 @@ public class Adresse {
 		this.id = id;
 	}
 
-	public String getNumero() {
+	public int getNumero() {
 		return this.numero;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setNumero(int i) {
+		this.numero = i;
 	}
 
 	public String getRue() {
@@ -40,12 +39,12 @@ public class Adresse {
 		this.rue = rue;
 	}
 
-	public String getCodePostal() {
+	public int getCodePostal() {
 		return this.codePostal;
 	}
 
-	public void setCodePostal(String codePostal) {
-		this.codePostal = codePostal;
+	public void setCodePostal(int i) {
+		this.codePostal = i;
 	}
 
 	public String getVille() {

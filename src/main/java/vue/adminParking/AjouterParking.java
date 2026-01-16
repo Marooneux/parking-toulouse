@@ -1,144 +1,176 @@
 package vue.adminParking;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.time.LocalTime;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import vue.TemplateSaisie;
 
 public class AjouterParking extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private JTextField txtNom;
-	private JTextField txtAdresse;
-	private JTextField txtTarif;
-	private JTextField txtHauteur;
-	private JTextField txtPlacesMax;
-	private JTextField txtPlacesOccupees;
-	private JTextField txtHeureOuverture;
-	private JTextField txtHeureFermeture;
-	private JCheckBox chkMoto;
+    // --- Champs du formulaire ---
+    private TemplateSaisie groupNom;
+    
+    // Adresse éclaté
+    private TemplateSaisie groupNumero;
+    private TemplateSaisie groupRue;
+    private TemplateSaisie groupCP;
+    private TemplateSaisie groupVille;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+    private TemplateSaisie groupTarif;
+    private TemplateSaisie groupHauteur;
+    private TemplateSaisie groupPlacesMax;
 
-	public AjouterParking(int idAdmin) {
-		this.initialize();
-	}
+    // Horaires
+    private TemplateSaisie groupOuverture;
+    private TemplateSaisie groupFermeture;
+    
+    private JCheckBox chkMoto;
 
-	private void initialize() {
-		this.setLayout(new BorderLayout(10, 10));
-		this.setBorder(new EmptyBorder(15, 15, 15, 15));
+    private JButton btnValider;
+    private JButton btnAnnuler;
 
-		JPanel content = new JPanel(new BorderLayout(10, 10));
-		content.setBorder(new EmptyBorder(0, 0, 0, 0));
-		this.add(content, BorderLayout.CENTER);
+    public AjouterParking(int idAdmin) {
+        initialize();
+    }
 
-		JLabel title = new JLabel("Ajout d'un nouveau parking");
-		title.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		content.add(title, BorderLayout.NORTH);
+    private void initialize() {
+        setLayout(new BorderLayout(10, 10));
+        setBorder(new EmptyBorder(15, 15, 15, 15));
+        setPreferredSize(new Dimension(500, 750)); // Taille adaptée au contenu
 
-		JPanel form = new JPanel(new GridLayout(0, 2, 10, 10));
+        // --- TITRE ---
+        JLabel title = new JLabel("Ajout d'un nouveau parking");
+        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        add(title, BorderLayout.NORTH);
 
-		this.txtNom = new JTextField();
-		this.txtAdresse = new JTextField();
-		this.txtTarif = new JTextField();
-		this.txtHauteur = new JTextField();
-		this.txtPlacesMax = new JTextField();
+        // --- FORMULAIRE ---
+        JPanel form = new JPanel();
+        form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
 
-		this.txtHeureOuverture = new JTextField();
-		this.txtHeureFermeture = new JTextField();
+        // 1. Nom
+        groupNom = new TemplateSaisie("Nom du parking", "");
+        form.add(groupNom);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Nom"));
-		form.add(this.txtNom);
+        // 2. Adresse (Ligne 1 : N° + Rue)
+        JPanel rowAdresse1 = createRowPanel();
+        groupNumero = new TemplateSaisie("N°", "");
+        groupNumero.setMaximumSize(new Dimension(80, 60));
+        
+        groupRue = new TemplateSaisie("Rue", "");
+        
+        rowAdresse1.add(groupNumero);
+        rowAdresse1.add(Box.createHorizontalStrut(10));
+        rowAdresse1.add(groupRue);
+        form.add(rowAdresse1);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Adresse"));
-		form.add(this.txtAdresse);
+        // 3. Adresse (Ligne 2 : CP + Ville)
+        JPanel rowAdresse2 = createRowPanel();
+        groupCP = new TemplateSaisie("Code Postal", "");
+        groupCP.setMaximumSize(new Dimension(100, 60));
+        
+        groupVille = new TemplateSaisie("Ville", "");
+        
+        rowAdresse2.add(groupCP);
+        rowAdresse2.add(Box.createHorizontalStrut(10));
+        rowAdresse2.add(groupVille);
+        form.add(rowAdresse2);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Tarif (€/h)"));
-		form.add(this.txtTarif);
+        // 4. Infos Techniques
+        groupTarif = new TemplateSaisie("Tarif (€/h)", "");
+        form.add(groupTarif);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Hauteur max (m)"));
-		form.add(this.txtHauteur);
+        groupHauteur = new TemplateSaisie("Hauteur max (m)", "");
+        form.add(groupHauteur);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Places max"));
-		form.add(this.txtPlacesMax);
+        // Places (Max & Occupées sur la même ligne pour gagner de la place)
+        JPanel rowPlaces = createRowPanel();
+        groupPlacesMax = new TemplateSaisie("Places max", "");
+        
+        rowPlaces.add(groupPlacesMax);
+        rowPlaces.add(Box.createHorizontalStrut(10));
+        form.add(rowPlaces);
+        form.add(Box.createVerticalStrut(10));
 
-		form.add(new JLabel("Places occupées"));
-		form.add(this.txtPlacesMax);
+        // 5. Horaires (Ligne)
+        JPanel rowHoraires = createRowPanel();
+        groupOuverture = new TemplateSaisie("Ouverture (HH:mm)", "");
+        groupFermeture = new TemplateSaisie("Fermeture (HH:mm)", "");
+        
+        rowHoraires.add(groupOuverture);
+        rowHoraires.add(Box.createHorizontalStrut(10));
+        rowHoraires.add(groupFermeture);
+        form.add(rowHoraires);
+        form.add(Box.createVerticalStrut(15));
 
-		form.add(new JLabel("Horaire d'ouverture (hh:mm:ss)"));
-		form.add(this.txtHeureOuverture);
+        // 6. Checkbox Moto
+        chkMoto = new JCheckBox("Dispose de places Moto");
+        chkMoto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        chkMoto.setForeground(new Color(73, 80, 87));
+        chkMoto.setOpaque(false);
+        chkMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
+        form.add(chkMoto);
 
-		form.add(new JLabel("Horaire de fermeture (hh:mm:ss)"));
-		form.add(this.txtHeureFermeture);
+        add(form, BorderLayout.CENTER);
 
-		this.chkMoto = new JCheckBox("Places moto");
-		this.chkMoto.setSelected(false);
-		form.add(this.chkMoto);
+        // --- BOUTONS ---
+        btnValider = new JButton("Valider");
+        btnAnnuler = new JButton("Annuler");
 
-		content.add(form, BorderLayout.CENTER);
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        actions.add(btnAnnuler);
+        actions.add(btnValider);
 
-		this.btnValider = new JButton("Valider");
-		this.btnAnnuler = new JButton("Annuler");
+        add(actions, BorderLayout.SOUTH);
+    }
 
-		JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		actions.add(this.btnAnnuler);
-		actions.add(this.btnValider);
+    // Méthode utilitaire pour créer une ligne horizontale
+    private JPanel createRowPanel() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.setOpaque(false);
+        return p;
+    }
 
-		content.add(actions, BorderLayout.SOUTH);
-	}
+    // --- GETTERS ---
 
-	public JButton getBtnValider() {
-		return this.btnValider;
-	}
+    public JButton getBtnValider() { return btnValider; }
+    public JButton getBtnAnnuler() { return btnAnnuler; }
 
-	public JButton getBtnAnnuler() {
-		return this.btnAnnuler;
-	}
+    public String getNom() { return groupNom.getText().trim(); }
+    
+    // Adresse éclaté
+    public String getNumero() { return groupNumero.getText().trim(); }
+    public String getRue() { return groupRue.getText().trim(); }
+    public String getCodePostal() { return groupCP.getText().trim(); }
+    public String getVille() { return groupVille.getText().trim(); }
 
-	public String getNom() {
-		return this.txtNom.getText().trim();
-	}
-
-	public String getAdresse() {
-		return this.txtAdresse.getText().trim();
-	}
-
-	public double getTarif() {
-		return Double.parseDouble(this.txtTarif.getText().trim());
-	}
-
-	public double getHauteur() {
-		return Double.parseDouble(this.txtHauteur.getText().trim());
-	}
-
-	public int getPlacesMax() {
-		return Integer.parseInt(this.txtPlacesMax.getText().trim());
-	}
-
-	public int getPlacesOccupees() {
-		return Integer.parseInt(this.txtPlacesOccupees.getText().trim());
-	}
-
-	public LocalTime getHeureOuverture() {
-		return LocalTime.parse(this.txtHeureOuverture.getText());
-	}
-
-	public LocalTime getHeureFermeture() {
-		return LocalTime.parse(this.txtHeureFermeture.getText());
-	}
-
-	public boolean isContientPlacesMoto() {
-		return this.chkMoto.isSelected();
-	}
-
+    public String getTarif() { return groupTarif.getText().trim(); }
+    public String getHauteur() { return groupHauteur.getText().trim(); }
+    public String getPlacesMax() { return groupPlacesMax.getText().trim(); }
+    
+    // On renvoie des Strings pour les heures, le contrôleur fera le parsing (plus sûr pour la vue)
+    public String getHeureOuverture() { return groupOuverture.getText().trim(); }
+    public String getHeureFermeture() { return groupFermeture.getText().trim(); }
+    
+    public boolean isContientPlacesMoto() { return chkMoto.isSelected(); }
 }

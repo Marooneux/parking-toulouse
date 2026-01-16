@@ -34,7 +34,7 @@ public class TestDaoAdresse {
 		cn.setAutoCommit(false);
 
 		this.daoAdresse = new DaoAdresse();
-		this.adresseTest = new Adresse(0, "12", "Rue de Test", "31000", "Toulouse");
+		this.adresseTest = new Adresse(2, "Rue de Test", 31000, "Toulouse");
 	}
 
 	@After
