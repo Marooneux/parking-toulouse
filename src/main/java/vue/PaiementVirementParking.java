@@ -5,11 +5,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ReservationParking;
-import modele.StationnementVoirie;
+import controleur.ControleurPaiementVirementParking;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -52,6 +50,7 @@ public class PaiementVirementParking extends JFrame {
         addField(formCard, "IBAN");
 
         JButton btnPayer = new JButton("Payer " + prix + "€");
+        this.btnPayer = btnPayer;
         btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnPayer.setBackground(BUTTON_COLOR);
         btnPayer.setForeground(Color.WHITE);
@@ -59,18 +58,7 @@ public class PaiementVirementParking extends JFrame {
         btnPayer.setBorder(new EmptyBorder(12, 0, 12, 0));
         btnPayer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         btnPayer.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnPayer.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	            try {
-	            	ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(reservation, prix);
-	            	frameConfirmationPaiement.setVisible(true);
-	                dispose();
-	            } catch (Exception ex) {
-	                ex.printStackTrace();
-	            }
-	        }
-	    });
-	        
+
         btnPayer.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) { btnPayer.setBackground(BUTTON_COLOR.darker()); }
             public void mouseExited(MouseEvent e) { btnPayer.setBackground(BUTTON_COLOR); }
@@ -82,7 +70,11 @@ public class PaiementVirementParking extends JFrame {
 
         mainPanel.add(formCard);
         add(mainPanel);
+
+        new ControleurPaiementVirementParking(this);
     }
+
+    private JButton btnPayer;
 
     private void addField(JPanel panel, String labelText) {
         JLabel label = new JLabel(labelText);
@@ -102,5 +94,17 @@ public class PaiementVirementParking extends JFrame {
         panel.add(Box.createVerticalStrut(5));
         panel.add(field);
         panel.add(Box.createVerticalStrut(20));
+    }
+
+    public JButton getBtnPayer() {
+        return this.btnPayer;
+    }
+
+    public ReservationParking getReservation() {
+        return this.reservation;
+    }
+
+    public double getPrix() {
+        return this.prix;
     }
 }

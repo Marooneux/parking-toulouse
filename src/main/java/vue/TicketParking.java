@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +16,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurSaisirHeureArriveParking;
 import modele.Parking;
 import modele.ReservationParking;
 
@@ -35,8 +32,10 @@ public class TicketParking extends JFrame {
     private Parking parking;
     private String immatriculation;
     private String heureArrivee;
+	private ReservationParking reservation;
 
 	public TicketParking(ReservationParking reservation, String plaque, String heureArrivee) {
+		this.reservation = reservation;
 		this.parking = reservation.getParking();
 		this.immatriculation = plaque;
 		this.heureArrivee = heureArrivee;
@@ -121,11 +120,6 @@ public class TicketParking extends JFrame {
 		panelFooter.add(panelButtonContainer);
 
 		btnPaiement = new JButton("Aller au paiement");
-		btnPaiement.addActionListener(e -> {
-			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(parking, heureArrivee);
-			new ChoixMoyenPaiementParking(reservation, prix).setVisible(true);
-			dispose();
-		});
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
@@ -165,6 +159,18 @@ public class TicketParking extends JFrame {
 	
 	public JButton getBtnPaiement() {
 	    return this.btnPaiement;
+	}
+
+	public ReservationParking getReservation() {
+		return this.reservation;
+	}
+
+	public Parking getParking() {
+		return this.parking;
+	}
+
+	public String getHeureArrivee() {
+		return this.heureArrivee;
 	}
 	
 	public void remplirInfos(String numéroTicket, String parking, String plaque, String heure, String adresse) {

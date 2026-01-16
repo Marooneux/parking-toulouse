@@ -18,8 +18,17 @@ public class TestParking {
 
 	@Before
 	public void setUp() {
-		this.parking = new Parking(1, "Parking Central", 100, 50, 1.8, LocalTime.of(9, 0),
-				LocalTime.of(21, 0), true, 2.5, new Adresse(0, null, "Rue Victor Hugo", null, null));
+		this.parking = new Parking(
+				"Parking Central",
+				100,
+				1.8,
+				LocalTime.of(9, 0),
+				LocalTime.of(21, 0),
+				true,
+				new Adresse(0, null, "Rue Victor Hugo", null, null),
+				2.5);
+		this.parking.setId(1);
+		this.parking.setNbPlacesOccupees(50);
 	}
 
 	@Test

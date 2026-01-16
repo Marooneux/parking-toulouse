@@ -6,8 +6,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
+import controleur.ControleurConfirmationPaiementVoirie;
 
 public class ConfirmationPaiementVoirie extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +26,7 @@ public class ConfirmationPaiementVoirie extends JFrame {
 	private int duree;
 	private double prix;
 	private String moyenPaiement;
+	private JButton btnTerminer;
 
 	public ConfirmationPaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix,
 			String moyenPaiement) {
@@ -93,20 +93,10 @@ public class ConfirmationPaiementVoirie extends JFrame {
 		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
 		this.contentPane.add(panelFooter, BorderLayout.SOUTH);
 
-		JButton btnTerminer = new JButton("Voir le e-ticket");
+		btnTerminer = new JButton("Voir le e-ticket");
 		btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTerminer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					TicketVoirie framePaiement = new TicketVoirie(zone2, immatriculation, duree, moyenPaiement);
-					framePaiement.setVisible(true);
-					ConfirmationPaiementVoirie.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+
+		new ControleurConfirmationPaiementVoirie(this);
 		btnTerminer.setForeground(Color.WHITE);
 		btnTerminer.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		btnTerminer.setBackground(new Color(0, 123, 255));
@@ -115,5 +105,29 @@ public class ConfirmationPaiementVoirie extends JFrame {
 		btnTerminer.setPreferredSize(new Dimension(250, 45));
 
 		panelFooter.add(btnTerminer);
+	}
+
+	public JButton getBtnTerminer() {
+		return this.btnTerminer;
+	}
+
+	public ZoneVoirie getZone() {
+		return this.zone;
+	}
+
+	public String getImmatriculation() {
+		return this.immatriculation;
+	}
+
+	public int getDuree() {
+		return this.duree;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
+	public String getMoyenPaiement() {
+		return this.moyenPaiement;
 	}
 }

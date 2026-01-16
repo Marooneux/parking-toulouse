@@ -14,13 +14,8 @@ public class HistoriquePanel extends JPanel {
 
     private JPanel reservationsPanel;
     private JButton loadMoreButton;
-    private ControleurHistorique controleur;
-    private Utilisateur utilisateur;
-
     // 2. Le constructeur prend l'Utilisateur pour savoir QUI afficher
     public HistoriquePanel(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-        
         // Configuration du JPanel
         setLayout(new BorderLayout(15, 15));
         setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -30,8 +25,7 @@ public class HistoriquePanel extends JPanel {
         initReservationsList();
         initLoadMoreButton();
 
-        this.controleur = new ControleurHistorique(this, utilisateur.getId());
-        
+        new ControleurHistorique(this, utilisateur.getId());
     }
 
     private void initHeader() {
@@ -79,13 +73,15 @@ public class HistoriquePanel extends JPanel {
         loadMoreButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadMoreButton.setPreferredSize(new Dimension(200, 35));
 
-        loadMoreButton.addActionListener(e -> controleur.chargerHistorique());
-
         JPanel panel = new JPanel();
         panel.setBackground(new Color(248, 249, 250));
         panel.add(loadMoreButton);
 
         add(panel, BorderLayout.SOUTH);
+    }
+
+    public void addReloadListener(java.awt.event.ActionListener listener) {
+        loadMoreButton.addActionListener(listener);
     }
 
     public void afficherHistorique(List<ReservationParking> reservations) {

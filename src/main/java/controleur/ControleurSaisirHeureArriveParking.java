@@ -74,7 +74,9 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
             LocalDateTime dateArrivee = LocalDateTime.of(LocalDate.now(), heureArrivee);
             ReservationParking reservation = new ReservationParking(dateArrivee, null, parking, null);
 
-            new TicketParking(reservation, plaque, heure).setVisible(true);
+            TicketParking ticket = new TicketParking(reservation, plaque, heure);
+            new ControleurTicketParking(ticket);
+            ticket.setVisible(true);
             vue.dispose();
 
         } catch (DateTimeParseException ex) {

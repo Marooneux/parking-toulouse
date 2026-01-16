@@ -9,8 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,6 +24,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import modele.ReservationParking;
+import controleur.ControleurPaiementParking;
 
 public class PaiementParking extends JFrame {
 
@@ -35,6 +34,7 @@ public class PaiementParking extends JFrame {
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
 	private JTextField textFieldCVC;
+	private JButton btnPayer;
 	
 	private ReservationParking reservation;
 	private double prix;
@@ -136,25 +136,15 @@ public class PaiementParking extends JFrame {
 		JPanel panelBtn = new JPanel();
 		panelBtn.setBackground(Color.WHITE);
 
-		JButton btnPayer = new JButton("Payer - " + prix + "€");
+		btnPayer = new JButton("Payer - " + prix + "€");
 		btnPayer.setBackground(new Color(0, 128, 255));
 		btnPayer.setForeground(Color.WHITE);
 		btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnPayer.setFocusPainted(false);
 		btnPayer.setPreferredSize(new Dimension(160, 40));
 		panelBtn.add(btnPayer);
-		btnPayer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ConfirmationPaiementParking frameConfirmationPaiement = new ConfirmationPaiementParking(reservation, prix);
-					frameConfirmationPaiement.setVisible(true);
-					PaiementParking.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+
+		new ControleurPaiementParking(this);
 
 		card.add(panelBtn);
 	}
@@ -244,4 +234,17 @@ public class PaiementParking extends JFrame {
 			}
 		}
 	}
+
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public ReservationParking getReservation() {
+		return this.reservation;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
 }

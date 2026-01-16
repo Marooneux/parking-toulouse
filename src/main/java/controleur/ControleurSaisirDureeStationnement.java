@@ -9,46 +9,53 @@ import javax.swing.JOptionPane;
 
 import modele.ZoneVoirie;
 import vue.ChoixMoyenPaiementVoirie;
-import vue.SaisirHeureArriveParking;
+import vue.SaisirDureeStationnement;
 import vue.TicketVoirie;
 
 public class ControleurSaisirDureeStationnement implements ActionListener {
 
-	public enum Etat {
-		ATTENTE_DUREE, PAIEMENT
-	}
+	private final ZoneVoirie zone;
+	private final SaisirDureeStationnement vue;
 
-	private Etat etat;
-	private SaisirHeureArriveParking vue;
-
-	public ControleurSaisirDureeStationnement(SaisirHeureArriveParking vue) {
+	public ControleurSaisirDureeStationnement(ZoneVoirie zone, SaisirDureeStationnement vue) {
+		this.zone = zone;
 		this.vue = vue;
-		this.etat = Etat.ATTENTE_DUREE;
-		vue.getBtnConfirmer().addActionListener(this);
+		this.vue.getBtnConfirmer().addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch (this.etat) {
-		case ATTENTE_DUREE:
-			if (!this.verifierDuree()) {
-				return;
-			}
-			this.etat = Etat.PAIEMENT;
-			break;
-		case PAIEMENT:
-			break;
+		String immatriculation = vue.getImmatriculation();
+		String dureeStr = vue.getDureeSaisie();
+		if (!validerChamps(immatriculation, dureeStr)) {
+			return;
+		}
+
+		int dureeMinutes;
+		try {
+			dureeMinutes = Integer.parseInt(dureeStr);
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(vue, "Veuillez entrer une durée en minutes uniquement.");
+			return;
+		}
+
+		if (dureeMinutes > zone.getDureeMax()) {
+			JOptionPane.showMessageDialog(vue, "La durée saisie dépasse la durée maximum de cette zone.");
+			return;
+		}
+
+		double prix = calculerPrixTotal(zone, dureeMinutes);
+		if (prix == 0) {
+			ouvrirTicket(zone, immatriculation, dureeMinutes);
+			vue.dispose();
+		} else {
+			ouvrirPaiement(zone, immatriculation, dureeMinutes, prix);
+			vue.dispose();
 		}
 	}
 
 	public static double calculerPrixTotal(ZoneVoirie zone, int duree) {
-		// Rajouter les deux horaires dans la table Zone? (
-		if /*
-			 * actuel.isAfter(zone.getHorairePayantFin()) ||
-			 * actuel.isBefore(zone.getHorairePayantDebut())) ||
-			 */
-		(LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY
-				|| (zone.getCouleur() == "rouge" && duree <= 30)) {
+		if (LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY || ("rouge".equals(zone.getCouleur()) && duree <= 30)) {
 			return 0;
 		}
 		double prixTotal = 0;
@@ -58,7 +65,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 			prixTotal += zone.getTarifHoraire();
 		}
 		prixTotal += heures * zone.getTarifHoraire();
-		if (zone.getCouleur() == "orange") {
+		if ("orange".equals(zone.getCouleur())) {
 			if (duree > 180 && duree < 240) {
 				prixTotal = 4;
 			} else if (duree > 240) {
@@ -68,10 +75,13 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		return prixTotal;
 	}
 
-	private boolean verifierDuree() {
-		String duree = this.vue.getTextFieldHeure().getText().trim();
-		if (duree.isEmpty()) {
-			JOptionPane.showMessageDialog(this.vue, "Veuillez saisir une durée avant de payer.");
+	private boolean validerChamps(String immatriculation, String duree) {
+		if (immatriculation == null || immatriculation.trim().isEmpty()) {
+			JOptionPane.showMessageDialog(vue, "Veuillez saisir votre plaque d'immatriculation avant de payer.");
+			return false;
+		}
+		if (duree == null || duree.trim().isEmpty()) {
+			JOptionPane.showMessageDialog(vue, "Veuillez saisir une durée avant de payer.");
 			return false;
 		}
 		return true;
@@ -85,6 +95,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 
 	public static void ouvrirTicket(ZoneVoirie zone, String immatriculation, int intDuree) {
 		TicketVoirie frameTicketVoirie = new TicketVoirie(zone, immatriculation, intDuree, "Gratuit");
+		new ControleurTicketVoirie(frameTicketVoirie);
 		frameTicketVoirie.setVisible(true);
 	}
 }

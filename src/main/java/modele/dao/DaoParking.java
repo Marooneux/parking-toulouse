@@ -71,14 +71,24 @@ public class DaoParking extends DaoModele<Parking> {
 		int idAdresse = rs.getInt("id_adresse");
 		Adresse adresse = this.daoAdresse.findById(idAdresse);
 
-		return new Parking(
-				id,
+		int tarif = rs.getInt("tarif");
+
+		int nbPlacesOccupees = rs.getInt("places_occupees");
+
+		Parking parking = new Parking(
 				nom,
 				capacite,
 				hauteurMax,
 				ouverture != null ? ouverture.toLocalTime() : null,
 				fermeture != null ? fermeture.toLocalTime() : null,
 				contientPlacesMoto,
-				adresse);
+				adresse,
+				tarif
+			);
+
+		parking.setId(id);
+		parking.setNbPlacesOccupees(nbPlacesOccupees);
+
+		return parking;
 	}
 }

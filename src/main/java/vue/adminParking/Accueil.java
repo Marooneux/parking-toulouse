@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.function.Consumer;
 
@@ -24,6 +25,9 @@ public class Accueil extends JFrame {
 
     private JPanel gridPanel;
     private JButton btnAjouter;
+    private JButton btnSidebarParkings;
+    private JButton btnSidebarStats;
+    private JButton btnRetourListe;
 
     private JTextField txtNom;
     private JTextField txtAdresse;
@@ -35,20 +39,16 @@ public class Accueil extends JFrame {
     private JCheckBox chkMoto;
     
     private JButton btnEnregistrerModification;
-    private JButton btnRetourListe;
     
     private Parking parkingEnEdition;
-    private int idAdmin;
-    private ControleurAccueilAdminParking controleur;
 
     public static void main(String[] args) {
     	new Accueil(3);
     }
 
     public Accueil(int idAdmin) {
-    	this.idAdmin = idAdmin;
     	initialize();
-    	this.controleur = new ControleurAccueilAdminParking(this, idAdmin);
+    	new ControleurAccueilAdminParking(this, idAdmin);
     }
 
     private void initialize() {
@@ -101,7 +101,6 @@ public class Accueil extends JFrame {
         btnToggle.setForeground(Color.LIGHT_GRAY);
         btnToggle.setBounds(10, 10, 50, 40);
         btnToggle.setMargin(new Insets(0, 0, 0, 0));
-        btnToggle.addActionListener(e -> toggleSidebarState());
         layeredPane.add(btnToggle, JLayeredPane.MODAL_LAYER);
     }
 
@@ -140,15 +139,13 @@ public class Accueil extends JFrame {
         lblMenu.setBorder(new EmptyBorder(0, 10, 20, 0));
         sidebar.add(lblMenu);
 
-        JButton btnParkings = createMenuButton("Liste Parkings");
-        btnParkings.addActionListener(e -> cardLayout.show(mainContentPanel, "PARKINGS"));
-        sidebar.add(btnParkings);
+        btnSidebarParkings = createMenuButton("Liste Parkings");
+        sidebar.add(btnSidebarParkings);
 
         sidebar.add(Box.createVerticalStrut(10));
 
-        JButton btnStats = createMenuButton("Statistiques");
-        btnStats.addActionListener(e -> cardLayout.show(mainContentPanel, "STATS"));
-        sidebar.add(btnStats);
+        btnSidebarStats = createMenuButton("Statistiques");
+        sidebar.add(btnSidebarStats);
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
@@ -217,11 +214,7 @@ public class Accueil extends JFrame {
         btnAjouter.setBackground(new Color(0, 0, 0));
         btnAjouter.setForeground(Color.WHITE);
         btnAjouter.setPreferredSize(new Dimension(150, 30));
-        btnAjouter.addActionListener(e -> {
-            controleur.ouvrirPageAjouter(idAdmin);
-            this.dispose();
-           
-        });
+        this.btnAjouter = btnAjouter;
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         actions.setBackground(new Color(248, 249, 250));
@@ -333,8 +326,6 @@ public class Accueil extends JFrame {
         actions.add(btnEnregistrerModification);
         panel.add(actions, BorderLayout.SOUTH);
 
-        btnRetourListe.addActionListener(e -> cardLayout.show(mainContentPanel, "PARKINGS"));
-
         return panel;
     }
 
@@ -383,6 +374,10 @@ public class Accueil extends JFrame {
     public JButton getBtnValiderAjout() { return btnAjouter; }
     public JButton getBtnEnregistrerModification() { return btnEnregistrerModification; }
     public Parking getParkingEnEdition() { return parkingEnEdition; }
+    public JButton getBtnSidebarParkings() { return btnSidebarParkings; }
+    public JButton getBtnSidebarStats() { return btnSidebarStats; }
+    public JButton getBtnRetourListe() { return btnRetourListe; }
+    public JButton getBtnToggle() { return btnToggle; }
 
     // Getters Formulaire
     public String getNom() { return txtNom.getText().trim(); }
@@ -393,4 +388,16 @@ public class Accueil extends JFrame {
     public LocalTime getHeureOuverture() { return LocalTime.parse(txtHeureOuverture.getText()); }
     public LocalTime getHeureFermeture() { return LocalTime.parse(txtHeureFermeture.getText()); }
     public boolean isContientPlacesMoto() { return chkMoto.isSelected(); }
+
+    // Exposed listeners
+    public void addToggleListener(ActionListener listener) { btnToggle.addActionListener(listener); }
+    public void addMenuParkingsListener(ActionListener listener) { btnSidebarParkings.addActionListener(listener); }
+    public void addMenuStatsListener(ActionListener listener) { btnSidebarStats.addActionListener(listener); }
+    public void addAjouterListener(ActionListener listener) { btnAjouter.addActionListener(listener); }
+    public void addRetourListener(ActionListener listener) { btnRetourListe.addActionListener(listener); }
+
+    public void showParkings() { cardLayout.show(mainContentPanel, "PARKINGS"); }
+    public void showStats() { cardLayout.show(mainContentPanel, "STATS"); }
+    public void showEdition() { cardLayout.show(mainContentPanel, "EDITION"); }
+    public void toggleSidebar() { toggleSidebarState(); }
 }

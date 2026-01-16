@@ -10,8 +10,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,8 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurTicketVoirie;
 import modele.ZoneVoirie;
+import controleur.ControleurTicketVoirie;
 
 public class TicketVoirie extends JFrame {
 
@@ -33,6 +31,7 @@ public class TicketVoirie extends JFrame {
 	private int duree;
 	private String moyenPaiement;
 	private JLabel nomZone;
+	private JButton btnPaiement;
 	
 	private Color couleur;
 
@@ -125,7 +124,7 @@ public class TicketVoirie extends JFrame {
 		panelButtonContainer.setBackground(Color.WHITE);
 		panelFooter.add(panelButtonContainer);
 
-		JButton btnPaiement = new JButton("Confirmer le départ");
+		btnPaiement = new JButton("Confirmer le départ");
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPaiement.setForeground(Color.WHITE);
@@ -134,12 +133,8 @@ public class TicketVoirie extends JFrame {
 		btnPaiement.setFocusPainted(false);
 		btnPaiement.setBorderPainted(false);
 		btnPaiement.setPreferredSize(new Dimension(200, 45));
-		btnPaiement.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+
+		new ControleurTicketVoirie(this);
 
 	}
 
@@ -160,6 +155,10 @@ public class TicketVoirie extends JFrame {
 			case "bleu": case "bleue": case "blue": return new Color(0, 122, 255);
 			default: return Color.GRAY;
 		}
+	}
+
+	public JButton getBtnConfirmer() {
+		return this.btnPaiement;
 	}
 
 	private void createInfoRow(JPanel parent, String label, JLabel lblVal) {

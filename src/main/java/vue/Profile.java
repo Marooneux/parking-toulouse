@@ -23,6 +23,9 @@ public class Profile extends JFrame {
     private JButton btnToggle;
     private static final int SIDEBAR_WIDTH = 220;
 
+    private JButton btnSidebarInfos;
+    private JButton btnSidebarHistorique;
+
     private JLabel lblValNom;
     private JLabel lblValPrenom;
     private JLabel lblValEmail;
@@ -40,6 +43,7 @@ public class Profile extends JFrame {
     public Profile(Utilisateur utilisateur) {
     	this.utilisateur = utilisateur;
         initialize();
+        new ControleurProfile(utilisateur, this);
     }
 
     private void initialize() {
@@ -71,17 +75,9 @@ public class Profile extends JFrame {
         // 3. Toggle Button
         createToggleBtn();
 
-        // 4. Gestion redimensionnement
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                updateLayoutBounds();
-            }
-        });
-        
         createTopRightButton(); 
 
-        // 4. Gestion redimensionnement (Déjà existant, mais vérifie qu'il appelle bien updateLayoutBounds)
+        // 4. Gestion redimensionnement
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -99,7 +95,6 @@ public class Profile extends JFrame {
         btnToggle.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnToggle.setForeground(Color.LIGHT_GRAY);
         btnToggle.setBounds(10, 10, 50, 40);
-        btnToggle.addActionListener(e -> toggleSidebarState());
         layeredPane.add(btnToggle, JLayeredPane.MODAL_LAYER);
     }
 
@@ -125,7 +120,7 @@ public class Profile extends JFrame {
         mainContentPanel.repaint();
     }
 
-    private void toggleSidebarState() {
+    public void toggleSidebarState() {
         boolean isVisible = sidebarPanel.isVisible();
         sidebarPanel.setVisible(!isVisible);
         btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : new Color(33, 37, 41));
@@ -145,15 +140,13 @@ public class Profile extends JFrame {
         lblMenu.setBorder(new EmptyBorder(0, 10, 20, 0));
         sidebar.add(lblMenu);
 
-        JButton btnInfos = createMenuButton("Mon Profil");
-        btnInfos.addActionListener(e -> cardLayout.show(mainContentPanel, "INFOS"));
-        sidebar.add(btnInfos);
+        btnSidebarInfos = createMenuButton("Mon Profil");
+        sidebar.add(btnSidebarInfos);
 
         sidebar.add(Box.createVerticalStrut(10));
 
-        JButton btnHist = createMenuButton("Historique");
-        btnHist.addActionListener(e -> cardLayout.show(mainContentPanel, "HISTORIQUE"));
-        sidebar.add(btnHist);
+        btnSidebarHistorique = createMenuButton("Historique");
+        sidebar.add(btnSidebarHistorique);
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
@@ -221,11 +214,6 @@ public class Profile extends JFrame {
         btnModifierInfos.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnModifierInfos.setPreferredSize(new Dimension(220, 40));
         btnModifierInfos.setFocusPainted(false);
-        btnModifierInfos.addActionListener(e -> {
-        	ControleurProfile controleur = new ControleurProfile(utilisateur, this);
-        	controleur.modifierInfos();
-        });
-        
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         footer.setBackground(new Color(248, 249, 250));
         footer.setBorder(new EmptyBorder(10, 50, 30, 50));
@@ -303,9 +291,6 @@ public class Profile extends JFrame {
         footer.add(btnEnregistrer);
         panel.add(footer, BorderLayout.SOUTH);
 
-        // Listener interne pour basculer de vue
-        btnAnnulerEdit.addActionListener(e -> showInfosTab());
-
         return panel;
     }
     
@@ -343,6 +328,10 @@ public class Profile extends JFrame {
     public void showEditionTab() {
         cardLayout.show(mainContentPanel, "EDITION");
     }
+    
+    public void showHistoriqueTab() {
+        cardLayout.show(mainContentPanel, "HISTORIQUE");
+    }
 
     // Remplir la vue INFO
     public void updateInfoDisplay(String nom, String prenom, String email) {
@@ -367,10 +356,6 @@ public class Profile extends JFrame {
         btnRetour.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnRetour.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btnRetour.addActionListener(e -> {
-            ControleurProfile controleur = new ControleurProfile(utilisateur, this);
-            controleur.ouvrirChoixStationnement(); 
-        });
         layeredPane.add(btnRetour, JLayeredPane.MODAL_LAYER);
     }
 
@@ -383,6 +368,19 @@ public class Profile extends JFrame {
     // Listeners
     public void addEditListener(ActionListener l) { btnModifierInfos.addActionListener(l); }
     public void addSaveListener(ActionListener l) { btnEnregistrer.addActionListener(l); }
+    public void addAnnulerEditListener(ActionListener l) { btnAnnulerEdit.addActionListener(l); }
+    public void addMenuInfosListener(ActionListener l) { btnSidebarInfos.addActionListener(l); }
+    public void addMenuHistoriqueListener(ActionListener l) { btnSidebarHistorique.addActionListener(l); }
+    public void addRetourListener(ActionListener l) { btnRetour.addActionListener(l); }
+    public void addToggleSidebarListener(ActionListener l) { btnToggle.addActionListener(l); }
+
+    public JButton getBtnModifierInfos() { return btnModifierInfos; }
+    public JButton getBtnEnregistrer() { return btnEnregistrer; }
+    public JButton getBtnAnnulerEdit() { return btnAnnulerEdit; }
+    public JButton getBtnSidebarInfos() { return btnSidebarInfos; }
+    public JButton getBtnSidebarHistorique() { return btnSidebarHistorique; }
+    public JButton getBtnRetour() { return btnRetour; }
+    public JButton getBtnToggle() { return btnToggle; }
     
     public void afficherMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);

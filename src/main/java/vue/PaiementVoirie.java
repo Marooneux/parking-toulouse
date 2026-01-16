@@ -9,8 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,6 +24,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import modele.ZoneVoirie;
+import controleur.ControleurPaiementVoirie;
 
 public class PaiementVoirie extends JFrame {
 
@@ -35,6 +34,7 @@ public class PaiementVoirie extends JFrame {
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
 	private JTextField textFieldCVC;
+	private JButton btnPayer;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
@@ -139,26 +139,15 @@ public class PaiementVoirie extends JFrame {
 		JPanel panelBtn = new JPanel();
 		panelBtn.setBackground(Color.WHITE);
 
-		JButton btnPayer = new JButton("Payer - " + prix + "€");
+		btnPayer = new JButton("Payer - " + prix + "€");
 		btnPayer.setBackground(new Color(0, 128, 255));
 		btnPayer.setForeground(Color.WHITE);
 		btnPayer.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnPayer.setFocusPainted(false);
 		btnPayer.setPreferredSize(new Dimension(160, 40));
 		panelBtn.add(btnPayer);
-		btnPayer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ConfirmationPaiementVoirie frameConfirmationPaiement = new ConfirmationPaiementVoirie(zone2,
-							immatriculation, duree, prix, "Carte bancaire");
-					frameConfirmationPaiement.setVisible(true);
-					PaiementVoirie.this.dispose();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+
+		new ControleurPaiementVoirie(this);
 
 		card.add(panelBtn);
 	}
@@ -184,6 +173,26 @@ public class PaiementVoirie extends JFrame {
 		bloc.add(champPanel);
 
 		return bloc;
+	}
+
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public ZoneVoirie getZone() {
+		return this.zone;
+	}
+
+	public String getImmatriculation() {
+		return this.immatriculation;
+	}
+
+	public int getDuree() {
+		return this.duree;
+	}
+
+	public double getPrix() {
+		return this.prix;
 	}
 
 	class FiltreUniquementChiffres extends DocumentFilter {

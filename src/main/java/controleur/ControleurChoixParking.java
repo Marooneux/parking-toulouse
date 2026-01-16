@@ -1,5 +1,7 @@
 package controleur;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -12,9 +14,8 @@ import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
-import vue.SaisirHeureArriveParking;
 
-public class ControleurChoixParking {
+public class ControleurChoixParking implements ActionListener {
 
 	private ChoixParking vue;
 	private DaoParking daoParking;
@@ -23,15 +24,12 @@ public class ControleurChoixParking {
 	private List<Parking> listeComplete;
 	// Liste actuellement affichée (filtrée et triée)
 	private List<Parking> listeAffichee;
-	private int idUser;
-
 	public ControleurChoixParking(ChoixParking vue) {
 		this(vue, 0);
 	}
 
 	public ControleurChoixParking(ChoixParking vue, int idUser) {
 		this.vue = vue;
-		this.idUser = idUser;
 		this.daoParking = new DaoParking();
 		this.listeComplete = new ArrayList<>();
 		this.listeAffichee = new ArrayList<>();
@@ -51,15 +49,10 @@ public class ControleurChoixParking {
 			}
 		});
 
-		vue.getItemAlpha().addActionListener(e -> {
-			Collections.sort(listeAffichee, Comparator.comparing(Parking::getNom));
-			afficherParkings();
-		});
-
-		vue.getItemFermeture().addActionListener(e -> {
-			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
-			this.afficherParkings();
-		});
+		vue.getItemAlpha().addActionListener(this);
+		vue.getItemFermeture().addActionListener(this);
+		vue.getItemPlaces().addActionListener(this);
+		vue.getBtnFilter().addActionListener(this);
 	}
 
 	private void chargerDonneesInitiales() {
@@ -102,9 +95,34 @@ public class ControleurChoixParking {
 		}
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source == vue.getBtnFilter()) {
+			vue.showFilterPopup();
+			return;
+		}
+
+		if (source == vue.getItemAlpha()) {
+			Collections.sort(listeAffichee, Comparator.comparing(Parking::getNom));
+			afficherParkings();
+			return;
+		}
+
+		if (source == vue.getItemFermeture()) {
+			Collections.sort(this.listeAffichee, Comparator.comparing(Parking::getHoraireFermeture));
+			this.afficherParkings();
+			return;
+		}
+
+		if (source == vue.getItemPlaces()) {
+			Collections.sort(this.listeAffichee, Comparator.comparing(p -> p.getNbPlacesMax() - p.getNbPlacesOccupees()));
+			this.afficherParkings();
+		}
+	}
+
 	private void onParkingSelected(Parking parking) {
-		SaisirHeureArriveParking vueSuivante = new SaisirHeureArriveParking(parking);
-		vueSuivante.setVisible(true);
+		new ControleurSaisirHeureArriveParking(parking);
 		this.vue.dispose();
 	}
 

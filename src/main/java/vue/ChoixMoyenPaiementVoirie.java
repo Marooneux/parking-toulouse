@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurChoixMoyenPaiementVoirie;
 import modele.ZoneVoirie;
 
 public class ChoixMoyenPaiementVoirie extends JFrame {
@@ -36,6 +37,8 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 	private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
 	private final Color BUTTON_COLOR = new Color(13, 110, 253);
 	private final Color BUTTON_TEXT_COLOR = Color.WHITE;
+	private JButton btnCarte;
+	private JButton btnVirement;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
@@ -66,36 +69,21 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		cardsContainer.setOpaque(false);
 		cardsContainer.setBorder(new EmptyBorder(20, 60, 60, 60));
 
+		btnCarte = buildPaymentButton("Payer par carte");
+		btnCarte.setActionCommand("CARTE");
 		JPanel cardCB = this.createCard(
 				"Carte Bancaire",
 				"Paiement immédiat par carte.",
-				"Payer par carte",
-				new IconCard(),
-				e -> {
-					try {
-						PaiementVoirie pagePaiementCB = new PaiementVoirie(zone2, immatriculation, duree, prix);
-						pagePaiementCB.setVisible(true);
-						this.dispose();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				});
+				btnCarte,
+				new IconCard());
 
+		btnVirement = buildPaymentButton("Payer par virement");
+		btnVirement.setActionCommand("VIREMENT");
 		JPanel cardVirement = this.createCard(
 				"Virement Bancaire",
 				"Saisir IBAN pour prélèvement SEPA.",
-				"Payer par virement",
-				new IconBank(),
-				e -> {
-					try {
-						PaiementVirementVoirie pageVirement = new PaiementVirementVoirie(zone2, immatriculation, duree,
-								prix);
-						pageVirement.setVisible(true);
-						this.dispose();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				});
+				btnVirement,
+				new IconBank());
 
 		cardsContainer.add(cardCB);
 		cardsContainer.add(cardVirement);
@@ -104,9 +92,33 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
 		this.add(mainPanel);
+
+		new ControleurChoixMoyenPaiementVoirie(this, zone2, immatriculation, duree, prix);
 	}
 
-	private JPanel createCard(String title, String subtitle, String buttonText, Icon icon, ActionListener action) {
+	private JButton buildPaymentButton(String buttonText) {
+		JButton btn = new JButton(buttonText);
+		btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btn.setBackground(this.BUTTON_COLOR);
+		btn.setForeground(this.BUTTON_TEXT_COLOR);
+		btn.setFocusPainted(false);
+		btn.setBorder(new EmptyBorder(12, 25, 12, 25));
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn.setBackground(ChoixMoyenPaiementVoirie.this.BUTTON_COLOR.darker());
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn.setBackground(ChoixMoyenPaiementVoirie.this.BUTTON_COLOR);
+			}
+		});
+		return btn;
+	}
+
+	private JPanel createCard(String title, String subtitle, JButton btn, Icon icon) {
 		JPanel card = new JPanel();
 		card.setLayout(new GridBagLayout());
 		card.setBackground(this.CARD_COLOR);
@@ -129,27 +141,6 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblSubtitle.setForeground(this.SUBTEXT_COLOR);
 
-		JButton btn = new JButton(buttonText);
-		btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		btn.setBackground(this.BUTTON_COLOR);
-		btn.setForeground(this.BUTTON_TEXT_COLOR);
-		btn.setFocusPainted(false);
-		btn.setBorder(new EmptyBorder(12, 25, 12, 25));
-		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btn.addActionListener(action);
-
-		btn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn.setBackground(ChoixMoyenPaiementVoirie.this.BUTTON_COLOR.darker());
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn.setBackground(ChoixMoyenPaiementVoirie.this.BUTTON_COLOR);
-			}
-		});
-
 		card.add(lblIcon, gbc);
 		card.add(lblTitle, gbc);
 		gbc.insets = new Insets(0, 0, 25, 0);
@@ -158,6 +149,30 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		card.add(btn, gbc);
 
 		return card;
+	}
+
+	public void addCarteListener(ActionListener listener) {
+		btnCarte.addActionListener(listener);
+	}
+
+	public void addVirementListener(ActionListener listener) {
+		btnVirement.addActionListener(listener);
+	}
+
+	public ZoneVoirie getZone() {
+		return zone;
+	}
+
+	public String getImmatriculation() {
+		return immatriculation;
+	}
+
+	public int getDuree() {
+		return duree;
+	}
+
+	public double getPrix() {
+		return prix;
 	}
 
 	private class IconCard implements Icon {
