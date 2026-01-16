@@ -19,11 +19,14 @@ import controleur.ControleurLoginPage;
 
 public class LoginPage extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private PlaceholderTextField loginField;
-	private JPasswordField passwdField;
 	private JButton btnValider;
+	TemplateSaisie saisieLogin;
+	TemplateSaisie saisieMdp;
 
 	public LoginPage() {
+		this.saisieLogin = new TemplateSaisie("Identifiant", "prenom.nom@exemple.fr");
+		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true); 
+		
 		this.setLayout(new BorderLayout());
 		this.setBackground(new Color(248, 249, 250));
 
@@ -88,43 +91,9 @@ public class LoginPage extends JPanel {
 
 		formPanel.add(Box.createVerticalStrut(28));
 
-		JLabel loginLabel = new JLabel("Identifiant");
-		loginLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		loginLabel.setForeground(new Color(73, 80, 87));
-		loginLabel.setAlignmentX(LEFT_ALIGNMENT);
-		formPanel.add(loginLabel);
 
-		formPanel.add(Box.createVerticalStrut(6));
-
-		this.loginField = new PlaceholderTextField("prenom.nom@exemple.fr", 20);
-		this.loginField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		this.loginField.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(206, 212, 218), 1, true),
-				new EmptyBorder(10, 12, 10, 12)));
-		this.loginField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
-		this.loginField.setBackground(new Color(251, 252, 253));
-		this.loginField.setAlignmentX(LEFT_ALIGNMENT);
-		formPanel.add(this.loginField);
-
-		formPanel.add(Box.createVerticalStrut(18));
-
-		JLabel passwdLabel = new JLabel("Mot de passe");
-		passwdLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		passwdLabel.setForeground(new Color(73, 80, 87));
-		passwdLabel.setAlignmentX(LEFT_ALIGNMENT);
-		formPanel.add(passwdLabel);
-
-		formPanel.add(Box.createVerticalStrut(6));
-
-		this.passwdField = new JPasswordField();
-		this.passwdField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		this.passwdField.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(206, 212, 218), 1, true),
-				new EmptyBorder(10, 12, 10, 12)));
-		this.passwdField.setBackground(new Color(251, 252, 253));
-		this.passwdField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
-		this.passwdField.setAlignmentX(LEFT_ALIGNMENT);
-		formPanel.add(this.passwdField);
+		formPanel.add(saisieLogin);
+		formPanel.add(saisieMdp);
 
 		formPanel.add(Box.createVerticalStrut(24));
 
@@ -155,15 +124,15 @@ public class LoginPage extends JPanel {
 
 		ControleurLoginPage controleur = new ControleurLoginPage(this);
 		this.btnValider.addActionListener(controleur);
-		this.passwdField.addActionListener(controleur);
+		saisieMdp.getField().addActionListener(controleur);
 	}
 
 	public String getLogin() {
-		return this.loginField.getText();
+		return this.saisieLogin.getText();
 	}
 
 	public String getMdp() {
-		return new String(this.passwdField.getPassword());
+		return new String(this.saisieMdp.getPassword());
 	}
 
 	public void setActifBoutonValider(Boolean b) {
@@ -171,6 +140,6 @@ public class LoginPage extends JPanel {
 	}
 
 	public void viderChampMdp() {
-		this.passwdField.setText("");
+		this.saisieMdp.setText("");
 	}
 }
