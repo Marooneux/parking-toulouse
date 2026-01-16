@@ -5,13 +5,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ReservationParking;
-import controleur.ControleurPaiementVirementParking;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PaiementVirementParking extends JFrame {
+public class PaiementVirementParking extends JPanel {
     
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color BUTTON_COLOR = new Color(13, 110, 253);
@@ -22,11 +21,6 @@ public class PaiementVirementParking extends JFrame {
     public PaiementVirementParking(ReservationParking reservation, double prix) {
     	this.reservation = reservation;
     	this.prix = prix;
-    	
-        setTitle("Virement Bancaire");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(450, 500);
-        setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(BACKGROUND_COLOR);
@@ -69,9 +63,8 @@ public class PaiementVirementParking extends JFrame {
         formCard.add(btnPayer);
 
         mainPanel.add(formCard);
-        add(mainPanel);
-
-        new ControleurPaiementVirementParking(this);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     private JButton btnPayer;

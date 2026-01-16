@@ -123,6 +123,5 @@ public class ControleurChoixParking implements ActionListener {
 
 	private void onParkingSelected(Parking parking) {
 		new ControleurSaisirHeureArriveParking(parking);
-		this.vue.dispose();
 	}
 }

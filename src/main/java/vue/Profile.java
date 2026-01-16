@@ -2,7 +2,6 @@ package vue;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import controleur.ControleurProfile;
 import modele.Utilisateur;
@@ -12,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class Profile extends JFrame {
+public class Profile extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,12 +46,11 @@ public class Profile extends JFrame {
     }
 
     private void initialize() {
-        setTitle("Mon Espace Utilisateur");
-        setBounds(100, 100, 1000, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        this.setLayout(new BorderLayout());
+        this.setBackground(new Color(248, 249, 250));
+
         layeredPane = new JLayeredPane();
-        setContentPane(layeredPane);
+        this.add(layeredPane, BorderLayout.CENTER);
 
         // 1. Main Content (CardLayout)
         mainContentPanel = new JPanel();
@@ -78,7 +76,7 @@ public class Profile extends JFrame {
         createTopRightButton(); 
 
         // 4. Gestion redimensionnement
-        addComponentListener(new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 updateLayoutBounds();
@@ -99,8 +97,8 @@ public class Profile extends JFrame {
     }
 
     private void updateLayoutBounds() {
-        int w = getContentPane().getWidth();
-        int h = getContentPane().getHeight();
+        int w = this.getWidth();
+        int h = this.getHeight();
 
         // Gestion de la sidebar (code existant)
         if (sidebarPanel.isVisible()) {

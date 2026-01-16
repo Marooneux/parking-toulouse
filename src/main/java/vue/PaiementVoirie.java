@@ -12,7 +12,6 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,12 +22,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import modele.ZoneVoirie;
-import controleur.ControleurPaiementVoirie;
-
-public class PaiementVoirie extends JFrame {
+public class PaiementVoirie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField textFieldNom;
 	private JTextField textFieldNumCarte;
 	private JTextField textFieldExpiration;
@@ -44,15 +40,10 @@ public class PaiementVoirie extends JFrame {
 		this.immatriculation = immatriculation;
 		this.duree = duree;
 		this.prix = prix;
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(520, 480);
-		this.setLocationRelativeTo(null);
 
-		this.contentPane = new JPanel();
-		this.contentPane.setLayout(new BorderLayout(20, 20));
-		this.contentPane.setBackground(Color.WHITE);
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setContentPane(this.contentPane);
+		this.setLayout(new BorderLayout(20, 20));
+		this.setBackground(Color.WHITE);
+		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// HEADER
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -77,7 +68,7 @@ public class PaiementVoirie extends JFrame {
 		titreZone.add(lblSousTitre);
 
 		header.add(titreZone);
-		this.contentPane.add(header, BorderLayout.NORTH);
+		this.add(header, BorderLayout.NORTH);
 
 		// CARD CENTRAL
 		JPanel card = new JPanel();
@@ -86,7 +77,7 @@ public class PaiementVoirie extends JFrame {
 				BorderFactory.createLineBorder(new Color(220, 220, 220)),
 				new EmptyBorder(20, 20, 20, 20)));
 		card.setLayout(new GridLayout(4, 1, 15, 15));
-		this.contentPane.add(card, BorderLayout.CENTER);
+		this.add(card, BorderLayout.CENTER);
 
 		// --- CHAMP NOM ---
 		this.textFieldNom = new PlaceholderTextField("Nom Prénom", 20);
@@ -134,8 +125,6 @@ public class PaiementVoirie extends JFrame {
 		btnPayer.setFocusPainted(false);
 		btnPayer.setPreferredSize(new Dimension(160, 40));
 		panelBtn.add(btnPayer);
-
-		new ControleurPaiementVoirie(this);
 
 		card.add(panelBtn);
 	}

@@ -20,16 +20,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurChoixMoyenPaiementVoirie;
 import modele.ZoneVoirie;
 
-public class ChoixMoyenPaiementVoirie extends JFrame {
+public class ChoixMoyenPaiementVoirie extends JPanel {
 
 	private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
 	private final Color CARD_COLOR = Color.WHITE;
@@ -50,10 +48,6 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		this.duree = duree;
 		this.prix = prix;
 
-		this.setTitle("Moyen de Paiement");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(850, 550);
-		this.setLocationRelativeTo(null);
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(this.BACKGROUND_COLOR);
@@ -91,9 +85,8 @@ public class ChoixMoyenPaiementVoirie extends JFrame {
 		mainPanel.add(headerPanel, BorderLayout.NORTH);
 		mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
-		this.add(mainPanel);
-
-		new ControleurChoixMoyenPaiementVoirie(this, zone2, immatriculation, duree, prix);
+		this.setLayout(new BorderLayout());
+		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
 	private JButton buildPaymentButton(String buttonText) {

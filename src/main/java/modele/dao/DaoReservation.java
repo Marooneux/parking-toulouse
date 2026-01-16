@@ -8,7 +8,6 @@ import java.util.List;
 import modele.Parking;
 import modele.ReservationParking;
 import modele.Utilisateur;
-import modele.dao.requetes.RequeteSelectParking;
 
 public class DaoReservation extends DaoModele<ReservationParking> {
 
@@ -17,23 +16,22 @@ public class DaoReservation extends DaoModele<ReservationParking> {
 
 	@Override
 	public void create(ReservationParking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("create not implemented");
 	}
 
 	@Override
 	public void update(ReservationParking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("update not implemented");
 	}
 
 	@Override
 	public void delete(ReservationParking donnees) throws SQLException {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("delete not implemented");
 	}
 
 	@Override
 	public List<ReservationParking> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("findAll not implemented");
 	}
 
 	@Override

@@ -13,9 +13,9 @@ import modele.dao.MySQLDataSource;
 import modele.Utilisateur.Type;
 import utils.AuthManager;
 import vue.LoginPage;
+import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
-import vue.adminParking.GestionParking;
 import vue.adminParking.ModifierParking;
 
 public class ControleurAccueilAdminParking implements ActionListener {
@@ -30,8 +30,7 @@ public class ControleurAccueilAdminParking implements ActionListener {
 		this.idAdmin = idAdmin;
 
 		if (!AuthManager.ensureAuthorized(Type.SYSADMIN.name(), Type.PARKINGADMIN.name())) {
-			this.vue.dispose();
-			new LoginPage().setVisible(true);
+			NavigationFrame.getInstance().showPage("login", LoginPage::new, "Connexion");
 			return;
 		}
 
@@ -39,7 +38,7 @@ public class ControleurAccueilAdminParking implements ActionListener {
 
 		registerListeners();
 		chargerParkings();
-		vue.setVisible(true);
+		NavigationFrame.getInstance().showPage("admin-home", () -> this.vue, "Administration");
 	}
 
 	private void registerListeners() {
@@ -69,19 +68,18 @@ public class ControleurAccueilAdminParking implements ActionListener {
 	public void ouvrirPageAjouter(int idAdmin) {
 		AjouterParking vueAjout = new AjouterParking(idAdmin);
 		new ControleurAjouterParking(vueAjout, idAdmin);
-		vueAjout.setVisible(true);
+		NavigationFrame.getInstance().showPage("admin-add", () -> vueAjout, "Ajouter un parking");
 	}
     
 	private void ouvrirPageModification(Parking parking) {
 		ModifierParking vueModif = new ModifierParking(parking);
 		new ControleurModifierParking(vueModif, parking, idAdmin);
-		vueModif.setVisible(true);
-		vue.dispose();
+		String key = "admin-edit-" + parking.getId();
+		NavigationFrame.getInstance().showPage(key, () -> vueModif, "Modifier le parking");
 	}
 
 	private void onParkingSelected(Parking parking) {
-		GestionParking vueSuivante = new GestionParking(parking);
-		vueSuivante.setVisible(true);
+		vue.afficherFormulaireEdition(parking);
 	}
 
 	private void supprimerParking(Parking parking) {
@@ -93,10 +91,8 @@ public class ControleurAccueilAdminParking implements ActionListener {
 			try {
 				this.daoParking.delete(parking);
 				JOptionPane.showMessageDialog(this.vue, "Parking supprimé avec succès !");
-				this.vue.dispose();
-				Accueil nouvelleVue = new Accueil(this.idAdmin);
-				new ControleurAccueilAdminParking(nouvelleVue, this.idAdmin);
-				nouvelleVue.setVisible(true);
+				chargerParkings();
+				vue.showParkings();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 				JOptionPane.showMessageDialog(this.vue, "Erreur lors de la suppression du parking.");
@@ -110,12 +106,10 @@ public class ControleurAccueilAdminParking implements ActionListener {
 
 		if (source == vue.getBtnValiderAjout()) {
 			ouvrirPageAjouter(idAdmin);
-			vue.dispose();
 			return;
 		}
 
 		if (source == vue.getBtnEnregistrerModification()) {
-			// TODO: enregistrer modifications si nécessaire
 			vue.showParkings();
 			return;
 		}

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import vue.ConfirmationPaiementParking;
 import vue.PaiementVirementParking;
+import vue.NavigationFrame;
 
 public class ControleurPaiementVirementParking implements ActionListener {
 
@@ -21,8 +22,8 @@ public class ControleurPaiementVirementParking implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             ConfirmationPaiementParking confirmation = new ConfirmationPaiementParking(vue.getReservation(), vue.getPrix());
-            confirmation.setVisible(true);
-            vue.dispose();
+            new ControleurConfirmationPaiementParking(confirmation, vue.getReservation(), vue.getPrix());
+            NavigationFrame.getInstance().showPage("parking-confirmation", () -> confirmation, "Paiement validé");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
             ex.printStackTrace();

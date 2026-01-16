@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -19,10 +17,9 @@ import javax.swing.border.LineBorder;
 import modele.Parking;
 import modele.ReservationParking;
 
-public class TicketParking extends JFrame {
+public class TicketParking extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JButton btnPaiement;
 	private JLabel lblNumeroTicket;
 	private JLabel lblParking;
@@ -39,20 +36,14 @@ public class TicketParking extends JFrame {
 		this.parking = reservation.getParking();
 		this.immatriculation = plaque;
 		this.heureArrivee = heureArrivee;
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 750, 600);
-		this.setTitle("Ticket de sortie");
 
-		this.contentPane = new JPanel();
-		this.contentPane.setBackground(new Color(255, 255, 255));
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BorderLayout(0, 0));
+			this.setBackground(new Color(255, 255, 255));
+			this.setBorder(new EmptyBorder(20, 20, 20, 20));
+			this.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelHeader = new JPanel();
 		panelHeader.setBackground(new Color(255, 255, 255));
-		this.contentPane.add(panelHeader, BorderLayout.NORTH);
+		this.add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BorderLayout(20, 0));
 
 		JLabel lblIcon = new JLabel("P");
@@ -81,7 +72,7 @@ public class TicketParking extends JFrame {
 		JPanel panelCenterContainer = new JPanel();
 		panelCenterContainer.setBackground(new Color(255, 255, 255));
 		panelCenterContainer.setBorder(new EmptyBorder(20, 80, 10, 80));
-		this.contentPane.add(panelCenterContainer, BorderLayout.CENTER);
+		this.add(panelCenterContainer, BorderLayout.CENTER);
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
@@ -106,7 +97,7 @@ public class TicketParking extends JFrame {
 		JPanel panelFooter = new JPanel();
 		panelFooter.setBackground(new Color(255, 255, 255));
 		panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
-		this.contentPane.add(panelFooter, BorderLayout.SOUTH);
+		this.add(panelFooter, BorderLayout.SOUTH);
 		panelFooter.setLayout(new GridLayout(2, 1, 0, 10));
 
 		JLabel lblWarning = new JLabel("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");

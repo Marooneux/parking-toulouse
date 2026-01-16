@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -22,10 +21,9 @@ import javax.swing.border.LineBorder;
 import modele.ZoneVoirie;
 import controleur.ControleurTicketVoirie;
 
-public class TicketVoirie extends JFrame {
+public class TicketVoirie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
@@ -41,25 +39,20 @@ public class TicketVoirie extends JFrame {
 		this.duree = duree;
 		this.moyenPaiement = moyenPaiement;
 		
-		this.couleur = convertirCouleur(zone.getCouleur());
+		this.couleur = convertirCouleur(this.zone.getCouleur());
 
 		// 2. On applique la couleur au texte de la zone
-		this.nomZone = new JLabel(zone.getCouleur());
+		this.nomZone = new JLabel(this.zone.getCouleur());
 		this.nomZone.setForeground(this.couleur); 
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 750, 600);
-		this.setTitle("Ticket de voirie");
 
-		this.contentPane = new JPanel();
-		this.contentPane.setBackground(new Color(255, 255, 255));
-		this.contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BorderLayout(0, 0));
+		this.setBackground(new Color(255, 255, 255));
+		this.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelHeader = new JPanel();
 		panelHeader.setBackground(new Color(255, 255, 255));
-		this.contentPane.add(panelHeader, BorderLayout.NORTH);
+		this.add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BorderLayout(20, 0));
 
 		// 3. Configuration du Rond P (défini plus bas)
@@ -85,7 +78,7 @@ public class TicketVoirie extends JFrame {
 		JPanel panelCenterContainer = new JPanel();
 		panelCenterContainer.setBackground(new Color(255, 255, 255));
 		panelCenterContainer.setBorder(new EmptyBorder(20, 80, 10, 80));
-		this.contentPane.add(panelCenterContainer, BorderLayout.CENTER);
+		this.add(panelCenterContainer, BorderLayout.CENTER);
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
@@ -102,16 +95,16 @@ public class TicketVoirie extends JFrame {
 
 		this.createInfoRow(panelInfoGrid, "Numéro de Ticket :", new JLabel("#V-00001"));
 		this.createInfoRow(panelInfoGrid, "Zone :", this.nomZone); // Ici le JLabel est déjà coloré
-		this.createInfoRow(panelInfoGrid, "Immatriculation :", new JLabel(immatriculation));
+		this.createInfoRow(panelInfoGrid, "Immatriculation :", new JLabel(this.immatriculation));
 		this.createInfoRow(panelInfoGrid, "Heure d'arrivée :", new JLabel(ControleurTicketVoirie.getHeureActuelle()));
 		this.createInfoRow(panelInfoGrid, "Heure départ max :",
-				new JLabel(ControleurTicketVoirie.calculerHeureDepart(duree)));
-		this.createInfoRow(panelInfoGrid, "Moyen de paiement :", new JLabel(moyenPaiement));
+				new JLabel(ControleurTicketVoirie.calculerHeureDepart(this.duree)));
+		this.createInfoRow(panelInfoGrid, "Moyen de paiement :", new JLabel(this.moyenPaiement));
 
 		JPanel panelFooter = new JPanel();
 		panelFooter.setBackground(new Color(255, 255, 255));
 		panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
-		this.contentPane.add(panelFooter, BorderLayout.SOUTH);
+		this.add(panelFooter, BorderLayout.SOUTH);
 		panelFooter.setLayout(new GridLayout(2, 1, 0, 10));
 
 		JLabel lblWarning = new JLabel("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");
@@ -133,8 +126,6 @@ public class TicketVoirie extends JFrame {
 		btnPaiement.setFocusPainted(false);
 		btnPaiement.setBorderPainted(false);
 		btnPaiement.setPreferredSize(new Dimension(200, 45));
-
-		new ControleurTicketVoirie(this);
 
 	}
 

@@ -9,6 +9,7 @@ import modele.ReservationParking;
 import vue.ChoixMoyenPaiementParking;
 import vue.PaiementParking;
 import vue.PaiementVirementParking;
+import vue.NavigationFrame;
 
 public class ControleurChoixMoyenPaiementParking implements ActionListener {
 
@@ -31,15 +32,15 @@ public class ControleurChoixMoyenPaiementParking implements ActionListener {
         try {
             if ("CARTE".equals(command)) {
                 PaiementParking pagePaiementCB = new PaiementParking(reservation, prix);
-                pagePaiementCB.setVisible(true);
-                vue.dispose();
+                new ControleurPaiementParking(pagePaiementCB);
+                NavigationFrame.getInstance().showPage("parking-paiement-carte", () -> pagePaiementCB, "Paiement par carte");
                 return;
             }
 
             if ("VIREMENT".equals(command)) {
                 PaiementVirementParking pageVirement = new PaiementVirementParking(reservation, prix);
-                pageVirement.setVisible(true);
-                vue.dispose();
+                new ControleurPaiementVirementParking(pageVirement);
+                NavigationFrame.getInstance().showPage("parking-paiement-virement", () -> pageVirement, "Paiement par virement");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");

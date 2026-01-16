@@ -16,25 +16,22 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurChoixZone;
-import modele.ZoneVoirie;
 import controleur.ControleurSaisirDureeStationnement;
+import modele.ZoneVoirie;
 
-public class ChoixZone extends JFrame {
+public class ChoixZone extends JPanel {
 	
 	private ControleurChoixZone controleur;
 
 	public ChoixZone() {
 		this.controleur = new ControleurChoixZone(this);
-		this.setBounds(100, 100, 1100, 850);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
 		header.setBackground(new Color(250, 250, 250));
@@ -60,7 +57,7 @@ public class ChoixZone extends JFrame {
 		texte.add(lblSousTitre);
 
 		header.add(texte);
-		this.getContentPane().add(header, BorderLayout.NORTH);
+		this.add(header, BorderLayout.NORTH);
 
 		JPanel mainCenterPanel = new JPanel();
 		mainCenterPanel.setBackground(new Color(245, 247, 250));
@@ -96,7 +93,7 @@ public class ChoixZone extends JFrame {
 		gridContainer.add(row2);
 
 		mainCenterPanel.add(gridContainer);
-		this.getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
+		this.add(mainCenterPanel, BorderLayout.CENTER);
 	}
 
 
@@ -209,7 +206,7 @@ public class ChoixZone extends JFrame {
 					SaisirDureeStationnement frameDureeStationnement = new SaisirDureeStationnement(zone);
 					new ControleurSaisirDureeStationnement(zone, frameDureeStationnement);
 					frameDureeStationnement.setVisible(true);
-					ChoixZone.this.dispose();
+					// navigation is now handled by controllers; no frame disposal here
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

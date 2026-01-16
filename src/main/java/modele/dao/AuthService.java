@@ -17,7 +17,7 @@ public class AuthService {
 	 */
 	public static Utilisateur authenticate(String email, String mdp) throws SQLException {
 		Connection cn = MySQLDataSource.getConnexion();
-		String sql = "SELECT * FROM utilisateurs WHERE email=?";
+		String sql = "SELECT id, nom, prenom, email, mdp, user_type FROM utilisateurs WHERE email=?";
 		PreparedStatement ps = cn.prepareStatement(sql);
 		ps.setString(1, email);
 		ResultSet rs = ps.executeQuery();
@@ -27,20 +27,36 @@ public class AuthService {
 			try {
 				valide = PasswordUtil.checkMdp(mdp, stored);
 			} catch (Exception e) {
-				// Fallback
+				// ignore bcrypt parsing issues, fall back to plaintext below
+			}
+			if (!valide && stored != null) {
+				valide = stored.equals(mdp);
 			}
 			if (!valide) {
-				valide = stored != null && stored.equals(mdp);
 				return null;
 			}
 			return new Utilisateur(
-					rs.getInt("id_utilisateur"),
+					rs.getInt("id"),
 					rs.getString("nom"),
 					rs.getString("prenom"),
 					rs.getString("email"),
-					rs.getString("mot_de_passe"),
-					Type.valueOf(rs.getString("type")));
+					stored,
+					parseType(rs.getString("user_type")));
 		}
 		return null;
+	}
+
+	private static Type parseType(String dbValue) {
+		if (dbValue == null) {
+			return Type.CLIENT;
+		}
+		switch (dbValue.trim().toUpperCase()) {
+		case "PARKINGADMIN":
+			return Type.PARKINGADMIN;
+		case "SYSADMIN":
+			return Type.SYSADMIN;
+		default:
+			return Type.CLIENT;
+		}
 	}
 }

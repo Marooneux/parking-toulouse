@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 import modele.Parking;
 
-public class ModifierParking extends JFrame {
+public class ModifierParking extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,14 +33,12 @@ public class ModifierParking extends JFrame {
     }
 
     private void initialize() {
-        setTitle("Modifier un parking");
-        setSize(450, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setLayout(new BorderLayout(10, 10));
+        this.setBorder(new EmptyBorder(15, 15, 15, 15));
 
         JPanel content = new JPanel(new BorderLayout(10, 10));
-        content.setBorder(new EmptyBorder(15, 15, 15, 15));
-        setContentPane(content);
+        content.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.add(content, BorderLayout.CENTER);
 
         JLabel title = new JLabel("Modification du parking");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));

@@ -6,6 +6,7 @@ import modele.Parking;
 import modele.dao.DaoParking;
 import vue.adminParking.Accueil;
 import vue.adminParking.ModifierParking;
+import vue.NavigationFrame;
 
 public class ControleurModifierParking {
 
@@ -30,11 +31,9 @@ public class ControleurModifierParking {
     }
 
     private void fermer() {
-    	 vue.dispose(); // ferme la page modifier
-
-    	 Accueil vueChoix = new Accueil(idAdmin);
-    	 new ControleurAccueilAdminParking(vueChoix, idAdmin);
-    	 vueChoix.setVisible(true);
+     	 Accueil vueChoix = new Accueil(idAdmin);
+     	 new ControleurAccueilAdminParking(vueChoix, idAdmin);
+     	 NavigationFrame.getInstance().showPage("admin-home", () -> vueChoix, "Administration");
     }
 
     private void valider() {
@@ -49,15 +48,14 @@ public class ControleurModifierParking {
     		parking.setHoraireOuverture(vue.getHeureOuverture());
             parking.setHoraireFermeture(vue.getHeureFermeture());
             parking.setContientPlacesMoto(vue.isContientPlacesMoto());
-            
+			
             daoParking.update(parking);
-            
+			
             JOptionPane.showMessageDialog(vue, "Parking modifié avec succès");
-    		
-            vue.dispose();
+			
             Accueil vueChoix = new Accueil(idAdmin);
             new ControleurAccueilAdminParking(vueChoix, idAdmin);
-            vueChoix.setVisible(true);
+            NavigationFrame.getInstance().showPage("admin-home", () -> vueChoix, "Administration");
             
     	} catch (Exception ex) {
     		ex.printStackTrace();

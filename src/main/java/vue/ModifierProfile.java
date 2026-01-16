@@ -1,13 +1,20 @@
 package vue;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import modele.Utilisateur;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
-public class ModifierProfile extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-    private JPanel contentPane;
+import modele.Utilisateur;
+
+public class ModifierProfile extends JPanel {
+
     private JTextField txtNom;
     private JTextField txtPrenom;
     private JTextField txtEmail;
@@ -17,71 +24,66 @@ public class ModifierProfile extends JFrame {
     private JButton btnAnnuler;
 
     public ModifierProfile() {
-        setTitle("Modifier mon profil");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // Fenêtre élargie pour contenir les labels longs
-        setBounds(100, 100, 500, 350); 
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        setBorder(new EmptyBorder(10, 10, 10, 10));
+        setLayout(null);
+        setPreferredSize(new Dimension(500, 350));
 
         // --- NOM ---
         JLabel lblNom = new JLabel("Nom :");
         lblNom.setBounds(30, 40, 160, 14); // Label élargi
-        contentPane.add(lblNom);
+        add(lblNom);
 
         txtNom = new JTextField();
         txtNom.setBounds(200, 37, 200, 20); // Champ décalé à droite
-        contentPane.add(txtNom);
+        add(txtNom);
         txtNom.setColumns(10);
 
         // --- PRENOM ---
         JLabel lblPrenom = new JLabel("Prénom :");
         lblPrenom.setBounds(30, 80, 160, 14);
-        contentPane.add(lblPrenom);
+        add(lblPrenom);
 
         txtPrenom = new JTextField();
         txtPrenom.setBounds(200, 77, 200, 20);
-        contentPane.add(txtPrenom);
+        add(txtPrenom);
         txtPrenom.setColumns(10);
 
         // --- EMAIL ---
         JLabel lblEmail = new JLabel("Email :");
         lblEmail.setBounds(30, 120, 160, 14);
-        contentPane.add(lblEmail);
+        add(lblEmail);
 
         txtEmail = new JTextField();
         txtEmail.setBounds(200, 117, 200, 20);
-        contentPane.add(txtEmail);
+        add(txtEmail);
         txtEmail.setColumns(10);
         
         // --- ANCIEN MDP ---
         JLabel lblAncienMdp = new JLabel("Ancien mot de passe :");
         lblAncienMdp.setBounds(30, 160, 160, 14);
-        contentPane.add(lblAncienMdp);
+        add(lblAncienMdp);
         
         txtAncienMdp = new JPasswordField();
         txtAncienMdp.setBounds(200, 157, 200, 20);
-        contentPane.add(txtAncienMdp);
+        add(txtAncienMdp);
 
         // --- NOUVEAU MDP ---
         JLabel lblNouveauMdp = new JLabel("Nouveau mot de passe :");
         lblNouveauMdp.setBounds(30, 200, 160, 14);
-        contentPane.add(lblNouveauMdp);
+        add(lblNouveauMdp);
 
         txtNouveauMdp = new JPasswordField();
         txtNouveauMdp.setBounds(200, 197, 200, 20);
-        contentPane.add(txtNouveauMdp);
+        add(txtNouveauMdp);
 
         // --- BOUTONS ---
         btnEnregistrer = new JButton("Enregistrer");
         btnEnregistrer.setBounds(200, 260, 110, 23);
-        contentPane.add(btnEnregistrer);
+        add(btnEnregistrer);
         
         btnAnnuler = new JButton("Annuler");
         btnAnnuler.setBounds(320, 260, 80, 23);
-        contentPane.add(btnAnnuler);
+        add(btnAnnuler);
     }
 
     // --- Méthodes pour le Contrôleur ---

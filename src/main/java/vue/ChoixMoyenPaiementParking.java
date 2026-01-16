@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controleur.ControleurChoixMoyenPaiementParking;
 import modele.ReservationParking;
 
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ChoixMoyenPaiementParking extends JFrame {
+public class ChoixMoyenPaiementParking extends JPanel {
 
     private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private final Color CARD_COLOR = Color.WHITE;
@@ -30,11 +29,6 @@ public class ChoixMoyenPaiementParking extends JFrame {
     public ChoixMoyenPaiementParking(ReservationParking reservation, double prix) {
     	this.reservation = reservation;
     	this.prix = prix;
-    	
-        setTitle("Moyen de Paiement");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(850, 550);
-        setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BACKGROUND_COLOR);
@@ -74,9 +68,8 @@ public class ChoixMoyenPaiementParking extends JFrame {
         mainPanel.add(headerPanel, BorderLayout.NORTH);
         mainPanel.add(cardsContainer, BorderLayout.CENTER);
 
-        add(mainPanel);
-
-        new ControleurChoixMoyenPaiementParking(this, reservation, prix);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     private JButton buildPaymentButton(String buttonText) {

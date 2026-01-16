@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import modele.Utilisateur;
 import modele.dao.DaoUtilisateur;
 import vue.ModifierProfile;
-// Importez votre DAO ici, ex: import dao.DaoUtilisateur;
 import vue.Profile;
+import vue.NavigationFrame;
 
 public class ControleurModifierProfile {
 
@@ -32,13 +32,9 @@ public class ControleurModifierProfile {
         this.vue.addAnnulerListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Profile profile = new Profile(utilisateur);
-                profile.setVisible(true);
-                vue.dispose();
+                afficherProfil();
             }
         });
-
-        this.vue.setVisible(true);
     }
 
     private void traiterEnregistrement() {
@@ -73,12 +69,16 @@ public class ControleurModifierProfile {
 
         
             vue.afficherMessage("Succès : Vos informations ont été mises à jour.");
-            Profile profile = new Profile(utilisateur);
-            profile.setVisible(true);
-            vue.dispose();
+            afficherProfil();
         } catch (Exception e) {
         	System.out.println(e);
             vue.afficherMessage("Erreur : Impossible de mettre à jour la base de données.");
         }
+    }
+
+    private void afficherProfil() {
+        Profile profile = new Profile(utilisateur);
+        new ControleurProfile(utilisateur, profile);
+        NavigationFrame.getInstance().showPage("profile", () -> profile, "Profil");
     }
 }

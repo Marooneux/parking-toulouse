@@ -9,15 +9,10 @@ import modele.dao.MySQLDataSource;
 import vue.ChoixZone;
 
 public class ControleurChoixZone {
-	
-	private ChoixZone vue;
-	private DaoZoneVoirie dao;
-	
+	private final DaoZoneVoirie dao;
 	
 	public ControleurChoixZone(ChoixZone vue) {
-		this.vue = vue;
 		this.dao = new DaoZoneVoirie();
-		
 		MySQLDataSource.creerAcces();
 	}
 

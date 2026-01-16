@@ -2,7 +2,6 @@ package modele.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
 import java.time.LocalTime;
 
