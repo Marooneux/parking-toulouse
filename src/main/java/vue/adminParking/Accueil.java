@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.function.Consumer;
 
 import controleur.ControleurAccueilAdminParking;
+import controleur.ControleurStatistique;
 import modele.Parking;
 
 public class Accueil extends JPanel {
@@ -22,6 +23,7 @@ public class Accueil extends JPanel {
     private CardLayout cardLayout;
     private JButton btnToggle;
     private static final int SIDEBAR_WIDTH = 200;
+    private Statistique statsPanel;
 
     private JPanel gridPanel;
     private JButton btnAjouter;
@@ -45,6 +47,8 @@ public class Accueil extends JPanel {
     public Accueil(int idAdmin) {
     	initialize();
     	new ControleurAccueilAdminParking(this, idAdmin);
+    	//statistique
+    	new ControleurStatistique(statsPanel);
     }
 
     private void initialize() {
@@ -349,11 +353,10 @@ public class Accueil extends JPanel {
     }
 
     private JPanel createStatsView() {
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(248, 249, 250));
-        panel.add(new JLabel("Statistiques à implémenter..."));
-        return panel;
+        statsPanel = new Statistique();
+        return statsPanel;
     }
+
 
     public void videListe() {
         if (this.gridPanel != null) {

@@ -73,7 +73,7 @@ public class DaoParking extends DaoModele<Parking> {
 
 		int tarif = rs.getInt("tarif");
 
-		int nbPlacesOccupees = rs.getInt("places_occupees");
+		//int nbPlacesOccupees = rs.getInt("places_occupees");
 
 		Parking parking = new Parking(
 				nom,
@@ -87,7 +87,7 @@ public class DaoParking extends DaoModele<Parking> {
 			);
 
 		parking.setId(id);
-		parking.setNbPlacesOccupees(nbPlacesOccupees);
+		//parking.setNbPlacesOccupees(nbPlacesOccupees);
 
 		return parking;
 	}
