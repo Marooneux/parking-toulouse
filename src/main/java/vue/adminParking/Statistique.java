@@ -272,7 +272,7 @@ public class Statistique extends JPanel {
         return item;
     }
 
-    // CHART PANELS — STYLE IMPROVED
+    // CHART PANELS 
     private class BarChartPanel extends JPanel {
         private static final long serialVersionUID = 1L;
 
@@ -501,7 +501,7 @@ public class Statistique extends JPanel {
 
 
 
-    // PUBLIC API (unchanged)
+    // PUBLIC API 
     public int getSelectedMonth() { return (Integer) cbMonth.getSelectedItem(); }
     public int getSelectedYear() { return (Integer) cbYear.getSelectedItem(); }
 
