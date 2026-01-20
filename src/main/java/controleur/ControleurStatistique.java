@@ -31,7 +31,7 @@ public class ControleurStatistique implements ActionListener {
 
         chargerDonnees();
 
-        vue.addRefreshListener(this);
+        vue.getBtnRefresh().addActionListener(this);
     }
 
     private void chargerDonnees() {
@@ -39,25 +39,36 @@ public class ControleurStatistique implements ActionListener {
             int month = vue.getSelectedMonth();
             int year = vue.getSelectedYear();
 
-            vue.setMontant(dao.getMontantMois(month, year));
-            vue.setSessions(dao.getTotalSessions(month, year));
-            vue.setZoneFavorite(dao.getZoneFavorite(month, year));
-            vue.setOccupation(dao.getOccupation(month, year));
+            // KPI values 
+            vue.setMontant(dao.getParkingMontantMois(month, year));
+            vue.setSessions(dao.getParkingTotalSessions(month, year));
+            vue.setOccupation(dao.getParkingOccupation(month, year));
 
-            vue.setSessionsPerDay(dao.getSessionsPerDay(month, year));
-            vue.setRevenueTrend(dao.getRevenueTrend(month, year));
-            vue.setZoneDistribution(dao.getZoneDistribution(month, year));
-            
-            vue.setRecentActivity(dao.getRecentActivity());
+            // Charts 
+            vue.setSessionsPerDay(dao.getParkingSessionsPerDay(month, year));
+            vue.setRevenueTrend(dao.getParkingRevenueTrend(month, year));
 
-            
-            vue.actualiserAffichage();
+            // Recent activity 
+            java.util.List<DaoStatistique.RecentActivity> raw = dao.getParkingRecentActivity(month, year);
+            java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();
+
+            for (DaoStatistique.RecentActivity a : raw) {
+                java.util.Map<String, Object> m = new java.util.HashMap<>();
+                m.put("lieu", a.lieu);
+                m.put("duree", formatDuree(a.dureeMinutes));
+                m.put("prix", a.tarif + "€");
+                m.put("date", a.date.toLocalDate().toString());
+                list.add(m);
+            }
+
+            vue.setRecentActivity(list);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            vue.showError("Erreur lors du chargement des statistiques.");
+            vue.showError("Erreur lors du chargement des statistiques parking.");
         }
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -65,4 +76,14 @@ public class ControleurStatistique implements ActionListener {
             chargerDonnees();
         }
     }
+
+    // Format duration 
+    private String formatDuree(int minutes) {
+        if (minutes < 60) return minutes + "min";
+        int h = minutes / 60;
+        int m = minutes % 60;
+        return m == 0 ? h + "h" : h + "h " + m + "min";
+    }
+    
+    
 }
