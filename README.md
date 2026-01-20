@@ -15,4 +15,4 @@ Pour utiliser l'application il suffit de se connecter via la page de connexion e
 ## Liens
 Lien vers le board : https://gitlab.info.iut-tlse3.fr/cmc4882a/sae3_2025_cumbane_munkh-erdene_nadiri_wacker/-/boards
 
-lien vers le dossier Teams : à ajouter
+Lien vers le dossier Teams : à ajouter
