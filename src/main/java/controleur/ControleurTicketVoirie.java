@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JOptionPane;
 
+import modele.Utilisateur;
+import utils.AuthManager;
+import vue.ChoixTypeStationnement;
+import vue.NavigationFrame;
 import vue.TicketVoirie;
 
 public class ControleurTicketVoirie implements ActionListener {
@@ -21,7 +25,10 @@ public class ControleurTicketVoirie implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(vue, "Stationnement terminé. Merci.");
+        Utilisateur user = AuthManager.getCurrentUser();        
+
+        NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
+                "Stationnement");
 	}
 
 	public static String calculerHeureDepart(int duree) {
