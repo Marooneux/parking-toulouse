@@ -8,10 +8,13 @@ import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 
 import modele.ReservationParking;
+import modele.Utilisateur;
 import modele.dao.DaoReservationParking;
 import modele.dao.MySQLDataSource;
 import utils.AuthManager;
+import vue.ChoixTypeStationnement;
 import vue.ConfirmationPaiementParking;
+import vue.NavigationFrame;
 
 public class ControleurConfirmationPaiementParking implements ActionListener {
 
@@ -47,7 +50,9 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 			} else {
 				dao.update(reservation);
 			}
-			System.exit(0);
+	        Utilisateur user = AuthManager.getCurrentUser();        
+	        NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
+	                     "Stationnement");
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");
 			ex.printStackTrace();
