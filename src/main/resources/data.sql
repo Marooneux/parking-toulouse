@@ -1,4 +1,4 @@
-INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, user_type) VALUES
+INSERT INTO utilisateurs (nom, prenom, email, mdp, user_type) VALUES
 ('Durand','Alice','alice.durand@mail.com','password123','client'),
 ('Martin','Bob','bob.martin@mail.com','password123','client'),
 ('Admin','Parking','admin.parking@mail.com','adminpass','parkingadmin'),
