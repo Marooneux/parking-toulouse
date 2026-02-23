@@ -37,7 +37,7 @@ INSERT INTO adresse_utilisateur (id_adresse, id_utilisateur) VALUES
 (2,2);
 
 INSERT INTO parkings
-(nom, capacite, hauteur_max, horaire_ouverture, horaire_fermeture, contient_places_moto, id_adresse, tarif_horaire)
+(nom, capacite, hauteur_max, horaire_ouverture, horaire_fermeture, contient_places_moto, id_adresse, tarif)
 VALUES
 ('Parking Arnaud Bernard',251,1.90,'07:00:00','23:00:00',1,3,3.39),
 ('Parking Du Barry',466,2.70,'07:00:00','23:00:00',1,4,1.85),
