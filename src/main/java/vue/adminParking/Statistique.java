@@ -109,13 +109,17 @@ public class Statistique extends JPanel {
         // BAR CHART 
         barChartPanel = new BarChartPanel();
         barChartPanel.setPreferredSize(new Dimension(0, 260));
-        content.add(wrapChart("Sessions par jour", barChartPanel));
+        JPanel barCard = wrapChart("Sessions par jour", barChartPanel);
+        barCard.add(createLegend("#007BFF", "Sessions"), BorderLayout.SOUTH);
+        content.add(barCard);
         content.add(Box.createVerticalStrut(25));
 
         // LINE CHART 
         lineChartPanel = new LineChartPanel();
         lineChartPanel.setPreferredSize(new Dimension(0, 260));
-        content.add(wrapChart("Revenus du mois", lineChartPanel));
+        JPanel lineCard = wrapChart("Revenus du mois", lineChartPanel);
+        lineCard.add(createLegend("#007BFF", "Revenus (€)"), BorderLayout.SOUTH);
+        content.add(lineCard);
         content.add(Box.createVerticalStrut(25));
 
         // RECENT ACTIVITY
@@ -186,11 +190,34 @@ public class Statistique extends JPanel {
         card.add(lbl, BorderLayout.NORTH);
         card.add(chart, BorderLayout.CENTER);
 
+
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setBackground(BG);
         wrapper.add(card, BorderLayout.CENTER);
 
         return wrapper;
+    }
+    
+    // ---------------------------------------------------------
+    // Legend
+    // ---------------------------------------------------------
+    
+    private JComponent createLegend(String colorHex, String label) {
+    	JPanel legend = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+    	legend.setBackground(Color.WHITE);
+    	
+    	JPanel colorBox =new JPanel();
+    	colorBox.setBackground(Color.decode(colorHex));
+    	colorBox.setPreferredSize(new Dimension(14,14));
+    	colorBox.setBorder(BorderFactory.createLineBorder(new Color(200,200,200)));
+    	
+    	JLabel lbl = new JLabel(label);
+    	lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    	lbl.setForeground(new Color(80,80,80));
+    	
+    	legend.add(colorBox);
+    	legend.add(lbl);
+    	return legend;
     }
 
     // ---------------------------------------------------------
@@ -250,7 +277,9 @@ public class Statistique extends JPanel {
     // ---------------------------------------------------------
     private static class BarChartPanel extends JPanel {
         private List<Integer> values = java.util.Collections.emptyList();
-
+        private final String[] labels = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"};
+        
+        
         public void setData(List<Integer> v) { values = v; repaint(); }
 
         @Override
@@ -284,6 +313,28 @@ public class Statistique extends JPanel {
                         x, y + bh, new Color(0, 123, 255, 120)));
                 g2.fillRoundRect(x + 4, y, barW - 8, bh, 10, 10);
             }
+            //label desous bar charte
+            g2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            g2.setColor(new Color(80, 80, 80));
+
+            for (int i = 0; i < values.size() && i < labels.length; i++) {
+                int x = pad + i * barW + barW / 2;
+                int y = h - pad + 18;
+                String text = labels[i];
+
+                int textWidth = g2.getFontMetrics().stringWidth(text);
+                g2.drawString(text, x - textWidth / 2, y);
+            }
+            
+            // Label de Y axis
+            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setColor(new Color(100, 100, 100));
+            for(int i = 0; i<=5; i++) {
+            	double value = max * (4-i) / 4.0;
+            	String label = String.format("%.0f", value);
+            	int y = pad + i * (h - pad * 2) / 4;
+            	g2.drawString(label, pad - 25, y+4);
+            }
         }
     }
 
@@ -292,7 +343,13 @@ public class Statistique extends JPanel {
     // ---------------------------------------------------------
     private static class LineChartPanel extends JPanel {
         private List<Double> values = java.util.Collections.emptyList();
-
+        private List<String> xLabels = java.util.Collections.emptyList();
+        
+        public void setLabels(List<String> labels) {
+        	this.xLabels = labels;
+        	repaint();
+        }
+        
         public void setData(List<Double> v) { values = v; repaint(); }
 
         @Override
@@ -317,6 +374,16 @@ public class Statistique extends JPanel {
                 g2.drawLine(pad, y, w - pad, y);
             }
 
+         // Y-axis labels (€)
+            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setColor(new Color(100, 100, 100));
+            for (int i = 0; i <= 4; i++) {
+                double value = max * (4 - i) / 4.0;
+                String label = String.format("%.0f€", value);
+                int y = pad + i * (h - pad * 2) / 4;
+                g2.drawString(label, pad - 35, y + 4);
+            }
+
             int[] xs = new int[n];
             int[] ys = new int[n];
 
@@ -325,8 +392,13 @@ public class Statistique extends JPanel {
                 ys[i] = h - pad - (int) (values.get(i) / max * (h - pad * 2));
             }
 
-            // Area
-            g2.setColor(new Color(0, 123, 255, 60));
+            // Area gradient
+            GradientPaint gp = new GradientPaint(
+                    0, pad, new Color(0, 123, 255, 90),
+                    0, h - pad, new Color(0, 123, 255, 10)
+            );
+            g2.setPaint(gp);
+
             Polygon area = new Polygon();
             area.addPoint(xs[0], h - pad);
             for (int i = 0; i < n; i++) area.addPoint(xs[i], ys[i]);
@@ -338,6 +410,25 @@ public class Statistique extends JPanel {
             g2.setStroke(new BasicStroke(2.5f));
             for (int i = 0; i < n - 1; i++) {
                 g2.drawLine(xs[i], ys[i], xs[i + 1], ys[i + 1]);
+            }
+
+            // Points
+            for (int i = 0; i < n; i++) {
+                g2.fillOval(xs[i] - 4, ys[i] - 4, 8, 8);
+            }
+
+            // X-axis labels (filtered)
+            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setColor(new Color(80, 80, 80));
+
+            int skip = Math.max(1, n / 7); // environ 7 labels max
+
+            for (int i = 0; i < n && i < xLabels.size(); i++) {
+                if (i % skip != 0) continue;
+
+                String text = xLabels.get(i);
+                int textWidth = g2.getFontMetrics().stringWidth(text);
+                g2.drawString(text, xs[i] - textWidth / 2, h - pad + 18);
             }
         }
     }
