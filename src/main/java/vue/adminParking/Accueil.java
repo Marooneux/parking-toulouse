@@ -54,6 +54,7 @@ public class Accueil extends JPanel {
     private void initialize() {
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(248, 249, 250));
+        this.setPreferredSize(new Dimension(1500, 800));
         
         layeredPane = new JLayeredPane();
         layeredPane.setLayout(null);
