@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import modele.ReservationParking;
 import modele.ReservationVoirie;
 import modele.dao.DaoReservationParking;
@@ -29,8 +31,16 @@ public class ControleurHistorique implements ActionListener {
         this.vue = vue;
 
         vue.addReloadListener(this);
-        chargerHistorique();
+
         vue.setVisible(true);
+        
+        vue.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                chargerHistorique();
+            }
+        });
+        chargerHistorique();
     }
 
     @Override
