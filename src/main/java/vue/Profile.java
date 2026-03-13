@@ -349,7 +349,7 @@ public class Profile extends JPanel {
         txtEditNom.setText(nom);
         txtEditPrenom.setText(prenom);
         txtEditEmail.setText(email);
-        txtEditMdp.setText(mdp);
+        txtEditMdp.setText("");
     }
     
     private void createTopRightButton() {
