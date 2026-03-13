@@ -30,11 +30,11 @@ public class ModifierProfile extends JPanel {
 
         // --- NOM ---
         JLabel lblNom = new JLabel("Nom :");
-        lblNom.setBounds(30, 40, 160, 14); // Label élargi
+        lblNom.setBounds(30, 40, 160, 14);
         add(lblNom);
 
         txtNom = new JTextField();
-        txtNom.setBounds(200, 37, 200, 20); // Champ décalé à droite
+        txtNom.setBounds(200, 37, 200, 20);
         add(txtNom);
         txtNom.setColumns(10);
 
