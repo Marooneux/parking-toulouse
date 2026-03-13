@@ -8,13 +8,15 @@ Pour utiliser l'application il suffit de se connecter via la page de connexion e
 
 ## Installation
 
-1. Créer la base de données avec le script schema.sql situé dans src/main/resources
+1. Cloner le projet avec `git clone https://gitlab.info.iut-tlse3.fr/cmc4882a/sae3_2025_cumbane_munkh-erdene_nadiri_wacker.git`
 
-2. Ajouter les données avec le deuxième script data.sql situé dans le même répertoire
+2. Créer la base de données avec le script schema.sql situé dans src/main/resources
 
-3. Avec Maven, les dépendences devraient s'installer automatiquement.
+3. Ajouter les données avec le deuxième script data.sql situé dans le même répertoire
 
-4. Compiler l'application avec Java 21
+4. Avec Maven, les dépendences devraient s'installer automatiquement.
+
+5. Compiler l'application avec Java 21
 
 Les tests s'exécutent avec JUnit 4
 
