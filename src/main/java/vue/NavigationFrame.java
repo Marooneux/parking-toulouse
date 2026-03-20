@@ -111,10 +111,21 @@ public final class NavigationFrame extends JFrame {
 	}
 
 	public void showPage(String key, Supplier<? extends Component> factory, String title) {
+		showPage(key, factory, title, false);
+	}
+
+	public void showPage(String key, Supplier<? extends Component> factory, String title, boolean forceRefresh) {
 		SwingUtilities.invokeLater(() -> {
 			if (this.currentKey != null && !this.currentKey.equals(key)) {
 				this.backStack.push(this.currentKey);
 				this.forwardStack.clear();
+			}
+
+			if (forceRefresh) {
+				Component existing = this.pages.remove(key);
+				if (existing != null) {
+					this.cardPanel.remove(existing);
+				}
 			}
 
 			Component page = this.pages.computeIfAbsent(key, k -> factory.get());
@@ -126,6 +137,8 @@ public final class NavigationFrame extends JFrame {
 			this.cardLayout.show(this.cardPanel, key);
 			this.setTitle(title);
 			this.titleLabel.setText(title);
+			this.cardPanel.revalidate();
+			this.cardPanel.repaint();
 			this.updateNavButtons();
 		});
 	}

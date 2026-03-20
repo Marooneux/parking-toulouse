@@ -14,14 +14,17 @@ import javax.swing.JOptionPane;
 
 import modele.Parking;
 import modele.ReservationParking;
+import modele.Utilisateur;
 import modele.Vehicule;
 import modele.dao.DaoReservationParking;
 import modele.dao.DaoVehicule;
 import modele.dao.MySQLDataSource;
 import utils.AuthManager;
+import vue.VehiculesPanel;
 import vue.NavigationFrame;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
+import controleur.ControleurVehicules;
 
 public class ControleurSaisirHeureArriveParking implements ActionListener {
 
@@ -80,29 +83,78 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
             }
 
             LocalDateTime dateArrivee = LocalDateTime.of(LocalDate.now(), heureArrivee);
-            if (AuthManager.getCurrentUser() == null) {
+            Utilisateur user = AuthManager.getCurrentUser();
+            if (user == null) {
                 JOptionPane.showMessageDialog(vue, "Vous devez être connecté pour réserver.");
                 return;
             }
 
-            ReservationParking reservation = new ReservationParking(dateArrivee, null, parking, AuthManager.getCurrentUser());
+            List<Vehicule> vehicules;
+            try {
+                MySQLDataSource.creerAcces();
+                vehicules = new DaoVehicule().findByUserId(user.getId());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(vue, "Impossible de vérifier vos véhicules.");
+                ex.printStackTrace();
+                return;
+            }
+            if (vehicules.isEmpty()) {
+                JOptionPane.showMessageDialog(vue, "Ajoutez un véhicule avant de vous garer.");
+                ouvrirVehicules(user);
+                return;
+            }
+            if (!immatriculationAutorisee(vehicules, plaque)) {
+                JOptionPane.showMessageDialog(vue, "Veuillez utiliser une plaque enregistrée dans votre profil.");
+                return;
+            }
 
             try {
                 MySQLDataSource.creerAcces();
-                new DaoReservationParking().create(reservation);
+                DaoReservationParking daoReservation = new DaoReservationParking();
+                ReservationParking active = daoReservation.findActiveByUserId(AuthManager.getCurrentUser().getId());
+                if (active != null) {
+                    JOptionPane.showMessageDialog(vue, "Vous êtes déjà garé. Quittez d'abord le parking.");
+                    return;
+                }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement de la réservation.");
+                JOptionPane.showMessageDialog(vue, "Impossible de vérifier votre stationnement en cours.");
                 ex.printStackTrace();
                 return;
             }
 
-            TicketParking ticket = new TicketParking(reservation, plaque, heure);
+            ReservationParking reservation = new ReservationParking(
+                    dateArrivee,
+                    null,
+                    parking,
+                    user);
+
+            TicketParking ticket = new TicketParking(reservation, plaque, heure, true);
             new ControleurTicketParking(ticket);
             NavigationFrame.getInstance().showPage("parking-ticket", () -> ticket, "Ticket parking");
 
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");
         }
+    }
+
+    private boolean immatriculationAutorisee(List<Vehicule> vehicules, String plaque) {
+        for (Vehicule vehicule : vehicules) {
+            if (vehicule.getImmatriculation().equalsIgnoreCase(plaque)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void ouvrirVehicules(Utilisateur user) {
+        NavigationFrame.getInstance().showPage(
+                "Vehicules",
+                () -> {
+                    VehiculesPanel panel = new VehiculesPanel(user);
+                    new ControleurVehicules(user, panel);
+                    return panel;
+                },
+                "Mes véhicules");
     }
 
     private void prefillPlaque() {

@@ -22,6 +22,9 @@ public class ChoixTypeStationnement extends JPanel {
     private JButton profileButton;
     private JButton btnParking;
     private JButton btnVoirie;
+    private JPanel activeTicketPanel;
+    private JLabel activeTicketDetails;
+    private JButton btnVoirTicket;
     
     public ChoixTypeStationnement() {
     	this(0);
@@ -59,7 +62,7 @@ public class ChoixTypeStationnement extends JPanel {
     		headerPanel.add(titleLabel, BorderLayout.WEST);
     		headerPanel.add(profileButton, BorderLayout.EAST);
 
-    		JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
+            JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
     		cardsContainer.setOpaque(false);
     		cardsContainer.setBorder(new EmptyBorder(20, 40, 40, 40));
 
@@ -80,8 +83,18 @@ public class ChoixTypeStationnement extends JPanel {
     		cardsContainer.add(cardParking);
     		cardsContainer.add(cardVoirie);
 
-    		mainPanel.add(headerPanel, BorderLayout.NORTH);
-    		mainPanel.add(cardsContainer, BorderLayout.CENTER);
+            JPanel contentPanel = new JPanel();
+            contentPanel.setOpaque(false);
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+
+            this.activeTicketPanel = createActiveTicketPanel();
+            this.activeTicketPanel.setVisible(false);
+            contentPanel.add(this.activeTicketPanel);
+            contentPanel.add(Box.createVerticalStrut(10));
+            contentPanel.add(cardsContainer);
+
+            mainPanel.add(headerPanel, BorderLayout.NORTH);
+            mainPanel.add(contentPanel, BorderLayout.CENTER);
 
     		this.add(mainPanel, BorderLayout.CENTER);
 
@@ -153,6 +166,65 @@ public class ChoixTypeStationnement extends JPanel {
 
     public JButton getBtnVoirie() {
         return this.btnVoirie;
+    }
+
+    public JButton getBtnVoirTicket() {
+        return this.btnVoirTicket;
+    }
+
+    public void afficherTicketActif(String parkingNom, String plaque, String heureArrivee) {
+        String nom = (parkingNom == null || parkingNom.isBlank()) ? "Parking" : parkingNom;
+        String immat = (plaque == null || plaque.isBlank()) ? "Inconnue" : plaque;
+        String heure = (heureArrivee == null || heureArrivee.isBlank()) ? "?" : heureArrivee;
+        this.activeTicketDetails.setText(nom + " | " + immat + " | Arrivee " + heure);
+        this.activeTicketPanel.setVisible(true);
+        revalidate();
+        repaint();
+    }
+
+    public void cacherTicketActif() {
+        this.activeTicketPanel.setVisible(false);
+        revalidate();
+        repaint();
+    }
+
+    private JPanel createActiveTicketPanel() {
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(220, 220, 220), 1),
+                new EmptyBorder(15, 20, 15, 20)));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel textPanel = new JPanel();
+        textPanel.setOpaque(false);
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+
+        JLabel title = new JLabel("Stationnement en cours");
+        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        title.setForeground(TEXT_COLOR);
+
+        this.activeTicketDetails = new JLabel(" ");
+        this.activeTicketDetails.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        this.activeTicketDetails.setForeground(SUBTEXT_COLOR);
+
+        textPanel.add(title);
+        textPanel.add(Box.createVerticalStrut(5));
+        textPanel.add(this.activeTicketDetails);
+
+        this.btnVoirTicket = new JButton("Voir le ticket");
+        this.btnVoirTicket.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        this.btnVoirTicket.setBackground(BUTTON_COLOR);
+        this.btnVoirTicket.setForeground(BUTTON_TEXT_COLOR);
+        this.btnVoirTicket.setFocusPainted(false);
+        this.btnVoirTicket.setBorder(new EmptyBorder(8, 15, 8, 15));
+        this.btnVoirTicket.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        panel.add(textPanel, BorderLayout.CENTER);
+        panel.add(this.btnVoirTicket, BorderLayout.EAST);
+
+        return panel;
     }
 
     private class IconP implements Icon {
