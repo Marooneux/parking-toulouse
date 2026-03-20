@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import modele.dao.DaoStatistique;
 import modele.dao.MySQLDataSource;
@@ -13,10 +15,10 @@ public class ControleurStatistique implements ActionListener {
 
     private final Statistique vue;
     private final DaoStatistique dao;
-
+    
     public ControleurStatistique(Statistique vue) {
         this.vue = vue;
-
+        
         MySQLDataSource.creerAcces();
 
         Connection c;
@@ -44,13 +46,23 @@ public class ControleurStatistique implements ActionListener {
             vue.setSessions(dao.getParkingTotalSessions(month, year));
             vue.setOccupation(dao.getParkingOccupation(month, year));
 
-            // Charts 
+            // Sessions per day (bar chart)
             vue.setSessionsPerDay(dao.getParkingSessionsPerDay(month, year));
-            vue.setRevenueTrend(dao.getParkingRevenueTrend(month, year));
+
+            // Revenue trend (WEEKLY)
+            List<Double> revenue = dao.getParkingRevenueTrend(month, year);
+            vue.setRevenueTrend(revenue);
+
+            // X-axis labels = Semaine 1, Semaine 2, ...
+            List<String> labels = new ArrayList<>();
+            for (int i = 1; i <= revenue.size(); i++) {
+                labels.add("Semaine " + i);
+            }
+            vue.setRevenueLabels(labels);
 
             // Recent activity 
-            java.util.List<DaoStatistique.RecentActivity> raw = dao.getParkingRecentActivity(month, year);
-            java.util.List<java.util.Map<String, Object>> list = new java.util.ArrayList<>();
+            List<DaoStatistique.RecentActivity> raw = dao.getParkingRecentActivity(month, year);
+            List<java.util.Map<String, Object>> list = new ArrayList<>();
 
             for (DaoStatistique.RecentActivity a : raw) {
                 java.util.Map<String, Object> m = new java.util.HashMap<>();
@@ -69,7 +81,6 @@ public class ControleurStatistique implements ActionListener {
         }
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vue.getBtnRefresh()) {
@@ -77,13 +88,10 @@ public class ControleurStatistique implements ActionListener {
         }
     }
 
-    // Format duration 
     private String formatDuree(int minutes) {
         if (minutes < 60) return minutes + "min";
         int h = minutes / 60;
         int m = minutes % 60;
         return m == 0 ? h + "h" : h + "h " + m + "min";
     }
-    
-    
 }
