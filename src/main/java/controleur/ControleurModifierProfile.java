@@ -51,11 +51,15 @@ public class ControleurModifierProfile {
         }
 
         if (!nouveauMdp.isEmpty()) {
-            if (!ancienMdp.equals(utilisateur.getMdp())) {
+            
+            // 1. On utilise PasswordUtil pour comparer le mot de passe en clair avec le hash
+            if (!utils.PasswordUtil.checkMdp(ancienMdp, utilisateur.getMdp())) {
                 vue.afficherMessage("Erreur : L'ancien mot de passe est incorrect.");
                 return;
             }
-            utilisateur.setMdp(ancienMdp, nouveauMdp);
+            
+            String nouveauMdpHash = utils.PasswordUtil.hashMdp(nouveauMdp);
+            utilisateur.setMdp(ancienMdp, nouveauMdpHash);
         }
 
         // Mise à jour des autres infos dans l'objet
