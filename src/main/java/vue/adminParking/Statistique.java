@@ -61,7 +61,7 @@ public class Statistique extends JPanel {
         left.add(title);
         left.add(Box.createVerticalStrut(4));
         left.add(subtitle);
-
+        
         cbMois = new JComboBox<>(new String[]{
                 "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
                 "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
@@ -109,7 +109,9 @@ public class Statistique extends JPanel {
         // BAR CHART 
         barChartPanel = new BarChartPanel();
         barChartPanel.setPreferredSize(new Dimension(0, 260));
-        JPanel barCard = wrapChart("Sessions par jour", barChartPanel);
+        //ajouté pour etre plus comprensible
+        JPanel barCard = wrapChart("Révenus par jour", barChartPanel);
+        //legende
         barCard.add(createLegend("#007BFF", "Sessions"), BorderLayout.SOUTH);
         content.add(barCard);
         content.add(Box.createVerticalStrut(25));
@@ -117,7 +119,9 @@ public class Statistique extends JPanel {
         // LINE CHART 
         lineChartPanel = new LineChartPanel();
         lineChartPanel.setPreferredSize(new Dimension(0, 260));
-        JPanel lineCard = wrapChart("Revenus du mois", lineChartPanel);
+        //ajouté pour etre plus comprensible
+        JPanel lineCard = wrapChart("Réservations du mois", lineChartPanel);
+        //legende 
         lineCard.add(createLegend("#007BFF", "Revenus (€)"), BorderLayout.SOUTH);
         content.add(lineCard);
         content.add(Box.createVerticalStrut(25));
@@ -244,6 +248,10 @@ public class Statistique extends JPanel {
     public void setSessionsPerDay(List<Integer> values) { barChartPanel.setData(values); }
 
     public void setRevenueTrend(List<Double> values) { lineChartPanel.setData(values); }
+    
+    public void setRevenueLabels(List<String> labels) {
+        lineChartPanel.setLabels(labels);
+    }
 
     public void setRecentActivity(List<Map<String, Object>> list) {
         recentActivityPanel.removeAll();
@@ -313,6 +321,8 @@ public class Statistique extends JPanel {
                         x, y + bh, new Color(0, 123, 255, 120)));
                 g2.fillRoundRect(x + 4, y, barW - 8, bh, 10, 10);
             }
+            
+            // Lun, Mar, Mer, Jeu, Ven, Sam, Dim sous chaque barre
             //label desous bar charte
             g2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
             g2.setColor(new Color(80, 80, 80));
@@ -326,6 +336,8 @@ public class Statistique extends JPanel {
                 g2.drawString(text, x - textWidth / 2, y);
             }
             
+           
+            //graduations verticales
             // Label de Y axis
             g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
             g2.setColor(new Color(100, 100, 100));
@@ -374,7 +386,8 @@ public class Statistique extends JPanel {
                 g2.drawLine(pad, y, w - pad, y);
             }
 
-         // Y-axis labels (€)
+            //graduations en euros
+            // Y-axis labels (€)
             g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
             g2.setColor(new Color(100, 100, 100));
             for (int i = 0; i <= 4; i++) {
