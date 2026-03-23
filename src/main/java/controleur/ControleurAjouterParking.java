@@ -57,7 +57,7 @@ public class ControleurAjouterParking {
             adresse.setRue(vue.getRue());
             adresse.setVille(vue.getVille());
 
-            Parking parking = new Parking(null, 0, 0, null, null, false, adresse, 0);
+            Parking parking = new Parking(null, 0, 0, 0, null, null, false, adresse, 0);
             parking.setNom(vue.getNom());
             parking.setAdresse(adresse);
             

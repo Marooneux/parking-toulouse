@@ -104,7 +104,7 @@ public class AdminParkingPanel extends JPanel {
         centerPanel.add(createDetailRow("🕒", horaireText));
 
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (this.parking.getNbPlacesMax() - this.parking.getNbPlacesOccupees()) + " places dispo"));
+        centerPanel.add(createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
 
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(createDetailRow("📏", "Max " + (this.parking.getHauteur()) + "m"));

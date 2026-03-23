@@ -98,7 +98,7 @@ public class ParkingPanel extends JPanel {
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(
-				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + " places"));
+				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(this.createDetailRow("📏", "Max " + (parking.getHauteurMax()) + "m"));

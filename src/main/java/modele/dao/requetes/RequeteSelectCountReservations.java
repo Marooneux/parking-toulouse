@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class RequeteSelectCountReservations extends Requete<Parking> {
     @Override
     public String requete() {
-        return "SELECT COUNT(*) FROM reservations_parking WHERE id_parking = ? AND (date_depart IS NULL OR prix_paye IS NULL)";
+        return "SELECT COUNT(*) FROM reservations_parking WHERE id_parking = ? AND date_depart IS NULL";
     }
 
     @Override
