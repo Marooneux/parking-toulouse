@@ -29,6 +29,7 @@ public class TestReservationParking {
         parking = new Parking(
                 "Parking Capitole",
                 150,
+                0,
                 1.8,
                 LocalTime.of(9, 0),
                 LocalTime.of(21, 0),

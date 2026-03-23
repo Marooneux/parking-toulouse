@@ -17,7 +17,7 @@ public class TestProximite {
 
     @Before
     public void setUp() {
-        parking = new Parking("Parking Test", 100, 2.0, null, null, false, null, 2.0);
+        parking = new Parking("Parking Test", 100, 0, 2.0, null, null, false, null, 2.0);
         ligne = new LigneMetro(1, "Ligne A", "Rouge");
 
         proximite = new Proximite(parking, ligne, 150);
@@ -32,7 +32,7 @@ public class TestProximite {
 
     @Test
     public void testSetters() {
-        Parking p2 = new Parking("Parking B", 50, 1.8, null, null, false, null, 1.5);
+        Parking p2 = new Parking("Parking B", 50, 0, 1.8, null, null, false, null, 1.5);
         LigneMetro l2 = new LigneMetro(2, "Ligne B", "Bleu");
 
         proximite.setParking(p2);
