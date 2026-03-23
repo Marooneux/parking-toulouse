@@ -35,7 +35,7 @@ public class SaisirDureeStationnement extends JPanel {
 		this.setLayout(new BorderLayout(15, 15));
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setBackground(new Color(250, 250, 250));
-		if (zone.getCouleur() == "bleue") {
+		if (zone.getCouleur().equals("bleue")) {
 			this.btnConfirmer = new JButton("Confirmer votre stationnement");
 		} else {
 			this.btnConfirmer = new JButton("Continuer vers le paiement");
@@ -103,7 +103,7 @@ public class SaisirDureeStationnement extends JPanel {
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		String minsGratuites = "";
-		if (this.zone.getCouleur() == "rouge") {
+		if (this.zone.getCouleur().equals("rouge")) {
 			minsGratuites = " (30 minutes gratuites)";
 		}
 		JLabel lblZone = new JLabel("Zone " + this.zone.getCouleur() + minsGratuites);
