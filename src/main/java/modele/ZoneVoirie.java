@@ -1,10 +1,12 @@
 package modele;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class ZoneVoirie {
+public class ZoneVoirie implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private int id;
 	private String couleur;
