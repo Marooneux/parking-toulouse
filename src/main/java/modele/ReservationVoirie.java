@@ -19,7 +19,7 @@ public class ReservationVoirie {
 		this.utilisateur = utilisateur;
 	}
 
-	public int getId() { 
+	public int getId() {
 		return this.id;
 	}
 
