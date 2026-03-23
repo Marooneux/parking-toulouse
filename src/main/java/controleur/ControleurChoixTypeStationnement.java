@@ -150,7 +150,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
         String heureArrivee = activeReservation.getDateArrivee() != null
                 ? activeReservation.getDateArrivee().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
                 : "";
-        TicketParking ticket = new TicketParking(activeReservation, plaque, heureArrivee, false);
+        TicketParking ticket = new TicketParking(activeReservation, plaque, false);
         new ControleurTicketParking(ticket);
         NavigationFrame.getInstance().showPage("parking-ticket", () -> ticket, "Ticket parking", true);
     }

@@ -236,4 +236,13 @@ public class SaisirHeureArriveParking extends JPanel {
             return false;
         }
     }
+    
+    public void reinitialiserChamps() {
+        if (this.textFieldPlaque != null && this.textFieldPlaque.getField() != null) {
+            this.textFieldPlaque.getField().setText("");
+        }
+        if (this.textFieldHeure != null && this.textFieldHeure.getField() != null) {
+            this.textFieldHeure.getField().setText("");
+        }
+    }
 }

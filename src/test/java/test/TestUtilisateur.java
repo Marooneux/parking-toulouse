@@ -9,6 +9,7 @@ import org.junit.Test;
 import modele.Abonnement;
 import modele.Utilisateur;
 import modele.Utilisateur.Type;
+import utils.PasswordUtil;
 
 public class TestUtilisateur {
 
@@ -36,9 +37,9 @@ public class TestUtilisateur {
 
 	@Test
 	public void testVerifierMdp() {
-		Utilisateur u = new Utilisateur(1, "Wacker", "Luka", "luka@mail.com", "secure123", null, Type.CLIENT);
-		//assertTrue(u.verifierMdp("secure123"));
-		//assertFalse(u.verifierMdp("secure"));
+		Utilisateur u = new Utilisateur(1, "Wacker", "Luka", "luka@mail.com", PasswordUtil.hashMdp("secure123"), null, Type.CLIENT);
+		assertTrue(u.verifierMdp("secure123"));
+		assertFalse(u.verifierMdp("secure"));
 	}
 
 	@Test
@@ -53,8 +54,8 @@ public class TestUtilisateur {
 	public void testModifierMdpNonReussi() {
 		Utilisateur u = new Utilisateur(1, "A", "B", "a@b.com", "123", null, Type.CLIENT);
 		u.setMdp("1234", "secure123");
-		//assertTrue(u.verifierMdp("123"));
-		//assertFalse(u.verifierMdp("secure123"));
+		assertFalse(u.verifierMdp("123")); 
+		assertTrue(u.verifierMdp("secure123"));
 	}
 
 	@Test
