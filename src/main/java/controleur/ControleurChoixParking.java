@@ -90,7 +90,6 @@ public class ControleurChoixParking implements ActionListener {
 		this.vue.viderGrille();
 		if (this.listeAffichee != null) {
 			for (Parking p : this.listeAffichee) {
-				System.out.println(p.getNbPlacesOccupees());
 				this.vue.addParking(p, this::onParkingSelected);
 			}
 		}

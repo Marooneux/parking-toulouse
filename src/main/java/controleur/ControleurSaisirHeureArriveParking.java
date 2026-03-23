@@ -35,7 +35,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
     public ControleurSaisirHeureArriveParking(Parking parking) {
         this.parking = parking;
         this.vue = new SaisirHeureArriveParking(parking);
-
+        this.vue.reinitialiserChamps();
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
         this.prefillPlaque();
@@ -128,9 +128,9 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                     parking,
                     user);
 
-            TicketParking ticket = new TicketParking(reservation, plaque, heure, true);
+            TicketParking ticket = new TicketParking(reservation, plaque, true);
             new ControleurTicketParking(ticket);
-            NavigationFrame.getInstance().showPage("parking-ticket", () -> ticket, "Ticket parking");
+            NavigationFrame.getInstance().showPage("parking-ticket-" + System.currentTimeMillis(), () -> ticket, "Ticket parking");
 
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");

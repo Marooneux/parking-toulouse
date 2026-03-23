@@ -1,6 +1,7 @@
 package modele;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class ReservationParking {
@@ -22,6 +23,16 @@ public class ReservationParking {
 		this.parking = parking;
 		this.utilisateur = utilisateur;
 	}
+	
+	public String dateArriveeToString() {
+		LocalDateTime dateTime = this.dateArrivee;
+        if (dateTime == null) {
+            return ""; 
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return dateTime.format(formatter);
+    }
+	
 
 	public void setId(int id) {
 		this.id = id;
