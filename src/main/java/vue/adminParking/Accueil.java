@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import controleur.ControleurAccueilAdminParking;
 import controleur.ControleurStatistique;
 import modele.Parking;
+import vue.TemplateSaisie;
 
 public class Accueil extends JPanel {
 
@@ -31,13 +32,13 @@ public class Accueil extends JPanel {
     private JButton btnSidebarStats;
     private JButton btnRetourListe;
 
-    private JTextField txtNom;
-    private JTextField txtAdresse;
-    private JTextField txtTarif;
-    private JTextField txtHauteur;
-    private JTextField txtPlacesMax;
-    private JTextField txtHeureOuverture;
-    private JTextField txtHeureFermeture;
+    private TemplateSaisie txtNom;
+    private TemplateSaisie txtAdresse;
+    private TemplateSaisie txtTarif;
+    private TemplateSaisie txtHauteur;
+    private TemplateSaisie txtPlacesMax;
+    private TemplateSaisie txtHeureOuverture;
+    private TemplateSaisie txtHeureFermeture;
     private JCheckBox chkMoto;
     
     private JButton btnEnregistrerModification;
@@ -239,13 +240,13 @@ public class Accueil extends JPanel {
         panel.add(Box.createVerticalStrut(20));
 
         // Initialisation des champs
-        txtNom = new JTextField();
-        txtAdresse = new JTextField();
-        txtTarif = new JTextField();
-        txtHauteur = new JTextField();
-        txtPlacesMax = new JTextField();
-        txtHeureOuverture = new JTextField();
-        txtHeureFermeture = new JTextField();
+        txtNom = new TemplateSaisie("Nom du parking", "", false, false);
+        txtAdresse = new TemplateSaisie("Adresse", "", false, false);
+        txtTarif = new TemplateSaisie("Tarif horaire", "", false, false);
+        txtHauteur = new TemplateSaisie("Hauteur max", "", false, false);
+        txtPlacesMax = new TemplateSaisie("Places max", "", false, false);
+        txtHeureOuverture = new TemplateSaisie("Heure ouverture", "", false, false);
+        txtHeureFermeture = new TemplateSaisie("Heure fermeture", "", false, false);
         chkMoto = new JCheckBox("Accepte les motos");
         chkMoto.setBackground(new Color(248, 249, 250));
 
@@ -291,7 +292,7 @@ public class Accueil extends JPanel {
     private void addFormField(JPanel panel, String label, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setBackground(new Color(248, 249, 250));
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         row.setBorder(new EmptyBorder(5, 0, 5, 0));
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
 

@@ -15,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -35,8 +34,8 @@ public class PaiementVirementParking extends JPanel {
     private final ReservationParking reservation;
     private final double prix;
     private JButton btnPayer;
-    private JTextField textFieldNom;
-    private JTextField textFieldIban;
+    private TemplateSaisie textFieldNom;
+    private TemplateSaisie textFieldIban;
 
     public PaiementVirementParking(ReservationParking reservation, double prix) {
         this.reservation = reservation;
@@ -96,14 +95,14 @@ public class PaiementVirementParking extends JPanel {
                 new EmptyBorder(18, 18, 18, 18)));
         card.setLayout(new GridLayout(0, 1, 12, 12));
 
-        this.textFieldNom = new PlaceholderTextField("Nom Prenom", 60);
-        this.textFieldNom.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        ((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(60));
+        this.textFieldNom = new TemplateSaisie("Nom et prenom", "Nom Prenom", false, false);
+        this.textFieldNom.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(60));
         card.add(creerBlocChamps("Nom et prenom", this.textFieldNom));
 
-        this.textFieldIban = new PlaceholderTextField("FR76 3000 6000 0112 3456 7890 189", 34);
-        this.textFieldIban.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        ((AbstractDocument) this.textFieldIban.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(34));
+        this.textFieldIban = new TemplateSaisie("IBAN", "FR76 3000 6000 0112 3456 7890 189", false, false);
+        this.textFieldIban.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ((AbstractDocument) this.textFieldIban.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(34));
         card.add(creerBlocChamps("IBAN", this.textFieldIban));
 
         JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -139,7 +138,7 @@ public class PaiementVirementParking extends JPanel {
         return row;
     }
 
-    private JPanel creerBlocChamps(String labelText, JTextField textField) {
+    private JPanel creerBlocChamps(String labelText, TemplateSaisie textField) {
         JPanel bloc = new JPanel();
         bloc.setOpaque(false);
         bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
@@ -148,7 +147,7 @@ public class PaiementVirementParking extends JPanel {
         lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        textField.setForeground(new Color(120, 120, 120));
+        textField.getField().setForeground(new Color(120, 120, 120));
 
         JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         champPanel.setOpaque(false);
