@@ -1,13 +1,15 @@
 package modele.dao.requetes;
 
-import modele.Parking;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RequeteSelectCountReservations extends Requete<Parking> {
+import modele.ReservationParking;
+
+public class RequeteSelectActiveReservationParkingByUserId extends Requete<ReservationParking> {
+
     @Override
     public String requete() {
-        return "SELECT COUNT(*) FROM reservations_parking WHERE id_parking = ? AND date_depart IS NULL";
+        return "SELECT * FROM reservations_parking WHERE id_utilisateur = ? AND date_depart IS NULL ORDER BY date_arrivee DESC";
     }
 
     @Override

@@ -27,7 +27,7 @@ import modele.Parking;
 public class ChoixParking extends JPanel {
 
 	private JPanel gridPanel;
-	private JTextField txtRecherche;
+	private TemplateSaisie txtRecherche;
 	private JMenuItem itemAlpha;
 	private JMenuItem itemPlaces;
 	private JMenuItem itemFermeture;
@@ -81,14 +81,14 @@ public class ChoixParking extends JPanel {
 		JPanel filterContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		filterContainer.setBackground(new Color(248, 249, 250));
 
-		this.txtRecherche = new JTextField(15);
-		this.txtRecherche.setPreferredSize(new Dimension(200, 42));
-		this.txtRecherche.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		this.txtRecherche.setBorder(BorderFactory.createCompoundBorder(
+		this.txtRecherche = new TemplateSaisie("Recherche", "Rechercher...", false, false);
+		this.txtRecherche.getField().setPreferredSize(new Dimension(200, 42));
+		this.txtRecherche.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		this.txtRecherche.getField().setBorder(BorderFactory.createCompoundBorder(
 				new LineBorder(new Color(206, 212, 218), 1),
 				new EmptyBorder(5, 10, 5, 10)));
 
-		this.txtRecherche.setToolTipText("Rechercher par nom ou adresse...");
+		this.txtRecherche.getField().setToolTipText("Rechercher par nom ou adresse...");
 
 		filterContainer.add(this.txtRecherche);
 		filterContainer.add(Box.createHorizontalStrut(10));
@@ -165,7 +165,7 @@ public class ChoixParking extends JPanel {
 	}
 
 	public JTextField getTxtRecherche() {
-		return this.txtRecherche;
+		return this.txtRecherche.getField();
 	}
 
 	public JMenuItem getItemAlpha() {

@@ -19,159 +19,177 @@ import modele.ReservationParking;
 
 public class TicketParking extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JButton btnPaiement;
-	private JLabel lblNumeroTicket;
-	private JLabel lblParking;
+    private static final long serialVersionUID = 1L;
+    private JButton btnPaiement;
+    private JLabel lblNumeroTicket;
+    private JLabel lblParking;
     private JLabel lblPlaque;
     private JLabel lblHeure;
     private JLabel lblAdresse;
+    private JLabel lblInstruction;
     private Parking parking;
     private String immatriculation;
     private String heureArrivee;
-	private ReservationParking reservation;
+    private ReservationParking reservation;
+    private boolean confirmationRequise;
 
-	public TicketParking(ReservationParking reservation, String plaque, String heureArrivee) {
-		this.reservation = reservation;
-		this.parking = reservation.getParking();
-		this.immatriculation = plaque;
-		this.heureArrivee = heureArrivee;
+    public TicketParking(ReservationParking reservation, String plaque, String heureArrivee) {
+        this(reservation, plaque, heureArrivee, true);
+    }
 
-			this.setBackground(new Color(255, 255, 255));
-			this.setBorder(new EmptyBorder(20, 20, 20, 20));
-			this.setLayout(new BorderLayout(0, 0));
+    public TicketParking(ReservationParking reservation, String plaque, String heureArrivee, boolean confirmationRequise) {
+        this.reservation = reservation;
+        this.parking = reservation.getParking();
+        this.immatriculation = plaque;
+        this.heureArrivee = heureArrivee;
+        this.confirmationRequise = confirmationRequise;
 
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(new Color(255, 255, 255));
-		this.add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BorderLayout(20, 0));
+        this.setBackground(new Color(255, 255, 255));
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblIcon = new JLabel("P");
-		lblIcon.setFont(new Font("Segoe UI", Font.BOLD, 30));
-		lblIcon.setForeground(new Color(60, 60, 60));
-		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIcon.setPreferredSize(new Dimension(60, 60));
-		lblIcon.setBorder(new LineBorder(new Color(60, 60, 60), 2, true));
-		panelHeader.add(lblIcon, BorderLayout.WEST);
+        JPanel panelHeader = new JPanel();
+        panelHeader.setBackground(new Color(255, 255, 255));
+        this.add(panelHeader, BorderLayout.NORTH);
+        panelHeader.setLayout(new BorderLayout(20, 0));
 
-		JPanel panelTextHeader = new JPanel();
-		panelTextHeader.setBackground(Color.WHITE);
-		panelHeader.add(panelTextHeader, BorderLayout.CENTER);
-		panelTextHeader.setLayout(new GridLayout(2, 1, 0, 0));
+        JLabel lblIcon = new JLabel("P");
+        lblIcon.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        lblIcon.setForeground(new Color(60, 60, 60));
+        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        lblIcon.setPreferredSize(new Dimension(60, 60));
+        lblIcon.setBorder(new LineBorder(new Color(60, 60, 60), 2, true));
+        panelHeader.add(lblIcon, BorderLayout.WEST);
 
-		JLabel lblTitre = new JLabel("Récapitulatif de votre stationnement");
-		lblTitre.setForeground(new Color(33, 37, 41));
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		panelTextHeader.add(lblTitre);
+        JPanel panelTextHeader = new JPanel();
+        panelTextHeader.setBackground(Color.WHITE);
+        panelHeader.add(panelTextHeader, BorderLayout.CENTER);
+        panelTextHeader.setLayout(new GridLayout(2, 1, 0, 0));
 
-		JLabel lblSousTitre = new JLabel("Veuillez conserver ce récapitulatif jusqu'à votre départ");
-		lblSousTitre.setForeground(new Color(108, 117, 125));
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		panelTextHeader.add(lblSousTitre);
+        JLabel lblTitre = new JLabel("Récapitulatif de votre stationnement");
+        lblTitre.setForeground(new Color(33, 37, 41));
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        panelTextHeader.add(lblTitre);
 
-		JPanel panelCenterContainer = new JPanel();
-		panelCenterContainer.setBackground(new Color(255, 255, 255));
-		panelCenterContainer.setBorder(new EmptyBorder(20, 80, 10, 80));
-		this.add(panelCenterContainer, BorderLayout.CENTER);
-		panelCenterContainer.setLayout(new BorderLayout(0, 0));
+        JLabel lblSousTitre = new JLabel("Veuillez conserver ce récapitulatif jusqu'à votre départ");
+        lblSousTitre.setForeground(new Color(108, 117, 125));
+        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        panelTextHeader.add(lblSousTitre);
 
-		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-		panelCard.setBackground(new Color(255, 255, 255));
-		panelCenterContainer.add(panelCard);
-		panelCard.setLayout(new BorderLayout(0, 0));
+        JPanel panelCenterContainer = new JPanel();
+        panelCenterContainer.setBackground(new Color(255, 255, 255));
+        panelCenterContainer.setBorder(new EmptyBorder(20, 80, 10, 80));
+        this.add(panelCenterContainer, BorderLayout.CENTER);
+        panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
-		JPanel panelInfoGrid = new JPanel();
-		panelInfoGrid.setBackground(new Color(255, 255, 255));
-		panelInfoGrid.setBorder(new EmptyBorder(20, 30, 20, 30));
-		panelCard.add(panelInfoGrid, BorderLayout.CENTER);
-		panelInfoGrid.setLayout(new GridLayout(5, 1, 0, 10));
+        JPanel panelCard = new JPanel();
+        panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
+        panelCard.setBackground(new Color(255, 255, 255));
+        panelCenterContainer.add(panelCard);
+        panelCard.setLayout(new BorderLayout(0, 0));
 
-		this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
-		this.lblParking = createInfoRow(panelInfoGrid, "Parking :", parking.getNom());
-		this.lblAdresse = createInfoRow(panelInfoGrid, "Adresse :", parking.getAdresse().getRue());
-		this.lblPlaque  = createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
-		this.lblHeure   = createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
-		
+        JPanel panelInfoGrid = new JPanel();
+        panelInfoGrid.setBackground(new Color(255, 255, 255));
+        panelInfoGrid.setBorder(new EmptyBorder(20, 30, 20, 30));
+        panelCard.add(panelInfoGrid, BorderLayout.CENTER);
+        panelInfoGrid.setLayout(new GridLayout(5, 1, 0, 10));
 
-		JPanel panelFooter = new JPanel();
-		panelFooter.setBackground(new Color(255, 255, 255));
-		panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
-		this.add(panelFooter, BorderLayout.SOUTH);
-		panelFooter.setLayout(new GridLayout(2, 1, 0, 10));
+        this.lblNumeroTicket = createInfoRow(panelInfoGrid, "Numéro de Ticket :", "#P-00001");
+        this.lblParking = createInfoRow(panelInfoGrid, "Parking :", parking.getNom());
+        this.lblAdresse = createInfoRow(panelInfoGrid, "Adresse :", parking.getAdresse().getRue());
+        this.lblPlaque = createInfoRow(panelInfoGrid, "Immatriculation :", immatriculation);
+        this.lblHeure = createInfoRow(panelInfoGrid, "Heure d'arrivée :", heureArrivee);
 
-		JLabel lblWarning = new JLabel("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");
-		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWarning.setForeground(new Color(33, 37, 41));
-		lblWarning.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		panelFooter.add(lblWarning);
+        JPanel panelFooter = new JPanel();
+        panelFooter.setBackground(new Color(255, 255, 255));
+        panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
+        this.add(panelFooter, BorderLayout.SOUTH);
+        panelFooter.setLayout(new GridLayout(2, 1, 0, 10));
 
-		JPanel panelButtonContainer = new JPanel();
-		panelButtonContainer.setBackground(Color.WHITE);
-		panelFooter.add(panelButtonContainer);
+        this.lblInstruction = new JLabel();
+        this.lblInstruction.setHorizontalAlignment(SwingConstants.CENTER);
+        this.lblInstruction.setForeground(new Color(33, 37, 41));
+        this.lblInstruction.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        panelFooter.add(this.lblInstruction);
 
-		btnPaiement = new JButton("Aller au paiement");
-		panelButtonContainer.add(btnPaiement);
-		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		btnPaiement.setForeground(Color.WHITE);
-		btnPaiement.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnPaiement.setBackground(new Color(0, 123, 255));
-		btnPaiement.setFocusPainted(false);
-		btnPaiement.setBorderPainted(false);
-		btnPaiement.setPreferredSize(new Dimension(250, 45));
-	}
+        JPanel panelButtonContainer = new JPanel();
+        panelButtonContainer.setBackground(Color.WHITE);
+        panelFooter.add(panelButtonContainer);
 
-	private JLabel createInfoRow(JPanel parent, String label, String valeur) {
-		JPanel row = new JPanel();
-		row.setBackground(Color.WHITE);
-		row.setLayout(new BorderLayout());
+        btnPaiement = new JButton();
+        panelButtonContainer.add(btnPaiement);
+        btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnPaiement.setForeground(Color.WHITE);
+        btnPaiement.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnPaiement.setBackground(new Color(0, 123, 255));
+        btnPaiement.setFocusPainted(false);
+        btnPaiement.setBorderPainted(false);
+        btnPaiement.setPreferredSize(new Dimension(250, 45));
 
-		JLabel lblKey = new JLabel(label);
-		lblKey.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		lblKey.setForeground(new Color(100, 100, 100));
+        refreshActions();
+    }
 
-		JLabel lblVal = new JLabel(valeur);
-		lblVal.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		lblVal.setForeground(new Color(50, 50, 50));
-		lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
+    private JLabel createInfoRow(JPanel parent, String label, String valeur) {
+        JPanel row = new JPanel();
+        row.setBackground(Color.WHITE);
+        row.setLayout(new BorderLayout());
 
-		row.add(lblKey, BorderLayout.WEST);
-		row.add(lblVal, BorderLayout.EAST);
+        JLabel lblKey = new JLabel(label);
+        lblKey.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        lblKey.setForeground(new Color(100, 100, 100));
 
-		JPanel separator = new JPanel();
-		separator.setPreferredSize(new Dimension(10, 1));
-		separator.setBackground(new Color(245, 245, 245));
-		row.add(separator, BorderLayout.SOUTH);
+        JLabel lblVal = new JLabel(valeur);
+        lblVal.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblVal.setForeground(new Color(50, 50, 50));
+        lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		parent.add(row);
-		return lblVal;
-	}
-	
-	public JButton getBtnPaiement() {
-	    return this.btnPaiement;
-	}
+        row.add(lblKey, BorderLayout.WEST);
+        row.add(lblVal, BorderLayout.EAST);
 
-	public ReservationParking getReservation() {
-		return this.reservation;
-	}
+        JPanel separator = new JPanel();
+        separator.setPreferredSize(new Dimension(10, 1));
+        separator.setBackground(new Color(245, 245, 245));
+        row.add(separator, BorderLayout.SOUTH);
 
-	public Parking getParking() {
-		return this.parking;
-	}
+        parent.add(row);
+        return lblVal;
+    }
 
-	public String getHeureArrivee() {
-		return this.heureArrivee;
-	}
-	
-	public void remplirInfos(String numéroTicket, String parking, String plaque, String heure, String adresse) {
-		lblNumeroTicket.setText(numéroTicket);
-	    lblParking.setText(parking);
-	    lblPlaque.setText(plaque);
-	    lblHeure.setText(heure);
-	    lblAdresse.setText(adresse);
-	}
+    private void refreshActions() {
+        if (this.confirmationRequise) {
+            this.lblInstruction.setText("Veuillez confirmer les informations du ticket");
+            this.btnPaiement.setText("Confirmer le ticket");
+        } else {
+            this.lblInstruction.setText("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");
+            this.btnPaiement.setText("Finir et payer");
+        }
+    }
 
+    public JButton getBtnPaiement() {
+        return this.btnPaiement;
+    }
 
+    public ReservationParking getReservation() {
+        return this.reservation;
+    }
 
+    public Parking getParking() {
+        return this.parking;
+    }
+
+    public String getHeureArrivee() {
+        return this.heureArrivee;
+    }
+
+    public boolean isConfirmationRequise() {
+        return this.confirmationRequise;
+    }
+
+    public void remplirInfos(String numeroTicket, String parking, String plaque, String heure, String adresse) {
+        lblNumeroTicket.setText(numeroTicket);
+        lblParking.setText(parking);
+        lblPlaque.setText(plaque);
+        lblHeure.setText(heure);
+        lblAdresse.setText(adresse);
+    }
 }

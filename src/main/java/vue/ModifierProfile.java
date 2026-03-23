@@ -1,94 +1,63 @@
 package vue;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import modele.Utilisateur;
 
 public class ModifierProfile extends JPanel {
 
-    private JTextField txtNom;
-    private JTextField txtPrenom;
-    private JTextField txtEmail;
-    private JPasswordField txtAncienMdp;
-    private JPasswordField txtNouveauMdp;
+    private TemplateSaisie txtNom;
+    private TemplateSaisie txtPrenom;
+    private TemplateSaisie txtEmail;
+    private TemplateSaisie txtAncienMdp;
+    private TemplateSaisie txtNouveauMdp;
     private JButton btnEnregistrer;
     private JButton btnAnnuler;
 
     public ModifierProfile() {
-        setBorder(new EmptyBorder(10, 10, 10, 10));
-        setLayout(null);
-        setPreferredSize(new Dimension(500, 350));
+        setBorder(new EmptyBorder(20, 20, 20, 20));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(500, 380));
 
-        // --- NOM ---
-        JLabel lblNom = new JLabel("Nom :");
-        lblNom.setBounds(30, 40, 160, 14); // Label élargi
-        add(lblNom);
+        txtNom = new TemplateSaisie("Nom", "Nom", false);
+        txtPrenom = new TemplateSaisie("Prenom", "Prenom", false);
+        txtEmail = new TemplateSaisie("Email", "email@exemple.fr", false);
+        txtAncienMdp = new TemplateSaisie("Ancien mot de passe", "", true);
+        txtNouveauMdp = new TemplateSaisie("Nouveau mot de passe", "", true);
 
-        txtNom = new JTextField();
-        txtNom.setBounds(200, 37, 200, 20); // Champ décalé à droite
         add(txtNom);
-        txtNom.setColumns(10);
-
-        // --- PRENOM ---
-        JLabel lblPrenom = new JLabel("Prénom :");
-        lblPrenom.setBounds(30, 80, 160, 14);
-        add(lblPrenom);
-
-        txtPrenom = new JTextField();
-        txtPrenom.setBounds(200, 77, 200, 20);
+        add(Box.createVerticalStrut(12));
         add(txtPrenom);
-        txtPrenom.setColumns(10);
-
-        // --- EMAIL ---
-        JLabel lblEmail = new JLabel("Email :");
-        lblEmail.setBounds(30, 120, 160, 14);
-        add(lblEmail);
-
-        txtEmail = new JTextField();
-        txtEmail.setBounds(200, 117, 200, 20);
+        add(Box.createVerticalStrut(12));
         add(txtEmail);
-        txtEmail.setColumns(10);
-        
-        // --- ANCIEN MDP ---
-        JLabel lblAncienMdp = new JLabel("Ancien mot de passe :");
-        lblAncienMdp.setBounds(30, 160, 160, 14);
-        add(lblAncienMdp);
-        
-        txtAncienMdp = new JPasswordField();
-        txtAncienMdp.setBounds(200, 157, 200, 20);
+        add(Box.createVerticalStrut(12));
         add(txtAncienMdp);
-
-        // --- NOUVEAU MDP ---
-        JLabel lblNouveauMdp = new JLabel("Nouveau mot de passe :");
-        lblNouveauMdp.setBounds(30, 200, 160, 14);
-        add(lblNouveauMdp);
-
-        txtNouveauMdp = new JPasswordField();
-        txtNouveauMdp.setBounds(200, 197, 200, 20);
+        add(Box.createVerticalStrut(12));
         add(txtNouveauMdp);
+        add(Box.createVerticalStrut(20));
 
-        // --- BOUTONS ---
         btnEnregistrer = new JButton("Enregistrer");
-        btnEnregistrer.setBounds(200, 260, 110, 23);
-        add(btnEnregistrer);
-        
         btnAnnuler = new JButton("Annuler");
-        btnAnnuler.setBounds(320, 260, 80, 23);
-        add(btnAnnuler);
+
+        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonRow.setOpaque(false);
+        buttonRow.add(btnEnregistrer);
+        buttonRow.add(btnAnnuler);
+        add(buttonRow);
     }
 
-    // --- Méthodes pour le Contrôleur ---
+    // --- Methodes pour le Controleur ---
 
-    // Pré-remplit les champs (sauf les mots de passe pour sécurité)
+    // Pre-remplit les champs (sauf les mots de passe pour securite)
     public void afficherUtilisateur(Utilisateur user) {
         txtNom.setText(user.getNom());
         txtPrenom.setText(user.getPrenom());
@@ -108,7 +77,7 @@ public class ModifierProfile extends JPanel {
     public void addEnregistrerListener(ActionListener action) {
         btnEnregistrer.addActionListener(action);
     }
-    
+
     public void addAnnulerListener(ActionListener action) {
         btnAnnuler.addActionListener(action);
     }

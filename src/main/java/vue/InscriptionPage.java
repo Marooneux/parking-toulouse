@@ -11,7 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -20,19 +19,37 @@ import controleur.ControleurInscriptionPage;
 public class InscriptionPage extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    private static final Color BG_PAGE = new Color(248, 249, 250);
+    private static final Color BG_CARD = Color.WHITE;
+    private static final Color BG_HERO = new Color(33, 37, 41);
+    private static final Color FG_HERO_SUBTITLE = new Color(222, 226, 230);
+    private static final Color FG_HERO_HINT = new Color(173, 181, 189);
+    private static final Color FG_TEXT = new Color(33, 37, 41);
+    private static final Color FG_MUTED = new Color(108, 117, 125);
+    private static final Color FG_LABEL = new Color(73, 80, 87);
+    private static final Color BORDER_SOFT = new Color(226, 232, 240);
+    private static final Color BORDER_INPUT = new Color(206, 212, 218);
+    private static final Color BG_INPUT = new Color(251, 252, 253);
+    private static final Color BORDER_BUTTON = new Color(222, 226, 230);
+    private static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 26);
+    private static final Font FONT_HERO_TITLE = new Font("Segoe UI", Font.BOLD, 22);
+    private static final Font FONT_BODY = new Font("Segoe UI", Font.PLAIN, 14);
+    private static final Font FONT_LABEL = new Font("Segoe UI", Font.PLAIN, 13);
+    private static final Font FONT_BUTTON = new Font("Segoe UI", Font.BOLD, 14);
+    private static final Dimension INPUT_MAX_SIZE = new Dimension(Integer.MAX_VALUE, 46);
 
-    private final PlaceholderTextField nomField;
-    private final PlaceholderTextField prenomField;
-    private final PlaceholderTextField emailField;
-    private final JPasswordField mdpField;
-    private final JPasswordField confirmField;
+    private final TemplateSaisie nomField;
+    private final TemplateSaisie prenomField;
+    private final TemplateSaisie emailField;
+    private final TemplateSaisie mdpField;
+    private final TemplateSaisie confirmField;
 
     private final JButton btnCreer;
     private final JButton btnRetourConnexion;
 
     public InscriptionPage() {
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(248, 249, 250));
+        this.setBackground(BG_PAGE);
 
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setOpaque(false);
@@ -40,109 +57,69 @@ public class InscriptionPage extends JPanel {
         this.add(wrapper, BorderLayout.CENTER);
 
         JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.WHITE);
+        card.setBackground(BG_CARD);
         card.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(226, 232, 240), 1),
+            new LineBorder(BORDER_SOFT, 1),
                 new EmptyBorder(0, 0, 0, 0)));
         wrapper.add(card, BorderLayout.CENTER);
 
         JPanel heroPanel = new JPanel();
         heroPanel.setPreferredSize(new Dimension(320, 0));
-        heroPanel.setBackground(new Color(33, 37, 41));
+        heroPanel.setBackground(BG_HERO);
         heroPanel.setLayout(new BoxLayout(heroPanel, BoxLayout.Y_AXIS));
         heroPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
 
         JLabel heroTitle = new JLabel("Rejoignez Smart Parking");
-        heroTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        heroTitle.setFont(FONT_HERO_TITLE);
         heroTitle.setForeground(Color.WHITE);
         heroPanel.add(heroTitle);
 
         heroPanel.add(Box.createVerticalStrut(10));
 
         JLabel heroSubtitle = new JLabel("Creez votre compte client pour reserver plus vite.");
-        heroSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        heroSubtitle.setForeground(new Color(222, 226, 230));
+        heroSubtitle.setFont(FONT_BODY);
+        heroSubtitle.setForeground(FG_HERO_SUBTITLE);
         heroPanel.add(heroSubtitle);
 
         heroPanel.add(Box.createVerticalGlue());
 
         JLabel heroHint = new JLabel("Gestion simple des parkings et tickets.");
         heroHint.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        heroHint.setForeground(new Color(173, 181, 189));
+        heroHint.setForeground(FG_HERO_HINT);
         heroPanel.add(heroHint);
 
         card.add(heroPanel, BorderLayout.WEST);
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-        formPanel.setBackground(Color.WHITE);
+        formPanel.setBackground(BG_CARD);
         formPanel.setBorder(new EmptyBorder(40, 50, 40, 50));
         card.add(formPanel, BorderLayout.CENTER);
 
-        JLabel title = new JLabel("Creer un compte");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        title.setForeground(new Color(33, 37, 41));
+        JLabel title = createLabel("Creer un compte", FONT_TITLE, FG_TEXT);
         title.setAlignmentX(LEFT_ALIGNMENT);
         formPanel.add(title);
 
         formPanel.add(Box.createVerticalStrut(6));
 
-        JLabel subtitle = new JLabel("Renseignez vos informations pour commencer.");
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        subtitle.setForeground(new Color(108, 117, 125));
+        JLabel subtitle = createLabel("Renseignez vos informations pour commencer.", FONT_BODY, FG_MUTED);
         subtitle.setAlignmentX(LEFT_ALIGNMENT);
         formPanel.add(subtitle);
 
         formPanel.add(Box.createVerticalStrut(24));
 
-        this.nomField = buildField(formPanel, "Nom", "Dupond");
-        this.prenomField = buildField(formPanel, "Prenom", "Jean");
-        this.emailField = buildField(formPanel, "Email", "prenom.nom@exemple.fr");
+        this.nomField = buildField(formPanel, "Nom", "Dupond", false);
+        this.prenomField = buildField(formPanel, "Prenom", "Jean", false);
+        this.emailField = buildField(formPanel, "Email", "prenom.nom@exemple.fr", false);
+        this.mdpField = buildField(formPanel, "Mot de passe (min. 8 caracteres)", "", true);
+        this.confirmField = buildField(formPanel, "Confirmer le mot de passe", "", true);
 
-        JLabel mdpLabel = new JLabel("Mot de passe (min. 8 caracteres)");
-        mdpLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        mdpLabel.setForeground(new Color(73, 80, 87));
-        mdpLabel.setAlignmentX(LEFT_ALIGNMENT);
-        formPanel.add(mdpLabel);
-
-        formPanel.add(Box.createVerticalStrut(6));
-
-        this.mdpField = new JPasswordField();
-        this.mdpField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        this.mdpField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(206, 212, 218), 1, true),
-                new EmptyBorder(10, 12, 10, 12)));
-        this.mdpField.setBackground(new Color(251, 252, 253));
-        this.mdpField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
-        this.mdpField.setAlignmentX(LEFT_ALIGNMENT);
-        formPanel.add(this.mdpField);
-
-        formPanel.add(Box.createVerticalStrut(18));
-
-        JLabel confirmLabel = new JLabel("Confirmer le mot de passe");
-        confirmLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        confirmLabel.setForeground(new Color(73, 80, 87));
-        confirmLabel.setAlignmentX(LEFT_ALIGNMENT);
-        formPanel.add(confirmLabel);
-
-        formPanel.add(Box.createVerticalStrut(6));
-
-        this.confirmField = new JPasswordField();
-        this.confirmField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        this.confirmField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(206, 212, 218), 1, true),
-                new EmptyBorder(10, 12, 10, 12)));
-        this.confirmField.setBackground(new Color(251, 252, 253));
-        this.confirmField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
-        this.confirmField.setAlignmentX(LEFT_ALIGNMENT);
-        formPanel.add(this.confirmField);
-
-        formPanel.add(Box.createVerticalStrut(26));
+        formPanel.add(Box.createVerticalStrut(8));
 
         this.btnCreer = new JButton("Creer mon compte");
         this.btnCreer.setBackground(new Color(52, 58, 64));
         this.btnCreer.setForeground(Color.WHITE);
-        this.btnCreer.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        this.btnCreer.setFont(FONT_BUTTON);
         this.btnCreer.setFocusPainted(false);
         this.btnCreer.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 20));
         this.btnCreer.setAlignmentX(LEFT_ALIGNMENT);
@@ -151,12 +128,12 @@ public class InscriptionPage extends JPanel {
         formPanel.add(Box.createVerticalStrut(12));
 
         this.btnRetourConnexion = new JButton("J'ai deja un compte");
-        this.btnRetourConnexion.setBackground(Color.WHITE);
+        this.btnRetourConnexion.setBackground(BG_CARD);
         this.btnRetourConnexion.setForeground(new Color(52, 58, 64));
         this.btnRetourConnexion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         this.btnRetourConnexion.setFocusPainted(false);
         this.btnRetourConnexion.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(222, 226, 230), 1),
+            new LineBorder(BORDER_BUTTON, 1),
                 new EmptyBorder(10, 14, 10, 14)));
         this.btnRetourConnexion.setAlignmentX(LEFT_ALIGNMENT);
         formPanel.add(this.btnRetourConnexion);
@@ -165,32 +142,31 @@ public class InscriptionPage extends JPanel {
 
         ControleurInscriptionPage controleur = new ControleurInscriptionPage(this);
         this.btnCreer.addActionListener(controleur);
-        this.confirmField.addActionListener(controleur);
+        this.confirmField.getField().addActionListener(controleur);
 
         this.btnRetourConnexion.addActionListener(e -> NavigationFrame.getInstance().showPage("Connexion", LoginPage::new, "Connexion"));
     }
 
-    private PlaceholderTextField buildField(JPanel container, String label, String placeholder) {
-        JLabel jlabel = new JLabel(label);
-        jlabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        jlabel.setForeground(new Color(73, 80, 87));
-        jlabel.setAlignmentX(LEFT_ALIGNMENT);
-        container.add(jlabel);
-
-        container.add(Box.createVerticalStrut(6));
-
-        PlaceholderTextField field = new PlaceholderTextField(placeholder, 20);
-        field.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        field.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(206, 212, 218), 1, true),
-                new EmptyBorder(10, 12, 10, 12)));
-        field.setBackground(new Color(251, 252, 253));
-        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
+    private TemplateSaisie buildField(JPanel container, String label, String placeholder, boolean isPassword) {
+        TemplateSaisie field = new TemplateSaisie(label, placeholder, isPassword);
         field.setAlignmentX(LEFT_ALIGNMENT);
+        field.getField().setFont(FONT_BODY);
+        field.getField().setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(BORDER_INPUT, 1, true),
+                new EmptyBorder(10, 12, 10, 12)));
+        field.getField().setBackground(BG_INPUT);
+        field.getField().setMaximumSize(INPUT_MAX_SIZE);
         container.add(field);
-
         container.add(Box.createVerticalStrut(18));
         return field;
+    }
+
+    private JLabel createLabel(String text, Font font, Color color) {
+        // Centralise la creation des libelles pour coherer les styles.
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        label.setForeground(color);
+        return label;
     }
 
     public String getNom() {

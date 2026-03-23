@@ -62,6 +62,7 @@ public class TestDaoReservationParking {
 		this.parkingTest = new Parking(
 				"Parking Test",
 				100,
+				0,
 				2.5,
 				LocalTime.of(7, 0),
 				LocalTime.of(23, 0),

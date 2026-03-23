@@ -31,10 +31,10 @@ public class PaiementParking extends JPanel {
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
-	private JTextField textFieldNom;
-	private JTextField textFieldNumCarte;
-	private JTextField textFieldExpiration;
-	private JTextField textFieldCVC;
+	private TemplateSaisie textFieldNom;
+	private TemplateSaisie textFieldNumCarte;
+	private TemplateSaisie textFieldExpiration;
+	private TemplateSaisie textFieldCVC;
 	private JButton btnPayer;
 
 	private final ReservationParking reservation;
@@ -112,27 +112,27 @@ public class PaiementParking extends JPanel {
 		card.add(montantRow);
 		card.add(Box.createVerticalStrut(12));
 
-		this.textFieldNom = new PlaceholderTextField("Nom Prenom", 40);
-		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(40));
-		styleField(this.textFieldNom);
+		this.textFieldNom = new TemplateSaisie("Nom sur la carte", "Nom Prenom", false, false);
+		((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(40));
+		styleField(this.textFieldNom.getField());
 		card.add(this.creerBlocChamps("Nom sur la carte", this.textFieldNom));
 
-		this.textFieldNumCarte = new PlaceholderTextField("1234 5678 9012 3456", 19);
-		((AbstractDocument) this.textFieldNumCarte.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
-		styleField(this.textFieldNumCarte);
+		this.textFieldNumCarte = new TemplateSaisie("Numero de carte", "1234 5678 9012 3456", false, false);
+		((AbstractDocument) this.textFieldNumCarte.getField().getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
+		styleField(this.textFieldNumCarte.getField());
 		card.add(this.creerBlocChamps("Numero de carte", this.textFieldNumCarte));
 
 		JPanel row = new JPanel(new GridLayout(1, 2, 12, 0));
 		row.setOpaque(false);
 
-		this.textFieldExpiration = new PlaceholderTextField("MM/YY", 5);
-		((AbstractDocument) this.textFieldExpiration.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
-		styleField(this.textFieldExpiration, 120);
+		this.textFieldExpiration = new TemplateSaisie("Expiration", "MM/YY", false, false);
+		((AbstractDocument) this.textFieldExpiration.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
+		styleField(this.textFieldExpiration.getField(), 120);
 		row.add(this.creerBlocChamps("Expiration", this.textFieldExpiration));
 
-		this.textFieldCVC = new PlaceholderTextField("123", 3);
-		((AbstractDocument) this.textFieldCVC.getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
-		styleField(this.textFieldCVC, 120);
+		this.textFieldCVC = new TemplateSaisie("CVC", "123", false, false);
+		((AbstractDocument) this.textFieldCVC.getField().getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
+		styleField(this.textFieldCVC.getField(), 120);
 		row.add(this.creerBlocChamps("CVC", this.textFieldCVC));
 
 		row.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -166,7 +166,7 @@ public class PaiementParking extends JPanel {
 		return tag;
 	}
 
-	private JPanel creerBlocChamps(String labelText, JTextField textField) {
+	private JPanel creerBlocChamps(String labelText, TemplateSaisie textField) {
 		JPanel bloc = new JPanel();
 		bloc.setOpaque(false);
 		bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
@@ -178,8 +178,8 @@ public class PaiementParking extends JPanel {
 		JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		champPanel.setOpaque(false);
 
-		textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		textField.setForeground(new Color(60, 60, 60));
+		textField.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		textField.getField().setForeground(new Color(60, 60, 60));
 
 		champPanel.add(textField);
 

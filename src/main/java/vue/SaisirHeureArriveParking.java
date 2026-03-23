@@ -31,8 +31,8 @@ public class SaisirHeureArriveParking extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private JButton btnConfirmer;
-    private JTextField textFieldPlaque;
-    private JTextField textFieldHeure;
+    private TemplateSaisie textFieldPlaque;
+    private TemplateSaisie textFieldHeure;
     private Parking parking;
     private JButton btnMaintenant;
 
@@ -126,9 +126,9 @@ public class SaisirHeureArriveParking extends JPanel {
         lblInfoVehicule.setForeground(new Color(50, 50, 50));
         p.add(lblInfoVehicule);
 
-        this.textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
-        ((AbstractDocument) this.textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-        this.textFieldPlaque.setPreferredSize(new Dimension(250, 30));
+        this.textFieldPlaque = new TemplateSaisie("Plaque", "AB-001-CD", false, false);
+        ((AbstractDocument) this.textFieldPlaque.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+        this.textFieldPlaque.getField().setPreferredSize(new Dimension(250, 30));
         p.add(this.textFieldPlaque);
 
         JLabel lblInfoImatricule = new JLabel(
@@ -157,9 +157,9 @@ public class SaisirHeureArriveParking extends JPanel {
         JPanel heurePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         heurePanel.setBackground(Color.WHITE);
 
-        this.textFieldHeure = new PlaceholderTextField("hh:mm", 5);
-        ((AbstractDocument) this.textFieldHeure.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
-        this.textFieldHeure.setPreferredSize(new Dimension(200, 30));
+        this.textFieldHeure = new TemplateSaisie("Heure", "hh:mm", false, false);
+        ((AbstractDocument) this.textFieldHeure.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
+        this.textFieldHeure.getField().setPreferredSize(new Dimension(200, 30));
         heurePanel.add(this.textFieldHeure);
 
         this.btnMaintenant = new JButton("Maintenant");
@@ -201,11 +201,11 @@ public class SaisirHeureArriveParking extends JPanel {
     }
 
     public JTextField getTextFieldHeure() {
-        return this.textFieldHeure;
+        return this.textFieldHeure.getField();
     }
 
     public JTextComponent getPlaque() {
-        return this.textFieldPlaque;
+        return this.textFieldPlaque.getField();
     }
 
     public JButton getBtnMaintenant() {

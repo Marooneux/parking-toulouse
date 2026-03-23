@@ -13,7 +13,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 
@@ -24,8 +23,8 @@ public class SaisirDureeStationnement extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JButton btnConfirmer;
-	private JTextField textFieldPlaque;
-	private JTextField textFieldNom;
+	private TemplateSaisie textFieldPlaque;
+	private TemplateSaisie textFieldNom;
 	private ZoneVoirie zone;
 
 	public SaisirDureeStationnement(ZoneVoirie zone) {
@@ -129,9 +128,9 @@ public class SaisirDureeStationnement extends JPanel {
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
-		this.textFieldPlaque = new PlaceholderTextField("AB-001-CD", 4);
-		((AbstractDocument) this.textFieldPlaque.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-		this.textFieldPlaque.setPreferredSize(new Dimension(250, 30));
+		this.textFieldPlaque = new TemplateSaisie("Plaque", "AB-001-CD", false, false);
+		((AbstractDocument) this.textFieldPlaque.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		this.textFieldPlaque.getField().setPreferredSize(new Dimension(250, 30));
 		p.add(this.textFieldPlaque);
 
 		JLabel lblInfoImatricule = new JLabel(
@@ -159,9 +158,9 @@ public class SaisirDureeStationnement extends JPanel {
 
 		// Todo : Rendre le texte field changeable par méthode pour pouvoir manipuler sa
 		// valeur
-		this.textFieldNom = new PlaceholderTextField("minutes", 4);
-		((AbstractDocument) this.textFieldNom.getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
-		this.textFieldNom.setPreferredSize(new Dimension(250, 30));
+		this.textFieldNom = new TemplateSaisie("Duree", "minutes", false, false);
+		((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		this.textFieldNom.getField().setPreferredSize(new Dimension(250, 30));
 		p.add(this.textFieldNom);
 
 		return p;

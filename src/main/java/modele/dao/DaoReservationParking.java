@@ -10,6 +10,7 @@ import modele.ReservationParking;
 import modele.Utilisateur;
 import modele.dao.requetes.RequeteDeleteReservationParking;
 import modele.dao.requetes.RequeteInsertReservationParking;
+import modele.dao.requetes.RequeteSelectActiveReservationParkingByUserId;
 import modele.dao.requetes.RequeteSelectReservationParking;
 import modele.dao.requetes.RequeteSelectReservationParkingById;
 import modele.dao.requetes.RequeteSelectReservationsParkingByUserId;
@@ -47,6 +48,16 @@ public class DaoReservationParking extends DaoModele<ReservationParking> {
 
 	public ReservationParking findById(int id) throws SQLException {
 		return this.findById(new RequeteSelectReservationParkingById(), String.valueOf(id));
+	}
+
+	public ReservationParking findActiveByUserId(int userId) throws SQLException {
+		List<ReservationParking> reservations = this.find(
+				new RequeteSelectActiveReservationParkingByUserId(),
+				String.valueOf(userId));
+		if (reservations.isEmpty()) {
+			return null;
+		}
+		return reservations.getFirst();
 	}
 
 	@Override

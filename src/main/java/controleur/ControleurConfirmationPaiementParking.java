@@ -35,8 +35,10 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 	}
 
 	private void departConfirme() {
-		LocalDateTime heureActuelle = LocalDateTime.now();
-		reservation.setDateDepart(heureActuelle);
+		if (reservation.getDateDepart() == null) {
+			LocalDateTime heureActuelle = LocalDateTime.now();
+			reservation.setDateDepart(heureActuelle);
+		}
 		reservation.setPrixPaye(prix);
 		try {
 			DaoReservationParking dao = new DaoReservationParking();
@@ -51,8 +53,11 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 				dao.update(reservation);
 			}
 	        Utilisateur user = AuthManager.getCurrentUser();        
-	        NavigationFrame.getInstance().showPage("Stationnement", () -> new ChoixTypeStationnement(user.getId()),
-	                     "Stationnement");
+	        NavigationFrame.getInstance().showPage(
+	                "Stationnement",
+	                () -> new ChoixTypeStationnement(user.getId()),
+	                "Stationnement",
+	                true);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");
 			ex.printStackTrace();

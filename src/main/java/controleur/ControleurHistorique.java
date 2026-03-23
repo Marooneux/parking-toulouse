@@ -29,8 +29,16 @@ public class ControleurHistorique implements ActionListener {
         this.vue = vue;
 
         vue.addReloadListener(this);
-        chargerHistorique();
+
         vue.setVisible(true);
+        
+        vue.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                chargerHistorique();
+            }
+        });
+        chargerHistorique();
     }
 
     @Override

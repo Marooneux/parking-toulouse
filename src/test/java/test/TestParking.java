@@ -16,20 +16,21 @@ public class TestParking {
 
     private Parking parking;
 
-    @Before
-    public void setUp() {
-        this.parking = new Parking(
-                "Parking Central",
-                100,
-                1.8,
-                LocalTime.of(9, 0),
-                LocalTime.of(21, 0),
-                true,
-                new Adresse(0, null, 0, null),
-                2.5);
-        this.parking.setId(1);
-        this.parking.setNbPlacesOccupees(50);
-    }
+	@Before
+	public void setUp() {
+		this.parking = new Parking(
+				"Parking Central",
+				100,
+				0,
+				1.8,
+				LocalTime.of(9, 0),
+				LocalTime.of(21, 0),
+				true,
+				new Adresse(0, "Rue Victor Hugo", 0, null),
+				2.5);
+		this.parking.setId(1);
+		this.parking.setNbPlacesOccupees(50);
+	}
 
     @Test
     public void testConstructor() {
@@ -43,16 +44,16 @@ public class TestParking {
         assertEquals(LocalTime.of(21, 0), this.parking.getHoraireFermeture());
     }
 
-    @Test
-    public void testSetters() {
-        this.parking.setNom("Parking Sud");
-        this.parking.setAdresse("Boulevard Carnot");
-        this.parking.setTarif(2.0);
-        this.parking.setCapacite(80);
-        this.parking.setNbPlacesOccupees(10);
-        this.parking.setHauteurMax(2.0);
-        this.parking.setHoraireOuverture(LocalTime.of(8, 0));
-        this.parking.setHoraireFermeture(LocalTime.of(22, 0));
+	@Test
+	public void testSetters() {
+		this.parking.setNom("Parking Sud");
+		this.parking.getAdresse().setRue("Boulevard Carnot");
+		this.parking.setTarif(2.0);
+		this.parking.setCapacite(80);
+		this.parking.setNbPlacesOccupees(10);
+		this.parking.setHauteurMax(2.0);
+		this.parking.setHoraireOuverture(LocalTime.of(8, 0));
+		this.parking.setHoraireFermeture(LocalTime.of(22, 0));
 
         assertEquals("Parking Sud", this.parking.getNom());
         assertEquals(null, this.parking.getAdresse().getRue());

@@ -31,10 +31,10 @@ public class Profile extends JPanel {
     private JLabel lblValEmail;
     private JButton btnModifierInfos;
 
-    private JTextField txtEditNom;
-    private JTextField txtEditPrenom;
-    private JTextField txtEditEmail;
-    private JPasswordField txtEditMdp;
+    private TemplateSaisie txtEditNom;
+    private TemplateSaisie txtEditPrenom;
+    private TemplateSaisie txtEditEmail;
+    private TemplateSaisie txtEditMdp;
     private JButton btnEnregistrer;
     private JButton btnAnnulerEdit;
     private JButton btnRetour;
@@ -263,10 +263,10 @@ public class Profile extends JPanel {
         form.setBackground(Color.WHITE);
         form.setBorder(new EmptyBorder(30, 30, 30, 30));
 
-        txtEditNom = new JTextField();
-        txtEditPrenom = new JTextField();
-        txtEditEmail = new JTextField();
-        txtEditMdp = new JPasswordField();
+        txtEditNom = new TemplateSaisie("Nom", "Nom", false, false);
+        txtEditPrenom = new TemplateSaisie("Prenom", "Prenom", false, false);
+        txtEditEmail = new TemplateSaisie("Email", "email@exemple.fr", false, false);
+        txtEditMdp = new TemplateSaisie("Mot de passe", "", true, false);
 
         addFormField(form, "Nom :", txtEditNom);
         addFormField(form, "Prénom :", txtEditPrenom);
@@ -349,7 +349,7 @@ public class Profile extends JPanel {
         txtEditNom.setText(nom);
         txtEditPrenom.setText(prenom);
         txtEditEmail.setText(email);
-        txtEditMdp.setText(mdp);
+        txtEditMdp.setText("");
     }
     
     private void createTopRightButton() {
