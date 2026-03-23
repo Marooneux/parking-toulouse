@@ -130,7 +130,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
 
             TicketParking ticket = new TicketParking(reservation, plaque, true);
             new ControleurTicketParking(ticket);
-            NavigationFrame.getInstance().showPage("parking-ticket-" + System.currentTimeMillis(), () -> ticket, "Ticket parking");
+            NavigationFrame.getInstance().showPage("parking-ticket-", () -> ticket, "Ticket parking", true);
 
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(vue, "Format heure invalide (HH:mm).");

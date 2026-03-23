@@ -84,13 +84,17 @@ public class ReservationParking {
 	}
 
 	public double calculerPrixTotal() {
-		if (parking == null) {
-			return 0.0;
-		}
-		LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
-		long minutes = ChronoUnit.MINUTES.between(this.dateArrivee, fin);
-		double heures = Math.max(0.0, minutes / 60.0);
-		return heures * parking.getTarif();
+	    if (parking == null) {
+	        return 0.0;
+	    }
+	    
+	    LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
+	    long minutes = Math.max(0, ChronoUnit.MINUTES.between(this.dateArrivee, fin));
+	    double quartsDHeure = Math.ceil(minutes / 15.0);
+	    quartsDHeure = Math.max(1.0, quartsDHeure);
+	    double heuresFacturees = quartsDHeure / 4.0;
+	    
+	    return heuresFacturees * parking.getTarif();
 	}
 
 }
