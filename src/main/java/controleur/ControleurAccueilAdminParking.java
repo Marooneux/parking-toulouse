@@ -110,32 +110,20 @@ public class ControleurAccueilAdminParking implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-
 		if (source == vue.getBtnValiderAjout()) {
 			ouvrirPageAjouter(idAdmin);
 			return;
 		}
-
-		if (source == vue.getBtnEnregistrerModification()) {
+		if (source == vue.getBtnEnregistrerModification()
+				|| source == vue.getBtnSidebarParkings()
+				|| source == vue.getBtnRetourListe()) {
 			vue.showParkings();
 			return;
 		}
-
-		if (source == vue.getBtnSidebarParkings()) {
-			vue.showParkings();
-			return;
-		}
-
 		if (source == vue.getBtnSidebarStats()) {
 			vue.showStats();
 			return;
 		}
-
-		if (source == vue.getBtnRetourListe()) {
-			vue.showParkings();
-			return;
-		}
-
 		if (source == vue.getBtnToggle()) {
 			vue.toggleSidebar();
 		}

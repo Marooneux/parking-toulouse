@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class TemplateSaisie extends JPanel {
+public class TemplateSaisie extends JPanel implements Cloneable {
 
     private static final Font LABEL_FONT = new Font("Segoe UI", Font.PLAIN, 13);
     private static final Color LABEL_COLOR = new Color(73, 80, 87);
@@ -14,13 +14,30 @@ public class TemplateSaisie extends JPanel {
     private static final Color FIELD_BORDER_COLOR = new Color(206, 212, 218);
     private static final Color FIELD_BG_COLOR = new Color(251, 252, 253);
 
+    private final String labelText;
+    private final String placeholder;
+    private final boolean isPassword;
+    private final boolean showLabel;
+    private final JLabel label;
     private JTextField textField;
 
     /**
      * Constructeur simplifié pour champ texte standard
      */
     public TemplateSaisie(String labelText, String placeholder) {
-        this(labelText, placeholder, false);
+        this(labelText, placeholder, false, true);
+    }
+
+    /**
+     * Constructeur avec gestion d'affichage du libellé
+     */
+    public TemplateSaisie(String labelText, String placeholder, boolean isPassword, boolean showLabel) {
+        this.labelText = labelText;
+        this.placeholder = placeholder;
+        this.isPassword = isPassword;
+        this.showLabel = showLabel;
+        this.label = new JLabel(labelText);
+        buildUi();
     }
 
     /**
@@ -30,14 +47,18 @@ public class TemplateSaisie extends JPanel {
      * @param isPassword Si true, le champ masquera les caractères
      */
     public TemplateSaisie(String labelText, String placeholder, boolean isPassword) {
+        this(labelText, placeholder, isPassword, true);
+    }
+
+    private void buildUi() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setAlignmentX(Component.LEFT_ALIGNMENT);
         setOpaque(false);
 
-        JLabel label = new JLabel(labelText);
         label.setFont(LABEL_FONT);
         label.setForeground(LABEL_COLOR);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        label.setVisible(showLabel);
 
         if (isPassword) {
             this.textField = new JPasswordField(20);
@@ -81,5 +102,17 @@ public class TemplateSaisie extends JPanel {
 
     public JTextField getField() {
         return textField;
+    }
+
+    @Override
+    public TemplateSaisie clone() {
+        // Cree une nouvelle instance avec la meme configuration et le meme contenu.
+        TemplateSaisie copie = new TemplateSaisie(labelText, placeholder, isPassword, showLabel);
+        if (isPassword) {
+            copie.setText(new String(getPassword()));
+        } else {
+            copie.setText(getText());
+        }
+        return copie;
     }
 }

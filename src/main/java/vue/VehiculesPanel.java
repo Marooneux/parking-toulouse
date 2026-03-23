@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +25,7 @@ import modele.Vehicule.TypeVehicule;
 
 public class VehiculesPanel extends JPanel {
 
-    private final JTextField txtImmatriculation;
+    private final TemplateSaisie txtImmatriculation;
     private final JComboBox<TypeVehicule> cbType;
     private final JButton btnAjouter;
     private final JButton btnSupprimer;
@@ -35,7 +34,7 @@ public class VehiculesPanel extends JPanel {
     private final DefaultTableModel model;
 
     public VehiculesPanel(modele.Utilisateur utilisateur) {
-        this.txtImmatriculation = new JTextField(10);
+        this.txtImmatriculation = new TemplateSaisie("Immatriculation", "AA-000-AA", false, false);
         this.cbType = new JComboBox<>(TypeVehicule.values());
         this.btnAjouter = new JButton("Ajouter");
         this.btnSupprimer = new JButton("Supprimer");
@@ -101,7 +100,7 @@ public class VehiculesPanel extends JPanel {
         inputs.setOpaque(false);
 
         JLabel lblImmat = new JLabel("Immatriculation :");
-        txtImmatriculation.setPreferredSize(new Dimension(140, 30));
+        txtImmatriculation.getField().setPreferredSize(new Dimension(140, 30));
 
         JLabel lblType = new JLabel("Type :");
         cbType.setPreferredSize(new Dimension(150, 30));
