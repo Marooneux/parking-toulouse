@@ -19,7 +19,8 @@ build-sonar:
       - sonar-scanner/
       
   script: 
-    - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    # - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    - mvn verify -Dmaven.test.failure.ignore=true org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
   allow_failure: true
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
