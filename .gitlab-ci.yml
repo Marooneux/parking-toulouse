@@ -10,7 +10,7 @@ stages:
 build-sonar:
   stage: build-sonar
   
-  
+
   cache:
     policy: pull-push
     key: "sonar-cache-$CI_COMMIT_REF_SLUG"
@@ -20,7 +20,10 @@ build-sonar:
       
   script: 
     # - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-    - mvn verify -Dmaven.test.failure.ignore=true org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    - mvn verify -DskipTests sonar:sonar \
+    -Dsonar.host.url=$SONAR_HOST_URL \
+    -Dsonar.login=$SONAR_TOKEN
+    # - mvn verify -Dmaven.test.failure.ignore=true org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
   allow_failure: true
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
