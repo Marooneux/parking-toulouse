@@ -110,7 +110,7 @@ public class Statistique extends JPanel {
         barChartPanel = new BarChartPanel();
         barChartPanel.setPreferredSize(new Dimension(0, 260));
         //ajouté pour etre plus comprensible
-        JPanel barCard = wrapChart("Révenus par jour", barChartPanel);
+        JPanel barCard = wrapChart("Réservations par jour", barChartPanel);
         //legende
         barCard.add(createLegend("#007BFF", "Sessions"), BorderLayout.SOUTH);
         content.add(barCard);
@@ -120,7 +120,7 @@ public class Statistique extends JPanel {
         lineChartPanel = new LineChartPanel();
         lineChartPanel.setPreferredSize(new Dimension(0, 260));
         //ajouté pour etre plus comprensible
-        JPanel lineCard = wrapChart("Réservations du mois", lineChartPanel);
+        JPanel lineCard = wrapChart("Révenus du mois", lineChartPanel);
         //legende 
         lineCard.add(createLegend("#007BFF", "Revenus (€)"), BorderLayout.SOUTH);
         content.add(lineCard);
