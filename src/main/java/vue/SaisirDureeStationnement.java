@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.JTextComponent;
 
 import modele.ZoneVoirie;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
@@ -212,6 +213,10 @@ public class SaisirDureeStationnement extends JPanel {
 	public String getImmatriculation() {
 		return this.textFieldPlaque.getText();
 	}
+	
+    public JTextComponent getPlaque() {
+        return this.textFieldPlaque.getField();
+    }
 
 	public ZoneVoirie getZone() {
 		return this.zone;
