@@ -21,11 +21,12 @@ public class TestParking {
 		this.parking = new Parking(
 				"Parking Central",
 				100,
+				0,
 				1.8,
 				LocalTime.of(9, 0),
 				LocalTime.of(21, 0),
 				true,
-				new Adresse(0, null, 0, null),
+				new Adresse(0, "Rue Victor Hugo", 0, null),
 				2.5);
 		this.parking.setId(1);
 		this.parking.setNbPlacesOccupees(50);
@@ -46,7 +47,7 @@ public class TestParking {
 	@Test
 	public void testSetters() {
 		this.parking.setNom("Parking Sud");
-		this.parking.setAdresse("Boulevard Carnot");
+		this.parking.getAdresse().setRue("Boulevard Carnot");
 		this.parking.setTarif(2.0);
 		this.parking.setCapacite(80);
 		this.parking.setNbPlacesOccupees(10);
