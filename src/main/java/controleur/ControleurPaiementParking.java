@@ -31,9 +31,9 @@ public class ControleurPaiementParking implements ActionListener {
             if (!finaliserReservation()) {
                 return;
             }
-            ConfirmationPaiementParking confirmation = new ConfirmationPaiementParking(vue.getReservation(), vue.getPrix());
+            ConfirmationPaiementParking confirmation = new ConfirmationPaiementParking(vue.getReservation());
             new ControleurConfirmationPaiementParking(confirmation, vue.getReservation(), vue.getPrix());
-            NavigationFrame.getInstance().showPage("parking-confirmation", () -> confirmation, "Paiement validé");
+            NavigationFrame.getInstance().showPage("parking-confirmation", () -> confirmation, "Paiement validé", true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
             ex.printStackTrace();

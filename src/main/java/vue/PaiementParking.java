@@ -40,9 +40,9 @@ public class PaiementParking extends JPanel {
 	private final ReservationParking reservation;
 	private final double prix;
 
-	public PaiementParking(ReservationParking reservation, double prix) {
+	public PaiementParking(ReservationParking reservation) {
 		this.reservation = reservation;
-		this.prix = prix;
+		this.prix = reservation.calculerPrixTotal();
 
 		this.setLayout(new BorderLayout(20, 20));
 		this.setBackground(BACKGROUND_COLOR);

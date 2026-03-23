@@ -1,6 +1,7 @@
 package modele;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class ReservationParking {
@@ -22,6 +23,16 @@ public class ReservationParking {
 		this.parking = parking;
 		this.utilisateur = utilisateur;
 	}
+	
+	public String dateArriveeToString() {
+		LocalDateTime dateTime = this.dateArrivee;
+        if (dateTime == null) {
+            return ""; 
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return dateTime.format(formatter);
+    }
+	
 
 	public void setId(int id) {
 		this.id = id;
@@ -73,13 +84,17 @@ public class ReservationParking {
 	}
 
 	public double calculerPrixTotal() {
-		if (parking == null) {
-			return 0.0;
-		}
-		LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
-		long minutes = ChronoUnit.MINUTES.between(this.dateArrivee, fin);
-		double heures = Math.max(0.0, minutes / 60.0);
-		return heures * parking.getTarif();
+	    if (parking == null) {
+	        return 0.0;
+	    }
+	    
+	    LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
+	    long minutes = Math.max(0, ChronoUnit.MINUTES.between(this.dateArrivee, fin));
+	    double quartsDHeure = Math.ceil(minutes / 15.0);
+	    quartsDHeure = Math.max(1.0, quartsDHeure);
+	    double heuresFacturees = quartsDHeure / 4.0;
+	    
+	    return heuresFacturees * parking.getTarif();
 	}
 
 }

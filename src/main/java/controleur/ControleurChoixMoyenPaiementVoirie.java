@@ -38,7 +38,7 @@ public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
                 PaiementVoirie pagePaiementCB = new PaiementVoirie(zone, immatriculation, duree, prix);
                 new ControleurPaiementVoirie(pagePaiementCB);
                 String key = "voirie-paiement-carte-" + immatriculation + "-" + duree;
-                NavigationFrame.getInstance().showPage(key, () -> pagePaiementCB, "Paiement par carte");
+                NavigationFrame.getInstance().showPage(key, () -> pagePaiementCB, "Paiement par carte", true);
                 return;
             }
 
@@ -46,7 +46,7 @@ public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
                 PaiementVirementVoirie pageVirement = new PaiementVirementVoirie(zone, immatriculation, duree, prix);
                 new ControleurPaiementVirementVoirie(pageVirement);
                 String key = "voirie-paiement-virement-" + immatriculation + "-" + duree;
-                NavigationFrame.getInstance().showPage(key, () -> pageVirement, "Paiement par virement");
+                NavigationFrame.getInstance().showPage(key, () -> pageVirement, "Paiement par virement", true);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");

@@ -17,10 +17,10 @@ public class ControleurChoixMoyenPaiementParking implements ActionListener {
     private final ReservationParking reservation;
     private final double prix;
 
-    public ControleurChoixMoyenPaiementParking(ChoixMoyenPaiementParking vue, ReservationParking reservation, double prix) {
+    public ControleurChoixMoyenPaiementParking(ChoixMoyenPaiementParking vue, ReservationParking reservation) {
         this.vue = vue;
         this.reservation = reservation;
-        this.prix = prix;
+        this.prix = reservation.calculerPrixTotal();
 
         vue.addCarteListener(this);
         vue.addVirementListener(this);
@@ -31,16 +31,16 @@ public class ControleurChoixMoyenPaiementParking implements ActionListener {
         String command = e.getActionCommand();
         try {
             if ("CARTE".equals(command)) {
-                PaiementParking pagePaiementCB = new PaiementParking(reservation, prix);
+                PaiementParking pagePaiementCB = new PaiementParking(reservation);
                 new ControleurPaiementParking(pagePaiementCB);
-                NavigationFrame.getInstance().showPage("parking-paiement-carte", () -> pagePaiementCB, "Paiement par carte");
+                NavigationFrame.getInstance().showPage("parking-paiement-carte", () -> pagePaiementCB, "Paiement par carte", true);
                 return;
             }
 
             if ("VIREMENT".equals(command)) {
                 PaiementVirementParking pageVirement = new PaiementVirementParking(reservation, prix);
                 new ControleurPaiementVirementParking(pageVirement);
-                NavigationFrame.getInstance().showPage("parking-paiement-virement", () -> pageVirement, "Paiement par virement");
+                NavigationFrame.getInstance().showPage("parking-paiement-virement", () -> pageVirement, "Paiement par virement", true);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");

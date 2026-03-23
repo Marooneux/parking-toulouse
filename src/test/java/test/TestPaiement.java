@@ -34,6 +34,7 @@ public class TestPaiement {
         Parking parking = new Parking(
                 "Parking Test",
                 100,
+                0,
                 2.0,
                 LocalTime.of(8, 0),
                 LocalTime.of(20, 0),
