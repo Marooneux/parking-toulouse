@@ -1,7 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -49,7 +48,7 @@ public class TestReservationParking {
     @Test
     public void testGetters() {
         assertEquals(LocalDateTime.of(2025, 11, 10, 12, 32, 35), reservation.getDateArrivee());
-        assertEquals(null, reservation.getDateDepart());
+        assertNull(reservation.getDateDepart());
         assertEquals(parking, reservation.getParking());
     }
 
@@ -66,9 +65,29 @@ public class TestReservationParking {
     }
 
     @Test
-    public void testPrixCalcul() {
+    public void testPrixCalcul_2Heures() {
         reservation.setDateDepart(reservation.getDateArrivee().plusHours(2));
+
+        // 2 hours = 120 minutes → 8 quarts → 2 hours billed
         double expected = 2 * parking.getTarif();
+        assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
+    }
+
+    @Test
+    public void testPrixCalcul_1Minute() {
+        reservation.setDateDepart(reservation.getDateArrivee().plusMinutes(1));
+
+        // 1 minute → 1 quart minimum → 0.25h billed
+        double expected = 0.25 * parking.getTarif();
+        assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
+    }
+
+    @Test
+    public void testPrixCalcul_16Minutes() {
+        reservation.setDateDepart(reservation.getDateArrivee().plusMinutes(16));
+
+        // 16 minutes → 2 quarts → 0.5h billed
+        double expected = 0.5 * parking.getTarif();
         assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
     }
 }
