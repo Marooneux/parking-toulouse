@@ -11,5 +11,5 @@ sonarcloud-check:
     - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests
   only:
     - merge_requests
-    - main
+    - main 
     - develop
