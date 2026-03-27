@@ -4,12 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import modele.ZoneVoirie;
 import modele.ReservationVoirie;
+import modele.Vehicule;
 import modele.dao.DaoReservationVoirie;
+import modele.dao.DaoVehicule;
 import modele.dao.MySQLDataSource;
 import vue.ChoixMoyenPaiementVoirie;
 import vue.NavigationFrame;
@@ -26,6 +29,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		this.zone = zone;
 		this.vue = vue;
 		this.vue.getBtnConfirmer().addActionListener(this);
+		this.prefillPlaque();
 
 		NavigationFrame.getInstance().showPage("voirie-duree", () -> this.vue, "Démarrer le stationnement");
 	}
@@ -91,6 +95,24 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		}
 		return true;
 	}
+	
+    private void prefillPlaque() {
+        try {
+            if (AuthManager.getCurrentUser() == null) {
+                return;
+            }
+            MySQLDataSource.creerAcces();
+            DaoVehicule daoVehicule = new DaoVehicule();
+            int userId = AuthManager.getCurrentUser().getId();
+            List<Vehicule> vehicules = daoVehicule.findByUserId(userId);
+            Vehicule vehicule = vehicules.isEmpty() ? null : vehicules.getFirst();
+            if (vehicule != null) {
+                vue.getPlaque().setText(vehicule.getImmatriculation());
+            }
+        } catch (Exception ignored) {
+            // Pré-remplissage non bloquant
+        }
+    }
 
 	public static void ouvrirPaiement(ZoneVoirie zone, String immatriculation, int intDuree, double prix) {
 		ChoixMoyenPaiementVoirie choix = new ChoixMoyenPaiementVoirie(zone, immatriculation,

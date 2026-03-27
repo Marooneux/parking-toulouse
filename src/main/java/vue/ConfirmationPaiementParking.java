@@ -21,7 +21,7 @@ public class ConfirmationPaiementParking extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final JButton btnTerminer;
 
-	public ConfirmationPaiementParking(ReservationParking reservation, double prix) {
+	public ConfirmationPaiementParking(ReservationParking reservation) {
 		this.setBackground(new Color(255, 255, 255));
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setLayout(new BorderLayout(0, 0));
@@ -62,7 +62,7 @@ public class ConfirmationPaiementParking extends JPanel {
 		lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		panelInnerContent.add(lblMerci);
 
-		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
+		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", reservation.getPrixPaye()));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMontant.setForeground(new Color(33, 37, 41));
 		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));

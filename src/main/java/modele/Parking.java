@@ -15,6 +15,7 @@ public class Parking {
 
 	public Parking(String nom, 
 				   int capacite, 
+				   int nbPlacesOccupees,
 				   double hauteurMax,
 				   LocalTime horaireOuverture,
 				   LocalTime horaireFermeture,
@@ -23,6 +24,7 @@ public class Parking {
 				   double tarif) {
 		this.nom = nom;
 		this.capacite = capacite;
+		this.nbPlacesOccupees = nbPlacesOccupees;
 		this.hauteurMax = hauteurMax;
 		this.horaireOuverture = horaireOuverture;
 		this.horaireFermeture = horaireFermeture;

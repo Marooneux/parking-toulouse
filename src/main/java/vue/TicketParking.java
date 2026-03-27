@@ -33,15 +33,15 @@ public class TicketParking extends JPanel {
     private ReservationParking reservation;
     private boolean confirmationRequise;
 
-    public TicketParking(ReservationParking reservation, String plaque, String heureArrivee) {
-        this(reservation, plaque, heureArrivee, true);
+    public TicketParking(ReservationParking reservation, String plaque) {
+        this(reservation, plaque, true);
     }
 
-    public TicketParking(ReservationParking reservation, String plaque, String heureArrivee, boolean confirmationRequise) {
+    public TicketParking(ReservationParking reservation, String plaque, boolean confirmationRequise) {
         this.reservation = reservation;
         this.parking = reservation.getParking();
         this.immatriculation = plaque;
-        this.heureArrivee = heureArrivee;
+        this.heureArrivee = reservation.dateArriveeToString();
         this.confirmationRequise = confirmationRequise;
 
         this.setBackground(new Color(255, 255, 255));
@@ -187,9 +187,9 @@ public class TicketParking extends JPanel {
 
     public void remplirInfos(String numeroTicket, String parking, String plaque, String heure, String adresse) {
         lblNumeroTicket.setText(numeroTicket);
-        lblParking.setText(parking);
+        lblParking.setText(this.reservation.getParking().getNom());
         lblPlaque.setText(plaque);
-        lblHeure.setText(heure);
-        lblAdresse.setText(adresse);
+        lblHeure.setText(this.reservation.dateArriveeToString());
+        lblAdresse.setText(this.reservation.getParking().getAdresse().getRue());
     }
 }

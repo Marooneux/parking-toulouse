@@ -29,7 +29,7 @@ public class ControleurPaiementVirementVoirie implements ActionListener {
                     "Virement bancaire");
             new ControleurConfirmationPaiementVoirie(confirmation);
             String key = "voirie-confirmation-" + vue.getImmatriculation() + "-" + vue.getDuree();
-            NavigationFrame.getInstance().showPage(key, () -> confirmation, "Paiement validé");
+            NavigationFrame.getInstance().showPage(key, () -> confirmation, "Paiement validé", true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
             ex.printStackTrace();
