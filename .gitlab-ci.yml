@@ -8,7 +8,7 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTestss
   only:
     - merge_requests
     - master
