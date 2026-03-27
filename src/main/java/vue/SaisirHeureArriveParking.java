@@ -75,9 +75,9 @@ public class SaisirHeureArriveParking extends JPanel {
         body.setBorder(new EmptyBorder(10, 0, 10, 0));
         this.add(body, BorderLayout.CENTER);
 
-        this.ajouterCarteDeDétails(body, "Parking selectionné", this.detailsZone());
-        this.ajouterCarteDeDétails(body, "Informations du véhicule", this.detailsVoiture());
-        this.ajouterCarteDeDétails(body, "Heure d'arrivée", this.detailsHeureArrivee());
+        this.ajouterCarteDeDetails(body, "Parking selectionné", this.detailsZone());
+        this.ajouterCarteDeDetails(body, "Informations du véhicule", this.detailsVoiture());
+        this.ajouterCarteDeDetails(body, "Heure d'arrivée", this.detailsHeureArrivee());
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(250, 250, 250));
@@ -174,7 +174,7 @@ public class SaisirHeureArriveParking extends JPanel {
         return p;
     }
 
-    private void ajouterCarteDeDétails(JPanel parent, String title, JPanel innerContent) {
+    private void ajouterCarteDeDetails(JPanel parent, String title, JPanel innerContent) {
         JPanel card = new JPanel();
         card.setLayout(new BorderLayout());
         card.setBackground(Color.WHITE);

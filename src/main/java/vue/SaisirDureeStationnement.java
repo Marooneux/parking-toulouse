@@ -74,9 +74,9 @@ public class SaisirDureeStationnement extends JPanel {
 		this.add(body, BorderLayout.CENTER);
 
 		// Création des champs de details du stationnement
-		this.ajouterCarteDeDétails(body, "Zone Sélectionnée", this.detailsZone());
-		this.ajouterCarteDeDétails(body, "Informations du véhicule", this.detailsVoiture());
-		this.ajouterCarteDeDétails(body, "Durée du stationnement", this.detailsDureeStationnement());
+		this.ajouterCarteDeDetails(body, "Zone Sélectionnée", this.detailsZone());
+		this.ajouterCarteDeDetails(body, "Informations du véhicule", this.detailsVoiture());
+		this.ajouterCarteDeDetails(body, "Durée du stationnement", this.detailsDureeStationnement());
 
 		// Button Payer
 		// ? Créer un prototype que peut être utilisé et changé partout dans l'appli ?
@@ -167,7 +167,7 @@ public class SaisirDureeStationnement extends JPanel {
 		return p;
 	}
 
-	private void ajouterCarteDeDétails(JPanel parent, String title, JPanel innerContent) {
+	private void ajouterCarteDeDetails(JPanel parent, String title, JPanel innerContent) {
 		JPanel card = new JPanel();
 		card.setLayout(new BorderLayout());
 		card.setBackground(Color.WHITE);

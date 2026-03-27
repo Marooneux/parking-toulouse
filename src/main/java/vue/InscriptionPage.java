@@ -26,7 +26,6 @@ public class InscriptionPage extends JPanel {
     private static final Color FG_HERO_HINT = new Color(173, 181, 189);
     private static final Color FG_TEXT = new Color(33, 37, 41);
     private static final Color FG_MUTED = new Color(108, 117, 125);
-    private static final Color FG_LABEL = new Color(73, 80, 87);
     private static final Color BORDER_SOFT = new Color(226, 232, 240);
     private static final Color BORDER_INPUT = new Color(206, 212, 218);
     private static final Color BG_INPUT = new Color(251, 252, 253);
@@ -34,7 +33,6 @@ public class InscriptionPage extends JPanel {
     private static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 26);
     private static final Font FONT_HERO_TITLE = new Font("Segoe UI", Font.BOLD, 22);
     private static final Font FONT_BODY = new Font("Segoe UI", Font.PLAIN, 14);
-    private static final Font FONT_LABEL = new Font("Segoe UI", Font.PLAIN, 13);
     private static final Font FONT_BUTTON = new Font("Segoe UI", Font.BOLD, 14);
     private static final Dimension INPUT_MAX_SIZE = new Dimension(Integer.MAX_VALUE, 46);
 
