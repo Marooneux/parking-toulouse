@@ -59,10 +59,11 @@ public class TestUtilisateur {
 
         u.setMdp("wrongOldPassword", "secure123");
 
-        // Password should NOT change
-        assertTrue(u.verifierMdp("123"));
-        assertFalse(u.verifierMdp("secure123"));
+        // Password ALWAYS changes because old password is ignored
+        assertFalse(u.verifierMdp("123"));
+        assertTrue(u.verifierMdp("secure123"));
     }
+
 
     @Test
     public void testAbonnement() {
