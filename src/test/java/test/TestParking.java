@@ -79,4 +79,17 @@ public class TestParking {
         assertTrue(this.parking.estOuvertApres(LocalTime.of(15, 0)));
         assertFalse(this.parking.estOuvertApres(LocalTime.of(6, 0)));
     }
+    
+
+    @Test
+    public void testOccupancyBoundaries() {
+        parking.setNbPlacesOccupees(0);
+        parking.enleverNbPlacesOccupes(1); // should not go negative if protected
+        assertTrue(parking.getNbPlacesOccupees() >= 0);
+
+        parking.setNbPlacesOccupees(100);
+        parking.ajouterNbPlacesOccupes(1); // should not exceed capacity if protected
+        assertTrue(parking.getNbPlacesOccupees() <= parking.getCapacite());
+    }
+
 }

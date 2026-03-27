@@ -23,17 +23,18 @@ public class Iterateur<T> implements Iterator<T> {
 
 	@Override
 	public T next() {
-		T instance = null;
-		try {
-			instance = this.dao.creerInstance(this.curseur);
-			this.hasNext = this.curseur.next();
-			if (this.hasNext == false) {
-				throw new NoSuchElementException();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return instance;
+	    if (!hasNext) {
+	        throw new NoSuchElementException();
+	    }
+
+	    try {
+	        T instance = dao.creerInstance(curseur);
+	        hasNext = curseur.next(); // prepare for next call
+	        return instance;
+	    } catch (SQLException e) {
+	        throw new RuntimeException(e);
+	    }
 	}
+
 
 }

@@ -1,7 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,11 +12,12 @@ import modele.Adresse;
 import modele.Paiement;
 import modele.Parking;
 import modele.ReservationParking;
+import modele.Utilisateur;
 
 public class TestPaiement {
 
-    // Minimal dummy Utilisateur so ReservationParking compiles
-    private class DummyUtilisateur extends modele.Utilisateur {
+    // Minimal real Utilisateur
+    private static class DummyUtilisateur extends Utilisateur {
         public DummyUtilisateur() {
             super(1, "Nom", "Prenom", "test@test.com", "password", null);
         }
@@ -35,12 +35,12 @@ public class TestPaiement {
                 "Parking Test",
                 100,
                 0,
-                2.0,
+                2.0,                       // tarif horaire
                 LocalTime.of(8, 0),
                 LocalTime.of(20, 0),
                 false,
                 adresse,
-                2.0 // tarif = 2€/h
+                2.0
         );
 
         LocalDateTime arrivee = LocalDateTime.now().minusHours(1);
@@ -50,10 +50,11 @@ public class TestPaiement {
                 arrivee,
                 depart,
                 parking,
-                new DummyUtilisateur() // NOT the real Utilisateur class
+                new DummyUtilisateur()
         );
 
-        reservation.setDateDepart(depart); // forces prixPaye calculation
+        // Force prix payé > 0 so paiement is valid
+        reservation.setPrixPaye(reservation.calculerPrixTotal());
 
         paiement = new Paiement(reservation, "CB");
     }
@@ -65,6 +66,7 @@ public class TestPaiement {
 
     @Test
     public void testEffectuerPaiement() {
+        assertTrue(paiement.estValide());
         assertTrue(paiement.effectuerPaiement());
     }
 }
