@@ -16,7 +16,6 @@ import modele.Utilisateur;
 
 public class TestPaiement {
 
-    // Minimal real Utilisateur
     private static class DummyUtilisateur extends Utilisateur {
         public DummyUtilisateur() {
             super(1, "Nom", "Prenom", "test@test.com", "password", null);
@@ -25,17 +24,18 @@ public class TestPaiement {
 
     private Paiement paiement;
     private ReservationParking reservation;
+    private Parking parking;
 
     @Before
     public void setUp() {
 
         Adresse adresse = new Adresse(1, "Rue Test", 31000, "Toulouse");
 
-        Parking parking = new Parking(
+        parking = new Parking(
                 "Parking Test",
                 100,
                 0,
-                2.0,                       // tarif horaire
+                2.0,
                 LocalTime.of(8, 0),
                 LocalTime.of(20, 0),
                 false,
@@ -53,20 +53,59 @@ public class TestPaiement {
                 new DummyUtilisateur()
         );
 
-        // Force prix payé > 0 so paiement is valid
+        // Force prix payé > 0
         reservation.setPrixPaye(reservation.calculerPrixTotal());
 
         paiement = new Paiement(reservation, "CB");
     }
 
     @Test
-    public void testMontant() {
+    public void testConstructorAndGetters() {
+        assertNotNull(paiement.getReservation());
         assertEquals(reservation.calculerPrixTotal(), paiement.getMontant(), 0.001);
+        assertNotNull(paiement.getDatePaiement());
+
     }
 
     @Test
-    public void testEffectuerPaiement() {
+    public void testEstValide_True() {
         assertTrue(paiement.estValide());
+    }
+
+    @Test
+    public void testEstValide_False() {
+        ReservationParking r2 = new ReservationParking(
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                parking,
+                new DummyUtilisateur()
+        );
+
+        r2.setPrixPaye(0);
+
+        Paiement p2 = new Paiement(r2, "CB");
+
+        assertFalse(p2.estValide());
+    }
+
+    @Test
+    public void testEffectuerPaiement_Success() {
         assertTrue(paiement.effectuerPaiement());
+    }
+
+    @Test
+    public void testEffectuerPaiement_Failure() {
+        ReservationParking r2 = new ReservationParking(
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                parking,
+                new DummyUtilisateur()
+        );
+
+        r2.setPrixPaye(0);
+
+        Paiement p2 = new Paiement(r2, "CB");
+
+        assertFalse(p2.effectuerPaiement());
     }
 }

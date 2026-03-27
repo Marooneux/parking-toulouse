@@ -11,10 +11,11 @@ import org.junit.Test;
 import modele.Adresse;
 import modele.Parking;
 import modele.ReservationParking;
+import modele.Utilisateur;
 
 public class TestReservationParking {
 
-    private class DummyUtilisateur extends modele.Utilisateur {
+    private class DummyUtilisateur extends Utilisateur {
         public DummyUtilisateur() {
             super(1, "Nom", "Prenom", "mail@test.com", "pwd", null);
         }
@@ -46,10 +47,11 @@ public class TestReservationParking {
     }
 
     @Test
-    public void testGetters() {
+    public void testConstructorAndGetters() {
         assertEquals(LocalDateTime.of(2025, 11, 10, 12, 32, 35), reservation.getDateArrivee());
         assertNull(reservation.getDateDepart());
         assertEquals(parking, reservation.getParking());
+        assertNotNull(reservation.getUtilisateur());
     }
 
     @Test
@@ -57,18 +59,40 @@ public class TestReservationParking {
         LocalDateTime newArrivee = LocalDateTime.of(2025, 11, 10, 13, 0);
         LocalDateTime newDepart = LocalDateTime.of(2025, 11, 10, 14, 0);
 
+        reservation.setId(42);
         reservation.setDateArrivee(newArrivee);
         reservation.setDateDepart(newDepart);
 
+        Parking newParking = parking;
+        reservation.setParking(newParking);
+
+        DummyUtilisateur newUser = new DummyUtilisateur();
+        reservation.setUtilisateur(newUser);
+
+        reservation.setPrixPaye(999); // ignored, recalculates internally
+
+        assertEquals(42, reservation.getId());
         assertEquals(newArrivee, reservation.getDateArrivee());
         assertEquals(newDepart, reservation.getDateDepart());
+        assertEquals(newParking, reservation.getParking());
+        assertEquals(newUser, reservation.getUtilisateur());
+        assertEquals(reservation.calculerPrixTotal(), reservation.getPrixPaye(), 0.001);
+    }
+
+    @Test
+    public void testDateArriveeToString() {
+        assertEquals("12:32", reservation.dateArriveeToString());
+    }
+
+    @Test
+    public void testDateArriveeToString_Null() {
+        reservation.setDateArrivee(null);
+        assertEquals("", reservation.dateArriveeToString());
     }
 
     @Test
     public void testPrixCalcul_2Heures() {
         reservation.setDateDepart(reservation.getDateArrivee().plusHours(2));
-
-        // 2 hours = 120 minutes → 8 quarts → 2 hours billed
         double expected = 2 * parking.getTarif();
         assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
     }
@@ -76,8 +100,6 @@ public class TestReservationParking {
     @Test
     public void testPrixCalcul_1Minute() {
         reservation.setDateDepart(reservation.getDateArrivee().plusMinutes(1));
-
-        // 1 minute → 1 quart minimum → 0.25h billed
         double expected = 0.25 * parking.getTarif();
         assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
     }
@@ -85,9 +107,27 @@ public class TestReservationParking {
     @Test
     public void testPrixCalcul_16Minutes() {
         reservation.setDateDepart(reservation.getDateArrivee().plusMinutes(16));
-
-        // 16 minutes → 2 quarts → 0.5h billed
         double expected = 0.5 * parking.getTarif();
         assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
+    }
+
+    @Test
+    public void testPrixCalcul_ZeroMinutes() {
+        reservation.setDateDepart(reservation.getDateArrivee());
+        double expected = 0.25 * parking.getTarif();
+        assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
+    }
+
+    @Test
+    public void testPrixCalcul_NegativeDuration() {
+        reservation.setDateDepart(reservation.getDateArrivee().minusMinutes(10));
+        double expected = 0.25 * parking.getTarif();
+        assertEquals(expected, reservation.calculerPrixTotal(), 0.001);
+    }
+
+    @Test
+    public void testPrixCalcul_NoParking() {
+        reservation.setParking(null);
+        assertEquals(0.0, reservation.calculerPrixTotal(), 0.001);
     }
 }
