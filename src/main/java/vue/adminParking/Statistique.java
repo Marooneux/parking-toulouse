@@ -314,7 +314,7 @@ public class Statistique extends JPanel {
                 int y = h - pad - bh;
 
                 g2.setPaint(new GradientPaint(x, y, new Color(0, 123, 255),
-                        x, y + bh, new Color(0, 123, 255, 120)));
+                        x, (float) y + bh, new Color(0, 123, 255, 120)));
                 g2.fillRoundRect(x + 4, y, barW - 8, bh, 10, 10);
             }
             

@@ -31,7 +31,11 @@ import org.junit.runners.Suite.SuiteClasses;
         TestZone.class,
 
         // Paiement
-        TestPaiement.class
+        TestPaiement.class,
+
+        // Utils
+        TestPasswordUtil.class,
+        TestAuthManager.class
 })
 public class AllTests {
 

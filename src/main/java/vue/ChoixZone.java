@@ -12,6 +12,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,6 +30,7 @@ import ui.theme.DefaultTheme;
 public class ChoixZone extends JPanel {
 
 	private static final long serialVersionUID = -4587482455866173269L;
+	private static final Logger LOGGER = Logger.getLogger(ChoixZone.class.getName());
 	private ControleurChoixZone controleur;
 
 	public ChoixZone() {
@@ -213,7 +216,7 @@ public class ChoixZone extends JPanel {
 					frameDureeStationnement.setVisible(true);
 					// navigation is now handled by controllers; no frame disposal here
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 				}
 			}
 		});
