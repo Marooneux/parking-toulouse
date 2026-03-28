@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.Parking;
+import ui.theme.DefaultTheme;
 
 public class AdminParkingPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -84,8 +84,8 @@ public class AdminParkingPanel extends JPanel {
         topPanel.add(space);
 
         JLabel lblName = new JLabel("<html>" + this.parking.getNom() + "</html>");
-        lblName.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblName.setForeground(new Color(33, 37, 41));
+        lblName.setFont(DefaultTheme.FONT_TITLE_ALT);
+        lblName.setForeground(DefaultTheme.TEXT_COLOR);
         topPanel.add(lblName);
 
         add(topPanel, BorderLayout.NORTH);
@@ -120,7 +120,7 @@ public class AdminParkingPanel extends JPanel {
         bottomPanel.add(borderTop, BorderLayout.NORTH);
 
         JLabel lblPrice = new JLabel(String.format("%.2f€/h", this.parking.getTarif()));
-        lblPrice.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblPrice.setFont(DefaultTheme.FONT_BUTTON);
         lblPrice.setForeground(Color.GRAY);
         lblPrice.setBorder(new EmptyBorder(10, 0, 0, 0));
 
@@ -134,13 +134,13 @@ public class AdminParkingPanel extends JPanel {
         row.setOpaque(false);
 
         JLabel lblIcon = new JLabel(icon);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        lblIcon.setFont(DefaultTheme.FONT_ICON_SMALL);
         lblIcon.setPreferredSize(new Dimension(25, 20));
         lblIcon.setForeground(Color.GRAY);
 
         JLabel lblText = new JLabel(text);
-        lblText.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lblText.setForeground(new Color(73, 80, 87));
+        lblText.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        lblText.setForeground(DefaultTheme.LABEL_COLOR);
 
         row.add(lblIcon);
         row.add(lblText);
@@ -166,7 +166,7 @@ public class AdminParkingPanel extends JPanel {
             g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
 
             g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Segoe UI", Font.BOLD, 22));
+            g2.setFont(DefaultTheme.FONT_HERO_TITLE);
             FontMetrics fm = g2.getFontMetrics();
             int x = (getWidth() - fm.stringWidth(text)) / 2;
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();

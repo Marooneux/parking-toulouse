@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,8 +25,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.Parking;
+import ui.theme.DefaultTheme;
 
 public class ParkingPanel extends JPanel {
+
+	private static final long serialVersionUID = -1637927391985610743L;
+
 	private JButton btnModifier;
 
 	private Color normalBorder = new Color(230, 230, 230);
@@ -77,8 +80,8 @@ public class ParkingPanel extends JPanel {
 		topPanel.add(space);
 
 		JLabel lblName = new JLabel("<html>" + parking.getNom() + "</html>");
-		lblName.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		lblName.setForeground(new Color(33, 37, 41));
+		lblName.setFont(DefaultTheme.FONT_TITLE_ALT);
+		lblName.setForeground(DefaultTheme.TEXT_COLOR);
 		topPanel.add(lblName);
 
 		this.add(topPanel, BorderLayout.NORTH);
@@ -98,7 +101,8 @@ public class ParkingPanel extends JPanel {
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(
-				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
+				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/"
+						+ parking.getCapacite() + " places"));
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(this.createDetailRow("📏", "Max " + (parking.getHauteurMax()) + "m"));
@@ -114,20 +118,19 @@ public class ParkingPanel extends JPanel {
 		bottomPanel.add(borderTop, BorderLayout.NORTH);
 
 		JLabel lblTarifLabel = new JLabel("Tarif");
-		lblTarifLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblTarifLabel.setFont(DefaultTheme.FONT_BOLD);
 		lblTarifLabel.setForeground(Color.GRAY);
 		lblTarifLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 
 		JLabel lblPrice = new JLabel(String.format("%.2f€/h", parking.getTarif()));
-		lblPrice.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblPrice.setForeground(new Color(33, 37, 41));
+		lblPrice.setFont(DefaultTheme.FONT_CARD_LABEL);
+		lblPrice.setForeground(DefaultTheme.TEXT_COLOR);
 		lblPrice.setBorder(new EmptyBorder(5, 0, 0, 0));
 
 		bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
 		bottomPanel.add(lblPrice, BorderLayout.EAST);
 		JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		actionsPanel.setOpaque(false);
-
 
 		bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
@@ -139,12 +142,12 @@ public class ParkingPanel extends JPanel {
 		row.setOpaque(false);
 
 		JLabel lblIcon = new JLabel(icon);
-		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+		lblIcon.setFont(DefaultTheme.FONT_ICON_SMALL);
 		lblIcon.setPreferredSize(new Dimension(25, 20));
 		lblIcon.setForeground(Color.GRAY);
 
 		JLabel lblText = new JLabel(text);
-		lblText.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblText.setFont(DefaultTheme.FONT_LABEL_SMALL);
 		lblText.setForeground(new Color(73, 80, 87));
 
 		row.add(lblIcon);
@@ -153,6 +156,8 @@ public class ParkingPanel extends JPanel {
 	}
 
 	class CircleIcon extends JComponent {
+
+		private static final long serialVersionUID = -440563882095950824L;
 		private String text;
 
 		public CircleIcon(String text) {
@@ -170,7 +175,7 @@ public class ParkingPanel extends JPanel {
 			g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
 
 			g2.setColor(Color.WHITE);
-			g2.setFont(new Font("Segoe UI", Font.BOLD, 22));
+			g2.setFont(DefaultTheme.FONT_HERO_TITLE);
 			FontMetrics fm = g2.getFontMetrics();
 			int x = (this.getWidth() - fm.stringWidth(this.text)) / 2;
 			int y = ((this.getHeight() - fm.getHeight()) / 2) + fm.getAscent();

@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLDataSource {
-	private static final String DEFAULT_URL = "jdbc:mysql://localhost:3306/sae_parking?serverTimezone=UTC";
+	private static final String DEFAULT_URL = "jdbc:mysql://localhost:3306/sae_parking?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
 	private static Connection connexion = null;
 	private static String url = DEFAULT_URL;
 	private static String login;
@@ -29,7 +29,7 @@ public class MySQLDataSource {
 
 		MySQLDataSource.url = resolvedUrl;
 		MySQLDataSource.login = resolvedUser;
-		MySQLDataSource.motDePasse = resolvedPass;
+		MySQLDataSource.motDePasse = resolvedPass != null ? resolvedPass : "";
 		MySQLDataSource.connexion = null;
 	}
 

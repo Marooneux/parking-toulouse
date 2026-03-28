@@ -25,10 +25,6 @@ public class ControleurChoixParking implements ActionListener {
 	// Liste actuellement affichée (filtrée et triée)
 	private List<Parking> listeAffichee;
 	public ControleurChoixParking(ChoixParking vue) {
-		this(vue, 0);
-	}
-
-	public ControleurChoixParking(ChoixParking vue, int idUser) {
 		this.vue = vue;
 		this.daoParking = new DaoParking();
 		this.listeComplete = new ArrayList<>();
@@ -63,7 +59,6 @@ public class ControleurChoixParking implements ActionListener {
 			this.afficherParkings();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Erreur de connexion");
 		}
 	}
 

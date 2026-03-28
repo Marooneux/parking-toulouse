@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.SQLException;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -69,7 +70,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             return;
         }
         if (e.getSource() == vue.getBtnParking()) {
-            openParkingPage(idUser);
+            openParkingPage();
             return;
         }
         if (e.getSource() == vue.getBtnVoirie()) {
@@ -77,7 +78,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
         }
     }
 
-    private void openParkingPage(int idUser) {
+    private void openParkingPage() {
         try {
         	if (chargerEtatStationnement()) {
         		JOptionPane.showMessageDialog(vue, "Vous êtes déjà garé. Quittez d'abord le parking.");
@@ -86,7 +87,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             NavigationFrame.getInstance().showPage("Parkings",
                     () -> {
                         ChoixParking p = new ChoixParking();
-                        new ControleurChoixParking(p, idUser);
+                        new ControleurChoixParking(p);
                         return p;
                     },
                     "Parkings");
@@ -103,7 +104,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
         		return;
         	}
             NavigationFrame.getInstance().showPage("Voirie",
-                    () -> new ChoixZone(),
+                    ChoixZone::new,
                     "Voirie");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -122,7 +123,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             DaoReservationParking dao = new DaoReservationParking();
             activeReservation = dao.findActiveByUserId(current.getId());
         } catch (Exception ex) {
-            activeReservation = null;
+            ex.printStackTrace();
         }
         if (activeReservation == null) {
             vue.cacherTicketActif();
@@ -147,9 +148,9 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             return;
         }
         String plaque = getPlaqueUtilisateur(AuthManager.getCurrentUser());
-        String heureArrivee = activeReservation.getDateArrivee() != null
-                ? activeReservation.getDateArrivee().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                : "";
+        //String heureArrivee = activeReservation.getDateArrivee() != null
+        //        ? activeReservation.getDateArrivee().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+        //        : ""
         TicketParking ticket = new TicketParking(activeReservation, plaque, false);
         new ControleurTicketParking(ticket);
         NavigationFrame.getInstance().showPage("parking-ticket", () -> ticket, "Ticket parking", true);
@@ -206,7 +207,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
         }
     }
 
-    private Utilisateur safeFetchUser(int idUser) throws Exception {
+    private Utilisateur safeFetchUser(int idUser) throws SQLException {
         Utilisateur current = AuthManager.getCurrentUser();
         if (current != null && current.getId() == idUser) {
             return current;

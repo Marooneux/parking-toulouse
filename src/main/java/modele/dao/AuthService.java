@@ -27,7 +27,7 @@ public class AuthService {
 			try {
 				valide = PasswordUtil.checkMdp(mdp, stored);
 			} catch (Exception e) {
-				// ignore bcrypt parsing issues, fall back to plaintext below
+				// Pas un hash BCrypt, fallback texte clair
 			}
 			if (!valide && stored != null) {
 				valide = stored.equals(mdp);

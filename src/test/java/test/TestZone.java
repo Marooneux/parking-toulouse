@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.time.LocalTime;
 
 import org.junit.Before;
@@ -65,5 +66,86 @@ public class TestZone {
         String affichage = zone.getHorairesAffiches();
         assertNotNull(affichage);
         assertFalse(affichage.isEmpty());
+    }
+
+    @Test
+    public void testFormatageHorairesGratuit() {
+        ZoneVoirie gratuite = new ZoneVoirie(2, "verte", 0.0, 60, null, null, null, null);
+        assertEquals("Gratuit", gratuite.getHorairesAffiches());
+    }
+
+    @Test
+    public void testFormatageHorairesSeulementAm() {
+        ZoneVoirie amOnly = new ZoneVoirie(3, "jaune", 1.0, 60,
+                LocalTime.of(9, 0), LocalTime.of(12, 0), null, null);
+        String affichage = amOnly.getHorairesAffiches();
+        assertNotNull(affichage);
+        assertFalse(affichage.contains("/"));
+    }
+
+    @Test
+    public void testMinsToHeuresSansMinutes() {
+        // 180 minutes = 3 heures pile
+        assertEquals("3 heures", zone.minsToHeures());
+    }
+
+    @Test
+    public void testMinsToHeuresAvecMinutes() {
+        zone.setDureeMax(185);
+        assertEquals("3 heures 5 minutes", zone.minsToHeures());
+    }
+
+    @Test
+    public void testConvertirCouleurRouge() {
+        Color c = zone.convertirCouleur();
+        assertEquals(new Color(255, 59, 48), c);
+    }
+
+    @Test
+    public void testConvertirCouleurJaune() {
+        zone.setCouleur("jaune");
+        assertEquals(new Color(255, 204, 0), zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurOrange() {
+        zone.setCouleur("orange");
+        assertEquals(new Color(255, 149, 0), zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurVerte() {
+        zone.setCouleur("verte");
+        assertEquals(new Color(0, 128, 0), zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurBleue() {
+        zone.setCouleur("bleue");
+        assertEquals(new Color(0, 122, 255), zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurHex() {
+        zone.setCouleur("#FF0000");
+        assertEquals(Color.decode("#FF0000"), zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurHexInvalide() {
+        zone.setCouleur("#ZZZZZZ");
+        assertEquals(Color.GRAY, zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurNull() {
+        zone.setCouleur(null);
+        assertEquals(Color.GRAY, zone.convertirCouleur());
+    }
+
+    @Test
+    public void testConvertirCouleurInconnue() {
+        zone.setCouleur("violet");
+        assertEquals(Color.GRAY, zone.convertirCouleur());
     }
 }
