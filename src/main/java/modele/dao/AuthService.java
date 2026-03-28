@@ -18,30 +18,32 @@ public class AuthService {
 	public static Utilisateur authenticate(String email, String mdp) throws SQLException {
 		Connection cn = MySQLDataSource.getConnexion();
 		String sql = "SELECT id, nom, prenom, email, mdp, user_type FROM utilisateurs WHERE email=?";
-		PreparedStatement ps = cn.prepareStatement(sql);
-		ps.setString(1, email);
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) {
-			String stored = rs.getString("mdp");
-			boolean valide = false;
-			try {
-				valide = PasswordUtil.checkMdp(mdp, stored);
-			} catch (Exception e) {
-				// Pas un hash BCrypt, fallback texte clair
+		try (PreparedStatement ps = cn.prepareStatement(sql)) {
+			ps.setString(1, email);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String stored = rs.getString("mdp");
+					boolean valide = false;
+					try {
+						valide = PasswordUtil.checkMdp(mdp, stored);
+					} catch (Exception e) {
+						// Pas un hash BCrypt, fallback texte clair
+					}
+					if (!valide && stored != null) {
+						valide = stored.equals(mdp);
+					}
+					if (!valide) {
+						return null;
+					}
+					return new Utilisateur(
+							rs.getInt("id"),
+							rs.getString("nom"),
+							rs.getString("prenom"),
+							rs.getString("email"),
+							stored,
+							parseType(rs.getString("user_type")));
+				}
 			}
-			if (!valide && stored != null) {
-				valide = stored.equals(mdp);
-			}
-			if (!valide) {
-				return null;
-			}
-			return new Utilisateur(
-					rs.getInt("id"),
-					rs.getString("nom"),
-					rs.getString("prenom"),
-					rs.getString("email"),
-					stored,
-					parseType(rs.getString("user_type")));
 		}
 		return null;
 	}

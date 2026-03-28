@@ -39,7 +39,7 @@ public class Profile extends JPanel {
     private JButton btnAnnulerEdit;
     private JButton btnRetour;
     
-    private Utilisateur utilisateur;
+    private transient Utilisateur utilisateur;
     public Profile(Utilisateur utilisateur) {
     	this.utilisateur = utilisateur;
         initialize();
