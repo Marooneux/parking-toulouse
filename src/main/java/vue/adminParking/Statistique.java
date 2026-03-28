@@ -2,20 +2,15 @@ package vue.adminParking;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import ui.theme.DefaultTheme;
+
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
 public class Statistique extends JPanel {
-
-    private static final Color BG = new Color(245, 247, 250);
-    private static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 26);
-    private static final Font FONT_SUBTITLE = new Font("Segoe UI", Font.PLAIN, 14);
-    private static final Font FONT_KPI_TITLE = new Font("Segoe UI", Font.PLAIN, 13);
-    private static final Font FONT_KPI_VALUE = new Font("Segoe UI", Font.BOLD, 24);
-    private static final Font FONT_SECTION_TITLE = new Font("Segoe UI", Font.BOLD, 20);
-    private static final Font FONT_BODY = new Font("Segoe UI Emoji", Font.PLAIN, 14);
 
     private final DecimalFormat moneyFormat = new DecimalFormat("#,##0.00");
 
@@ -33,7 +28,7 @@ public class Statistique extends JPanel {
 
     public Statistique() {
         setLayout(new BorderLayout());
-        setBackground(BG);
+        setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         add(createHeader(), BorderLayout.NORTH);
         add(createContent(), BorderLayout.CENTER);
@@ -44,20 +39,20 @@ public class Statistique extends JPanel {
     // ---------------------------------------------------------
     private JComponent createHeader() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(BG);
+        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
         header.setBorder(new EmptyBorder(20, 40, 10, 40));
 
         JLabel title = new JLabel("📊 Statistiques Parking");
-        title.setFont(FONT_TITLE);
-        title.setForeground(new Color(30, 33, 40));
+        title.setFont(DefaultTheme.FONT_TITLE);
+        title.setForeground(DefaultTheme.TEXT_COLOR);
 
         JLabel subtitle = new JLabel("Vue d’ensemble de l’activité des parkings");
-        subtitle.setFont(FONT_SUBTITLE);
-        subtitle.setForeground(new Color(110, 117, 125));
+        subtitle.setFont(DefaultTheme.FONT_BODY);
+        subtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
         JPanel left = new JPanel();
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-        left.setBackground(BG);
+        left.setBackground(DefaultTheme.BACKGROUND_COLOR);
         left.add(title);
         left.add(Box.createVerticalStrut(4));
         left.add(subtitle);
@@ -66,17 +61,17 @@ public class Statistique extends JPanel {
                 "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
                 "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
         });
-        cbMois.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cbMois.setFont(DefaultTheme.FONT_LABEL_SMALL);
 
         btnRefresh = new JButton("⟳ Actualiser");
-        btnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btnRefresh.setFont(DefaultTheme.FONT_LABEL_SMALL);
         btnRefresh.setBackground(new Color(0, 123, 255));
         btnRefresh.setForeground(Color.WHITE);
         btnRefresh.setFocusPainted(false);
         btnRefresh.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        right.setBackground(BG);
+        right.setBackground(DefaultTheme.BACKGROUND_COLOR);
         right.add(cbMois);
         right.add(btnRefresh);
 
@@ -92,12 +87,12 @@ public class Statistique extends JPanel {
     private JComponent createContent() {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBackground(BG);
+        content.setBackground(DefaultTheme.BACKGROUND_COLOR);
         content.setBorder(new EmptyBorder(0, 40, 40, 40));
 
         // KPI ROW
         JPanel kpiRow = new JPanel(new GridLayout(1, 3, 20, 0));
-        kpiRow.setBackground(BG);
+        kpiRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         kpiRow.add(createKpiCard("Montant du mois", "€0.00", new Color(0, 123, 255), lbl -> lblMontant = lbl));
         kpiRow.add(createKpiCard("Total sessions", "0", new Color(40, 167, 69), lbl -> lblSessions = lbl));
@@ -128,19 +123,19 @@ public class Statistique extends JPanel {
 
         // RECENT ACTIVITY
         JLabel recentTitle = new JLabel("Activité récente");
-        recentTitle.setFont(FONT_SECTION_TITLE);
-        recentTitle.setForeground(new Color(30, 33, 40));
+        recentTitle.setFont(DefaultTheme.FONT_CARD_LABEL);
+        recentTitle.setForeground(DefaultTheme.TEXT_COLOR);
         recentTitle.setBorder(new EmptyBorder(0, 0, 8, 0));
         content.add(recentTitle);
 
         recentActivityPanel = new JPanel();
         recentActivityPanel.setLayout(new BoxLayout(recentActivityPanel, BoxLayout.Y_AXIS));
-        recentActivityPanel.setBackground(BG);
+        recentActivityPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         content.add(recentActivityPanel);
 
         JScrollPane scroll = new JScrollPane(content);
         scroll.setBorder(null);
-        scroll.getViewport().setBackground(BG);
+        scroll.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         return scroll;
@@ -159,12 +154,12 @@ public class Statistique extends JPanel {
         accentPanel.setBackground(accent);
 
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(FONT_KPI_TITLE);
+        lblTitle.setFont(DefaultTheme.FONT_LABEL_SMALL);
         lblTitle.setForeground(new Color(110, 117, 125));
 
         JLabel lblValue = new JLabel(value);
-        lblValue.setFont(FONT_KPI_VALUE);
-        lblValue.setForeground(new Color(30, 33, 40));
+        lblValue.setFont(DefaultTheme.FONT_TITLE_LABEL);
+        lblValue.setForeground(DefaultTheme.TEXT_COLOR);
 
         ref.accept(lblValue);
 
@@ -187,8 +182,8 @@ public class Statistique extends JPanel {
         card.setBorder(new EmptyBorder(16, 18, 16, 18));
 
         JLabel lbl = new JLabel(title);
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        lbl.setForeground(new Color(30, 33, 40));
+        lbl.setFont(DefaultTheme.FONT_LABEL);
+        lbl.setForeground(DefaultTheme.TEXT_COLOR);
         lbl.setBorder(new EmptyBorder(0, 0, 8, 0));
 
         card.add(lbl, BorderLayout.NORTH);
@@ -196,7 +191,7 @@ public class Statistique extends JPanel {
 
 
         JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setBackground(BG);
+        wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
         wrapper.add(card, BorderLayout.CENTER);
 
         return wrapper;
@@ -216,7 +211,7 @@ public class Statistique extends JPanel {
     	colorBox.setBorder(BorderFactory.createLineBorder(new Color(200,200,200)));
     	
     	JLabel lbl = new JLabel(label);
-    	lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    	lbl.setFont(DefaultTheme.FONT_LABEL_SMALL);
     	lbl.setForeground(new Color(80,80,80));
     	
     	legend.add(colorBox);
@@ -268,7 +263,7 @@ public class Statistique extends JPanel {
                     "   •   💰 " + a.get("prix") +
                     "   •   📅 " + a.get("date")
             );
-            lbl.setFont(FONT_BODY);
+            lbl.setFont(DefaultTheme.FONT_BODY);
             lbl.setForeground(new Color(60, 60, 60));
 
             card.add(lbl, BorderLayout.CENTER);
@@ -325,7 +320,7 @@ public class Statistique extends JPanel {
             
             // Lun, Mar, Mer, Jeu, Ven, Sam, Dim sous chaque barre
             //label desous bar charte
-            g2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            g2.setFont(DefaultTheme.FONT_HERO_HINT);
             g2.setColor(new Color(80, 80, 80));
 
             for (int i = 0; i < values.size() && i < labels.length; i++) {
@@ -340,7 +335,7 @@ public class Statistique extends JPanel {
            
             //graduations verticales
             // Label de Y axis
-            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
             g2.setColor(new Color(100, 100, 100));
             for(int i = 0; i<=5; i++) {
             	double value = max * (4-i) / 4.0;
@@ -390,7 +385,7 @@ public class Statistique extends JPanel {
 
             //graduations en euros
             // Y-axis labels (€)
-            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
             g2.setColor(new Color(100, 100, 100));
             for (int i = 0; i <= 4; i++) {
                 double value = max * (4 - i) / 4.0;
@@ -433,7 +428,7 @@ public class Statistique extends JPanel {
             }
 
             // X-axis labels (filtered)
-            g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
             g2.setColor(new Color(80, 80, 80));
 
             int skip = Math.max(1, n / 7); // environ 7 labels max

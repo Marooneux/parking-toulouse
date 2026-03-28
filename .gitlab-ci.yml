@@ -13,3 +13,4 @@ sonarcloud-check:
     - merge_requests
     - main 
     - develop
+    - tags 

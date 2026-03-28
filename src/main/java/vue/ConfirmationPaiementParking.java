@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -15,26 +14,27 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ReservationParking;
+import ui.theme.DefaultTheme;
 
 public class ConfirmationPaiementParking extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1104275223803452119L;
 	private final JButton btnTerminer;
 
 	public ConfirmationPaiementParking(ReservationParking reservation) {
-		this.setBackground(new Color(255, 255, 255));
+		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCenterContainer = new JPanel();
-		panelCenterContainer.setBackground(new Color(255, 255, 255));
+		panelCenterContainer.setBackground(Color.WHITE);
 		panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
 		this.add(panelCenterContainer, BorderLayout.CENTER);
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-		panelCard.setBackground(new Color(255, 255, 255));
+		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
 
@@ -46,30 +46,30 @@ public class ConfirmationPaiementParking extends JPanel {
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_BIG);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
 		JLabel lblTitre = new JLabel("Paiement Validé !");
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		panelInnerContent.add(lblTitre);
 
 		JLabel lblMerci = new JLabel("Merci de votre visite");
 		lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMerci.setForeground(new Color(100, 100, 100));
-		lblMerci.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblMerci.setFont(DefaultTheme.FONT_LABEL_BIG);
 		panelInnerContent.add(lblMerci);
 
 		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", reservation.getPrixPaye()));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMontant.setForeground(new Color(33, 37, 41));
-		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblMontant.setForeground(DefaultTheme.TEXT_COLOR);
+		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
 		panelInnerContent.add(lblMontant);
 
 		JPanel panelFooter = new JPanel();
-		panelFooter.setBackground(new Color(255, 255, 255));
+		panelFooter.setBackground(Color.WHITE);
 		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
 		this.add(panelFooter, BorderLayout.SOUTH);
 
@@ -77,7 +77,7 @@ public class ConfirmationPaiementParking extends JPanel {
 		this.btnTerminer = btnTerminerLocal;
 		btnTerminerLocal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTerminerLocal.setForeground(Color.WHITE);
-		btnTerminerLocal.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		btnTerminerLocal.setFont(DefaultTheme.FONT_TITLE_SMALL);
 		btnTerminerLocal.setBackground(new Color(0, 123, 255));
 		btnTerminerLocal.setFocusPainted(false);
 		btnTerminerLocal.setBorderPainted(false);

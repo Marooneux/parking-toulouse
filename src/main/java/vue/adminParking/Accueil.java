@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import controleur.ControleurAccueilAdminParking;
 import controleur.ControleurStatistique;
 import modele.Parking;
+import ui.theme.DefaultTheme;
 import vue.TemplateSaisie;
 
 public class Accueil extends JPanel {
@@ -54,7 +55,7 @@ public class Accueil extends JPanel {
 
     private void initialize() {
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(248, 249, 250));
+        this.setBackground(DefaultTheme.BACKGROUND_COLOR);
         this.setPreferredSize(new Dimension(1500, 800));
         
         layeredPane = new JLayeredPane();
@@ -64,7 +65,7 @@ public class Accueil extends JPanel {
         mainContentPanel = new JPanel();
         cardLayout = new CardLayout();
         mainContentPanel.setLayout(cardLayout);
-        mainContentPanel.setBackground(new Color(248, 249, 250));
+        mainContentPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         JPanel viewParkings = createParkingView();
         mainContentPanel.add(viewParkings, "PARKINGS");
@@ -96,7 +97,7 @@ public class Accueil extends JPanel {
 
     private void createToggleBtn() {
         btnToggle = new JButton("\u2630");
-        btnToggle.setFont(new Font("Segoe UI Symbol", Font.BOLD, 30));
+        btnToggle.setFont(DefaultTheme.FONT_SYMBOL);
         btnToggle.setFocusPainted(false);
         btnToggle.setBorderPainted(false);
         btnToggle.setContentAreaFilled(false);
@@ -124,19 +125,19 @@ public class Accueil extends JPanel {
     private void toggleSidebarState() {
         boolean isVisible = sidebarPanel.isVisible();
         sidebarPanel.setVisible(!isVisible);
-        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : new Color(33, 37, 41));
+        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.BACKGROUND_HERO);
         updateLayoutBounds();
     }
 
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBackground(new Color(33, 37, 41));
+        sidebar.setBackground(DefaultTheme.BACKGROUND_HERO);
         sidebar.setBorder(new EmptyBorder(60, 10, 20, 10));
 
         JLabel lblMenu = new JLabel("MENU");
         lblMenu.setForeground(Color.LIGHT_GRAY);
-        lblMenu.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblMenu.setFont(DefaultTheme.FONT_BUTTON);
         lblMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
         lblMenu.setBorder(new EmptyBorder(0, 10, 20, 0));
         sidebar.add(lblMenu);
@@ -161,35 +162,35 @@ public class Accueil extends JPanel {
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        btn.setFont(DefaultTheme.FONT_BODY);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return btn;
     }
 
     private JPanel createParkingView() {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(new Color(248, 249, 250));
+        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        headerPanel.setBackground(new Color(248, 249, 250));
+        headerPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         headerPanel.setBorder(new EmptyBorder(25, 70, 30, 50));
 
         JPanel titleContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        titleContainer.setBackground(new Color(248, 249, 250));
+        titleContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
         
         JLabel iconCar = new JLabel("\uD83C\uDD7F\uFE0F "); 
-        iconCar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        iconCar.setFont(DefaultTheme.FONT_ICON);
         
         JLabel lblTitle = new JLabel("Gestion des Parkings");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        lblTitle.setForeground(new Color(33, 37, 41));
+        lblTitle.setFont(DefaultTheme.FONT_TITLE);
+        lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
         titleContainer.add(iconCar);
         titleContainer.add(lblTitle);
 
         JLabel lblSubtitle = new JLabel("Gérez vos parkings");
-        lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSubtitle.setFont(DefaultTheme.FONT_BODY);
         lblSubtitle.setForeground(new Color(108, 117, 125));
         lblSubtitle.setBorder(new EmptyBorder(5, 5, 0, 0));
 
@@ -200,10 +201,10 @@ public class Accueil extends JPanel {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.getViewport().setBackground(new Color(248, 249, 250));
+        scrollPane.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         gridPanel = new JPanel();
-        gridPanel.setBackground(new Color(248, 249, 250));
+        gridPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
         gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
@@ -212,13 +213,13 @@ public class Accueil extends JPanel {
 
         JButton btnAjouter = new JButton("Ajouter un parking");
         btnAjouter.setFocusPainted(false);
-        btnAjouter.setBackground(new Color(0, 0, 0));
+        btnAjouter.setBackground(Color.BLACK);
         btnAjouter.setForeground(Color.WHITE);
         btnAjouter.setPreferredSize(new Dimension(150, 30));
         this.btnAjouter = btnAjouter;
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        actions.setBackground(new Color(248, 249, 250));
+        actions.setBackground(DefaultTheme.BACKGROUND_COLOR);
         actions.setBorder(new EmptyBorder(10, 50, 30, 50));
         actions.add(btnAjouter);
 
@@ -230,11 +231,11 @@ public class Accueil extends JPanel {
     private JPanel createEditionView() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(248, 249, 250));
+        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         panel.setBorder(new EmptyBorder(40, 60, 40, 60));
 
         JLabel lblTitre = new JLabel("Modifier le parking");
-        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
         lblTitre.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(lblTitre);
         panel.add(Box.createVerticalStrut(20));
@@ -248,7 +249,7 @@ public class Accueil extends JPanel {
         txtHeureOuverture = new TemplateSaisie("Heure ouverture", "", false, false);
         txtHeureFermeture = new TemplateSaisie("Heure fermeture", "", false, false);
         chkMoto = new JCheckBox("Accepte les motos");
-        chkMoto.setBackground(new Color(248, 249, 250));
+        chkMoto.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         // Construction du formulaire
         addFormField(panel, "Nom du parking :", txtNom);
@@ -260,7 +261,7 @@ public class Accueil extends JPanel {
         addFormField(panel, "Heure Fermeture :", txtHeureFermeture);
         
         JPanel pnlMoto = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pnlMoto.setBackground(new Color(248, 249, 250));
+        pnlMoto.setBackground(DefaultTheme.BACKGROUND_COLOR);
         pnlMoto.add(chkMoto);
         pnlMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
         pnlMoto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -270,7 +271,7 @@ public class Accueil extends JPanel {
 
         // Boutons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnPanel.setBackground(new Color(248, 249, 250));
+        btnPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         btnPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
@@ -291,13 +292,13 @@ public class Accueil extends JPanel {
 
     private void addFormField(JPanel panel, String label, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
-        row.setBackground(new Color(248, 249, 250));
+        row.setBackground(DefaultTheme.BACKGROUND_COLOR);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         row.setBorder(new EmptyBorder(5, 0, 5, 0));
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel lbl = new JLabel(label);
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lbl.setFont(DefaultTheme.FONT_BODY);
         lbl.setPreferredSize(new Dimension(150, 30));
         
         row.add(lbl, BorderLayout.WEST);

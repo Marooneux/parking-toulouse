@@ -31,7 +31,7 @@ public abstract class DaoModele<T> implements Dao<T> {
 		}
 	}
 
-	public int miseAJour(Requete<T> req, T donnee, String... id) throws SQLException {
+	public int miseAJour(Requete<T> req, String... id) throws SQLException {
 		try (PreparedStatement ps = MySQLDataSource.getConnexion().prepareStatement(req.requete())) {
 			req.parametres(ps, id);
 			return ps.executeUpdate();

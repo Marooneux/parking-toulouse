@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -17,8 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import modele.Adresse;
 import modele.Parking;
+import ui.theme.DefaultTheme;
 import vue.TemplateSaisie; // Assure-toi que l'import est bon
-import vue.TemplateSaisie;
 
 public class ModifierParking extends JPanel {
 
@@ -55,7 +54,7 @@ public class ModifierParking extends JPanel {
         setPreferredSize(new Dimension(500, 700)); // Hauteur augmentée
 
         JLabel title = new JLabel("Modification du parking");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setFont(DefaultTheme.FONT_TITLE_ALT);
         add(title, BorderLayout.NORTH);
 
         JPanel form = new JPanel();
@@ -124,7 +123,7 @@ public class ModifierParking extends JPanel {
 
         // --- 6. NOUVELLE SECTION : CHECKBOX MOTO ---
         chkMoto = new JCheckBox("Dispose de places Moto");
-        chkMoto.setFont(new Font("Segoe UI", Font.PLAIN, 13)); // Même font que tes labels
+        chkMoto.setFont(DefaultTheme.FONT_BODY); // Même font que tes labels
         chkMoto.setForeground(new Color(73, 80, 87)); // Même couleur gris foncé
         chkMoto.setOpaque(false);
         chkMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
