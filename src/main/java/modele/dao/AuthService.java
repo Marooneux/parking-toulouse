@@ -10,6 +10,8 @@ import modele.Utilisateur.Type;
 import utils.PasswordUtil;
 
 public class AuthService {
+	private AuthService() {}
+
 	/**
 	 * Authentifie un utilisateur par mail et mot de passe. Cette methode recupere
 	 * l'utilisateur par son mail, puis compare le mot de passe donné avec le hash.
@@ -18,30 +20,24 @@ public class AuthService {
 	public static Utilisateur authenticate(String email, String mdp) throws SQLException {
 		Connection cn = MySQLDataSource.getConnexion();
 		String sql = "SELECT id, nom, prenom, email, mdp, user_type FROM utilisateurs WHERE email=?";
-		PreparedStatement ps = cn.prepareStatement(sql);
-		ps.setString(1, email);
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) {
-			String stored = rs.getString("mdp");
-			boolean valide = false;
-			try {
-				valide = PasswordUtil.checkMdp(mdp, stored);
-			} catch (Exception e) {
-				// ignore bcrypt parsing issues, fall back to plaintext below
+		try (PreparedStatement ps = cn.prepareStatement(sql)) {
+			ps.setString(1, email);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String stored = rs.getString("mdp");
+					boolean valide = PasswordUtil.checkMdp(mdp, stored);
+					if (!valide) {
+						return null;
+					}
+					return new Utilisateur(
+							rs.getInt("id"),
+							rs.getString("nom"),
+							rs.getString("prenom"),
+							rs.getString("email"),
+							stored,
+							parseType(rs.getString("user_type")));
+				}
 			}
-			if (!valide && stored != null) {
-				valide = stored.equals(mdp);
-			}
-			if (!valide) {
-				return null;
-			}
-			return new Utilisateur(
-					rs.getInt("id"),
-					rs.getString("nom"),
-					rs.getString("prenom"),
-					rs.getString("email"),
-					stored,
-					parseType(rs.getString("user_type")));
 		}
 		return null;
 	}

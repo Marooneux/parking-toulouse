@@ -26,7 +26,7 @@ public class ControleurStatistique implements ActionListener {
             c = MySQLDataSource.getConnexion();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Connexion impossible");
+            throw new IllegalStateException("Connexion impossible");
         }
 
         this.dao = new DaoStatistique(c);
@@ -66,10 +66,10 @@ public class ControleurStatistique implements ActionListener {
 
             for (DaoStatistique.RecentActivity a : raw) {
                 java.util.Map<String, Object> m = new java.util.HashMap<>();
-                m.put("lieu", a.lieu);
-                m.put("duree", formatDuree(a.dureeMinutes));
-                m.put("prix", a.tarif + "€");
-                m.put("date", a.date.toLocalDate().toString());
+                m.put("lieu", a.getLieu());
+                m.put("duree", formatDuree(a.getDureeMinutes()));
+                m.put("prix", a.getTarif() + "€");
+                m.put("date", a.getDate().toLocalDate().toString());
                 list.add(m);
             }
 

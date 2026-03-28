@@ -40,7 +40,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
         this.prefillPlaque();
 
-        NavigationFrame.getInstance().showPage("parking-arrivee", () -> this.vue, "Démarrer le stationnement");
+        NavigationFrame.getInstance().showPage("parking-arrivee", () -> this.vue, "Démarrer le stationnement", true);
     }
 
     private void remplirHeureActuelle() {

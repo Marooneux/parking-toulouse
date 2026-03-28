@@ -156,7 +156,7 @@ public class TestStationnementVoirie {
                 LocalTime.of(19, 0)
         );
 
-        // Just ensure method runs
-        s.isDimanche();
+        boolean expected = LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY;
+        assertEquals(expected, s.isDimanche());
     }
 }

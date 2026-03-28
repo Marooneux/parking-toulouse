@@ -31,7 +31,7 @@ public class PaiementVirementParking extends JPanel {
     private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    private final ReservationParking reservation;
+    private final transient ReservationParking reservation;
     private final double prix;
     private JButton btnPayer;
     private TemplateSaisie textFieldNom;

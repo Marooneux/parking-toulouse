@@ -2,6 +2,7 @@ package modele.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import modele.dao.requetes.RequeteInsertAdminParking;
 import modele.dao.requetes.RequeteInsertAdminParking.Association;
@@ -15,15 +16,17 @@ public class DaoAdminParking extends DaoModele<Association> {
 
     @Override
     public void update(Association donnees) throws SQLException {
+        // Update non supporté pour les associations admin-parking
     }
 
     @Override
     public void delete(Association donnees) throws SQLException {
+        // Delete non supporté pour les associations admin-parking
     }
 
     @Override
     public List<Association> findAll() throws SQLException {
-        return null; 
+        return Collections.emptyList();
     }
 
     @Override

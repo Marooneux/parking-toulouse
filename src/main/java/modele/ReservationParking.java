@@ -88,6 +88,7 @@ public class ReservationParking {
 	        return 0.0;
 	    }
 	    
+	    if (this.dateArrivee == null) return 0.0;
 	    LocalDateTime fin = (this.dateDepart != null) ? this.dateDepart : LocalDateTime.now();
 	    long minutes = Math.max(0, ChronoUnit.MINUTES.between(this.dateArrivee, fin));
 	    double quartsDHeure = Math.ceil(minutes / 15.0);

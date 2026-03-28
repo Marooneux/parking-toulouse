@@ -52,7 +52,9 @@ public class DaoAbonne extends DaoModele<Abonne> {
 		boolean estActif = curseur.getBoolean("est_actif");
 
 		Utilisateur utilisateur = this.daoUtilisateur.findById(idUtilisateur);
+		if (utilisateur == null) throw new SQLException("Utilisateur introuvable id=" + idUtilisateur);
 		Abonnement abonnement = this.daoAbonnement.findById(idAbonnement);
+		if (abonnement == null) throw new SQLException("Abonnement introuvable id=" + idAbonnement);
 
 		return new Abonne(utilisateur, abonnement, estActif);
 	}

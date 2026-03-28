@@ -14,6 +14,8 @@ import controleur.ControleurHistorique;
 // 1. On hérite de JPanel au lieu de JFrame
 public class HistoriquePanel extends JPanel {
 
+    private static final String FONT_SEGOE_UI = FONT_SEGOE_UI;
+
     private JPanel reservationsPanel;
     private JButton loadMoreButton;
     // 2. Le constructeur prend l'Utilisateur pour savoir QUI afficher
@@ -35,11 +37,11 @@ public class HistoriquePanel extends JPanel {
         header.setBackground(new Color(248, 249, 250));
 
         JLabel title = new JLabel("Historique des réservations");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        title.setFont(new Font(FONT_SEGOE_UI, Font.BOLD, 22));
         title.setForeground(new Color(33, 37, 41));
 
         JLabel subtitle = new JLabel("Retrouvez vos stationnements passés et en cours");
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        subtitle.setFont(new Font(FONT_SEGOE_UI, Font.PLAIN, 14));
         subtitle.setForeground(Color.GRAY);
 
         JPanel textPanel = new JPanel();
@@ -70,7 +72,7 @@ public class HistoriquePanel extends JPanel {
         loadMoreButton = new JButton("Rafraîchir");
         loadMoreButton.setBackground(Color.WHITE);
         loadMoreButton.setFocusPainted(false);
-        loadMoreButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        loadMoreButton.setFont(new Font(FONT_SEGOE_UI, Font.PLAIN, 12));
         loadMoreButton.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         loadMoreButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadMoreButton.setPreferredSize(new Dimension(200, 35));
@@ -91,7 +93,7 @@ public class HistoriquePanel extends JPanel {
 
         if (reservationsParking.isEmpty() && reservationsVoirie.isEmpty()) {
             JLabel empty = new JLabel("Aucun historique trouvé.");
-            empty.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+            empty.setFont(new Font(FONT_SEGOE_UI, Font.ITALIC, 14));
             empty.setForeground(Color.GRAY);
             empty.setAlignmentX(Component.CENTER_ALIGNMENT);
             reservationsPanel.add(Box.createVerticalStrut(20));
@@ -132,16 +134,16 @@ public class HistoriquePanel extends JPanel {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
         JLabel name = new JLabel(r.getParking().getNom());
-        name.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        name.setFont(new Font(FONT_SEGOE_UI, Font.BOLD, 15));
         
         String adrStr = (r.getParking().getAdresse() != null) ? r.getParking().getAdresse().getRue() : "Adresse inconnue";
         JLabel address = new JLabel(adrStr);
-        address.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        address.setFont(new Font(FONT_SEGOE_UI, Font.PLAIN, 12));
         address.setForeground(Color.GRAY);
 
         // Dates
         JLabel dates = new JLabel("Du " + r.getDateArrivee() + (r.getDateDepart() != null ? " au " + r.getDateDepart() : " (En cours)"));
-        dates.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        dates.setFont(new Font(FONT_SEGOE_UI, Font.PLAIN, 11));
         dates.setForeground(new Color(100, 100, 150));
 
         infoPanel.add(name);
@@ -156,7 +158,7 @@ public class HistoriquePanel extends JPanel {
 
         double prix = (r.getDateDepart() != null) ? r.calculerPrixTotal() : 0;
         JLabel price = new JLabel(r.getDateDepart() == null ? "En cours" : String.format("%.2f €", prix));
-        price.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        price.setFont(new Font(FONT_SEGOE_UI, Font.BOLD, 14));
         price.setForeground(new Color(40, 167, 69));
 
         rightPanel.add(price);
@@ -193,10 +195,10 @@ public class HistoriquePanel extends JPanel {
 
         ZoneVoirie zone = r.getZone();
         JLabel name = new JLabel("Zone voirie " + (zone != null ? zone.getCouleur() : "?"));
-        name.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        name.setFont(new Font(FONT_SEGOE_UI, Font.BOLD, 15));
 
         JLabel dates = new JLabel("Début " + r.getDateDebut() + " | Durée " + r.getDureeMinutes() + " min");
-        dates.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        dates.setFont(new Font(FONT_SEGOE_UI, Font.PLAIN, 11));
         dates.setForeground(new Color(100, 100, 150));
 
         infoPanel.add(name);
@@ -207,7 +209,7 @@ public class HistoriquePanel extends JPanel {
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         rightPanel.setBackground(Color.WHITE);
         JLabel price = new JLabel("Durée " + r.getDureeMinutes() + " min");
-        price.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        price.setFont(new Font(FONT_SEGOE_UI, Font.BOLD, 14));
         price.setForeground(new Color(0, 123, 255));
         rightPanel.add(price);
         card.add(rightPanel, BorderLayout.EAST);
