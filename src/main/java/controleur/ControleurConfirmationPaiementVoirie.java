@@ -14,6 +14,9 @@ import utils.AuthManager;
 import vue.ConfirmationPaiementVoirie;
 import vue.NavigationFrame;
 import vue.TicketVoirie;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurConfirmationPaiementVoirie implements ActionListener {
 
@@ -37,7 +40,7 @@ public class ControleurConfirmationPaiementVoirie implements ActionListener {
             new DaoReservationVoirie().create(reservation);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement de la réservation.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             return;
         }
 

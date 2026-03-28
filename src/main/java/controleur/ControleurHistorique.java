@@ -11,6 +11,9 @@ import modele.dao.DaoReservationParking;
 import modele.dao.DaoReservationVoirie;
 import modele.dao.MySQLDataSource;
 import vue.HistoriquePanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurHistorique implements ActionListener {
 
@@ -52,7 +55,7 @@ public class ControleurHistorique implements ActionListener {
             List<ReservationVoirie> voirie = daoVoirie.findByUserId(userId);
             vue.afficherHistorique(reservations, voirie);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
     

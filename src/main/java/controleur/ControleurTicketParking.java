@@ -15,6 +15,9 @@ import vue.ChoixTypeStationnement;
 import vue.NavigationFrame;
 import vue.ChoixMoyenPaiementParking;
 import vue.TicketParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurTicketParking implements ActionListener {
 
@@ -61,7 +64,7 @@ public class ControleurTicketParking implements ActionListener {
 					true);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de la confirmation du ticket.");
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 
@@ -73,7 +76,7 @@ public class ControleurTicketParking implements ActionListener {
 			NavigationFrame.getInstance().showPage("parking-choix-paiement", () -> choix, "Choisir le paiement", true);
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir le paiement.");
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 }

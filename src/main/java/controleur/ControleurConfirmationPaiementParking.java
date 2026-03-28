@@ -15,6 +15,9 @@ import utils.AuthManager;
 import vue.ChoixTypeStationnement;
 import vue.ConfirmationPaiementParking;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurConfirmationPaiementParking implements ActionListener {
 
@@ -64,7 +67,7 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 	                true);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 }

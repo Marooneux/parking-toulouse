@@ -8,6 +8,9 @@ import modele.ZoneVoirie;
 import modele.dao.DaoZoneVoirie;
 import modele.dao.MySQLDataSource;
 import vue.ChoixZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurChoixZone {
 	private final DaoZoneVoirie dao;
@@ -22,7 +25,7 @@ public class ControleurChoixZone {
         try {
 			return dao.findAll();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return Collections.emptyList();
     }

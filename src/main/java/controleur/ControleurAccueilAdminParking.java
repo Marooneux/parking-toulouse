@@ -17,6 +17,9 @@ import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
 import vue.adminParking.ModifierParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurAccueilAdminParking implements ActionListener {
 
@@ -67,7 +70,7 @@ public class ControleurAccueilAdminParking implements ActionListener {
 
 			this.vue.actualiserAffichage();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			System.err.println("Erreur lors du chargement des parkings. Vérifiez la connexion à la base de données.");
 		}
 	}
@@ -101,7 +104,7 @@ public class ControleurAccueilAdminParking implements ActionListener {
 				chargerParkings();
 				vue.showParkings();
 			} catch (SQLException ex) {
-				ex.printStackTrace();
+				LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 				JOptionPane.showMessageDialog(this.vue, "Erreur lors de la suppression du parking.");
 			}
 		}

@@ -13,6 +13,9 @@ import modele.dao.requetes.RequeteInsertAdminParking;
 import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurAjouterParking {
 
@@ -96,7 +99,7 @@ public class ControleurAjouterParking {
             fermer();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ajout : " + ex.getMessage());
         }
     }

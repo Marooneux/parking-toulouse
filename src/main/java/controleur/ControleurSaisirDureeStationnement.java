@@ -19,6 +19,9 @@ import vue.NavigationFrame;
 import vue.SaisirDureeStationnement;
 import vue.TicketVoirie;
 import utils.AuthManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurSaisirDureeStationnement implements ActionListener {
 
@@ -134,7 +137,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 			new DaoReservationVoirie().create(reservation);
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement de la réservation.");
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 			return;
 		}
 
