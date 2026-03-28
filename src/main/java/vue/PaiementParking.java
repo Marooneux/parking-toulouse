@@ -37,7 +37,7 @@ public class PaiementParking extends JPanel {
 	private TemplateSaisie textFieldCVC;
 	private JButton btnPayer;
 
-	private final ReservationParking reservation;
+	private final transient ReservationParking reservation;
 	private final double prix;
 
 	public PaiementParking(ReservationParking reservation) {

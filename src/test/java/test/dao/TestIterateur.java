@@ -41,13 +41,13 @@ public class TestIterateur {
         }
 
         @Override
-        public void create(Dummy donnee) throws SQLException {}
+        public void create(Dummy donnee) throws SQLException { /* Non utilisé dans les tests d'itérateur */ }
 
         @Override
-        public void update(Dummy donnee) throws SQLException {}
+        public void update(Dummy donnee) throws SQLException { /* Non utilisé dans les tests d'itérateur */ }
 
         @Override
-        public void delete(Dummy donnee) throws SQLException {}
+        public void delete(Dummy donnee) throws SQLException { /* Non utilisé dans les tests d'itérateur */ }
 
         @Override
         public java.util.List<Dummy> findAll() throws SQLException {

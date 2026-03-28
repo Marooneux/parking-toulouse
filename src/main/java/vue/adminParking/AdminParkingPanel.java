@@ -27,7 +27,7 @@ import ui.theme.DefaultTheme;
 public class AdminParkingPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private final Parking parking;
+    private final transient Parking parking;
     private final Consumer<Parking> onClick;
 
     private final Color normalBorder = new Color(230, 230, 230);

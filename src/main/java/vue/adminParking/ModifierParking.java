@@ -22,7 +22,7 @@ import vue.TemplateSaisie; // Assure-toi que l'import est bon
 public class ModifierParking extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final Parking parking;
+    private final transient Parking parking;
 
     // --- Champs existants ---
     private TemplateSaisie groupNom;

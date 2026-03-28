@@ -69,7 +69,9 @@ public class DaoReservationParking extends DaoModele<ReservationParking> {
 		int idUtilisateur = curseur.getInt("id_utilisateur");
 
 		Parking parking = this.daoParking.findById(idParking);
+		if (parking == null) throw new SQLException("Parking introuvable id=" + idParking);
 		Utilisateur utilisateur = this.daoUtilisateur.findById(idUtilisateur);
+		if (utilisateur == null) throw new SQLException("Utilisateur introuvable id=" + idUtilisateur);
 
 		ReservationParking reservation = new ReservationParking(
 				tsArrivee != null ? tsArrivee.toLocalDateTime() : null,

@@ -1,6 +1,7 @@
 package controleur;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import modele.ZoneVoirie;
@@ -23,6 +24,6 @@ public class ControleurChoixZone {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return Collections.emptyList();
     }
 }

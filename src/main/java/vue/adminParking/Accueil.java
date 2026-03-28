@@ -344,7 +344,7 @@ public class Accueil extends JPanel {
     }
 
     public void afficherFormulaireEdition(Parking parking) {
-
+        // Not yet implemented
     }
 
     private JPanel createStatsView() {

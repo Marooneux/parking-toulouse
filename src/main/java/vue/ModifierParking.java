@@ -19,7 +19,7 @@ public class ModifierParking extends JPanel {
 
 	private static final long serialVersionUID = 5438146851248626756L;
 
-	private final Parking parking;
+	private final transient Parking parking;
 
 	private TemplateSaisie groupNom;
 

@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -134,7 +135,7 @@ public class PaiementVirementVoirie extends JPanel {
 		JLabel val = new JLabel(value);
 		val.setFont(DefaultTheme.FONT_LABEL_SMALL);
 		val.setForeground(new Color(40, 40, 40));
-		val.setHorizontalAlignment(JLabel.RIGHT);
+		val.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		row.add(lbl, BorderLayout.WEST);
 		row.add(val, BorderLayout.EAST);

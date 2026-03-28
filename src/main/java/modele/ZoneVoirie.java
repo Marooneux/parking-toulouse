@@ -47,10 +47,10 @@ public class ZoneVoirie implements Serializable {
         }
         
         if (debutPm != null && finPm != null) {
-            if (sb.length() > 0) sb.append(" / ");
+            if (!sb.isEmpty()) sb.append(" / ");
             sb.append(debutPm.format(fmt)).append("-").append(finPm.format(fmt));
         }
-        return sb.length() > 0 ? sb.toString() : "Gratuit";
+        return !sb.isEmpty() ? sb.toString() : "Gratuit";
     }
 	
 	

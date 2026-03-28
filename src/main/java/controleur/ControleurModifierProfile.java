@@ -1,7 +1,5 @@
 package controleur;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import modele.Utilisateur;
 import modele.dao.DaoUtilisateur;
 import vue.ModifierProfile;
@@ -21,20 +19,10 @@ public class ControleurModifierProfile {
         this.vue.afficherUtilisateur(utilisateur);
 
         // 2. Gestion du bouton Enregistrer
-        this.vue.addEnregistrerListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                traiterEnregistrement();
-            }
-        });
+        this.vue.addEnregistrerListener(e -> traiterEnregistrement());
 
         // 3. Gestion du bouton Annuler
-        this.vue.addAnnulerListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                afficherProfil();
-            }
-        });
+        this.vue.addAnnulerListener(e -> afficherProfil());
     }
 
     private void traiterEnregistrement() {
@@ -58,8 +46,7 @@ public class ControleurModifierProfile {
                 return;
             }
             
-            String nouveauMdpHash = utils.PasswordUtil.hashMdp(nouveauMdp);
-            utilisateur.setMdp(ancienMdp, nouveauMdpHash);
+            utilisateur.setMdp(ancienMdp, nouveauMdp);
         }
 
         // Mise à jour des autres infos dans l'objet

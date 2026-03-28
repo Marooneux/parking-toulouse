@@ -70,6 +70,7 @@ public class DaoParking extends DaoModele<Parking> {
 
 		int idAdresse = rs.getInt("id_adresse");
 		Adresse adresse = this.daoAdresse.findById(idAdresse);
+		if (adresse == null) throw new SQLException("Adresse introuvable id=" + idAdresse);
 
 		int tarif = rs.getInt("tarif");
 

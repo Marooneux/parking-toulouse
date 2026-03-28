@@ -90,7 +90,8 @@ public class ControleurChoixTypeStationnement implements ActionListener {
                         new ControleurChoixParking(p);
                         return p;
                     },
-                    "Parkings");
+                    "Parkings",
+                    true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
