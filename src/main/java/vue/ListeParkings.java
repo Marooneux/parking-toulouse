@@ -8,10 +8,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 public class ListeParkings extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -5022492403853856247L;
 	private List<ParkingPanel> placesDeParking;
 	private JPanel listeParkings;
 

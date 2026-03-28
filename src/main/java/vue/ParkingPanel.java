@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +28,9 @@ import modele.Parking;
 import ui.theme.DefaultTheme;
 
 public class ParkingPanel extends JPanel {
+
+	private static final long serialVersionUID = -1637927391985610743L;
+
 	private JButton btnModifier;
 
 	private Color normalBorder = new Color(230, 230, 230);
@@ -99,7 +101,8 @@ public class ParkingPanel extends JPanel {
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(
-				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
+				this.createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/"
+						+ parking.getCapacite() + " places"));
 
 		centerPanel.add(Box.createVerticalStrut(8));
 		centerPanel.add(this.createDetailRow("📏", "Max " + (parking.getHauteurMax()) + "m"));
@@ -129,7 +132,6 @@ public class ParkingPanel extends JPanel {
 		JPanel actionsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		actionsPanel.setOpaque(false);
 
-
 		bottomPanel.add(actionsPanel, BorderLayout.SOUTH);
 
 		this.add(bottomPanel, BorderLayout.SOUTH);
@@ -154,6 +156,8 @@ public class ParkingPanel extends JPanel {
 	}
 
 	class CircleIcon extends JComponent {
+
+		private static final long serialVersionUID = -440563882095950824L;
 		private String text;
 
 		public CircleIcon(String text) {

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -19,7 +18,7 @@ import ui.theme.DefaultTheme;
 
 public class ConfirmationPaiementParking extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1104275223803452119L;
 	private final JButton btnTerminer;
 
 	public ConfirmationPaiementParking(ReservationParking reservation) {

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,15 +17,16 @@ import controleur.ControleurLoginPage;
 import ui.theme.DefaultTheme;
 
 public class LoginPage extends JPanel {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5993030307261664665L;
 	private JButton btnValider;
 	TemplateSaisie saisieLogin;
 	TemplateSaisie saisieMdp;
 
 	public LoginPage() {
 		this.saisieLogin = new TemplateSaisie("Identifiant", "prenom.nom@exemple.fr");
-		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true); 
-		
+		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true);
+
 		this.setLayout(new BorderLayout());
 		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
@@ -91,9 +91,8 @@ public class LoginPage extends JPanel {
 
 		formPanel.add(Box.createVerticalStrut(28));
 
-
-		formPanel.add(saisieLogin);
-		formPanel.add(saisieMdp);
+		formPanel.add(this.saisieLogin);
+		formPanel.add(this.saisieMdp);
 
 		formPanel.add(Box.createVerticalStrut(24));
 
@@ -117,18 +116,19 @@ public class LoginPage extends JPanel {
 				new LineBorder(DefaultTheme.BORDER_BUTTON, 1),
 				new EmptyBorder(10, 14, 10, 14)));
 		btnInscription.setAlignmentX(LEFT_ALIGNMENT);
-		btnInscription.addActionListener(e -> NavigationFrame.getInstance().showPage("Inscription", InscriptionPage::new, "Creer un compte"));
+		btnInscription.addActionListener(
+				e -> NavigationFrame.getInstance().showPage("Inscription", InscriptionPage::new, "Creer un compte"));
 		formPanel.add(btnInscription);
 
 		formPanel.add(Box.createVerticalGlue());
 
 		ControleurLoginPage controleur = new ControleurLoginPage(this);
 		this.btnValider.addActionListener(controleur);
-		saisieMdp.getField().addActionListener(controleur);
+		this.saisieMdp.getField().addActionListener(controleur);
 	}
-	
+
 	public javax.swing.JButton getBtnConnexion() {
-	    return btnValider; // ou le nom de ta variable bouton
+		return this.btnValider; // ou le nom de ta variable bouton
 	}
 
 	public String getLogin() {

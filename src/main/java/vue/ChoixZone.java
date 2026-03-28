@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
@@ -27,7 +26,8 @@ import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
 
 public class ChoixZone extends JPanel {
-	
+
+	private static final long serialVersionUID = -4587482455866173269L;
 	private ControleurChoixZone controleur;
 
 	public ChoixZone() {
@@ -70,17 +70,17 @@ public class ChoixZone extends JPanel {
 
 		JPanel row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
 		row1.setOpaque(false);
-		
+
 		JPanel row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
 		row2.setOpaque(false);
 
-		List<ZoneVoirie> zones = controleur.recupererZones();
-		
+		List<ZoneVoirie> zones = this.controleur.recupererZones();
+
 		int compteur = 0;
 		for (ZoneVoirie zone : zones) {
 			Color couleurCarte = zone.convertirCouleur();
 			JPanel carte = this.createCard(zone, couleurCarte);
-			
+
 			if (compteur < 3) {
 				row1.add(carte);
 			} else {
@@ -97,10 +97,11 @@ public class ChoixZone extends JPanel {
 		this.add(mainCenterPanel, BorderLayout.CENTER);
 	}
 
-
 	private JPanel createCard(ZoneVoirie zone, Color themeColor) {
 
 		JPanel card = new JPanel() {
+			private static final long serialVersionUID = -6125640794538734690L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -122,6 +123,9 @@ public class ChoixZone extends JPanel {
 		card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		JPanel iconCircle = new JPanel() {
+
+			private static final long serialVersionUID = -6699192283684772965L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				Graphics2D g2 = (Graphics2D) g;

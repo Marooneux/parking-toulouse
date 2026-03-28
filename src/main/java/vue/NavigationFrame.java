@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -26,7 +25,9 @@ import javax.swing.border.LineBorder;
 import ui.theme.DefaultTheme;
 
 public final class NavigationFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -5149350946563757318L;
+
 	private static NavigationFrame INSTANCE;
 
 	private final CardLayout cardLayout = new CardLayout();
@@ -113,7 +114,7 @@ public final class NavigationFrame extends JFrame {
 	}
 
 	public void showPage(String key, Supplier<? extends Component> factory, String title) {
-		showPage(key, factory, title, false);
+		this.showPage(key, factory, title, false);
 	}
 
 	public void showPage(String key, Supplier<? extends Component> factory, String title, boolean forceRefresh) {

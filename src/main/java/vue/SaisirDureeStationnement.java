@@ -22,7 +22,7 @@ import vue.PaiementVoirie.LimiteCaracteresFilter;
 
 public class SaisirDureeStationnement extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1213099304739348672L;
 	private JButton btnConfirmer;
 	private TemplateSaisie textFieldPlaque;
 	private TemplateSaisie textFieldNom;
@@ -46,7 +46,7 @@ public class SaisirDureeStationnement extends JPanel {
 		header.setBackground(new Color(250, 250, 250));
 
 		JLabel lblIcon = new JLabel("\uD83C\uDFE2");
-		lblIcon.setFont(new Font(defaultEmojiFont, Font.PLAIN, 28));
+		lblIcon.setFont(new Font(this.defaultEmojiFont, Font.PLAIN, 28));
 		header.add(lblIcon);
 
 		JPanel texte = new JPanel();
@@ -54,12 +54,12 @@ public class SaisirDureeStationnement extends JPanel {
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-		lblTitre.setFont(new Font(defaultFont, Font.BOLD, 22));
+		lblTitre.setFont(new Font(this.defaultFont, Font.BOLD, 22));
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Veuillez confirmez votre stationnement en voirie");
-		lblSousTitre.setFont(new Font(defaultFont, Font.PLAIN, 14));
+		lblSousTitre.setFont(new Font(this.defaultFont, Font.PLAIN, 14));
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		texte.add(lblSousTitre);
 
@@ -83,7 +83,7 @@ public class SaisirDureeStationnement extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
 
-		this.btnConfirmer.setFont(new Font(defaultFont, Font.BOLD, 16));
+		this.btnConfirmer.setFont(new Font(this.defaultFont, Font.BOLD, 16));
 		this.btnConfirmer.setBackground(new Color(0, 122, 255));
 		this.btnConfirmer.setForeground(Color.WHITE);
 		this.btnConfirmer.setFocusPainted(false);
@@ -107,12 +107,12 @@ public class SaisirDureeStationnement extends JPanel {
 			minsGratuites = " (30 minutes gratuites)";
 		}
 		JLabel lblZone = new JLabel("Zone " + this.zone.getCouleur() + minsGratuites);
-		lblZone.setFont(new Font(defaultFont, Font.PLAIN, 15));
+		lblZone.setFont(new Font(this.defaultFont, Font.PLAIN, 15));
 		lblZone.setForeground(new Color(50, 50, 50));
 		p.add(lblZone);
 
 		JLabel lblDureeMax = new JLabel("Durée maximum : " + this.zone.minsToHeures());
-		lblDureeMax.setFont(new Font(defaultFont, Font.PLAIN, 15));
+		lblDureeMax.setFont(new Font(this.defaultFont, Font.PLAIN, 15));
 		lblDureeMax.setForeground(new Color(50, 50, 50));
 		p.add(lblDureeMax);
 
@@ -127,18 +127,19 @@ public class SaisirDureeStationnement extends JPanel {
 
 		JLabel lblInfoVehicule = new JLabel(
 				"Entrez la plaque d'immatriculation de votre véhicule avec le format suivant");
-		lblInfoVehicule.setFont(new Font(defaultFont, Font.PLAIN, 15));
+		lblInfoVehicule.setFont(new Font(this.defaultFont, Font.PLAIN, 15));
 		lblInfoVehicule.setForeground(new Color(50, 50, 50));
 		p.add(lblInfoVehicule);
 
 		this.textFieldPlaque = new TemplateSaisie("Plaque", "AB-001-CD", false, false);
-		((AbstractDocument) this.textFieldPlaque.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		((AbstractDocument) this.textFieldPlaque.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(20));
 		this.textFieldPlaque.getField().setPreferredSize(new Dimension(250, 30));
 		p.add(this.textFieldPlaque);
 
 		JLabel lblInfoImatricule = new JLabel(
 				"Vous serez susceptible de reçevoir une amende si la plaque indiquée n'est pas la bonne");
-		lblInfoImatricule.setFont(new Font(defaultFont, Font.PLAIN, 12));
+		lblInfoImatricule.setFont(new Font(this.defaultFont, Font.PLAIN, 12));
 		lblInfoImatricule.setForeground(new Color(120, 120, 120));
 		lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
 		p.add(lblInfoImatricule);
@@ -153,14 +154,15 @@ public class SaisirDureeStationnement extends JPanel {
 		p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		JLabel lblTitreHeureArrive = new JLabel("Saisissez la durée de stationnement (en minutes)");
-		lblTitreHeureArrive.setFont(new Font(defaultFont, Font.PLAIN, 15));
+		lblTitreHeureArrive.setFont(new Font(this.defaultFont, Font.PLAIN, 15));
 		lblTitreHeureArrive.setForeground(new Color(50, 50, 50));
 		p.add(lblTitreHeureArrive);
 
 		p.add(Box.createRigidArea(new Dimension(0, 8)));
 
 		this.textFieldNom = new TemplateSaisie("Duree", "minutes", false, false);
-		((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(20));
+		((AbstractDocument) this.textFieldNom.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(20));
 		this.textFieldNom.getField().setPreferredSize(new Dimension(250, 30));
 		p.add(this.textFieldNom);
 
@@ -178,7 +180,7 @@ public class SaisirDureeStationnement extends JPanel {
 		header.setBackground(Color.WHITE);
 
 		JLabel lblTitle = new JLabel(title);
-		lblTitle.setFont(new Font(defaultFont, Font.BOLD, 14));
+		lblTitle.setFont(new Font(this.defaultFont, Font.BOLD, 14));
 		lblTitle.setForeground(new Color(70, 70, 70));
 		header.add(lblTitle);
 
@@ -213,10 +215,10 @@ public class SaisirDureeStationnement extends JPanel {
 	public String getImmatriculation() {
 		return this.textFieldPlaque.getText();
 	}
-	
-    public JTextComponent getPlaque() {
-        return this.textFieldPlaque.getField();
-    }
+
+	public JTextComponent getPlaque() {
+		return this.textFieldPlaque.getField();
+	}
 
 	public ZoneVoirie getZone() {
 		return this.zone;

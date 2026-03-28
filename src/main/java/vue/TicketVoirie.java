@@ -17,20 +17,20 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurTicketVoirie;
 import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
-import controleur.ControleurTicketVoirie;
 
 public class TicketVoirie extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2282953775737224594L;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
 	private String moyenPaiement;
 	private JLabel nomZone;
 	private JButton btnPaiement;
-	
+
 	private Color couleur;
 
 	public TicketVoirie(ZoneVoirie zone, String immatriculation, int duree, String moyenPaiement) {
@@ -38,13 +38,12 @@ public class TicketVoirie extends JPanel {
 		this.immatriculation = immatriculation;
 		this.duree = duree;
 		this.moyenPaiement = moyenPaiement;
-		
-		this.couleur = convertirCouleur(this.zone.getCouleur());
+
+		this.couleur = this.convertirCouleur(this.zone.getCouleur());
 
 		// 2. On applique la couleur au texte de la zone
 		this.nomZone = new JLabel(this.zone.getCouleur());
-		this.nomZone.setForeground(this.couleur); 
-
+		this.nomZone.setForeground(this.couleur);
 
 		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -117,34 +116,49 @@ public class TicketVoirie extends JPanel {
 		panelButtonContainer.setBackground(Color.WHITE);
 		panelFooter.add(panelButtonContainer);
 
-		btnPaiement = new JButton("Confirmer le départ");
-		panelButtonContainer.add(btnPaiement);
-		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPaiement.setForeground(Color.WHITE);
-		btnPaiement.setFont(DefaultTheme.FONT_TITLE_SMALL);
-		btnPaiement.setBackground(new Color(0, 123, 255));
-		btnPaiement.setFocusPainted(false);
-		btnPaiement.setBorderPainted(false);
-		btnPaiement.setPreferredSize(new Dimension(200, 45));
+		this.btnPaiement = new JButton("Confirmer le départ");
+		panelButtonContainer.add(this.btnPaiement);
+		this.btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.btnPaiement.setForeground(Color.WHITE);
+		this.btnPaiement.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnPaiement.setBackground(new Color(0, 123, 255));
+		this.btnPaiement.setFocusPainted(false);
+		this.btnPaiement.setBorderPainted(false);
+		this.btnPaiement.setPreferredSize(new Dimension(200, 45));
 
 	}
 
 	// --- Méthode pour récupérer la couleur (identique à celle de ChoixZone) ---
 	private Color convertirCouleur(String nomCouleur) {
-		if (nomCouleur == null) return Color.GRAY;
+		if (nomCouleur == null) {
+			return Color.GRAY;
+		}
 		String clef = nomCouleur.toLowerCase().trim();
 
 		if (clef.startsWith("#")) {
-			try { return Color.decode(clef); } catch (Exception e) { return Color.GRAY; }
+			try {
+				return Color.decode(clef);
+			} catch (Exception e) {
+				return Color.GRAY;
+			}
 		}
-		
+
 		switch (clef) {
-			case "jaune": return new Color(255, 204, 0);
-			case "orange": return new Color(255, 149, 0);
-			case "rouge": return new Color(255, 59, 48);
-			case "vert": case "verte": return new Color(0, 128, 0);
-			case "bleu": case "bleue": case "blue": return new Color(0, 122, 255);
-			default: return Color.GRAY;
+		case "jaune":
+			return new Color(255, 204, 0);
+		case "orange":
+			return new Color(255, 149, 0);
+		case "rouge":
+			return new Color(255, 59, 48);
+		case "vert":
+		case "verte":
+			return new Color(0, 128, 0);
+		case "bleu":
+		case "bleue":
+		case "blue":
+			return new Color(0, 122, 255);
+		default:
+			return Color.GRAY;
 		}
 	}
 
@@ -185,10 +199,10 @@ public class TicketVoirie extends JPanel {
 
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			
+
 			// 4. On utilise la couleur calculée dans le constructeur
 			g2.setColor(TicketVoirie.this.couleur);
-			
+
 			g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 			g2.setColor(Color.WHITE);
 			g2.setFont(DefaultTheme.FONT_TITLE_2);

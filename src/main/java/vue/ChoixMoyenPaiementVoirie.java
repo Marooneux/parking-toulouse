@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -30,6 +29,7 @@ import ui.theme.DefaultTheme;
 
 public class ChoixMoyenPaiementVoirie extends JPanel {
 
+	private static final long serialVersionUID = 3423101212327323950L;
 	private JButton btnCarte;
 	private JButton btnVirement;
 	private ZoneVoirie zone;
@@ -42,7 +42,6 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		this.immatriculation = immatriculation;
 		this.duree = duree;
 		this.prix = prix;
-
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
@@ -58,20 +57,20 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		cardsContainer.setOpaque(false);
 		cardsContainer.setBorder(new EmptyBorder(20, 60, 60, 60));
 
-		btnCarte = buildPaymentButton("Payer par carte");
-		btnCarte.setActionCommand("CARTE");
+		this.btnCarte = this.buildPaymentButton("Payer par carte");
+		this.btnCarte.setActionCommand("CARTE");
 		JPanel cardCB = this.createCard(
 				"Carte Bancaire",
 				"Paiement immédiat par carte.",
-				btnCarte,
+				this.btnCarte,
 				new IconCard());
 
-		btnVirement = buildPaymentButton("Payer par virement");
-		btnVirement.setActionCommand("VIREMENT");
+		this.btnVirement = this.buildPaymentButton("Payer par virement");
+		this.btnVirement.setActionCommand("VIREMENT");
 		JPanel cardVirement = this.createCard(
 				"Virement Bancaire",
 				"Saisir IBAN pour prélèvement SEPA.",
-				btnVirement,
+				this.btnVirement,
 				new IconBank());
 
 		cardsContainer.add(cardCB);
@@ -140,27 +139,27 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 	}
 
 	public void addCarteListener(ActionListener listener) {
-		btnCarte.addActionListener(listener);
+		this.btnCarte.addActionListener(listener);
 	}
 
 	public void addVirementListener(ActionListener listener) {
-		btnVirement.addActionListener(listener);
+		this.btnVirement.addActionListener(listener);
 	}
 
 	public ZoneVoirie getZone() {
-		return zone;
+		return this.zone;
 	}
 
 	public String getImmatriculation() {
-		return immatriculation;
+		return this.immatriculation;
 	}
 
 	public int getDuree() {
-		return duree;
+		return this.duree;
 	}
 
 	public double getPrix() {
-		return prix;
+		return this.prix;
 	}
 
 	private class IconCard implements Icon {

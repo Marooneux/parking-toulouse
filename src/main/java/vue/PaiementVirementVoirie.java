@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -24,7 +23,7 @@ import ui.theme.DefaultTheme;
 
 public class PaiementVirementVoirie extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6895815859853184568L;
 	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
@@ -83,10 +82,10 @@ public class PaiementVirementVoirie extends JPanel {
 				new EmptyBorder(16, 16, 16, 16)));
 		recap.setLayout(new GridLayout(0, 1, 8, 8));
 
-		recap.add(creerInfoRow("Zone", zone.getCouleur()));
-		recap.add(creerInfoRow("Immatriculation", immatriculation));
-		recap.add(creerInfoRow("Duree", duree + " min"));
-		recap.add(creerInfoRow("Montant", String.format("%.2f €", prix)));
+		recap.add(this.creerInfoRow("Zone", this.zone.getCouleur()));
+		recap.add(this.creerInfoRow("Immatriculation", immatriculation));
+		recap.add(this.creerInfoRow("Duree", duree + " min"));
+		recap.add(this.creerInfoRow("Montant", String.format("%.2f €", prix)));
 
 		center.add(recap);
 
@@ -99,23 +98,25 @@ public class PaiementVirementVoirie extends JPanel {
 
 		this.textFieldNom = new TemplateSaisie("Nom et prenom", "Nom Prenom", false, false);
 		this.textFieldNom.getField().setFont(DefaultTheme.FONT_BODY);
-		((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(60));
-		card.add(creerBlocChamps("Nom et prenom", this.textFieldNom));
+		((AbstractDocument) this.textFieldNom.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(60));
+		card.add(this.creerBlocChamps("Nom et prenom", this.textFieldNom));
 
 		this.textFieldIban = new TemplateSaisie("IBAN", "FR76 3000 6000 0112 3456 7890 189", false, false);
 		this.textFieldIban.getField().setFont(DefaultTheme.FONT_BODY);
-		((AbstractDocument) this.textFieldIban.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(34));
-		card.add(creerBlocChamps("IBAN", this.textFieldIban));
+		((AbstractDocument) this.textFieldIban.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(34));
+		card.add(this.creerBlocChamps("IBAN", this.textFieldIban));
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelBtn.setOpaque(false);
-		btnPayer = new JButton(String.format("Payer - %.2f €", prix));
-		btnPayer.setBackground(PRIMARY_COLOR);
-		btnPayer.setForeground(Color.WHITE);
-		btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
-		btnPayer.setFocusPainted(false);
-		btnPayer.setPreferredSize(new Dimension(180, 40));
-		panelBtn.add(btnPayer);
+		this.btnPayer = new JButton(String.format("Payer - %.2f €", prix));
+		this.btnPayer.setBackground(PRIMARY_COLOR);
+		this.btnPayer.setForeground(Color.WHITE);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFocusPainted(false);
+		this.btnPayer.setPreferredSize(new Dimension(180, 40));
+		panelBtn.add(this.btnPayer);
 		card.add(panelBtn);
 
 		center.add(card);

@@ -15,74 +15,89 @@ import modele.Utilisateur;
 
 public class ModifierProfile extends JPanel {
 
-    private TemplateSaisie txtNom;
-    private TemplateSaisie txtPrenom;
-    private TemplateSaisie txtEmail;
-    private TemplateSaisie txtAncienMdp;
-    private TemplateSaisie txtNouveauMdp;
-    private JButton btnEnregistrer;
-    private JButton btnAnnuler;
+	private static final long serialVersionUID = 7890505630568538549L;
+	private TemplateSaisie txtNom;
+	private TemplateSaisie txtPrenom;
+	private TemplateSaisie txtEmail;
+	private TemplateSaisie txtAncienMdp;
+	private TemplateSaisie txtNouveauMdp;
+	private JButton btnEnregistrer;
+	private JButton btnAnnuler;
 
-    public ModifierProfile() {
-        setBorder(new EmptyBorder(20, 20, 20, 20));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(500, 380));
+	public ModifierProfile() {
+		this.setBorder(new EmptyBorder(20, 20, 20, 20));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setPreferredSize(new Dimension(500, 380));
 
-        txtNom = new TemplateSaisie("Nom", "Nom", false);
-        txtPrenom = new TemplateSaisie("Prenom", "Prenom", false);
-        txtEmail = new TemplateSaisie("Email", "email@exemple.fr", false);
-        txtAncienMdp = new TemplateSaisie("Ancien mot de passe", "", true);
-        txtNouveauMdp = new TemplateSaisie("Nouveau mot de passe", "", true);
+		this.txtNom = new TemplateSaisie("Nom", "Nom", false);
+		this.txtPrenom = new TemplateSaisie("Prenom", "Prenom", false);
+		this.txtEmail = new TemplateSaisie("Email", "email@exemple.fr", false);
+		this.txtAncienMdp = new TemplateSaisie("Ancien mot de passe", "", true);
+		this.txtNouveauMdp = new TemplateSaisie("Nouveau mot de passe", "", true);
 
-        add(txtNom);
-        add(Box.createVerticalStrut(12));
-        add(txtPrenom);
-        add(Box.createVerticalStrut(12));
-        add(txtEmail);
-        add(Box.createVerticalStrut(12));
-        add(txtAncienMdp);
-        add(Box.createVerticalStrut(12));
-        add(txtNouveauMdp);
-        add(Box.createVerticalStrut(20));
+		this.add(this.txtNom);
+		this.add(Box.createVerticalStrut(12));
+		this.add(this.txtPrenom);
+		this.add(Box.createVerticalStrut(12));
+		this.add(this.txtEmail);
+		this.add(Box.createVerticalStrut(12));
+		this.add(this.txtAncienMdp);
+		this.add(Box.createVerticalStrut(12));
+		this.add(this.txtNouveauMdp);
+		this.add(Box.createVerticalStrut(20));
 
-        btnEnregistrer = new JButton("Enregistrer");
-        btnAnnuler = new JButton("Annuler");
+		this.btnEnregistrer = new JButton("Enregistrer");
+		this.btnAnnuler = new JButton("Annuler");
 
-        JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonRow.setOpaque(false);
-        buttonRow.add(btnEnregistrer);
-        buttonRow.add(btnAnnuler);
-        add(buttonRow);
-    }
+		JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonRow.setOpaque(false);
+		buttonRow.add(this.btnEnregistrer);
+		buttonRow.add(this.btnAnnuler);
+		this.add(buttonRow);
+	}
 
-    // --- Methodes pour le Controleur ---
+	// --- Methodes pour le Controleur ---
 
-    // Pre-remplit les champs (sauf les mots de passe pour securite)
-    public void afficherUtilisateur(Utilisateur user) {
-        txtNom.setText(user.getNom());
-        txtPrenom.setText(user.getPrenom());
-        txtEmail.setText(user.getEmail());
-        txtAncienMdp.setText("");
-        txtNouveauMdp.setText("");
-    }
+	// Pre-remplit les champs (sauf les mots de passe pour securite)
+	public void afficherUtilisateur(Utilisateur user) {
+		this.txtNom.setText(user.getNom());
+		this.txtPrenom.setText(user.getPrenom());
+		this.txtEmail.setText(user.getEmail());
+		this.txtAncienMdp.setText("");
+		this.txtNouveauMdp.setText("");
+	}
 
-    // Getters
-    public String getNomInput() { return txtNom.getText(); }
-    public String getPrenomInput() { return txtPrenom.getText(); }
-    public String getEmailInput() { return txtEmail.getText(); }
-    public String getAncienMdpInput() { return new String(txtAncienMdp.getPassword()); }
-    public String getNouveauMdpInput() { return new String(txtNouveauMdp.getPassword()); }
+	// Getters
+	public String getNomInput() {
+		return this.txtNom.getText();
+	}
 
-    // Listeners
-    public void addEnregistrerListener(ActionListener action) {
-        btnEnregistrer.addActionListener(action);
-    }
+	public String getPrenomInput() {
+		return this.txtPrenom.getText();
+	}
 
-    public void addAnnulerListener(ActionListener action) {
-        btnAnnuler.addActionListener(action);
-    }
+	public String getEmailInput() {
+		return this.txtEmail.getText();
+	}
 
-    public void afficherMessage(String msg) {
-        JOptionPane.showMessageDialog(this, msg);
-    }
+	public String getAncienMdpInput() {
+		return new String(this.txtAncienMdp.getPassword());
+	}
+
+	public String getNouveauMdpInput() {
+		return new String(this.txtNouveauMdp.getPassword());
+	}
+
+	// Listeners
+	public void addEnregistrerListener(ActionListener action) {
+		this.btnEnregistrer.addActionListener(action);
+	}
+
+	public void addAnnulerListener(ActionListener action) {
+		this.btnAnnuler.addActionListener(action);
+	}
+
+	public void afficherMessage(String msg) {
+		JOptionPane.showMessageDialog(this, msg);
+	}
 }

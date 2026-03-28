@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.awt.GridLayout;
 import java.util.function.Consumer;
 
@@ -27,6 +26,7 @@ import ui.theme.DefaultTheme;
 
 public class ChoixParking extends JPanel {
 
+	private static final long serialVersionUID = -2921377439343576414L;
 	private JPanel gridPanel;
 	private TemplateSaisie txtRecherche;
 	private JMenuItem itemAlpha;
@@ -94,8 +94,8 @@ public class ChoixParking extends JPanel {
 		filterContainer.add(this.txtRecherche);
 		filterContainer.add(Box.createHorizontalStrut(10));
 
-		btnFilter = this.createFilterButton();
-		filterContainer.add(btnFilter);
+		this.btnFilter = this.createFilterButton();
+		filterContainer.add(this.btnFilter);
 
 		headerPanel.add(filterContainer, BorderLayout.EAST);
 
@@ -132,9 +132,9 @@ public class ChoixParking extends JPanel {
 				new EmptyBorder(10, 20, 10, 20)));
 		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		popupMenu = new JPopupMenu();
-		popupMenu.setBackground(Color.WHITE);
-		popupMenu.setBorder(new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1));
+		this.popupMenu = new JPopupMenu();
+		this.popupMenu.setBackground(Color.WHITE);
+		this.popupMenu.setBorder(new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1));
 
 		this.itemAlpha = new JMenuItem("Nom (A-Z)");
 		this.styleMenuItem(this.itemAlpha);
@@ -145,9 +145,9 @@ public class ChoixParking extends JPanel {
 		this.itemFermeture = new JMenuItem("Horaire de fermeture");
 		this.styleMenuItem(this.itemFermeture);
 
-		popupMenu.add(this.itemAlpha);
-		popupMenu.add(this.itemPlaces);
-		popupMenu.add(this.itemFermeture);
+		this.popupMenu.add(this.itemAlpha);
+		this.popupMenu.add(this.itemPlaces);
+		this.popupMenu.add(this.itemFermeture);
 
 		return btn;
 	}
@@ -186,8 +186,8 @@ public class ChoixParking extends JPanel {
 	}
 
 	public void showFilterPopup() {
-		if (popupMenu != null && btnFilter != null) {
-			popupMenu.show(btnFilter, 0, btnFilter.getHeight());
+		if (this.popupMenu != null && this.btnFilter != null) {
+			this.popupMenu.show(this.btnFilter, 0, this.btnFilter.getHeight());
 		}
 	}
 

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -16,8 +15,10 @@ import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
+
 public class ConfirmationPaiementVoirie extends JPanel {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -1044509068457353369L;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
@@ -78,16 +79,16 @@ public class ConfirmationPaiementVoirie extends JPanel {
 		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
 		this.add(panelFooter, BorderLayout.SOUTH);
 
-		btnTerminer = new JButton("Voir le e-ticket");
-		btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTerminer.setForeground(Color.WHITE);
-		btnTerminer.setFont(DefaultTheme.FONT_TITLE_SMALL);
-		btnTerminer.setBackground(new Color(0, 123, 255));
-		btnTerminer.setFocusPainted(false);
-		btnTerminer.setBorderPainted(false);
-		btnTerminer.setPreferredSize(new Dimension(250, 45));
+		this.btnTerminer = new JButton("Voir le e-ticket");
+		this.btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.btnTerminer.setForeground(Color.WHITE);
+		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnTerminer.setBackground(new Color(0, 123, 255));
+		this.btnTerminer.setFocusPainted(false);
+		this.btnTerminer.setBorderPainted(false);
+		this.btnTerminer.setPreferredSize(new Dimension(250, 45));
 
-		panelFooter.add(btnTerminer);
+		panelFooter.add(this.btnTerminer);
 	}
 
 	public JButton getBtnTerminer() {
