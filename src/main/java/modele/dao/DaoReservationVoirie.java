@@ -62,11 +62,13 @@ public class DaoReservationVoirie extends DaoModele<ReservationVoirie> {
 		int idUtilisateur = curseur.getInt("id_utilisateur");
 
 		ZoneVoirie zone = this.daoZone.findById(idZone);
+		if (zone == null) throw new SQLException("Zone introuvable id=" + idZone);
 		Utilisateur utilisateur = this.daoUtilisateur.findById(idUtilisateur);
+		if (utilisateur == null) throw new SQLException("Utilisateur introuvable id=" + idUtilisateur);
 
 		return new ReservationVoirie(
 				id,
-				tsDebut.toLocalDateTime(),
+				tsDebut != null ? tsDebut.toLocalDateTime() : null,
 				duree,
 				zone,
 				utilisateur);

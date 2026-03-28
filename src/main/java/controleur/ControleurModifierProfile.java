@@ -58,8 +58,7 @@ public class ControleurModifierProfile {
                 return;
             }
             
-            String nouveauMdpHash = utils.PasswordUtil.hashMdp(nouveauMdp);
-            utilisateur.setMdp(ancienMdp, nouveauMdpHash);
+            utilisateur.setMdp(ancienMdp, nouveauMdp);
         }
 
         // Mise à jour des autres infos dans l'objet

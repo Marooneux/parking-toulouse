@@ -52,7 +52,11 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 			} else {
 				dao.update(reservation);
 			}
-	        Utilisateur user = AuthManager.getCurrentUser();        
+	        Utilisateur user = AuthManager.getCurrentUser();
+	        if (user == null) {
+	            JOptionPane.showMessageDialog(vue, "Session expirée, veuillez vous reconnecter.");
+	            return;
+	        }
 	        NavigationFrame.getInstance().showPage(
 	                "Stationnement",
 	                () -> new ChoixTypeStationnement(user.getId()),

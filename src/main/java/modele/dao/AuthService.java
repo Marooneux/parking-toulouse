@@ -23,15 +23,7 @@ public class AuthService {
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					String stored = rs.getString("mdp");
-					boolean valide = false;
-					try {
-						valide = PasswordUtil.checkMdp(mdp, stored);
-					} catch (Exception e) {
-						// Pas un hash BCrypt, fallback texte clair
-					}
-					if (!valide && stored != null) {
-						valide = stored.equals(mdp);
-					}
+					boolean valide = PasswordUtil.checkMdp(mdp, stored);
 					if (!valide) {
 						return null;
 					}

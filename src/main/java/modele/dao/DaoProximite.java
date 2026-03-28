@@ -50,7 +50,9 @@ public class DaoProximite extends DaoModele<Proximite> {
 		int distance = curseur.getInt("distance_metres");
 
 		Parking parking = this.daoParking.findById(idParking);
+		if (parking == null) throw new SQLException("Parking introuvable id=" + idParking);
 		LigneMetro ligneMetro = this.daoLigneMetro.findById(idLigne);
+		if (ligneMetro == null) throw new SQLException("Ligne metro introuvable id=" + idLigne);
 
 		return new Proximite(parking, ligneMetro, distance);
 	}

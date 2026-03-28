@@ -46,7 +46,7 @@ public class MySQLDataSource {
 	}
 
 	public static Connection getConnexion() throws SQLException {
-		if (MySQLDataSource.connexion == null) {
+		if (MySQLDataSource.connexion == null || !MySQLDataSource.connexion.isValid(2)) {
 			MySQLDataSource.connexion = DriverManager.getConnection(
 					MySQLDataSource.url,
 					MySQLDataSource.login,
