@@ -10,6 +10,8 @@ import modele.Utilisateur.Type;
 import modele.dao.AuthService;
 
 public class AuthManager {
+	private AuthManager() {}
+
 	private static Utilisateur currentUser;
 
 	public static boolean login(String email, String mdp) {

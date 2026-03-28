@@ -10,6 +10,8 @@ import modele.Utilisateur.Type;
 import utils.PasswordUtil;
 
 public class AuthService {
+	private AuthService() {}
+
 	/**
 	 * Authentifie un utilisateur par mail et mot de passe. Cette methode recupere
 	 * l'utilisateur par son mail, puis compare le mot de passe donné avec le hash.

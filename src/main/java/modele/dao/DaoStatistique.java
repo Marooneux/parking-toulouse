@@ -17,11 +17,23 @@ public class DaoStatistique {
     //  MODEL FOR RECENT ACTIVITY
     // ------------------------------
     public static class RecentActivity {
-        public LocalDateTime date;
-        public String lieu;
-        public String details;
-        public int dureeMinutes;
-        public double tarif;
+        private LocalDateTime date;
+        private String lieu;
+        private String details;
+        private int dureeMinutes;
+        private double tarif;
+
+        public LocalDateTime getDate() { return date; }
+        public String getLieu() { return lieu; }
+        public String getDetails() { return details; }
+        public int getDureeMinutes() { return dureeMinutes; }
+        public double getTarif() { return tarif; }
+
+        public void setDate(LocalDateTime date) { this.date = date; }
+        public void setLieu(String lieu) { this.lieu = lieu; }
+        public void setDetails(String details) { this.details = details; }
+        public void setDureeMinutes(int dureeMinutes) { this.dureeMinutes = dureeMinutes; }
+        public void setTarif(double tarif) { this.tarif = tarif; }
     }
 
     // ------------------------------
@@ -190,11 +202,11 @@ public class DaoStatistique {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     RecentActivity a = new RecentActivity();
-                    a.date = rs.getTimestamp("date").toLocalDateTime();
-                    a.lieu = rs.getString("lieu");
-                    a.details = rs.getString("details");
-                    a.dureeMinutes = rs.getInt("duree");
-                    a.tarif = rs.getDouble("tarif");
+                    a.setDate(rs.getTimestamp("date").toLocalDateTime());
+                    a.setLieu(rs.getString("lieu"));
+                    a.setDetails(rs.getString("details"));
+                    a.setDureeMinutes(rs.getInt("duree"));
+                    a.setTarif(rs.getDouble("tarif"));
                     list.add(a);
                 }
             }

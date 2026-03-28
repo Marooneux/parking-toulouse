@@ -298,7 +298,8 @@ public class Statistique extends JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int w = getWidth(), h = getHeight();
+            int w = getWidth();
+            int h = getHeight();
             int pad = 40;
             int max = values.stream().max(Integer::compare).orElse(1);
 
@@ -372,7 +373,8 @@ public class Statistique extends JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int w = getWidth(), h = getHeight();
+            int w = getWidth();
+            int h = getHeight();
             int pad = 40;
 
             double max = values.stream().max(Double::compare).orElse(1.0);
