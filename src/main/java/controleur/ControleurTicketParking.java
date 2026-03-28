@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurTicketParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurTicketParking.class.getName());
+
 
 	private final TicketParking vue;
 

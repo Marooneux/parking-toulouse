@@ -22,6 +22,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurAccueilAdminParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurAccueilAdminParking.class.getName());
+
 
 	private final Accueil vue;
 	private final DaoParking daoParking;

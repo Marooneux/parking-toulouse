@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurHistorique implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurHistorique.class.getName());
+
 
     private final HistoriquePanel vue;
     private final DaoReservationParking dao;

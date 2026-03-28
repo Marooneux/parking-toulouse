@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurConfirmationPaiementVoirie implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurConfirmationPaiementVoirie.class.getName());
+
 
     private final ConfirmationPaiementVoirie vue;
 

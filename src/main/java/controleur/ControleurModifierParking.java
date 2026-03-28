@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurModifierParking {
+	private static final Logger LOGGER = Logger.getLogger(ControleurModifierParking.class.getName());
+
 
     private ModifierParking vue;
     private Parking parking;

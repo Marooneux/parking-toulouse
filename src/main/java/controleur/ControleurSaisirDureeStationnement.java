@@ -24,6 +24,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurSaisirDureeStationnement implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurSaisirDureeStationnement.class.getName());
+
 
 	private final ZoneVoirie zone;
 	private final SaisirDureeStationnement vue;

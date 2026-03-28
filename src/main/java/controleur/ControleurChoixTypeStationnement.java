@@ -38,6 +38,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurChoixTypeStationnement implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixTypeStationnement.class.getName());
+
 
     public enum Etat {
         PARKING, VOIRIE

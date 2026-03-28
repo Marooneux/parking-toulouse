@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurAjouterParking {
+	private static final Logger LOGGER = Logger.getLogger(ControleurAjouterParking.class.getName());
+
 
     private AjouterParking vue;
     private DaoParking daoParking;

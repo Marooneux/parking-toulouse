@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurSaisirHeureArriveParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurSaisirHeureArriveParking.class.getName());
+
 
     private final SaisirHeureArriveParking vue;
     private final Parking parking;

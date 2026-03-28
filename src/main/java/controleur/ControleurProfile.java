@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurProfile implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurProfile.class.getName());
+
 
     private final Utilisateur utilisateur;
     private final Profile vue;

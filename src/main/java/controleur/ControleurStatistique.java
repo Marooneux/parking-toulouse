@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurStatistique implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurStatistique.class.getName());
+
 
     private final Statistique vue;
     private final DaoStatistique dao;

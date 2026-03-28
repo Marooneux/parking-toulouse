@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurConfirmationPaiementParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurConfirmationPaiementParking.class.getName());
+
 
 	private final ConfirmationPaiementParking vue;
 	private final ReservationParking reservation;

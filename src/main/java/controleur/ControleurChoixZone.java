@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurChoixZone {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixZone.class.getName());
+
 	private final DaoZoneVoirie dao;
 	
 	public ControleurChoixZone(ChoixZone vue) {

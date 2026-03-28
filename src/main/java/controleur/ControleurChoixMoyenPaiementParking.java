@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurChoixMoyenPaiementParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixMoyenPaiementParking.class.getName());
+
 
     private final ChoixMoyenPaiementParking vue;
     private final ReservationParking reservation;

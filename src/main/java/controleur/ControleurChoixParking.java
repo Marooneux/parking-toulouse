@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 
 
 public class ControleurChoixParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixParking.class.getName());
+
 
 	private ChoixParking vue;
 	private DaoParking daoParking;
