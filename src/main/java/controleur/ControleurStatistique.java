@@ -10,8 +10,13 @@ import java.util.List;
 import modele.dao.DaoStatistique;
 import modele.dao.MySQLDataSource;
 import vue.adminParking.Statistique;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurStatistique implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurStatistique.class.getName());
+
 
     private final Statistique vue;
     private final DaoStatistique dao;
@@ -25,7 +30,7 @@ public class ControleurStatistique implements ActionListener {
         try {
             c = MySQLDataSource.getConnexion();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             throw new IllegalStateException("Connexion impossible");
         }
 
@@ -76,7 +81,7 @@ public class ControleurStatistique implements ActionListener {
             vue.setRecentActivity(list);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             vue.showError("Erreur lors du chargement des statistiques parking.");
         }
     }

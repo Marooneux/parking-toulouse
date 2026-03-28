@@ -15,8 +15,13 @@ import utils.AuthManager;
 import vue.ConfirmationPaiementParking;
 import vue.PaiementVirementParking;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurPaiementVirementParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurPaiementVirementParking.class.getName());
+
 
     private final PaiementVirementParking vue;
 
@@ -36,7 +41,7 @@ public class ControleurPaiementVirementParking implements ActionListener {
             NavigationFrame.getInstance().showPage("parking-confirmation", () -> confirmation, "Paiement validé", true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -67,7 +72,7 @@ public class ControleurPaiementVirementParking implements ActionListener {
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             return false;
         }
     }

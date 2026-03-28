@@ -24,8 +24,13 @@ import vue.VehiculesPanel;
 import vue.NavigationFrame;
 import vue.SaisirHeureArriveParking;
 import vue.TicketParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurSaisirHeureArriveParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurSaisirHeureArriveParking.class.getName());
+
 
     private final SaisirHeureArriveParking vue;
     private final Parking parking;
@@ -94,7 +99,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                 vehicules = new DaoVehicule().findByUserId(user.getId());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vue, "Impossible de vérifier vos véhicules.");
-                ex.printStackTrace();
+                LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
                 return;
             }
             if (vehicules.isEmpty()) {
@@ -117,7 +122,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vue, "Impossible de vérifier votre stationnement en cours.");
-                ex.printStackTrace();
+                LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
                 return;
             }
 

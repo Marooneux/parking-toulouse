@@ -10,8 +10,13 @@ import vue.ModifierProfile;
 import vue.NavigationFrame;
 import vue.Profile;
 import vue.VehiculesPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurProfile implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurProfile.class.getName());
+
 
     private final Utilisateur utilisateur;
     private final Profile vue;
@@ -134,7 +139,7 @@ public class ControleurProfile implements ActionListener {
             vue.showInfosTab();
         } catch (Exception ex) {
             vue.afficherMessage("Erreur lors de la mise à jour : " + ex.getMessage());
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
     

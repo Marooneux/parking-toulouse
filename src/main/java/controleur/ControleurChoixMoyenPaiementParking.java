@@ -10,8 +10,13 @@ import vue.ChoixMoyenPaiementParking;
 import vue.PaiementParking;
 import vue.PaiementVirementParking;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurChoixMoyenPaiementParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixMoyenPaiementParking.class.getName());
+
 
     private final ChoixMoyenPaiementParking vue;
     private final ReservationParking reservation;
@@ -44,7 +49,7 @@ public class ControleurChoixMoyenPaiementParking implements ActionListener {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 }

@@ -8,8 +8,13 @@ import javax.swing.JOptionPane;
 import vue.ConfirmationPaiementVoirie;
 import vue.PaiementVirementVoirie;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurPaiementVirementVoirie implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurPaiementVirementVoirie.class.getName());
+
 
     private final PaiementVirementVoirie vue;
 
@@ -32,7 +37,7 @@ public class ControleurPaiementVirementVoirie implements ActionListener {
             NavigationFrame.getInstance().showPage(key, () -> confirmation, "Paiement validé", true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir la confirmation de paiement.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 }

@@ -10,8 +10,13 @@ import vue.ChoixMoyenPaiementVoirie;
 import vue.PaiementVirementVoirie;
 import vue.PaiementVoirie;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixMoyenPaiementVoirie.class.getName());
+
 
     private final ChoixMoyenPaiementVoirie vue;
     private final ZoneVoirie zone;
@@ -50,7 +55,7 @@ public class ControleurChoixMoyenPaiementVoirie implements ActionListener {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du paiement.");
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 }

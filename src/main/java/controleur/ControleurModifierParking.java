@@ -11,8 +11,13 @@ import modele.dao.DaoParking;
 import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import vue.adminParking.ModifierParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurModifierParking {
+	private static final Logger LOGGER = Logger.getLogger(ControleurModifierParking.class.getName());
+
 
     private ModifierParking vue;
     private Parking parking;
@@ -98,7 +103,7 @@ public class ControleurModifierParking {
             fermer();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(vue, "Erreur critique lors de la modification : " + ex.getMessage());
         }
     }
