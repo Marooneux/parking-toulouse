@@ -13,9 +13,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <sonar.projectKey>Parking</sonar.projectKey>
-        <sonar.projectName>Parking</sonar.projectName>
-        <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+        <sonar.organization>saeparking</sonar.organization>
+        <sonar.projectKey>saeparking_parking</sonar.projectKey>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -67,6 +67,32 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <!-- jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    
+                    <!-- Attach agent -->
+                    <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                    </execution>
+
+                    <!-- Generate report -->
+                    <execution>
+                    <id>report</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                    </execution>
+
+                </executions>
+                </plugin>
         </plugins>
     </build>
 

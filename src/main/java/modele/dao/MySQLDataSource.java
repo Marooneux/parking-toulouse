@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLDataSource {
-	private static final String DEFAULT_URL = "jdbc:mysql://localhost:3306/sae_parking?serverTimezone=UTC";
+	private static final String DEFAULT_URL = "jdbc:mysql://localhost:3306/sae_parking?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
 	private static Connection connexion = null;
 	private static String url = DEFAULT_URL;
 	private static String login;
@@ -21,7 +21,9 @@ public class MySQLDataSource {
 	public static void creerAcces() {
 		String resolvedUrl = firstNonEmpty(System.getProperty("DB_URL"), System.getenv("DB_URL"), DEFAULT_URL);
 		String resolvedUser = firstNonEmpty(System.getProperty("DB_USER"), System.getenv("DB_USER"));
-		String resolvedPass = firstNonEmpty(System.getProperty("DB_PASSWORD"), System.getenv("DB_PASSWORD"));
+		String resolvedPass = firstNonEmpty(
+				System.getProperty("DB_PASSWORD"), System.getenv("DB_PASSWORD"),
+				System.getProperty("DB_PASS"), System.getenv("DB_PASS"));
 
 		if (resolvedUser == null) {
 			throw new IllegalStateException("DB_USER non défini (propriété JVM ou variable d'environnement)");
@@ -29,7 +31,7 @@ public class MySQLDataSource {
 
 		MySQLDataSource.url = resolvedUrl;
 		MySQLDataSource.login = resolvedUser;
-		MySQLDataSource.motDePasse = resolvedPass;
+		MySQLDataSource.motDePasse = resolvedPass != null ? resolvedPass : "";
 		MySQLDataSource.connexion = null;
 	}
 
