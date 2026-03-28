@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ui.theme.DefaultTheme;
 import vue.TemplateSaisie;
 
 public class AjouterParking extends JPanel {
@@ -54,7 +54,7 @@ public class AjouterParking extends JPanel {
 
         // --- TITRE ---
         JLabel title = new JLabel("Ajout d'un nouveau parking");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setFont(DefaultTheme.FONT_TITLE_ALT);
         add(title, BorderLayout.NORTH);
 
         // --- FORMULAIRE ---
@@ -123,7 +123,7 @@ public class AjouterParking extends JPanel {
 
         // 6. Checkbox Moto
         chkMoto = new JCheckBox("Dispose de places Moto");
-        chkMoto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        chkMoto.setFont(DefaultTheme.FONT_LABEL_SMALL);
         chkMoto.setForeground(new Color(73, 80, 87));
         chkMoto.setOpaque(false);
         chkMoto.setAlignmentX(Component.LEFT_ALIGNMENT);

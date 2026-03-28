@@ -1,266 +1,285 @@
 package vue;
 
-import javax.swing.*;
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurChoixTypeStationnement;
-
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import ui.theme.DefaultTheme;
 
 public class ChoixTypeStationnement extends JPanel {
 
-    private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
-    private final Color CARD_COLOR = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(33, 37, 41);
-    private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
-    private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private final Color BUTTON_TEXT_COLOR = Color.WHITE;
+	private static final long serialVersionUID = -6935867236118057702L;
+	private JButton profileButton;
+	private JButton btnParking;
+	private JButton btnVoirie;
+	private JPanel activeTicketPanel;
+	private JLabel activeTicketDetails;
+	private JButton btnVoirTicket;
 
-    private JButton profileButton;
-    private JButton btnParking;
-    private JButton btnVoirie;
-    private JPanel activeTicketPanel;
-    private JLabel activeTicketDetails;
-    private JButton btnVoirTicket;
-    
-    public ChoixTypeStationnement() {
-    	this(0);
-    }
-    
+	public ChoixTypeStationnement() {
+		this(0);
+	}
 
-        public ChoixTypeStationnement(int idUser) {
-    		this.setLayout(new BorderLayout());
-    		this.setBackground(BACKGROUND_COLOR);
+	public ChoixTypeStationnement(int idUser) {
+		this.setLayout(new BorderLayout());
+		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
-    		JPanel mainPanel = new JPanel(new BorderLayout());
-    		mainPanel.setBackground(BACKGROUND_COLOR);
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
-    		JPanel headerPanel = new JPanel(new BorderLayout());
-    		headerPanel.setOpaque(false);
-    		headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
+		JPanel headerPanel = new JPanel(new BorderLayout());
+		headerPanel.setOpaque(false);
+		headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
 
-    		JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
-    		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-    		titleLabel.setForeground(TEXT_COLOR);
-    		titleLabel.setIcon(new IconP());
-        
-    		profileButton = new JButton("Mon Profil");
-    		profileButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-    		profileButton.setForeground(TEXT_COLOR);
-    		profileButton.setBackground(Color.WHITE);
-    		profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
-    		profileButton.setFocusPainted(false);
-    		profileButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    		profileButton.setIcon(new IconProfile());
-    		profileButton.setIconTextGap(10);
+		JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
+		titleLabel.setFont(DefaultTheme.FONT_TITLE_LABEL);
+		titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
+		titleLabel.setIcon(new IconP());
 
-    		profileButton.setMargin(new Insets(5, 15, 5, 15)); 
+		this.profileButton = new JButton("Mon Profil");
+		this.profileButton.setFont(DefaultTheme.FONT_BUTTON);
+		this.profileButton.setForeground(DefaultTheme.TEXT_COLOR);
+		this.profileButton.setBackground(Color.WHITE);
+		this.profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
+		this.profileButton.setFocusPainted(false);
+		this.profileButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.profileButton.setIcon(new IconProfile());
+		this.profileButton.setIconTextGap(10);
 
-    		headerPanel.add(titleLabel, BorderLayout.WEST);
-    		headerPanel.add(profileButton, BorderLayout.EAST);
+		this.profileButton.setMargin(new Insets(5, 15, 5, 15));
 
-            JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
-    		cardsContainer.setOpaque(false);
-    		cardsContainer.setBorder(new EmptyBorder(20, 40, 40, 40));
+		headerPanel.add(titleLabel, BorderLayout.WEST);
+		headerPanel.add(this.profileButton, BorderLayout.EAST);
 
-    		JPanel cardParking = createCard(
-    		        "Stationnement Parking",
-    		        "Stationner dans un parking sécurisé au choix.",
-    		        "Trouver un parking",
-    		        true
-    		);
+		JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 30, 0));
+		cardsContainer.setOpaque(false);
+		cardsContainer.setBorder(new EmptyBorder(20, 40, 40, 40));
 
-    		JPanel cardVoirie = createCard(
-    		        "Stationnement en Voirie",
-    		        "Stationner en voirie dans une zone au choix.",
-    		        "Trouver un emplacement",
-    		        false
-    		);
+		JPanel cardParking = this.createCard(
+				"Stationnement Parking",
+				"Stationner dans un parking sécurisé au choix.",
+				"Trouver un parking",
+				true);
 
-    		cardsContainer.add(cardParking);
-    		cardsContainer.add(cardVoirie);
+		JPanel cardVoirie = this.createCard(
+				"Stationnement en Voirie",
+				"Stationner en voirie dans une zone au choix.",
+				"Trouver un emplacement",
+				false);
 
-            JPanel contentPanel = new JPanel();
-            contentPanel.setOpaque(false);
-            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		cardsContainer.add(cardParking);
+		cardsContainer.add(cardVoirie);
 
-            this.activeTicketPanel = createActiveTicketPanel();
-            this.activeTicketPanel.setVisible(false);
-            contentPanel.add(this.activeTicketPanel);
-            contentPanel.add(Box.createVerticalStrut(10));
-            contentPanel.add(cardsContainer);
+		JPanel contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-            mainPanel.add(headerPanel, BorderLayout.NORTH);
-            mainPanel.add(contentPanel, BorderLayout.CENTER);
+		this.activeTicketPanel = this.createActiveTicketPanel();
+		this.activeTicketPanel.setVisible(false);
+		contentPanel.add(this.activeTicketPanel);
+		contentPanel.add(Box.createVerticalStrut(10));
+		contentPanel.add(cardsContainer);
 
-    		this.add(mainPanel, BorderLayout.CENTER);
+		mainPanel.add(headerPanel, BorderLayout.NORTH);
+		mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-    		new ControleurChoixTypeStationnement(this, idUser);
-        }
+		this.add(mainPanel, BorderLayout.CENTER);
 
-    private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
-        JPanel card = new JPanel();
-        card.setLayout(new GridBagLayout());
-        card.setBackground(CARD_COLOR);
+		new ControleurChoixTypeStationnement(this, idUser);
+	}
 
-        card.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(220, 220, 220), 1),
-                new EmptyBorder(30, 30, 30, 30)
-        ));
+	private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
+		JPanel card = new JPanel();
+		card.setLayout(new GridBagLayout());
+		card.setBackground(DefaultTheme.BACKGROUND_CARD);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 0, 5, 0);
+		card.setBorder(BorderFactory.createCompoundBorder(
+				new LineBorder(new Color(220, 220, 220), 1),
+				new EmptyBorder(30, 30, 30, 30)));
 
-        JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblTitle.setForeground(TEXT_COLOR);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(5, 0, 5, 0);
 
-        JLabel lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblSubtitle.setForeground(SUBTEXT_COLOR);
+		JLabel lblTitle = new JLabel(title);
+		lblTitle.setFont(DefaultTheme.FONT_TITLE_ALT);
+		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
-        JButton btn = new JButton(buttonText);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setBackground(BUTTON_COLOR);
-        btn.setForeground(BUTTON_TEXT_COLOR);
-        btn.setFocusPainted(false);
-        btn.setBorder(new EmptyBorder(10, 20, 10, 20));
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		JLabel lblSubtitle = new JLabel(subtitle);
+		lblSubtitle.setFont(DefaultTheme.FONT_BODY);
+		lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
-        if (isParking) {
-            this.btnParking = btn;
-        } else {
-            this.btnVoirie = btn;
-        }
+		JButton btn = new JButton(buttonText);
+		btn.setFont(DefaultTheme.FONT_BUTTON);
+		btn.setBackground(DefaultTheme.BUTTON_COLOR);
+		btn.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
+		btn.setFocusPainted(false);
+		btn.setBorder(new EmptyBorder(10, 20, 10, 20));
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btn.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR.darker());
-            }
+		if (isParking) {
+			this.btnParking = btn;
+		} else {
+			this.btnVoirie = btn;
+		}
 
-            public void mouseExited(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR);
-            }
-        });
+		btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn.setBackground(DefaultTheme.BUTTON_COLOR.darker());
+			}
 
-        card.add(lblTitle, gbc);
-        gbc.insets = new Insets(5, 0, 20, 0);
-        card.add(lblSubtitle, gbc);
-        card.add(btn, gbc);
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn.setBackground(DefaultTheme.BUTTON_COLOR);
+			}
+		});
 
-        return card;
-    }
+		card.add(lblTitle, gbc);
+		gbc.insets = new Insets(5, 0, 20, 0);
+		card.add(lblSubtitle, gbc);
+		card.add(btn, gbc);
 
-    public JButton getProfileButton() {
-        return this.profileButton;
-    }
+		return card;
+	}
 
-    public JButton getBtnParking() {
-        return this.btnParking;
-    }
+	public JButton getProfileButton() {
+		return this.profileButton;
+	}
 
-    public JButton getBtnVoirie() {
-        return this.btnVoirie;
-    }
+	public JButton getBtnParking() {
+		return this.btnParking;
+	}
 
-    public JButton getBtnVoirTicket() {
-        return this.btnVoirTicket;
-    }
+	public JButton getBtnVoirie() {
+		return this.btnVoirie;
+	}
 
-    public void afficherTicketActif(String parkingNom, String plaque, String heureArrivee) {
-        String nom = (parkingNom == null || parkingNom.isBlank()) ? "Parking" : parkingNom;
-        String immat = (plaque == null || plaque.isBlank()) ? "Inconnue" : plaque;
-        String heure = (heureArrivee == null || heureArrivee.isBlank()) ? "?" : heureArrivee;
-        this.activeTicketDetails.setText(nom + " | " + immat + " | Arrivee " + heure);
-        this.activeTicketPanel.setVisible(true);
-        revalidate();
-        repaint();
-    }
+	public JButton getBtnVoirTicket() {
+		return this.btnVoirTicket;
+	}
 
-    public void cacherTicketActif() {
-        this.activeTicketPanel.setVisible(false);
-        revalidate();
-        repaint();
-    }
+	public void afficherTicketActif(String parkingNom, String plaque, String heureArrivee) {
+		String nom = (parkingNom == null || parkingNom.isBlank()) ? "Parking" : parkingNom;
+		String immat = (plaque == null || plaque.isBlank()) ? "Inconnue" : plaque;
+		String heure = (heureArrivee == null || heureArrivee.isBlank()) ? "?" : heureArrivee;
+		this.activeTicketDetails.setText(nom + " | " + immat + " | Arrivee " + heure);
+		this.activeTicketPanel.setVisible(true);
+		this.revalidate();
+		this.repaint();
+	}
 
-    private JPanel createActiveTicketPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(220, 220, 220), 1),
-                new EmptyBorder(15, 20, 15, 20)));
-        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
-        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	public void cacherTicketActif() {
+		this.activeTicketPanel.setVisible(false);
+		this.revalidate();
+		this.repaint();
+	}
 
-        JPanel textPanel = new JPanel();
-        textPanel.setOpaque(false);
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+	private JPanel createActiveTicketPanel() {
+		JPanel panel = new JPanel(new BorderLayout(10, 10));
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(BorderFactory.createCompoundBorder(
+				new LineBorder(new Color(220, 220, 220), 1),
+				new EmptyBorder(15, 20, 15, 20)));
+		panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+		panel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel title = new JLabel("Stationnement en cours");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        title.setForeground(TEXT_COLOR);
+		JPanel textPanel = new JPanel();
+		textPanel.setOpaque(false);
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 
-        this.activeTicketDetails = new JLabel(" ");
-        this.activeTicketDetails.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        this.activeTicketDetails.setForeground(SUBTEXT_COLOR);
+		JLabel title = new JLabel("Stationnement en cours");
+		title.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		title.setForeground(DefaultTheme.TEXT_COLOR);
 
-        textPanel.add(title);
-        textPanel.add(Box.createVerticalStrut(5));
-        textPanel.add(this.activeTicketDetails);
+		this.activeTicketDetails = new JLabel(" ");
+		this.activeTicketDetails.setFont(DefaultTheme.FONT_HERO_HINT);
+		this.activeTicketDetails.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
-        this.btnVoirTicket = new JButton("Voir le ticket");
-        this.btnVoirTicket.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        this.btnVoirTicket.setBackground(BUTTON_COLOR);
-        this.btnVoirTicket.setForeground(BUTTON_TEXT_COLOR);
-        this.btnVoirTicket.setFocusPainted(false);
-        this.btnVoirTicket.setBorder(new EmptyBorder(8, 15, 8, 15));
-        this.btnVoirTicket.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		textPanel.add(title);
+		textPanel.add(Box.createVerticalStrut(5));
+		textPanel.add(this.activeTicketDetails);
 
-        panel.add(textPanel, BorderLayout.CENTER);
-        panel.add(this.btnVoirTicket, BorderLayout.EAST);
+		this.btnVoirTicket = new JButton("Voir le ticket");
+		this.btnVoirTicket.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		this.btnVoirTicket.setBackground(DefaultTheme.BUTTON_COLOR);
+		this.btnVoirTicket.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
+		this.btnVoirTicket.setFocusPainted(false);
+		this.btnVoirTicket.setBorder(new EmptyBorder(8, 15, 8, 15));
+		this.btnVoirTicket.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        return panel;
-    }
+		panel.add(textPanel, BorderLayout.CENTER);
+		panel.add(this.btnVoirTicket, BorderLayout.EAST);
 
-    private class IconP implements Icon {
-        @Override
-        public void paintIcon(Component c, Graphics g, int x, int y) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
-            g2.setStroke(new BasicStroke(2));
-            g2.drawRoundRect(x, y, 30, 30, 10, 10);
-            g2.setFont(new Font("Segoe UI", Font.BOLD, 20));
-            g2.drawString("P", x + 10, y + 23);
-        }
+		return panel;
+	}
 
-        @Override
-        public int getIconWidth() { return 35; }
+	private class IconP implements Icon {
+		@Override
+		public void paintIcon(Component c, Graphics g, int x, int y) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setColor(DefaultTheme.TEXT_COLOR);
+			g2.setStroke(new BasicStroke(2));
+			g2.drawRoundRect(x, y, 30, 30, 10, 10);
+			g2.setFont(DefaultTheme.FONT_CARD_LABEL);
+			g2.drawString("P", x + 10, y + 23);
+		}
 
-        @Override
-        public int getIconHeight() { return 35; }
-    }
+		@Override
+		public int getIconWidth() {
+			return 35;
+		}
 
-    private class IconProfile implements Icon {
-        @Override
-        public void paintIcon(Component c, Graphics g, int x, int y) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
-            
-            g2.fillOval(x + 6, y + 2, 12, 12);
-            g2.fillArc(x + 2, y + 16, 20, 14, 0, 180);
-        }
+		@Override
+		public int getIconHeight() {
+			return 35;
+		}
+	}
 
-        @Override
-        public int getIconWidth() { return 24; }
+	private class IconProfile implements Icon {
+		@Override
+		public void paintIcon(Component c, Graphics g, int x, int y) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setColor(DefaultTheme.TEXT_COLOR);
 
-        @Override
-        public int getIconHeight() { return 24; }
-    }
+			g2.fillOval(x + 6, y + 2, 12, 12);
+			g2.fillArc(x + 2, y + 16, 20, 14, 0, 180);
+		}
+
+		@Override
+		public int getIconWidth() {
+			return 24;
+		}
+
+		@Override
+		public int getIconHeight() {
+			return 24;
+		}
+	}
 }

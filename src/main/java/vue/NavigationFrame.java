@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -23,8 +22,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import ui.theme.DefaultTheme;
+
 public final class NavigationFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -5149350946563757318L;
+
 	private static NavigationFrame INSTANCE;
 
 	private final CardLayout cardLayout = new CardLayout();
@@ -44,7 +47,7 @@ public final class NavigationFrame extends JFrame {
 		this.setSize(1200, 800);
 		this.setLocationRelativeTo(null);
 		this.getContentPane().setLayout(new BorderLayout());
-		this.getContentPane().setBackground(new Color(248, 249, 250));
+		this.getContentPane().setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JPanel header = new JPanel();
 		header.setLayout(new BorderLayout());
@@ -75,8 +78,8 @@ public final class NavigationFrame extends JFrame {
 		titlePanel.add(Box.createHorizontalStrut(10));
 
 		this.titleLabel = new JLabel("Smart Parking");
-		this.titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		this.titleLabel.setForeground(new Color(33, 37, 41));
+		this.titleLabel.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
 		titlePanel.add(this.titleLabel);
 		titlePanel.add(Box.createHorizontalGlue());
 
@@ -92,12 +95,12 @@ public final class NavigationFrame extends JFrame {
 
 	private JButton buildNavButton(String text) {
 		JButton btn = new JButton(text);
-		btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btn.setFont(DefaultTheme.FONT_BUTTON);
 		btn.setForeground(new Color(52, 58, 64));
 		btn.setBackground(Color.WHITE);
 		btn.setFocusPainted(false);
 		btn.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(222, 226, 230), 1),
+				new LineBorder(DefaultTheme.BORDER_BUTTON, 1),
 				new EmptyBorder(8, 14, 8, 14)));
 		btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		return btn;
@@ -111,7 +114,7 @@ public final class NavigationFrame extends JFrame {
 	}
 
 	public void showPage(String key, Supplier<? extends Component> factory, String title) {
-		showPage(key, factory, title, false);
+		this.showPage(key, factory, title, false);
 	}
 
 	public void showPage(String key, Supplier<? extends Component> factory, String title, boolean forceRefresh) {

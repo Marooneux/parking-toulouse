@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,19 +14,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurLoginPage;
+import ui.theme.DefaultTheme;
 
 public class LoginPage extends JPanel {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5993030307261664665L;
 	private JButton btnValider;
 	TemplateSaisie saisieLogin;
 	TemplateSaisie saisieMdp;
 
 	public LoginPage() {
 		this.saisieLogin = new TemplateSaisie("Identifiant", "prenom.nom@exemple.fr");
-		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true); 
-		
+		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true);
+
 		this.setLayout(new BorderLayout());
-		this.setBackground(new Color(248, 249, 250));
+		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JPanel wrapper = new JPanel(new BorderLayout());
 		wrapper.setOpaque(false);
@@ -37,32 +38,32 @@ public class LoginPage extends JPanel {
 		JPanel card = new JPanel(new BorderLayout());
 		card.setBackground(Color.WHITE);
 		card.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(226, 232, 240), 1),
+				new LineBorder(DefaultTheme.BORDER_SOFT, 1),
 				new EmptyBorder(0, 0, 0, 0)));
 		wrapper.add(card, BorderLayout.CENTER);
 
 		JPanel heroPanel = new JPanel();
 		heroPanel.setPreferredSize(new Dimension(320, 0));
-		heroPanel.setBackground(new Color(33, 37, 41));
+		heroPanel.setBackground(DefaultTheme.TEXT_COLOR);
 		heroPanel.setLayout(new BoxLayout(heroPanel, BoxLayout.Y_AXIS));
 		heroPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
 
 		JLabel heroTitle = new JLabel("Smart Parking");
-		heroTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		heroTitle.setFont(DefaultTheme.FONT_TITLE_LABEL);
 		heroTitle.setForeground(Color.WHITE);
 		heroPanel.add(heroTitle);
 
 		heroPanel.add(Box.createVerticalStrut(10));
 
 		JLabel heroSubtitle = new JLabel("Gérez vos stationnements avec fluidité.");
-		heroSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		heroSubtitle.setForeground(new Color(222, 226, 230));
+		heroSubtitle.setFont(DefaultTheme.FONT_BODY);
+		heroSubtitle.setForeground(DefaultTheme.BORDER_BUTTON);
 		heroPanel.add(heroSubtitle);
 
 		heroPanel.add(Box.createVerticalGlue());
 
 		JLabel heroHint = new JLabel("Vos parkings, vos réservations, en un seul endroit.");
-		heroHint.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		heroHint.setFont(DefaultTheme.FONT_HERO_HINT);
 		heroHint.setForeground(new Color(173, 181, 189));
 		heroPanel.add(heroHint);
 
@@ -75,31 +76,30 @@ public class LoginPage extends JPanel {
 		card.add(formPanel, BorderLayout.CENTER);
 
 		JLabel title = new JLabel("Connexion");
-		title.setFont(new Font("Segoe UI", Font.BOLD, 26));
-		title.setForeground(new Color(33, 37, 41));
+		title.setFont(DefaultTheme.FONT_TITLE);
+		title.setForeground(DefaultTheme.TEXT_COLOR);
 		title.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(title);
 
 		formPanel.add(Box.createVerticalStrut(6));
 
 		JLabel subtitle = new JLabel("Accédez à votre espace de gestion de stationnement.");
-		subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		subtitle.setForeground(new Color(108, 117, 125));
+		subtitle.setFont(DefaultTheme.FONT_BODY);
+		subtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 		subtitle.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(subtitle);
 
 		formPanel.add(Box.createVerticalStrut(28));
 
-
-		formPanel.add(saisieLogin);
-		formPanel.add(saisieMdp);
+		formPanel.add(this.saisieLogin);
+		formPanel.add(this.saisieMdp);
 
 		formPanel.add(Box.createVerticalStrut(24));
 
 		this.btnValider = new JButton("Se connecter");
 		this.btnValider.setBackground(new Color(52, 58, 64));
 		this.btnValider.setForeground(Color.WHITE);
-		this.btnValider.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		this.btnValider.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnValider.setFocusPainted(false);
 		this.btnValider.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 20));
 		this.btnValider.setAlignmentX(LEFT_ALIGNMENT);
@@ -110,24 +110,25 @@ public class LoginPage extends JPanel {
 		JButton btnInscription = new JButton("Creer un compte");
 		btnInscription.setBackground(Color.WHITE);
 		btnInscription.setForeground(new Color(52, 58, 64));
-		btnInscription.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		btnInscription.setFont(DefaultTheme.FONT_LABEL_SMALL);
 		btnInscription.setFocusPainted(false);
 		btnInscription.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(222, 226, 230), 1),
+				new LineBorder(DefaultTheme.BORDER_BUTTON, 1),
 				new EmptyBorder(10, 14, 10, 14)));
 		btnInscription.setAlignmentX(LEFT_ALIGNMENT);
-		btnInscription.addActionListener(e -> NavigationFrame.getInstance().showPage("Inscription", InscriptionPage::new, "Creer un compte"));
+		btnInscription.addActionListener(
+				e -> NavigationFrame.getInstance().showPage("Inscription", InscriptionPage::new, "Creer un compte"));
 		formPanel.add(btnInscription);
 
 		formPanel.add(Box.createVerticalGlue());
 
 		ControleurLoginPage controleur = new ControleurLoginPage(this);
 		this.btnValider.addActionListener(controleur);
-		saisieMdp.getField().addActionListener(controleur);
+		this.saisieMdp.getField().addActionListener(controleur);
 	}
-	
+
 	public javax.swing.JButton getBtnConnexion() {
-	    return btnValider; // ou le nom de ta variable bouton
+		return this.btnValider; // ou le nom de ta variable bouton
 	}
 
 	public String getLogin() {

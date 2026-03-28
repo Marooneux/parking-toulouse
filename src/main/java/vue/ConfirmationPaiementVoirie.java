@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -15,8 +14,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
+import ui.theme.DefaultTheme;
+
 public class ConfirmationPaiementVoirie extends JPanel {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -1044509068457353369L;
 	private ZoneVoirie zone;
 	private String immatriculation;
 	private int duree;
@@ -32,19 +34,19 @@ public class ConfirmationPaiementVoirie extends JPanel {
 		this.prix = prix;
 		this.moyenPaiement = moyenPaiement;
 
-		this.setBackground(new Color(255, 255, 255));
+		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCenterContainer = new JPanel();
-		panelCenterContainer.setBackground(new Color(255, 255, 255));
+		panelCenterContainer.setBackground(Color.WHITE);
 		panelCenterContainer.setBorder(new EmptyBorder(40, 100, 40, 100));
 		this.add(panelCenterContainer, BorderLayout.CENTER);
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-		panelCard.setBackground(new Color(255, 255, 255));
+		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
 
@@ -56,37 +58,37 @@ public class ConfirmationPaiementVoirie extends JPanel {
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(new Font("Segoe UI Symbol", Font.BOLD, 50));
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_BIG);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
 		JLabel lblTitre = new JLabel("Paiement Validé !");
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		panelInnerContent.add(lblTitre);
 
 		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMontant.setForeground(new Color(33, 37, 41));
-		lblMontant.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblMontant.setForeground(DefaultTheme.TEXT_COLOR);
+		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
 		panelInnerContent.add(lblMontant);
 
 		JPanel panelFooter = new JPanel();
-		panelFooter.setBackground(new Color(255, 255, 255));
+		panelFooter.setBackground(Color.WHITE);
 		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
 		this.add(panelFooter, BorderLayout.SOUTH);
 
-		btnTerminer = new JButton("Voir le e-ticket");
-		btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTerminer.setForeground(Color.WHITE);
-		btnTerminer.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnTerminer.setBackground(new Color(0, 123, 255));
-		btnTerminer.setFocusPainted(false);
-		btnTerminer.setBorderPainted(false);
-		btnTerminer.setPreferredSize(new Dimension(250, 45));
+		this.btnTerminer = new JButton("Voir le e-ticket");
+		this.btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.btnTerminer.setForeground(Color.WHITE);
+		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnTerminer.setBackground(new Color(0, 123, 255));
+		this.btnTerminer.setFocusPainted(false);
+		this.btnTerminer.setBorderPainted(false);
+		this.btnTerminer.setPreferredSize(new Dimension(250, 45));
 
-		panelFooter.add(btnTerminer);
+		panelFooter.add(this.btnTerminer);
 	}
 
 	public JButton getBtnTerminer() {

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
@@ -23,11 +22,12 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import modele.ReservationParking;
+import ui.theme.DefaultTheme;
 
 public class PaiementParking extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private static final Color BACKGROUND_COLOR = new Color(248, 249, 250);
+	private static final long serialVersionUID = -1573551118360617932L;
+	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
@@ -52,7 +52,7 @@ public class PaiementParking extends JPanel {
 		header.setBackground(BACKGROUND_COLOR);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+		icon.setFont(DefaultTheme.FONT_ICON);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -60,12 +60,12 @@ public class PaiementParking extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Paiement");
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblTitre.setForeground(new Color(33, 37, 41));
+		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		titreZone.add(lblSousTitre);
 
@@ -87,10 +87,10 @@ public class PaiementParking extends JPanel {
 
 		JPanel brands = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
 		brands.setOpaque(false);
-		brands.add(createBadge("VISA", new Color(0, 86, 179), new Color(229, 239, 255)));
-		brands.add(createBadge("Mastercard", new Color(204, 0, 0), new Color(255, 235, 235)));
-		brands.add(createBadge("Amex", new Color(0, 102, 153), new Color(231, 243, 248)));
-		brands.add(createBadge("Discover", new Color(255, 102, 0), new Color(255, 242, 230)));
+		brands.add(this.createBadge("VISA", new Color(0, 86, 179), new Color(229, 239, 255)));
+		brands.add(this.createBadge("Mastercard", new Color(204, 0, 0), new Color(255, 235, 235)));
+		brands.add(this.createBadge("Amex", new Color(0, 102, 153), new Color(231, 243, 248)));
+		brands.add(this.createBadge("Discover", new Color(255, 102, 0), new Color(255, 242, 230)));
 		brands.setAlignmentX(Component.LEFT_ALIGNMENT);
 		card.add(brands);
 		card.add(Box.createVerticalStrut(8));
@@ -98,13 +98,13 @@ public class PaiementParking extends JPanel {
 		JPanel montantRow = new JPanel(new BorderLayout(8, 0));
 		montantRow.setOpaque(false);
 		JLabel lblMontant = new JLabel("Montant");
-		lblMontant.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblMontant.setFont(DefaultTheme.FONT_LABEL_SMALL);
 		lblMontant.setForeground(new Color(90, 90, 90));
-		JButton pillMontant = new JButton(String.format("%.2f €", prix));
+		JButton pillMontant = new JButton(String.format("%.2f €", this.prix));
 		pillMontant.setEnabled(false);
 		pillMontant.setBackground(new Color(243, 246, 249));
 		pillMontant.setForeground(new Color(40, 40, 40));
-		pillMontant.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		pillMontant.setFont(DefaultTheme.FONT_BUTTON);
 		pillMontant.setBorder(BorderFactory.createEmptyBorder(10, 14, 10, 14));
 		montantRow.add(lblMontant, BorderLayout.WEST);
 		montantRow.add(pillMontant, BorderLayout.EAST);
@@ -113,26 +113,30 @@ public class PaiementParking extends JPanel {
 		card.add(Box.createVerticalStrut(12));
 
 		this.textFieldNom = new TemplateSaisie("Nom sur la carte", "Nom Prenom", false, false);
-		((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(40));
-		styleField(this.textFieldNom.getField());
+		((AbstractDocument) this.textFieldNom.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(40));
+		this.styleField(this.textFieldNom.getField());
 		card.add(this.creerBlocChamps("Nom sur la carte", this.textFieldNom));
 
 		this.textFieldNumCarte = new TemplateSaisie("Numero de carte", "1234 5678 9012 3456", false, false);
-		((AbstractDocument) this.textFieldNumCarte.getField().getDocument()).setDocumentFilter(new FiltreUniquementChiffres(16));
-		styleField(this.textFieldNumCarte.getField());
+		((AbstractDocument) this.textFieldNumCarte.getField().getDocument())
+				.setDocumentFilter(new FiltreUniquementChiffres(16));
+		this.styleField(this.textFieldNumCarte.getField());
 		card.add(this.creerBlocChamps("Numero de carte", this.textFieldNumCarte));
 
 		JPanel row = new JPanel(new GridLayout(1, 2, 12, 0));
 		row.setOpaque(false);
 
 		this.textFieldExpiration = new TemplateSaisie("Expiration", "MM/YY", false, false);
-		((AbstractDocument) this.textFieldExpiration.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(5));
-		styleField(this.textFieldExpiration.getField(), 120);
+		((AbstractDocument) this.textFieldExpiration.getField().getDocument())
+				.setDocumentFilter(new LimiteCaracteresFilter(5));
+		this.styleField(this.textFieldExpiration.getField(), 120);
 		row.add(this.creerBlocChamps("Expiration", this.textFieldExpiration));
 
 		this.textFieldCVC = new TemplateSaisie("CVC", "123", false, false);
-		((AbstractDocument) this.textFieldCVC.getField().getDocument()).setDocumentFilter(new FiltreUniquementChiffres(3));
-		styleField(this.textFieldCVC.getField(), 120);
+		((AbstractDocument) this.textFieldCVC.getField().getDocument())
+				.setDocumentFilter(new FiltreUniquementChiffres(3));
+		this.styleField(this.textFieldCVC.getField(), 120);
 		row.add(this.creerBlocChamps("CVC", this.textFieldCVC));
 
 		row.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -141,13 +145,13 @@ public class PaiementParking extends JPanel {
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelBtn.setOpaque(false);
-		btnPayer = new JButton(String.format("Payer - %.2f €", prix));
-		btnPayer.setBackground(PRIMARY_COLOR);
-		btnPayer.setForeground(Color.WHITE);
-		btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnPayer.setFocusPainted(false);
-		btnPayer.setPreferredSize(new Dimension(200, 44));
-		panelBtn.add(btnPayer);
+		this.btnPayer = new JButton(String.format("Payer - %.2f €", this.prix));
+		this.btnPayer.setBackground(PRIMARY_COLOR);
+		this.btnPayer.setForeground(Color.WHITE);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFocusPainted(false);
+		this.btnPayer.setPreferredSize(new Dimension(200, 44));
+		panelBtn.add(this.btnPayer);
 		panelBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
 		card.add(panelBtn);
 
@@ -159,7 +163,7 @@ public class PaiementParking extends JPanel {
 		tag.setOpaque(true);
 		tag.setBackground(bg);
 		tag.setForeground(fg);
-		tag.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		tag.setFont(DefaultTheme.FONT_BOLD);
 		tag.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(new Color(220, 220, 220)),
 				new EmptyBorder(6, 10, 6, 10)));
@@ -172,13 +176,13 @@ public class PaiementParking extends JPanel {
 		bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
 
 		JLabel lbl = new JLabel(labelText);
-		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lbl.setFont(DefaultTheme.FONT_BODY);
 		lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		champPanel.setOpaque(false);
 
-		textField.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		textField.getField().setFont(DefaultTheme.FONT_BODY);
 		textField.getField().setForeground(new Color(60, 60, 60));
 
 		champPanel.add(textField);
@@ -190,7 +194,7 @@ public class PaiementParking extends JPanel {
 	}
 
 	private void styleField(JTextField field) {
-		styleField(field, 280);
+		this.styleField(field, 280);
 	}
 
 	private void styleField(JTextField field, int prefWidth) {

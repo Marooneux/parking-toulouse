@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 import javax.swing.JTextField;
 
 public class PlaceholderTextField extends JTextField {
+
+	private static final long serialVersionUID = -8021586149922254914L;
 	private String placeholder;
 
 	public PlaceholderTextField(String placeholder) {
