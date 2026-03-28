@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import controleur.ControleurChoixZone;
 import controleur.ControleurSaisirDureeStationnement;
 import modele.ZoneVoirie;
+import ui.theme.DefaultTheme;
 
 public class ChoixZone extends JPanel {
 	
@@ -38,7 +39,7 @@ public class ChoixZone extends JPanel {
 		header.setBorder(new javax.swing.border.MatteBorder(0, 0, 1, 0, new Color(230, 230, 230)));
 
 		JLabel lblIcon = new JLabel("\uD83D\uDE97");
-		lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
+		lblIcon.setFont(DefaultTheme.FONT_ICON_BIG);
 		header.add(lblIcon);
 
 		JPanel texte = new JPanel();
@@ -46,13 +47,13 @@ public class ChoixZone extends JPanel {
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel(
 				"Sélectionnez votre zone de stationnement. La sélection de la mauvaise zone entrainera une amende.");
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		lblSousTitre.setForeground(Color.GRAY);
 		texte.add(lblSousTitre);
 
@@ -128,7 +129,7 @@ public class ChoixZone extends JPanel {
 				g2.setColor(themeColor);
 				g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 				g2.setColor(Color.WHITE);
-				g2.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				g2.setFont(DefaultTheme.FONT_CARD_LABEL);
 				g2.drawString("P", 14, 27);
 			}
 		};
@@ -137,7 +138,7 @@ public class ChoixZone extends JPanel {
 		card.add(iconCircle);
 
 		JLabel lblTitre = new JLabel("Zone " + zone.getCouleur());
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_ALT);
 		lblTitre.setForeground(new Color(33, 33, 33));
 		lblTitre.setBounds(25, 80, 250, 25);
 		card.add(lblTitre);
@@ -148,19 +149,19 @@ public class ChoixZone extends JPanel {
 		card.add(iconClock);
 
 		JLabel lblHorairesTitle = new JLabel("Horaires payants");
-		lblHorairesTitle.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblHorairesTitle.setFont(DefaultTheme.FONT_BOLD);
 		lblHorairesTitle.setForeground(Color.GRAY);
 		lblHorairesTitle.setBounds(50, 120, 120, 15);
 		card.add(lblHorairesTitle);
 
 		JLabel lblJoursVal = new JLabel("Lundi au samedi");
-		lblJoursVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblJoursVal.setFont(DefaultTheme.FONT_BODY);
 		lblJoursVal.setForeground(new Color(50, 50, 50));
 		lblJoursVal.setBounds(50, 138, 150, 20);
 		card.add(lblJoursVal);
 
 		JLabel lblHorairesVal = new JLabel(zone.getHorairesAffiches());
-		lblHorairesVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblHorairesVal.setFont(DefaultTheme.FONT_BODY);
 		lblHorairesVal.setForeground(new Color(50, 50, 50));
 		lblHorairesVal.setBounds(50, 158, 220, 20);
 		card.add(lblHorairesVal);
@@ -171,13 +172,13 @@ public class ChoixZone extends JPanel {
 		card.add(iconSand);
 
 		JLabel lblDureeTitle = new JLabel("Durée max");
-		lblDureeTitle.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblDureeTitle.setFont(DefaultTheme.FONT_BOLD);
 		lblDureeTitle.setForeground(Color.GRAY);
 		lblDureeTitle.setBounds(50, 190, 120, 15);
 		card.add(lblDureeTitle);
 
 		JLabel lblDureeVal = new JLabel(zone.minsToHeures());
-		lblDureeVal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblDureeVal.setFont(DefaultTheme.FONT_BODY);
 		lblDureeVal.setForeground(new Color(50, 50, 50));
 		lblDureeVal.setBounds(50, 208, 150, 20);
 		card.add(lblDureeVal);
@@ -188,13 +189,13 @@ public class ChoixZone extends JPanel {
 		card.add(separator);
 
 		JLabel lblTarifTitle = new JLabel("Tarif");
-		lblTarifTitle.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblTarifTitle.setFont(DefaultTheme.FONT_BUTTON_ALT);
 		lblTarifTitle.setForeground(Color.GRAY);
 		lblTarifTitle.setBounds(25, 270, 100, 20);
 		card.add(lblTarifTitle);
 
 		JLabel lblPrix = new JLabel(String.valueOf(zone.getTarifHoraire()) + " €/h");
-		lblPrix.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblPrix.setFont(DefaultTheme.FONT_TITLE_ALT);
 		lblPrix.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrix.setBounds(175, 270, 100, 20);
 		card.add(lblPrix);

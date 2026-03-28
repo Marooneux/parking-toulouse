@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ReservationParking;
+import ui.theme.DefaultTheme;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -12,13 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ChoixMoyenPaiementParking extends JPanel {
-
-    private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
-    private final Color CARD_COLOR = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(33, 37, 41);
-    private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
-    private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private final Color BUTTON_TEXT_COLOR = Color.WHITE;
     
     private JButton btnCarte;
     private JButton btnVirement;
@@ -31,13 +25,13 @@ public class ChoixMoyenPaiementParking extends JPanel {
     	this.prix = prix;
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(BACKGROUND_COLOR);
+        mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30));
         headerPanel.setOpaque(false);
         JLabel titleLabel = new JLabel("Choisissez votre moyen de paiement");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        titleLabel.setForeground(TEXT_COLOR);
+        titleLabel.setFont(DefaultTheme.FONT_TITLE);
+        titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
         headerPanel.add(titleLabel);
 
         JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 40, 0));
@@ -74,16 +68,16 @@ public class ChoixMoyenPaiementParking extends JPanel {
 
     private JButton buildPaymentButton(String buttonText) {
         JButton btn = new JButton(buttonText);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setBackground(BUTTON_COLOR);
-        btn.setForeground(BUTTON_TEXT_COLOR);
+        btn.setFont(DefaultTheme.FONT_BUTTON);
+        btn.setBackground(DefaultTheme.BUTTON_COLOR);
+        btn.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
         btn.setFocusPainted(false);
         btn.setBorder(new EmptyBorder(12, 25, 12, 25));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btn.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) { btn.setBackground(BUTTON_COLOR.darker()); }
-            public void mouseExited(MouseEvent e) { btn.setBackground(BUTTON_COLOR); }
+            public void mouseEntered(MouseEvent e) { btn.setBackground(DefaultTheme.BUTTON_COLOR.darker()); }
+            public void mouseExited(MouseEvent e) { btn.setBackground(DefaultTheme.BUTTON_COLOR); }
         });
         return btn;
     }
@@ -91,7 +85,7 @@ public class ChoixMoyenPaiementParking extends JPanel {
     private JPanel createCard(String title, String subtitle, JButton btn, Icon icon) {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
-        card.setBackground(CARD_COLOR);
+        card.setBackground(DefaultTheme.BACKGROUND_CARD);
         card.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(220, 220, 220), 1),
                 new EmptyBorder(30, 30, 30, 30)
@@ -105,12 +99,12 @@ public class ChoixMoyenPaiementParking extends JPanel {
         JLabel lblIcon = new JLabel(icon);
         
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setForeground(TEXT_COLOR);
+        lblTitle.setFont(DefaultTheme.FONT_CARD_LABEL);
+        lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
         JLabel lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblSubtitle.setForeground(SUBTEXT_COLOR);
+        lblSubtitle.setFont(DefaultTheme.FONT_BODY);
+        lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
         card.add(lblIcon, gbc);
         card.add(lblTitle, gbc);
@@ -143,7 +137,7 @@ public class ChoixMoyenPaiementParking extends JPanel {
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
+            g2.setColor(DefaultTheme.TEXT_COLOR);
             g2.fillRoundRect(x, y + 10, 50, 35, 8, 8);
             g2.setColor(Color.WHITE);
             g2.fillRect(x, y + 18, 50, 6);
@@ -158,7 +152,7 @@ public class ChoixMoyenPaiementParking extends JPanel {
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
+            g2.setColor(DefaultTheme.TEXT_COLOR);
             int[] xPoints = {x + 25, x, x + 50};
             int[] yPoints = {y, y + 15, y + 15};
             g2.fillPolygon(xPoints, yPoints, 3);

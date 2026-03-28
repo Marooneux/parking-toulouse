@@ -3,7 +3,7 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import modele.Parking;
+import ui.theme.DefaultTheme;
 import modele.Adresse; 
 
 public class ModifierParking extends JPanel {
@@ -47,7 +48,7 @@ public class ModifierParking extends JPanel {
         setPreferredSize(new Dimension(500, 600)); 
 
         JLabel title = new JLabel("Modification du parking");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setFont(DefaultTheme.FONT_TITLE_ALT);
         add(title, BorderLayout.NORTH);
 
         JPanel form = new JPanel();

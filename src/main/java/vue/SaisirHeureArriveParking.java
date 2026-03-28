@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,6 +23,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import modele.Parking;
+import ui.theme.DefaultTheme;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
 
 public class SaisirHeureArriveParking extends JPanel {
@@ -49,7 +49,7 @@ public class SaisirHeureArriveParking extends JPanel {
         header.setBackground(new Color(250, 250, 250));
 
         JLabel lblIcon = new JLabel("\uD83C\uDFE2");
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
+        lblIcon.setFont(DefaultTheme.FONT_ICON_ALT);
         header.add(lblIcon);
 
         JPanel texte = new JPanel();
@@ -57,12 +57,12 @@ public class SaisirHeureArriveParking extends JPanel {
         texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
         JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
         lblTitre.setForeground(new Color(40, 40, 40));
         texte.add(lblTitre);
 
         JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
-        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
         lblSousTitre.setForeground(new Color(100, 100, 100));
         texte.add(lblSousTitre);
 
@@ -82,7 +82,7 @@ public class SaisirHeureArriveParking extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(250, 250, 250));
 
-        this.btnConfirmer.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        this.btnConfirmer.setFont(DefaultTheme.FONT_TITLE_SMALL);
         this.btnConfirmer.setBackground(new Color(0, 122, 255));
         this.btnConfirmer.setForeground(Color.WHITE);
         this.btnConfirmer.setFocusPainted(false);
@@ -102,12 +102,12 @@ public class SaisirHeureArriveParking extends JPanel {
         p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
         JLabel lblZone = new JLabel(this.parking.getNom());
-        lblZone.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        lblZone.setFont(DefaultTheme.FONT_LABEL);
         lblZone.setForeground(new Color(50, 50, 50));
         p.add(lblZone);
 
         JLabel lblHauteur = new JLabel("Hauteur : " + this.parking.getHauteurMax() + "m");
-        lblHauteur.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        lblHauteur.setFont(DefaultTheme.FONT_LABEL);
         lblHauteur.setForeground(new Color(50, 50, 50));
         p.add(lblHauteur);
 
@@ -122,7 +122,7 @@ public class SaisirHeureArriveParking extends JPanel {
 
         JLabel lblInfoVehicule = new JLabel(
                 "Entrez la plaque d'immatriculation de votre véhicule avec le format suivant");
-        lblInfoVehicule.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        lblInfoVehicule.setFont(DefaultTheme.FONT_LABEL);
         lblInfoVehicule.setForeground(new Color(50, 50, 50));
         p.add(lblInfoVehicule);
 
@@ -133,7 +133,7 @@ public class SaisirHeureArriveParking extends JPanel {
 
         JLabel lblInfoImatricule = new JLabel(
                 "Vous serez susceptible de recevoir une amende si la plaque indiquée n'est pas la bonne");
-        lblInfoImatricule.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblInfoImatricule.setFont(DefaultTheme.FONT_HERO_HINT);
         lblInfoImatricule.setForeground(new Color(120, 120, 120));
         lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
         p.add(lblInfoImatricule);
@@ -148,7 +148,7 @@ public class SaisirHeureArriveParking extends JPanel {
         p.setBorder(new EmptyBorder(15, 15, 15, 15));
 
         JLabel lblTitreHeureArrive = new JLabel("Saisissez votre heure d'arrivée (format HH:mm)");
-        lblTitreHeureArrive.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        lblTitreHeureArrive.setFont(DefaultTheme.FONT_LABEL);
         lblTitreHeureArrive.setForeground(new Color(50, 50, 50));
         p.add(lblTitreHeureArrive);
 
@@ -163,7 +163,7 @@ public class SaisirHeureArriveParking extends JPanel {
         heurePanel.add(this.textFieldHeure);
 
         this.btnMaintenant = new JButton("Maintenant");
-        this.btnMaintenant.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        this.btnMaintenant.setFont(DefaultTheme.FONT_HERO_HINT);
         this.btnMaintenant.setBackground(new Color(220, 220, 220));
         this.btnMaintenant.setFocusPainted(false);
         this.btnMaintenant.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -185,7 +185,7 @@ public class SaisirHeureArriveParking extends JPanel {
         header.setBackground(Color.WHITE);
 
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblTitle.setFont(DefaultTheme.FONT_BUTTON);
         lblTitle.setForeground(new Color(70, 70, 70));
         header.add(lblTitle);
 

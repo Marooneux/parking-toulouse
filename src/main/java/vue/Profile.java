@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurProfile;
 import modele.Utilisateur;
+import ui.theme.DefaultTheme;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -48,7 +49,7 @@ public class Profile extends JPanel {
 
     private void initialize() {
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(248, 249, 250));
+        this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         layeredPane = new JLayeredPane();
         this.add(layeredPane, BorderLayout.CENTER);
@@ -57,7 +58,7 @@ public class Profile extends JPanel {
         mainContentPanel = new JPanel();
         cardLayout = new CardLayout();
         mainContentPanel.setLayout(cardLayout);
-        mainContentPanel.setBackground(new Color(248, 249, 250));
+        mainContentPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         // Ajout des "Cartes" (Vues)
         mainContentPanel.add(createInfosView(), "INFOS");
@@ -122,19 +123,19 @@ public class Profile extends JPanel {
     public void toggleSidebarState() {
         boolean isVisible = sidebarPanel.isVisible();
         sidebarPanel.setVisible(!isVisible);
-        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : new Color(33, 37, 41));
+        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.TEXT_COLOR);
         updateLayoutBounds();
     }
 
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBackground(new Color(33, 37, 41));
+        sidebar.setBackground(DefaultTheme.TEXT_COLOR);
         sidebar.setBorder(new EmptyBorder(60, 10, 20, 10));
 
         JLabel lblMenu = new JLabel("MON COMPTE");
         lblMenu.setForeground(Color.LIGHT_GRAY);
-        lblMenu.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblMenu.setFont(DefaultTheme.FONT_BUTTON);
         lblMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
         lblMenu.setBorder(new EmptyBorder(0, 10, 20, 0));
         sidebar.add(lblMenu);
@@ -164,7 +165,7 @@ public class Profile extends JPanel {
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        btn.setFont(DefaultTheme.FONT_BODY);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return btn;
     }
@@ -172,18 +173,18 @@ public class Profile extends JPanel {
     // --- VUE 1 : INFOS (Lecture Seule) ---
     private JPanel createInfosView() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(248, 249, 250));
+        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         // Header
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        header.setBackground(new Color(248, 249, 250));
+        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
         header.setBorder(new EmptyBorder(40, 50, 20, 50));
         
         JLabel icon = new JLabel("\uD83D\uDC64 "); // Icone User
-        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        icon.setFont(DefaultTheme.FONT_ICON);
         JLabel title = new JLabel("Mes Informations");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        title.setForeground(new Color(33, 37, 41));
+        title.setFont(DefaultTheme.FONT_TITLE);
+        title.setForeground(DefaultTheme.TEXT_COLOR);
         
         header.add(icon);
         header.add(title);
@@ -205,7 +206,7 @@ public class Profile extends JPanel {
         
         // Wrapper pour centrer un peu le contenu
         JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setBackground(new Color(248, 249, 250));
+        wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
         wrapper.setBorder(new EmptyBorder(0, 50, 50, 50));
         wrapper.add(content, BorderLayout.NORTH);
         
@@ -215,11 +216,11 @@ public class Profile extends JPanel {
         btnModifierInfos = new JButton("Modifier mes informations");
         btnModifierInfos.setBackground(new Color(0, 123, 255));
         btnModifierInfos.setForeground(Color.WHITE);
-        btnModifierInfos.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnModifierInfos.setFont(DefaultTheme.FONT_BUTTON);
         btnModifierInfos.setPreferredSize(new Dimension(220, 40));
         btnModifierInfos.setFocusPainted(false);
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        footer.setBackground(new Color(248, 249, 250));
+        footer.setBackground(DefaultTheme.BACKGROUND_COLOR);
         footer.setBorder(new EmptyBorder(10, 50, 30, 50));
         footer.add(btnModifierInfos);
         panel.add(footer, BorderLayout.SOUTH);
@@ -233,11 +234,11 @@ public class Profile extends JPanel {
         row.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(230,230,230)));
         
         JLabel l = new JLabel(label);
-        l.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        l.setFont(DefaultTheme.FONT_BUTTON);
         l.setForeground(Color.GRAY);
         l.setPreferredSize(new Dimension(100, 40));
         
-        valueLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        valueLabel.setFont(DefaultTheme.FONT_LABEL_BIG);
         
         row.add(l, BorderLayout.WEST);
         row.add(valueLabel, BorderLayout.CENTER);
@@ -247,14 +248,14 @@ public class Profile extends JPanel {
     // --- VUE 2 : EDITION (Formulaire) ---
     private JPanel createEditionView() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(248, 249, 250));
+        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         // Header
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        header.setBackground(new Color(248, 249, 250));
+        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
         header.setBorder(new EmptyBorder(40, 50, 20, 50));
         JLabel title = new JLabel("Modifier le profil");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        title.setFont(DefaultTheme.FONT_HERO_TITLE);
         header.add(title);
         panel.add(header, BorderLayout.NORTH);
 
@@ -274,14 +275,14 @@ public class Profile extends JPanel {
         addFormField(form, "Mot de passe :", txtEditMdp);
 
         JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setBackground(new Color(248, 249, 250));
+        wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
         wrapper.setBorder(new EmptyBorder(0, 50, 0, 50));
         wrapper.add(form, BorderLayout.NORTH);
         panel.add(new JScrollPane(wrapper), BorderLayout.CENTER);
 
         // Actions
         btnAnnulerEdit = new JButton("Annuler");
-        btnAnnulerEdit.setBackground(new Color(108, 117, 125));
+        btnAnnulerEdit.setBackground(DefaultTheme.SUBTEXT_COLOR);
         btnAnnulerEdit.setForeground(Color.WHITE);
         
         btnEnregistrer = new JButton("Enregistrer");
@@ -289,7 +290,7 @@ public class Profile extends JPanel {
         btnEnregistrer.setForeground(Color.WHITE);
         
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        footer.setBackground(new Color(248, 249, 250));
+        footer.setBackground(DefaultTheme.BACKGROUND_COLOR);
         footer.setBorder(new EmptyBorder(20, 50, 30, 50));
         footer.add(btnAnnulerEdit);
         footer.add(btnEnregistrer);
@@ -300,7 +301,7 @@ public class Profile extends JPanel {
     
     private void addFormField(JPanel p, String label, JComponent field) {
         JLabel l = new JLabel(label);
-        l.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        l.setFont(DefaultTheme.FONT_BODY);
         p.add(l);
         p.add(field);
     }
@@ -308,13 +309,13 @@ public class Profile extends JPanel {
     // --- VUE 3 : HISTORIQUE ---
     private JPanel createHistoriqueView() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(248, 249, 250));
+        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
         
         JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        header.setBackground(new Color(248, 249, 250));
+        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
         header.setBorder(new EmptyBorder(40, 50, 20, 50));
         JLabel title = new JLabel("Historique des activités");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        title.setFont(DefaultTheme.FONT_HERO_TITLE);
         header.add(title);
         panel.add(header, BorderLayout.NORTH);
 
@@ -354,10 +355,10 @@ public class Profile extends JPanel {
     
     private void createTopRightButton() {
         btnRetour = new JButton("Menu principal");
-        btnRetour.setBackground(new Color(0, 0, 0));
+        btnRetour.setBackground(Color.BLACK);
         btnRetour.setForeground(Color.WHITE);
         btnRetour.setFocusPainted(false);
-        btnRetour.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnRetour.setFont(DefaultTheme.FONT_BUTTON);
         btnRetour.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         layeredPane.add(btnRetour, JLayeredPane.MODAL_LAYER);

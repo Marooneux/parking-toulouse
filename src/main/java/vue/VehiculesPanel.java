@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import modele.Vehicule;
 import modele.Vehicule.TypeVehicule;
+import ui.theme.DefaultTheme;
 
 public class VehiculesPanel extends JPanel {
 
@@ -52,7 +52,7 @@ public class VehiculesPanel extends JPanel {
 
         setLayout(new BorderLayout(15, 15));
         setBorder(new EmptyBorder(20, 20, 20, 20));
-        setBackground(new Color(248, 249, 250));
+        setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         add(buildHeader(), BorderLayout.NORTH);
         add(buildTablePanel(), BorderLayout.CENTER);
@@ -61,14 +61,14 @@ public class VehiculesPanel extends JPanel {
 
     private JPanel buildHeader() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(new Color(248, 249, 250));
+        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
         JLabel title = new JLabel("Mes véhicules");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        title.setForeground(new Color(33, 37, 41));
+        title.setFont(DefaultTheme.FONT_HERO_TITLE);
+        title.setForeground(DefaultTheme.TEXT_COLOR);
 
         JLabel subtitle = new JLabel("Ajoutez vos plaques pour les réutiliser rapidement");
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        subtitle.setFont(DefaultTheme.FONT_BODY);
         subtitle.setForeground(Color.GRAY);
 
         JPanel texts = new JPanel();

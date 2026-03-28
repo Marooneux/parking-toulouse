@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+
 import java.awt.GridLayout;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,11 +22,12 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import modele.ReservationParking;
+import ui.theme.DefaultTheme;
 
 public class PaiementVirementParking extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static final Color BACKGROUND_COLOR = new Color(248, 249, 250);
+    private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
     private static final Color BORDER_COLOR = new Color(230, 230, 230);
     private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -49,7 +50,7 @@ public class PaiementVirementParking extends JPanel {
         header.setBackground(BACKGROUND_COLOR);
 
         JLabel icon = new JLabel("💳");
-        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        icon.setFont(DefaultTheme.FONT_ICON);
         header.add(icon);
 
         JPanel titreZone = new JPanel();
@@ -57,12 +58,12 @@ public class PaiementVirementParking extends JPanel {
         titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
         JLabel lblTitre = new JLabel("Virement bancaire");
-        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        lblTitre.setForeground(new Color(33, 37, 41));
+        lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+        lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
         titreZone.add(lblTitre);
 
         JLabel lblSousTitre = new JLabel("Securisez votre reglement");
-        lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSousTitre.setFont(DefaultTheme.FONT_BODY);
         lblSousTitre.setForeground(new Color(100, 100, 100));
         titreZone.add(lblSousTitre);
 
@@ -96,12 +97,12 @@ public class PaiementVirementParking extends JPanel {
         card.setLayout(new GridLayout(0, 1, 12, 12));
 
         this.textFieldNom = new TemplateSaisie("Nom et prenom", "Nom Prenom", false, false);
-        this.textFieldNom.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        this.textFieldNom.getField().setFont(DefaultTheme.FONT_BODY);
         ((AbstractDocument) this.textFieldNom.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(60));
         card.add(creerBlocChamps("Nom et prenom", this.textFieldNom));
 
         this.textFieldIban = new TemplateSaisie("IBAN", "FR76 3000 6000 0112 3456 7890 189", false, false);
-        this.textFieldIban.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        this.textFieldIban.getField().setFont(DefaultTheme.FONT_BODY);
         ((AbstractDocument) this.textFieldIban.getField().getDocument()).setDocumentFilter(new LimiteCaracteresFilter(34));
         card.add(creerBlocChamps("IBAN", this.textFieldIban));
 
@@ -110,7 +111,7 @@ public class PaiementVirementParking extends JPanel {
         btnPayer = new JButton(String.format("Payer - %.2f €", prix));
         btnPayer.setBackground(PRIMARY_COLOR);
         btnPayer.setForeground(Color.WHITE);
-        btnPayer.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
         btnPayer.setFocusPainted(false);
         btnPayer.setPreferredSize(new Dimension(180, 40));
         panelBtn.add(btnPayer);
@@ -125,11 +126,11 @@ public class PaiementVirementParking extends JPanel {
         row.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
         JLabel lbl = new JLabel(label);
-        lbl.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lbl.setFont(DefaultTheme.FONT_BUTTON_ALT);
         lbl.setForeground(new Color(80, 80, 80));
 
         JLabel val = new JLabel(value);
-        val.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        val.setFont(DefaultTheme.FONT_LABEL_SMALL);
         val.setForeground(new Color(40, 40, 40));
         val.setHorizontalAlignment(JLabel.RIGHT);
 
@@ -144,7 +145,7 @@ public class PaiementVirementParking extends JPanel {
         bloc.setLayout(new BoxLayout(bloc, BoxLayout.Y_AXIS));
 
         JLabel lbl = new JLabel(labelText);
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lbl.setFont(DefaultTheme.FONT_BODY);
         lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         textField.getField().setForeground(new Color(120, 120, 120));

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.ZoneVoirie;
+import ui.theme.DefaultTheme;
 import controleur.ControleurTicketVoirie;
 
 public class TicketVoirie extends JPanel {
@@ -46,12 +46,12 @@ public class TicketVoirie extends JPanel {
 		this.nomZone.setForeground(this.couleur); 
 
 
-		this.setBackground(new Color(255, 255, 255));
+		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(new Color(255, 255, 255));
+		panelHeader.setBackground(Color.WHITE);
 		this.add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BorderLayout(20, 0));
 
@@ -66,29 +66,29 @@ public class TicketVoirie extends JPanel {
 		panelTextHeader.setLayout(new GridLayout(2, 1, 0, 0));
 
 		JLabel lblTitre = new JLabel("Récapitulatif de stationnement");
-		lblTitre.setForeground(new Color(33, 37, 41));
-		lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_LABEL);
 		panelTextHeader.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Veuillez conserver ce récapitulatif jusqu'à votre départ");
-		lblSousTitre.setForeground(new Color(108, 117, 125));
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSousTitre.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		panelTextHeader.add(lblSousTitre);
 
 		JPanel panelCenterContainer = new JPanel();
-		panelCenterContainer.setBackground(new Color(255, 255, 255));
+		panelCenterContainer.setBackground(Color.WHITE);
 		panelCenterContainer.setBorder(new EmptyBorder(20, 80, 10, 80));
 		this.add(panelCenterContainer, BorderLayout.CENTER);
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
-		panelCard.setBackground(new Color(255, 255, 255));
+		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelInfoGrid = new JPanel();
-		panelInfoGrid.setBackground(new Color(255, 255, 255));
+		panelInfoGrid.setBackground(Color.WHITE);
 		panelInfoGrid.setBorder(new EmptyBorder(20, 30, 20, 30));
 		panelCard.add(panelInfoGrid, BorderLayout.CENTER);
 		panelInfoGrid.setLayout(new GridLayout(6, 1, 0, 10));
@@ -102,15 +102,15 @@ public class TicketVoirie extends JPanel {
 		this.createInfoRow(panelInfoGrid, "Moyen de paiement :", new JLabel(this.moyenPaiement));
 
 		JPanel panelFooter = new JPanel();
-		panelFooter.setBackground(new Color(255, 255, 255));
+		panelFooter.setBackground(Color.WHITE);
 		panelFooter.setBorder(new EmptyBorder(10, 0, 10, 0));
 		this.add(panelFooter, BorderLayout.SOUTH);
 		panelFooter.setLayout(new GridLayout(2, 1, 0, 10));
 
 		JLabel lblWarning = new JLabel("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");
 		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWarning.setForeground(new Color(33, 37, 41));
-		lblWarning.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblWarning.setForeground(DefaultTheme.TEXT_COLOR);
+		lblWarning.setFont(DefaultTheme.FONT_BUTTON_ALT);
 		panelFooter.add(lblWarning);
 
 		JPanel panelButtonContainer = new JPanel();
@@ -121,7 +121,7 @@ public class TicketVoirie extends JPanel {
 		panelButtonContainer.add(btnPaiement);
 		btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPaiement.setForeground(Color.WHITE);
-		btnPaiement.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		btnPaiement.setFont(DefaultTheme.FONT_TITLE_SMALL);
 		btnPaiement.setBackground(new Color(0, 123, 255));
 		btnPaiement.setFocusPainted(false);
 		btnPaiement.setBorderPainted(false);
@@ -158,10 +158,10 @@ public class TicketVoirie extends JPanel {
 		row.setLayout(new BorderLayout());
 
 		JLabel lblKey = new JLabel(label);
-		lblKey.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lblKey.setFont(DefaultTheme.FONT_LABEL);
 		lblKey.setForeground(new Color(100, 100, 100));
 
-		lblVal.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		lblVal.setFont(DefaultTheme.FONT_TITLE_SMALL);
 		lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		row.add(lblKey, BorderLayout.WEST);
@@ -191,7 +191,7 @@ public class TicketVoirie extends JPanel {
 			
 			g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 			g2.setColor(Color.WHITE);
-			g2.setFont(new Font("Segoe UI", Font.BOLD, 25));
+			g2.setFont(DefaultTheme.FONT_TITLE_2);
 			String texte = "P";
 			FontMetrics metrics = g2.getFontMetrics();
 

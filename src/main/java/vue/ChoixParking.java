@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+
 import java.awt.GridLayout;
 import java.util.function.Consumer;
 
@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import modele.Parking;
+import ui.theme.DefaultTheme;
 
 public class ChoixParking extends JPanel {
 
@@ -40,35 +41,35 @@ public class ChoixParking extends JPanel {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout(0, 0));
-		this.setBackground(new Color(248, 249, 250));
+		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JPanel headerPanel = new JPanel(new BorderLayout());
-		headerPanel.setBackground(new Color(248, 249, 250));
+		headerPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 		headerPanel.setBorder(new EmptyBorder(40, 50, 30, 50));
 
 		JPanel textContainer = new JPanel();
 		textContainer.setLayout(new BoxLayout(textContainer, BoxLayout.Y_AXIS));
-		textContainer.setBackground(new Color(248, 249, 250));
+		textContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JPanel titleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		titleRow.setBackground(new Color(248, 249, 250));
+		titleRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JLabel iconCar = new JLabel("\uD83C\uDD7F\uFE0F");
-		iconCar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+		iconCar.setFont(DefaultTheme.FONT_ICON);
 
 		JLabel lblTitle = new JLabel(" Démarrer le Stationnement");
-		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
-		lblTitle.setForeground(new Color(33, 37, 41));
+		lblTitle.setFont(DefaultTheme.FONT_TITLE);
+		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
 		titleRow.add(iconCar);
 		titleRow.add(lblTitle);
 
 		JPanel subtitleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		subtitleRow.setBackground(new Color(248, 249, 250));
+		subtitleRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		JLabel lblSousTitre = new JLabel("Sélectionnez le parking souhaité.");
-		lblSousTitre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblSousTitre.setForeground(new Color(108, 117, 125));
+		lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
+		lblSousTitre.setForeground(DefaultTheme.SUBTEXT_COLOR);
 		lblSousTitre.setBorder(new EmptyBorder(5, 0, 0, 0));
 
 		subtitleRow.add(lblSousTitre);
@@ -79,13 +80,13 @@ public class ChoixParking extends JPanel {
 		headerPanel.add(textContainer, BorderLayout.WEST);
 
 		JPanel filterContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		filterContainer.setBackground(new Color(248, 249, 250));
+		filterContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		this.txtRecherche = new TemplateSaisie("Recherche", "Rechercher...", false, false);
 		this.txtRecherche.getField().setPreferredSize(new Dimension(200, 42));
-		this.txtRecherche.getField().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		this.txtRecherche.getField().setFont(DefaultTheme.FONT_BODY);
 		this.txtRecherche.getField().setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(206, 212, 218), 1),
+				new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1),
 				new EmptyBorder(5, 10, 5, 10)));
 
 		this.txtRecherche.getField().setToolTipText("Rechercher par nom ou adresse...");
@@ -103,15 +104,15 @@ public class ChoixParking extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		scrollPane.getViewport().setBackground(new Color(248, 249, 250));
+		scrollPane.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
 
 		this.gridPanel = new JPanel();
-		this.gridPanel.setBackground(new Color(248, 249, 250));
+		this.gridPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 		this.gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
 		this.gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
 		JPanel wrapperPanel = new JPanel(new BorderLayout());
-		wrapperPanel.setBackground(new Color(248, 249, 250));
+		wrapperPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 		wrapperPanel.add(this.gridPanel, BorderLayout.NORTH);
 
 		scrollPane.setViewportView(wrapperPanel);
@@ -121,19 +122,19 @@ public class ChoixParking extends JPanel {
 
 	private JButton createFilterButton() {
 		JButton btn = new JButton("Trier par  \u25BC");
-		btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btn.setFont(DefaultTheme.FONT_BUTTON);
 		btn.setPreferredSize(new Dimension(140, 42));
 		btn.setBackground(Color.WHITE);
-		btn.setForeground(new Color(33, 37, 41));
+		btn.setForeground(DefaultTheme.TEXT_COLOR);
 		btn.setFocusPainted(false);
 		btn.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(new Color(206, 212, 218), 1),
+				new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1),
 				new EmptyBorder(10, 20, 10, 20)));
 		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		popupMenu = new JPopupMenu();
 		popupMenu.setBackground(Color.WHITE);
-		popupMenu.setBorder(new LineBorder(new Color(206, 212, 218), 1));
+		popupMenu.setBorder(new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1));
 
 		this.itemAlpha = new JMenuItem("Nom (A-Z)");
 		this.styleMenuItem(this.itemAlpha);
@@ -152,9 +153,9 @@ public class ChoixParking extends JPanel {
 	}
 
 	private void styleMenuItem(JMenuItem item) {
-		item.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		item.setFont(DefaultTheme.FONT_BODY);
 		item.setBackground(Color.WHITE);
-		item.setForeground(new Color(33, 37, 41));
+		item.setForeground(DefaultTheme.TEXT_COLOR);
 		item.setBorder(new EmptyBorder(10, 15, 10, 15));
 	}
 

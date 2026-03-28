@@ -5,20 +5,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurChoixTypeStationnement;
+import ui.theme.DefaultTheme;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ChoixTypeStationnement extends JPanel {
-
-    private final Color BACKGROUND_COLOR = new Color(248, 249, 250);
-    private final Color CARD_COLOR = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(33, 37, 41);
-    private final Color SUBTEXT_COLOR = new Color(108, 117, 125);
-    private final Color BUTTON_COLOR = new Color(13, 110, 253);
-    private final Color BUTTON_TEXT_COLOR = Color.WHITE;
-
+    
     private JButton profileButton;
     private JButton btnParking;
     private JButton btnVoirie;
@@ -33,23 +27,23 @@ public class ChoixTypeStationnement extends JPanel {
 
         public ChoixTypeStationnement(int idUser) {
     		this.setLayout(new BorderLayout());
-    		this.setBackground(BACKGROUND_COLOR);
+    		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
     		JPanel mainPanel = new JPanel(new BorderLayout());
-    		mainPanel.setBackground(BACKGROUND_COLOR);
+    		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
     		JPanel headerPanel = new JPanel(new BorderLayout());
     		headerPanel.setOpaque(false);
     		headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
 
     		JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
-    		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-    		titleLabel.setForeground(TEXT_COLOR);
+    		titleLabel.setFont(DefaultTheme.FONT_TITLE_LABEL);
+    		titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
     		titleLabel.setIcon(new IconP());
         
     		profileButton = new JButton("Mon Profil");
-    		profileButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-    		profileButton.setForeground(TEXT_COLOR);
+    		profileButton.setFont(DefaultTheme.FONT_BUTTON);
+    		profileButton.setForeground(DefaultTheme.TEXT_COLOR);
     		profileButton.setBackground(Color.WHITE);
     		profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
     		profileButton.setFocusPainted(false);
@@ -104,7 +98,7 @@ public class ChoixTypeStationnement extends JPanel {
     private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
-        card.setBackground(CARD_COLOR);
+        card.setBackground(DefaultTheme.BACKGROUND_CARD);
 
         card.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(220, 220, 220), 1),
@@ -117,17 +111,17 @@ public class ChoixTypeStationnement extends JPanel {
         gbc.insets = new Insets(5, 0, 5, 0);
 
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblTitle.setForeground(TEXT_COLOR);
+        lblTitle.setFont(DefaultTheme.FONT_TITLE_ALT);
+        lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
         JLabel lblSubtitle = new JLabel(subtitle);
-        lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblSubtitle.setForeground(SUBTEXT_COLOR);
+        lblSubtitle.setFont(DefaultTheme.FONT_BODY);
+        lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
         JButton btn = new JButton(buttonText);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setBackground(BUTTON_COLOR);
-        btn.setForeground(BUTTON_TEXT_COLOR);
+        btn.setFont(DefaultTheme.FONT_BUTTON);
+        btn.setBackground(DefaultTheme.BUTTON_COLOR);
+        btn.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
         btn.setFocusPainted(false);
         btn.setBorder(new EmptyBorder(10, 20, 10, 20));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -140,11 +134,11 @@ public class ChoixTypeStationnement extends JPanel {
 
         btn.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR.darker());
+                btn.setBackground(DefaultTheme.BUTTON_COLOR.darker());
             }
 
             public void mouseExited(MouseEvent e) {
-                btn.setBackground(BUTTON_COLOR);
+                btn.setBackground(DefaultTheme.BUTTON_COLOR);
             }
         });
 
@@ -202,21 +196,21 @@ public class ChoixTypeStationnement extends JPanel {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("Stationnement en cours");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        title.setForeground(TEXT_COLOR);
+        title.setFont(DefaultTheme.FONT_TITLE_SMALL);
+        title.setForeground(DefaultTheme.TEXT_COLOR);
 
         this.activeTicketDetails = new JLabel(" ");
-        this.activeTicketDetails.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        this.activeTicketDetails.setForeground(SUBTEXT_COLOR);
+        this.activeTicketDetails.setFont(DefaultTheme.FONT_HERO_HINT);
+        this.activeTicketDetails.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
         textPanel.add(title);
         textPanel.add(Box.createVerticalStrut(5));
         textPanel.add(this.activeTicketDetails);
 
         this.btnVoirTicket = new JButton("Voir le ticket");
-        this.btnVoirTicket.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        this.btnVoirTicket.setBackground(BUTTON_COLOR);
-        this.btnVoirTicket.setForeground(BUTTON_TEXT_COLOR);
+        this.btnVoirTicket.setFont(DefaultTheme.FONT_BUTTON_ALT);
+        this.btnVoirTicket.setBackground(DefaultTheme.BUTTON_COLOR);
+        this.btnVoirTicket.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
         this.btnVoirTicket.setFocusPainted(false);
         this.btnVoirTicket.setBorder(new EmptyBorder(8, 15, 8, 15));
         this.btnVoirTicket.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -232,10 +226,10 @@ public class ChoixTypeStationnement extends JPanel {
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
+            g2.setColor(DefaultTheme.TEXT_COLOR);
             g2.setStroke(new BasicStroke(2));
             g2.drawRoundRect(x, y, 30, 30, 10, 10);
-            g2.setFont(new Font("Segoe UI", Font.BOLD, 20));
+            g2.setFont(DefaultTheme.FONT_CARD_LABEL);
             g2.drawString("P", x + 10, y + 23);
         }
 
@@ -251,7 +245,7 @@ public class ChoixTypeStationnement extends JPanel {
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(TEXT_COLOR);
+            g2.setColor(DefaultTheme.TEXT_COLOR);
             
             g2.fillOval(x + 6, y + 2, 12, 12);
             g2.fillArc(x + 2, y + 16, 20, 14, 0, 180);

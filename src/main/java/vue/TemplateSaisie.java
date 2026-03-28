@@ -4,15 +4,13 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import ui.theme.DefaultTheme;
+
 import java.awt.*;
 
 public class TemplateSaisie extends JPanel implements Cloneable {
 
-    private static final Font LABEL_FONT = new Font("Segoe UI", Font.PLAIN, 13);
-    private static final Color LABEL_COLOR = new Color(73, 80, 87);
-    private static final Font FIELD_FONT = new Font("Segoe UI", Font.PLAIN, 14);
-    private static final Color FIELD_BORDER_COLOR = new Color(206, 212, 218);
-    private static final Color FIELD_BG_COLOR = new Color(251, 252, 253);
 
     private final String labelText;
     private final String placeholder;
@@ -55,8 +53,8 @@ public class TemplateSaisie extends JPanel implements Cloneable {
         setAlignmentX(Component.LEFT_ALIGNMENT);
         setOpaque(false);
 
-        label.setFont(LABEL_FONT);
-        label.setForeground(LABEL_COLOR);
+        label.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        label.setForeground(DefaultTheme.LABEL_COLOR);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         label.setVisible(showLabel);
 
@@ -74,12 +72,12 @@ public class TemplateSaisie extends JPanel implements Cloneable {
     }
 
     private void styleField(JTextField field) {
-        field.setFont(FIELD_FONT);
-        field.setBackground(FIELD_BG_COLOR);
+        field.setFont(DefaultTheme.FONT_FIELD);
+        field.setBackground(DefaultTheme.FIELD_BACKGROUND_COLOR);
         field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
         field.setAlignmentX(Component.LEFT_ALIGNMENT);
         field.setBorder(new CompoundBorder(
-                new LineBorder(FIELD_BORDER_COLOR, 1, true),
+                new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1, true),
                 new EmptyBorder(10, 12, 10, 12)
         ));
     }
