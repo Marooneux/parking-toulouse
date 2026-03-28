@@ -405,7 +405,7 @@ public class Statistique extends JPanel {
             // Area gradient
             GradientPaint gp = new GradientPaint(
                     0, pad, new Color(0, 123, 255, 90),
-                    0, h - pad, new Color(0, 123, 255, 10)
+                    0, (float) h - pad, new Color(0, 123, 255, 10)
             );
             g2.setPaint(gp);
 
