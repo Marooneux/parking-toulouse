@@ -3,8 +3,6 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
 import modele.Utilisateur;
 import modele.Utilisateur.Type;
 import modele.dao.MySQLDataSource;
@@ -20,14 +18,6 @@ public class ControleurLoginPage implements ActionListener {
     public ControleurLoginPage(LoginPage vue) {
         this.vue = vue;
         MySQLDataSource.creerAcces();
-        
-        // --- CORRECTION 1 : AJOUT DU LISTENER ---
-        // Sans ça, le clic ne déclenche rien.
-        // Assure-toi que ta vue a bien un getter getBtnConnexion()
-        this.vue.getBtnConnexion().addActionListener(this);
-        
-        // Optionnel : Permet de valider avec "Entrée" dans le champ mot de passe
-        // this.vue.getChampMotDePasse().addActionListener(this); 
     }
 
     @Override
@@ -41,7 +31,6 @@ public class ControleurLoginPage implements ActionListener {
 
         boolean ok = AuthManager.login(utilisateur, mdp);
         if (!ok) {
-            JOptionPane.showMessageDialog(vue, "Utilisateur ou mot de passe invalide");
             this.vue.viderChampMdp();
             return;
         }

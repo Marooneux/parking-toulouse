@@ -14,14 +14,22 @@ public class AuthManager {
 
 	public static boolean login(String email, String mdp) {
 		try {
+			if (email == null || email.isBlank()) {
+				JOptionPane.showMessageDialog(null, "Veuillez saisir un email.");
+				return false;
+			}
 			Utilisateur u = AuthService.authenticate(email, mdp);
 			if (u != null) {
 				currentUser = u;
 				return true;
 			}
+			JOptionPane.showMessageDialog(null, "Utilisateur ou mot de passe invalide.");
 			return false;
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erreur de connexion: " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de données :\n" + e.getMessage());
+			return false;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erreur inattendue :\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
 			return false;
 		}
 	}
