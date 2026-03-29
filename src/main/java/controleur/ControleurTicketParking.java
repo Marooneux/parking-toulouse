@@ -73,7 +73,7 @@ public class ControleurTicketParking implements ActionListener {
 	private void allerAuPaiement() {
 		try {
 			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(vue.getParking(), vue.getHeureArrivee());
-			ChoixMoyenPaiementParking choix = new ChoixMoyenPaiementParking(vue.getReservation(), prix);
+			ChoixMoyenPaiementParking choix = new ChoixMoyenPaiementParking(vue.getReservation());
 			new ControleurChoixMoyenPaiementParking(choix, vue.getReservation());
 			NavigationFrame.getInstance().showPage("parking-choix-paiement", () -> choix, "Choisir le paiement", true);
 		} catch (Exception ex) {

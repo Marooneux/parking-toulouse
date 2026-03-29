@@ -36,9 +36,9 @@ public class ChoixMoyenPaiementParking extends JPanel {
 	private ReservationParking reservation;
 	private double prix;
 
-	public ChoixMoyenPaiementParking(ReservationParking reservation, double prix) {
+	public ChoixMoyenPaiementParking(ReservationParking reservation) {
 		this.reservation = reservation;
-		this.prix = prix;
+		this.prix = reservation.calculerPrixTotal();
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
