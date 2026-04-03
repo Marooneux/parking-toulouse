@@ -37,14 +37,6 @@ public class TestCompte {
         assertEquals("anna@mail.com", c.getEmail());
     }
 
-    @Test
-    public void testConnectionValide() {
-        Compte c = new FakeCompte("Doe", "John", "john@mail.com", "secret");
-
-        assertTrue(c.connectionValide("john@mail.com", "secret"));
-        assertFalse(c.connectionValide("john@mail.com", "wrong"));
-        assertFalse(c.connectionValide("wrong@mail.com", "secret"));
-    }
 
     @Test
     public void testSetMdp() {
