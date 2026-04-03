@@ -1,7 +1,6 @@
 package modele;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -19,7 +18,7 @@ public class StationnementVoirie {
 	public double calculerPrixTotal(int duree) {
 		LocalTime actuel = LocalTime.of(6, 0);
 		if ((actuel.isBefore(this.HorairePayantFin) && actuel.isAfter(this.HorairePayantDebut))
-				|| LocalDate.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
+				|| this.isDimanche()) {
 			return 0;
 		}
 
