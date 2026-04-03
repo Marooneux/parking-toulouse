@@ -13,8 +13,13 @@ import modele.dao.requetes.RequeteInsertAdminParking;
 import vue.NavigationFrame;
 import vue.adminParking.Accueil;
 import vue.adminParking.AjouterParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurAjouterParking {
+	private static final Logger LOGGER = Logger.getLogger(ControleurAjouterParking.class.getName());
+
 
     private AjouterParking vue;
     private DaoParking daoParking;
@@ -62,9 +67,10 @@ public class ControleurAjouterParking {
             parking.setAdresse(adresse);
             
             try {
-                parking.setTarif(Double.parseDouble(vue.getTarif()));
-                parking.setHauteurMax(Double.parseDouble(vue.getHauteur()));
-                parking.setCapacite(Integer.parseInt(vue.getPlacesMax()));
+                parking.setTarif(vue.getTarif());
+                parking.setHauteurMax(vue.getHauteur());
+                parking.setCapacite(vue.getPlacesMax());
+
                 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(vue, "Vérifiez les champs numériques (Tarif, Hauteur, Places).");
@@ -96,7 +102,7 @@ public class ControleurAjouterParking {
             fermer();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ajout : " + ex.getMessage());
         }
     }

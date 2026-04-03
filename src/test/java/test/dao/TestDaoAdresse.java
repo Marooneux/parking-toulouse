@@ -1,6 +1,7 @@
 package test.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -50,7 +51,7 @@ public class TestDaoAdresse {
 	@Test
 	public void testCreateAndFindById() throws SQLException {
 		this.daoAdresse.create(this.adresseTest);
-		assertNotNull(this.adresseTest.getId());
+		assertNotEquals(0, this.adresseTest.getId());
 
 		Adresse a2 = this.daoAdresse.findById(this.adresseTest.getId());
 		assertNotNull(a2);

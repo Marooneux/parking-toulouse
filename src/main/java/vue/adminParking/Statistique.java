@@ -293,7 +293,8 @@ public class Statistique extends JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int w = getWidth(), h = getHeight();
+            int w = getWidth();
+            int h = getHeight();
             int pad = 40;
             int max = values.stream().max(Integer::compare).orElse(1);
 
@@ -313,7 +314,7 @@ public class Statistique extends JPanel {
                 int y = h - pad - bh;
 
                 g2.setPaint(new GradientPaint(x, y, new Color(0, 123, 255),
-                        x, y + bh, new Color(0, 123, 255, 120)));
+                        x, (float) y + bh, new Color(0, 123, 255, 120)));
                 g2.fillRoundRect(x + 4, y, barW - 8, bh, 10, 10);
             }
             
@@ -367,7 +368,8 @@ public class Statistique extends JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int w = getWidth(), h = getHeight();
+            int w = getWidth();
+            int h = getHeight();
             int pad = 40;
 
             double max = values.stream().max(Double::compare).orElse(1.0);
@@ -403,7 +405,7 @@ public class Statistique extends JPanel {
             // Area gradient
             GradientPaint gp = new GradientPaint(
                     0, pad, new Color(0, 123, 255, 90),
-                    0, h - pad, new Color(0, 123, 255, 10)
+                    0, (float) h - pad, new Color(0, 123, 255, 10)
             );
             g2.setPaint(gp);
 

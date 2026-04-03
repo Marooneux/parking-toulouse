@@ -33,8 +33,13 @@ import vue.Profile;
 import vue.HistoriquePanel;
 import vue.TicketParking;
 import utils.AuthManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurChoixTypeStationnement implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixTypeStationnement.class.getName());
+
 
     public enum Etat {
         PARKING, VOIRIE
@@ -90,9 +95,10 @@ public class ControleurChoixTypeStationnement implements ActionListener {
                         new ControleurChoixParking(p);
                         return p;
                     },
-                    "Parkings");
+                    "Parkings",
+                    true);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -107,7 +113,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
                     ChoixZone::new,
                     "Voirie");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -123,7 +129,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
             DaoReservationParking dao = new DaoReservationParking();
             activeReservation = dao.findActiveByUserId(current.getId());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
         if (activeReservation == null) {
             vue.cacherTicketActif();
@@ -185,7 +191,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
                     () -> new Profile(user),
                     "Profil");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture du profil");
         }
     }
@@ -202,7 +208,7 @@ public class ControleurChoixTypeStationnement implements ActionListener {
                     () -> new HistoriquePanel(user),
                     "Historique");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(vue, "Erreur lors de l'ouverture de l'historique");
         }
     }

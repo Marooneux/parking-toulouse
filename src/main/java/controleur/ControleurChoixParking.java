@@ -14,8 +14,13 @@ import modele.Parking;
 import modele.dao.DaoParking;
 import modele.dao.MySQLDataSource;
 import vue.ChoixParking;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurChoixParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurChoixParking.class.getName());
+
 
 	private ChoixParking vue;
 	private DaoParking daoParking;
@@ -58,7 +63,7 @@ public class ControleurChoixParking implements ActionListener {
 			this.listeAffichee = new ArrayList<>(this.listeComplete);
 			this.afficherParkings();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

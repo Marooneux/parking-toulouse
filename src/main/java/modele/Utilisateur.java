@@ -2,32 +2,28 @@ package modele;
 
 import utils.PasswordUtil;
 
-public class Utilisateur {
+public class Utilisateur extends Compte {
 	public enum Type {
 		SYSADMIN, PARKINGADMIN, CLIENT
 	}
 
 	private int id;
-	private String nom;
-	private String prenom;
-	private String email;
-	private String motDePasse;
 	private Type type;
 	private Abonnement abonnement;
 
 	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Type type) {
-		this(id, nom, prenom, email, motDePasse, null, type);
+		super(nom, prenom, email, motDePasse);
+		this.id = id;
+		this.type = type;
 	}
 
 	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Abonnement abonnement, Type type) {
+		super(nom, prenom, email, motDePasse);
 		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.motDePasse = motDePasse;
 		this.type = type;
 		this.abonnement = abonnement;
 	}
+	
 
 	public int getId() {
 		return this.id;
@@ -35,30 +31,6 @@ public class Utilisateur {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getNom() {
-		return this.nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return this.prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Type getType() {

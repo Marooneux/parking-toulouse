@@ -1,6 +1,6 @@
 package vue.adminParking;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -54,6 +54,7 @@ public class Accueil extends JPanel {
     }
 
     private void initialize() {
+    	
         this.setLayout(new BorderLayout());
         this.setBackground(DefaultTheme.COLOR_BG_PAGE);
         this.setPreferredSize(new Dimension(1500, 800));
@@ -142,29 +143,16 @@ public class Accueil extends JPanel {
         lblMenu.setBorder(new EmptyBorder(0, 10, 20, 0));
         sidebar.add(lblMenu);
 
-        btnSidebarParkings = createMenuButton("Liste Parkings");
+        btnSidebarParkings = UIButtons.sidebar("Liste Parkings");
         sidebar.add(btnSidebarParkings);
 
         sidebar.add(Box.createVerticalStrut(10));
 
-        btnSidebarStats = createMenuButton("Statistiques");
+        btnSidebarStats = UIButtons.sidebar("Statistiques");
         sidebar.add(btnSidebarStats);
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
-    }
-
-    private JButton createMenuButton(String text) {
-        JButton btn = new JButton(text);
-        btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        btn.setAlignmentX(Component.LEFT_ALIGNMENT);
-        btn.setBackground(new Color(52, 58, 64));
-        btn.setForeground(Color.WHITE);
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-        btn.setFont(DefaultTheme.FONT_BODY);
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        return btn;
     }
 
     private JPanel createParkingView() {
@@ -211,12 +199,9 @@ public class Accueil extends JPanel {
         scrollPane.setViewportView(gridPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        JButton btnAjouter = new JButton("Ajouter un parking");
-        btnAjouter.setFocusPainted(false);
-        btnAjouter.setBackground(Color.BLACK);
-        btnAjouter.setForeground(Color.WHITE);
-        btnAjouter.setPreferredSize(new Dimension(150, 30));
-        this.btnAjouter = btnAjouter;
+        btnAjouter = UIButtons.black("Ajouter un parking");
+    	btnAjouter.setPreferredSize(new Dimension(150, 30));
+        
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         actions.setBackground(DefaultTheme.COLOR_BG_PAGE);
@@ -252,13 +237,14 @@ public class Accueil extends JPanel {
         chkMoto.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         // Construction du formulaire
-        addFormField(panel, "Nom du parking :", txtNom);
-        addFormField(panel, "Adresse :", txtAdresse);
-        addFormField(panel, "Tarif Horaire :", txtTarif);
-        addFormField(panel, "Hauteur Max :", txtHauteur);
-        addFormField(panel, "Places Max :", txtPlacesMax);
-        addFormField(panel, "Heure Ouverture :", txtHeureOuverture);
-        addFormField(panel, "Heure Fermeture :", txtHeureFermeture);
+        panel.add(UIForm.row("Nom du parking :", txtNom));
+        panel.add(UIForm.row("Adresse :", txtAdresse));
+        panel.add(UIForm.row("Tarif Horaire :", txtTarif));
+        panel.add(UIForm.row("Hauteur Max :", txtHauteur));
+        panel.add(UIForm.row("Places Max :", txtPlacesMax));
+        panel.add(UIForm.row("Heure Ouverture :", txtHeureOuverture));
+        panel.add(UIForm.row("Heure Fermeture :", txtHeureFermeture));
+
         
         JPanel pnlMoto = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlMoto.setBackground(DefaultTheme.COLOR_BG_PAGE);
@@ -275,13 +261,8 @@ public class Accueil extends JPanel {
         btnPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
-        btnRetourListe = new JButton("Annuler");
-        btnRetourListe.setBackground(new Color(108, 117, 125));
-        btnRetourListe.setForeground(Color.WHITE);
-        
-        btnEnregistrerModification = new JButton("Enregistrer");
-        btnEnregistrerModification.setBackground(new Color(40, 167, 69));
-        btnEnregistrerModification.setForeground(Color.WHITE);
+        btnRetourListe = UIButtons.danger("Annuler");
+        btnEnregistrerModification = UIButtons.primary("Enregistrer");
 
         btnPanel.add(btnRetourListe);
         btnPanel.add(btnEnregistrerModification);
@@ -290,22 +271,6 @@ public class Accueil extends JPanel {
         return panel;
     }
 
-    private void addFormField(JPanel panel, String label, JComponent component) {
-        JPanel row = new JPanel(new BorderLayout(10, 0));
-        row.setBackground(DefaultTheme.COLOR_BG_PAGE);
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        row.setBorder(new EmptyBorder(5, 0, 5, 0));
-        row.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel lbl = new JLabel(label);
-        lbl.setFont(DefaultTheme.FONT_BODY);
-        lbl.setPreferredSize(new Dimension(150, 30));
-        
-        row.add(lbl, BorderLayout.WEST);
-        row.add(component, BorderLayout.CENTER);
-        
-        panel.add(row);
-    }
 
     public void addParking(Parking parking, Consumer<Parking> onSelect, Consumer<Parking> onModify, Consumer<Parking> onDelete) {
         AdminParkingPanel panelInfo = new AdminParkingPanel(parking, onSelect);
@@ -314,16 +279,12 @@ public class Accueil extends JPanel {
         container.setBackground(Color.WHITE);
         container.add(panelInfo, BorderLayout.CENTER);
 
-        JButton btnSupprimer = new JButton("Supprimer");
+        JButton btnSupprimer = UIButtons.danger("Supprimer");
         btnSupprimer.setFocusPainted(false);
-        btnSupprimer.setBackground(new Color(220, 53, 69)); 
-        btnSupprimer.setForeground(Color.WHITE);
         btnSupprimer.setPreferredSize(new Dimension(100, 30));
         
-        JButton btnModifier = new JButton("Modifier");
+        JButton btnModifier = UIButtons.primary("Modifier");
         btnModifier.setFocusPainted(false);
-        btnModifier.setBackground(new Color(0, 128, 255));
-        btnModifier.setForeground(Color.WHITE);
         btnModifier.setPreferredSize(new Dimension(100, 30));
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -344,7 +305,7 @@ public class Accueil extends JPanel {
     }
 
     public void afficherFormulaireEdition(Parking parking) {
-
+        // Not yet implemented
     }
 
     private JPanel createStatsView() {

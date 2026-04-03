@@ -21,10 +21,9 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import modele.ReservationParking;
 import ui.theme.DefaultTheme;
 
-public class PaiementParking extends JPanel {
+public class PaiementCarte extends JPanel {
 
 	private static final long serialVersionUID = -1573551118360617932L;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
@@ -35,13 +34,10 @@ public class PaiementParking extends JPanel {
 	private TemplateSaisie textFieldExpiration;
 	private TemplateSaisie textFieldCVC;
 	private JButton btnPayer;
-
-	private final ReservationParking reservation;
 	private final double prix;
 
-	public PaiementParking(ReservationParking reservation) {
-		this.reservation = reservation;
-		this.prix = reservation.calculerPrixTotal();
+	public PaiementCarte(double prix) {
+		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
 		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
@@ -180,10 +176,8 @@ public class PaiementParking extends JPanel {
 
 		JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		champPanel.setOpaque(false);
-
 		textField.getField().setFont(DefaultTheme.FONT_BODY);
 		textField.getField().setForeground(new Color(60, 60, 60));
-
 		champPanel.add(textField);
 
 		bloc.add(lbl);
@@ -204,8 +198,16 @@ public class PaiementParking extends JPanel {
 				new EmptyBorder(6, 10, 6, 10)));
 	}
 
-	class FiltreUniquementChiffres extends DocumentFilter {
-		private int maxCaracteres;
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
+	static class FiltreUniquementChiffres extends DocumentFilter {
+		private final int maxCaracteres;
 
 		public FiltreUniquementChiffres(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -239,7 +241,7 @@ public class PaiementParking extends JPanel {
 	}
 
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -266,17 +268,4 @@ public class PaiementParking extends JPanel {
 			}
 		}
 	}
-
-	public JButton getBtnPayer() {
-		return this.btnPayer;
-	}
-
-	public ReservationParking getReservation() {
-		return this.reservation;
-	}
-
-	public double getPrix() {
-		return this.prix;
-	}
-
 }

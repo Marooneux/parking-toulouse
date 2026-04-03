@@ -15,8 +15,13 @@ import utils.AuthManager;
 import vue.ChoixTypeStationnement;
 import vue.ConfirmationPaiementParking;
 import vue.NavigationFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ControleurConfirmationPaiementParking implements ActionListener {
+	private static final Logger LOGGER = Logger.getLogger(ControleurConfirmationPaiementParking.class.getName());
+
 
 	private final ConfirmationPaiementParking vue;
 	private final ReservationParking reservation;
@@ -52,7 +57,11 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 			} else {
 				dao.update(reservation);
 			}
-	        Utilisateur user = AuthManager.getCurrentUser();        
+	        Utilisateur user = AuthManager.getCurrentUser();
+	        if (user == null) {
+	            JOptionPane.showMessageDialog(vue, "Session expirée, veuillez vous reconnecter.");
+	            return;
+	        }
 	        NavigationFrame.getInstance().showPage(
 	                "Stationnement",
 	                () -> new ChoixTypeStationnement(user.getId()),
@@ -60,7 +69,7 @@ public class ControleurConfirmationPaiementParking implements ActionListener {
 	                true);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(vue, "Erreur lors de l'enregistrement du paiement.");
-			ex.printStackTrace();
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 }

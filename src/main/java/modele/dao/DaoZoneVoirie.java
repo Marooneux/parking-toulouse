@@ -43,7 +43,7 @@ public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
 	@Override
 	protected ZoneVoirie creerInstance(ResultSet curseur) throws SQLException {
 		int id = curseur.getInt("id");
-		String nom = curseur.getString("couleur");
+		String couleur = curseur.getString("couleur");
 		double tarifHoraire = curseur.getDouble("tarif_horaire");
 		int dureeMax = curseur.getInt("duree_max");
 		java.sql.Time sqlDebutAm = curseur.getTime("debut_am");
@@ -55,6 +55,6 @@ public class DaoZoneVoirie extends DaoModele<ZoneVoirie> {
 	    java.sql.Time sqlFinPm = curseur.getTime("fin_pm");
 	    LocalTime finPm = (sqlFinPm != null) ? sqlFinPm.toLocalTime() : null;
 	    
-		return new ZoneVoirie(id, nom, tarifHoraire, dureeMax, debutAm, finAm, debutPm, finPm);
+		return new ZoneVoirie(id, couleur, tarifHoraire, dureeMax, debutAm, finAm, debutPm, finPm);
 	}
 }

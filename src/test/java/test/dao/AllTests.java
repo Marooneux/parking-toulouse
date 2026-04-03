@@ -5,8 +5,21 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestDaoLigneMetro.class, TestDaoParking.class, TestDaoProximite.class, TestDaoReservationParking.class,
-		TestDaoReservationVoirie.class, TestDaoUtilisateur.class, TestDaoZoneVoirie.class })
+@SuiteClasses({ 
+	TestAuthService.class,
+	TestDaoAbonne.class,
+	TestDaoAbonnement.class,
+	TestDaoAdresse.class,
+	TestDaoLigneMetro.class,
+	TestDaoParking.class,
+	TestDaoProximite.class,
+	TestDaoReservationParking.class,
+	TestDaoReservationVoirie.class,
+	TestDaoUtilisateur.class,
+	TestDaoVehicule.class,
+	TestDaoZoneVoirie.class,
+	TestIterateur.class
+})
 public class AllTests {
 
 }

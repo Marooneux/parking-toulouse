@@ -27,10 +27,10 @@ public class TicketParking extends JPanel {
 	private JLabel lblHeure;
 	private JLabel lblAdresse;
 	private JLabel lblInstruction;
-	private Parking parking;
+	private transient Parking parking;
 	private String immatriculation;
 	private String heureArrivee;
-	private ReservationParking reservation;
+	private transient ReservationParking reservation;
 	private boolean confirmationRequise;
 
 	public TicketParking(ReservationParking reservation, String plaque) {

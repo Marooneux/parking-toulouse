@@ -21,9 +21,7 @@ public class MySQLDataSource {
 	public static void creerAcces() {
 		String resolvedUrl = firstNonEmpty(System.getProperty("DB_URL"), System.getenv("DB_URL"), DEFAULT_URL);
 		String resolvedUser = firstNonEmpty(System.getProperty("DB_USER"), System.getenv("DB_USER"));
-		String resolvedPass = firstNonEmpty(
-				System.getProperty("DB_PASSWORD"), System.getenv("DB_PASSWORD"),
-				System.getProperty("DB_PASS"), System.getenv("DB_PASS"));
+		String resolvedPass = firstNonEmpty(System.getProperty("DB_PASS"), System.getenv("DB_PASS"));
 
 		if (resolvedUser == null) {
 			throw new IllegalStateException("DB_USER non défini (propriété JVM ou variable d'environnement)");
@@ -46,7 +44,7 @@ public class MySQLDataSource {
 	}
 
 	public static Connection getConnexion() throws SQLException {
-		if (MySQLDataSource.connexion == null) {
+		if (MySQLDataSource.connexion == null || !MySQLDataSource.connexion.isValid(2)) {
 			MySQLDataSource.connexion = DriverManager.getConnection(
 					MySQLDataSource.url,
 					MySQLDataSource.login,

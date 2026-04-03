@@ -24,7 +24,7 @@ import javax.swing.text.JTextComponent;
 
 import modele.Parking;
 import ui.theme.DefaultTheme;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public class SaisirHeureArriveParking extends JPanel {
 

@@ -6,8 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-		TestPasswordUtil.class,
-
 		// Parking administration
 		AdminParkingTest.class,
 
@@ -32,8 +30,12 @@ import org.junit.runners.Suite.SuiteClasses;
 		// Zones
 		TestZone.class,
 
-		// Paiement
-		TestPaiement.class
+        // Paiement
+        TestPaiement.class,
+
+        // Utils
+        TestPasswordUtil.class,
+        TestAuthManager.class
 })
 public class AllTests {
 

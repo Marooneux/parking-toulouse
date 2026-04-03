@@ -43,19 +43,19 @@ public class ControleurTicketVoirie implements ActionListener {
 
 	public static Color getRgb(String couleur) {
 		Color col = Color.black;
-		if (couleur == "rouge") {
+		if ("rouge".equals(couleur)) {
 			col = Color.red;
 		}
-		if (couleur == "verte") {
+		if ("verte".equals(couleur)) {
 			col = Color.green;
 		}
-		if (couleur == "jaune") {
+		if ("jaune".equals(couleur)) {
 			col = Color.yellow;
 		}
-		if (couleur == "orange") {
+		if ("orange".equals(couleur)) {
 			col = Color.orange;
 		}
-		if (couleur == "bleu") {
+		if ("bleu".equals(couleur)) {
 			col = Color.blue;
 		}
 		return col;

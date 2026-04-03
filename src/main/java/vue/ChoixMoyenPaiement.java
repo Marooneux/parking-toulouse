@@ -24,22 +24,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.ReservationParking;
 import ui.theme.DefaultTheme;
 
-public class ChoixMoyenPaiementParking extends JPanel {
+public class ChoixMoyenPaiement extends JPanel {
 
-	private static final long serialVersionUID = -7953814449419081423L;
+	private static final long serialVersionUID = 1L;
 	private JButton btnCarte;
 	private JButton btnVirement;
 
-	private ReservationParking reservation;
-	private double prix;
-
-	public ChoixMoyenPaiementParking(ReservationParking reservation, double prix) {
-		this.reservation = reservation;
-		this.prix = prix;
-
+	public ChoixMoyenPaiement() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
@@ -88,7 +81,6 @@ public class ChoixMoyenPaiementParking extends JPanel {
 		btn.setFocusPainted(false);
 		btn.setBorder(new EmptyBorder(12, 25, 12, 25));
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -144,14 +136,6 @@ public class ChoixMoyenPaiementParking extends JPanel {
 		this.btnVirement.addActionListener(listener);
 	}
 
-	public ReservationParking getReservation() {
-		return this.reservation;
-	}
-
-	public double getPrix() {
-		return this.prix;
-	}
-
 	private class IconCard implements Icon {
 		@Override
 		public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -165,14 +149,10 @@ public class ChoixMoyenPaiementParking extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
 
 	private class IconBank implements Icon {
@@ -192,14 +172,9 @@ public class ChoixMoyenPaiementParking extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
-
 }

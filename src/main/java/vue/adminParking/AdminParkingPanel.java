@@ -27,7 +27,7 @@ import ui.theme.DefaultTheme;
 public class AdminParkingPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private final Parking parking;
+    private final transient Parking parking;
     private final Consumer<Parking> onClick;
 
     private final Color normalBorder = new Color(230, 230, 230);
@@ -95,19 +95,19 @@ public class AdminParkingPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-        centerPanel.add(createDetailRow("📍", this.parking.getAdresse() != null ? this.parking.getAdresse().getRue() : ""));
+        centerPanel.add(UIDetailRow.create("📍", this.parking.getAdresse() != null ? this.parking.getAdresse().getRue() : ""));
         centerPanel.add(Box.createVerticalStrut(8));
 
         String horaireText = (this.parking.getHeureOuverture().equals(this.parking.getHeureFermeture()))
                 ? "24h / 24"
                 : this.parking.getHeureOuverture() + " - " + this.parking.getHeureFermeture();
-        centerPanel.add(createDetailRow("🕒", horaireText));
+        centerPanel.add(UIDetailRow.create("🕒", horaireText));
 
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
+        centerPanel.add(UIDetailRow.create("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
 
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("📏", "Max " + (this.parking.getHauteur()) + "m"));
+        centerPanel.add(UIDetailRow.create("📏", "Max " + (this.parking.getHauteur()) + "m"));
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -127,24 +127,6 @@ public class AdminParkingPanel extends JPanel {
         bottomPanel.add(lblPrice, BorderLayout.WEST);
 
         add(bottomPanel, BorderLayout.SOUTH);
-    }
-
-    private JPanel createDetailRow(String icon, String text) {
-        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        row.setOpaque(false);
-
-        JLabel lblIcon = new JLabel(icon);
-        lblIcon.setFont(DefaultTheme.FONT_ICON_S);
-        lblIcon.setPreferredSize(new Dimension(25, 20));
-        lblIcon.setForeground(Color.GRAY);
-
-        JLabel lblText = new JLabel(text);
-        lblText.setFont(DefaultTheme.FONT_LABEL_S);
-        lblText.setForeground(DefaultTheme.COLOR_TEXT_SECONDARY);
-
-        row.add(lblIcon);
-        row.add(lblText);
-        return row;
     }
 
     class CircleIcon extends JComponent {

@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,32 +18,29 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import modele.ReservationParking;
 import ui.theme.DefaultTheme;
 
-public class PaiementVirementParking extends JPanel {
+public class PaiementVirement extends JPanel {
 
-	private static final long serialVersionUID = 3249422619928286426L;
+	private static final long serialVersionUID = 6895815859853184568L;
+	private static final Color BACKGROUND_COLOR = DefaultTheme.COLOR_BG_PAGE;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
-	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-	private final ReservationParking reservation;
 	private final double prix;
 	private JButton btnPayer;
 	private TemplateSaisie textFieldNom;
 	private TemplateSaisie textFieldIban;
 
-	public PaiementVirementParking(ReservationParking reservation, double prix) {
-		this.reservation = reservation;
+	public PaiementVirement(double prix, String[][] recapLignes) {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
+		this.setBackground(BACKGROUND_COLOR);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
+		header.setBackground(BACKGROUND_COLOR);
 
 		JLabel icon = new JLabel("💳");
 		icon.setFont(DefaultTheme.FONT_ICON_L);
@@ -80,12 +75,9 @@ public class PaiementVirementParking extends JPanel {
 				new EmptyBorder(16, 16, 16, 16)));
 		recap.setLayout(new GridLayout(0, 1, 8, 8));
 
-		recap.add(this.creerInfoRow("Parking",
-				reservation.getParking() != null ? reservation.getParking().getNom() : "Parking"));
-		recap.add(this.creerInfoRow("Arrivee", this.formatDate(reservation.getDateArrivee())));
-		recap.add(this.creerInfoRow("Depart", this.formatDate(reservation.getDateDepart())));
-		recap.add(this.creerInfoRow("Montant", String.format("%.2f €", prix)));
-
+		for (String[] ligne : recapLignes) {
+			recap.add(this.creerInfoRow(ligne[0], ligne[1]));
+		}
 		center.add(recap);
 
 		JPanel card = new JPanel();
@@ -161,12 +153,16 @@ public class PaiementVirementParking extends JPanel {
 		return bloc;
 	}
 
-	private String formatDate(LocalDateTime dateTime) {
-		return dateTime != null ? DATE_FORMAT.format(dateTime) : "-";
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public double getPrix() {
+		return this.prix;
 	}
 
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -194,17 +190,5 @@ public class PaiementVirementParking extends JPanel {
 				super.replace(fb, offset, length, text, attrs);
 			}
 		}
-	}
-
-	public JButton getBtnPayer() {
-		return this.btnPayer;
-	}
-
-	public ReservationParking getReservation() {
-		return this.reservation;
-	}
-
-	public double getPrix() {
-		return this.prix;
 	}
 }
