@@ -31,14 +31,6 @@ public final class DefaultTheme {
 
     // Polices d'écriture, triées par taille
     private static final String FONT_FAMILY = "Segoe UI";
-
-    /* 
-
-    public static final Font FONT_TITLE_L = new Font(FONT_FAMILY, Font.BOLD, 22);
-    public static final Font FONT_TITLE_M = new Font(FONT_FAMILY, Font.BOLD, 18);
-    public static final Font FONT_TITLE_S = new Font(FONT_FAMILY, Font.BOLD, 16);
-    */
-
     public static final Font FONT_DISPLAY    = new Font(FONT_FAMILY, Font.BOLD, 30);
     public static final Font FONT_TITLE_XL   = new Font(FONT_FAMILY, Font.BOLD, 26);
     public static final Font FONT_TITLE_L    = new Font(FONT_FAMILY, Font.BOLD, 24);
@@ -55,14 +47,14 @@ public final class DefaultTheme {
     public static final Font FONT_BODY_XS    = new Font(FONT_FAMILY, Font.PLAIN, 11);
     
     private static final String FONT_FAMILY_ICON   = "Segoe UI Emoji";
-    public static final Font FONT_ICON_XL   = new Font(FONT_FAMILY_ICON, Font.PLAIN, 36);
-    public static final Font FONT_ICON_L    = new Font(FONT_FAMILY_ICON, Font.PLAIN, 32);
-    public static final Font FONT_ICON      = new Font(FONT_FAMILY_ICON, Font.PLAIN, 28);
-    public static final Font FONT_ICON_S    = new Font(FONT_FAMILY_ICON, Font.PLAIN, 14);
+    public static final Font FONT_ICON_XL    = new Font(FONT_FAMILY_ICON, Font.PLAIN, 36);
+    public static final Font FONT_ICON_L     = new Font(FONT_FAMILY_ICON, Font.PLAIN, 32);
+    public static final Font FONT_ICON       = new Font(FONT_FAMILY_ICON, Font.PLAIN, 28);
+    public static final Font FONT_ICON_S     = new Font(FONT_FAMILY_ICON, Font.PLAIN, 14);
 
     private static final String FONT_FAMILY_SYMBOL = "Segoe UI Symbol";
-    public static final Font FONT_SYMBOL_XL = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 50);
-    public static final Font FONT_SYMBOL_L  = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 40);
-    public static final Font FONT_SYMBOL    = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 30);
-    public static final Font FONT_SYMBOL_S  = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 20);
+    public static final Font FONT_SYMBOL_XL  = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 50);
+    public static final Font FONT_SYMBOL_L   = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 40);
+    public static final Font FONT_SYMBOL     = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 30);
+    public static final Font FONT_SYMBOL_S   = new Font(FONT_FAMILY_SYMBOL, Font.BOLD, 20);
 }
