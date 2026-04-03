@@ -76,6 +76,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
+                <includes>
+                    <include>**/modele/**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/modele/dao/**</exclude>
+                </excludes>
                 <executions>
                     
                     <!-- Attach agent -->
