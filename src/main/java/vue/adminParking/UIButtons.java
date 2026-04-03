@@ -39,4 +39,16 @@ public class UIButtons {
         btn.setFont(DefaultTheme.FONT_BODY);
         return btn;
     }
+    
+    public static JButton black(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setFont(DefaultTheme.FONT_BODY);
+        return btn;
+    }
+
 }

@@ -199,8 +199,8 @@ public class Accueil extends JPanel {
         scrollPane.setViewportView(gridPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        btnAjouter = UIButtons.primary("Ajouter un parking");
-        btnAjouter.setPreferredSize(new Dimension(150, 30));
+        btnAjouter = UIButtons.black("Ajouter un parking");
+    	btnAjouter.setPreferredSize(new Dimension(150, 30));
         
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
