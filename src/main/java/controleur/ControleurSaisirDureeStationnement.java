@@ -14,8 +14,10 @@ import modele.Vehicule;
 import modele.dao.DaoReservationVoirie;
 import modele.dao.DaoVehicule;
 import modele.dao.MySQLDataSource;
-import vue.ChoixMoyenPaiementVoirie;
+import vue.ChoixMoyenPaiement;
 import vue.NavigationFrame;
+import vue.PaiementCarte;
+import vue.PaiementVirement;
 import vue.SaisirDureeStationnement;
 import vue.TicketVoirie;
 import utils.AuthManager;
@@ -120,11 +122,26 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
     }
 
 	public static void ouvrirPaiement(ZoneVoirie zone, String immatriculation, int intDuree, double prix) {
-		ChoixMoyenPaiementVoirie choix = new ChoixMoyenPaiementVoirie(zone, immatriculation,
-				intDuree, prix);
-		new ControleurChoixMoyenPaiementVoirie(choix, zone, immatriculation, intDuree, prix);
-		String key = "voirie-choix-paiement-" + immatriculation + "-" + intDuree;
-		NavigationFrame.getInstance().showPage(key, () -> choix, "Choisir le paiement");
+		String[][] recap = {
+			{"Zone", zone.getCouleur()},
+			{"Immatriculation", immatriculation},
+			{"Duree", intDuree + " min"},
+			{"Montant", String.format("%.2f €", prix)}
+		};
+		ChoixMoyenPaiement choix = new ChoixMoyenPaiement();
+		new ControleurChoixMoyenPaiement(choix,
+			() -> {
+				PaiementCarte page = new PaiementCarte(prix);
+				new ControleurPaiementVoirie(page, page.getBtnPayer(), zone, immatriculation, intDuree, prix, "Carte bancaire");
+				NavigationFrame.getInstance().showPage("voirie-paiement-carte-" + immatriculation + "-" + intDuree, () -> page, "Paiement par carte", true);
+			},
+			() -> {
+				PaiementVirement page = new PaiementVirement(prix, recap);
+				new ControleurPaiementVoirie(page, page.getBtnPayer(), zone, immatriculation, intDuree, prix, "Virement bancaire");
+				NavigationFrame.getInstance().showPage("voirie-paiement-virement-" + immatriculation + "-" + intDuree, () -> page, "Paiement par virement", true);
+			}
+		);
+		NavigationFrame.getInstance().showPage("voirie-choix-paiement-" + immatriculation + "-" + intDuree, () -> choix, "Choisir le paiement");
 	}
 
 	public static void ouvrirTicket(ZoneVoirie zone, String immatriculation, int intDuree) {

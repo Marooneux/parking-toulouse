@@ -11,9 +11,13 @@ import modele.Utilisateur;
 import modele.dao.DaoReservationParking;
 import modele.dao.MySQLDataSource;
 import utils.AuthManager;
+import java.time.format.DateTimeFormatter;
+
+import vue.ChoixMoyenPaiement;
 import vue.ChoixTypeStationnement;
 import vue.NavigationFrame;
-import vue.ChoixMoyenPaiementParking;
+import vue.PaiementCarte;
+import vue.PaiementVirement;
 import vue.TicketParking;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,9 +76,28 @@ public class ControleurTicketParking implements ActionListener {
 
 	private void allerAuPaiement() {
 		try {
-			double prix = ControleurSaisirHeureArriveParking.calculerPrixTotal(vue.getParking(), vue.getHeureArrivee());
-			ChoixMoyenPaiementParking choix = new ChoixMoyenPaiementParking(vue.getReservation());
-			new ControleurChoixMoyenPaiementParking(choix, vue.getReservation());
+			ReservationParking reservation = vue.getReservation();
+			double prix = reservation.calculerPrixTotal();
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			String[][] recap = {
+				{"Parking", reservation.getParking() != null ? reservation.getParking().getNom() : "Parking"},
+				{"Arrivee", reservation.getDateArrivee() != null ? fmt.format(reservation.getDateArrivee()) : "-"},
+				{"Depart", reservation.getDateDepart() != null ? fmt.format(reservation.getDateDepart()) : "-"},
+				{"Montant", String.format("%.2f €", prix)}
+			};
+			ChoixMoyenPaiement choix = new ChoixMoyenPaiement();
+			new ControleurChoixMoyenPaiement(choix,
+				() -> {
+					PaiementCarte page = new PaiementCarte(prix);
+					new ControleurPaiementParking(page, page.getBtnPayer(), prix, reservation);
+					NavigationFrame.getInstance().showPage("parking-paiement-carte", () -> page, "Paiement par carte", true);
+				},
+				() -> {
+					PaiementVirement page = new PaiementVirement(prix, recap);
+					new ControleurPaiementParking(page, page.getBtnPayer(), prix, reservation);
+					NavigationFrame.getInstance().showPage("parking-paiement-virement", () -> page, "Paiement par virement", true);
+				}
+			);
 			NavigationFrame.getInstance().showPage("parking-choix-paiement", () -> choix, "Choisir le paiement", true);
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(vue, "Impossible d'ouvrir le paiement.");
