@@ -18,7 +18,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import modele.ZoneVoirie;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public class SaisirDureeStationnement extends JPanel {
 
