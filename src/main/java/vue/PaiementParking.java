@@ -27,7 +27,6 @@ import ui.theme.DefaultTheme;
 public class PaiementParking extends JPanel {
 
 	private static final long serialVersionUID = -1573551118360617932L;
-	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
@@ -45,14 +44,14 @@ public class PaiementParking extends JPanel {
 		this.prix = reservation.calculerPrixTotal();
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -60,8 +59,8 @@ public class PaiementParking extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Paiement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
@@ -98,7 +97,7 @@ public class PaiementParking extends JPanel {
 		JPanel montantRow = new JPanel(new BorderLayout(8, 0));
 		montantRow.setOpaque(false);
 		JLabel lblMontant = new JLabel("Montant");
-		lblMontant.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		lblMontant.setFont(DefaultTheme.FONT_LABEL_S);
 		lblMontant.setForeground(new Color(90, 90, 90));
 		JButton pillMontant = new JButton(String.format("%.2f €", this.prix));
 		pillMontant.setEnabled(false);
@@ -148,7 +147,7 @@ public class PaiementParking extends JPanel {
 		this.btnPayer = new JButton(String.format("Payer - %.2f €", this.prix));
 		this.btnPayer.setBackground(PRIMARY_COLOR);
 		this.btnPayer.setForeground(Color.WHITE);
-		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnPayer.setFocusPainted(false);
 		this.btnPayer.setPreferredSize(new Dimension(200, 44));
 		panelBtn.add(this.btnPayer);

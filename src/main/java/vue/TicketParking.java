@@ -54,7 +54,7 @@ public class TicketParking extends JPanel {
 		panelHeader.setLayout(new BorderLayout(20, 0));
 
 		JLabel lblIcon = new JLabel("P");
-		lblIcon.setFont(DefaultTheme.FONT_TITLE_BIG);
+		lblIcon.setFont(DefaultTheme.FONT_DISPLAY);
 		lblIcon.setForeground(new Color(60, 60, 60));
 		lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIcon.setPreferredSize(new Dimension(60, 60));
@@ -67,13 +67,13 @@ public class TicketParking extends JPanel {
 		panelTextHeader.setLayout(new GridLayout(2, 1, 0, 0));
 
 		JLabel lblTitre = new JLabel("Récapitulatif de votre stationnement");
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
-		lblTitre.setFont(DefaultTheme.FONT_TITLE_LABEL);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_L);
 		panelTextHeader.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Veuillez conserver ce récapitulatif jusqu'à votre départ");
-		lblSousTitre.setForeground(DefaultTheme.SUBTEXT_COLOR);
-		lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
+		lblSousTitre.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		panelTextHeader.add(lblSousTitre);
 
 		JPanel panelCenterContainer = new JPanel();
@@ -83,7 +83,7 @@ public class TicketParking extends JPanel {
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1, true));
 		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
@@ -108,8 +108,8 @@ public class TicketParking extends JPanel {
 
 		this.lblInstruction = new JLabel();
 		this.lblInstruction.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblInstruction.setForeground(DefaultTheme.TEXT_COLOR);
-		this.lblInstruction.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		this.lblInstruction.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
+		this.lblInstruction.setFont(DefaultTheme.FONT_BUTTON);
 		panelFooter.add(this.lblInstruction);
 
 		JPanel panelButtonContainer = new JPanel();
@@ -120,7 +120,7 @@ public class TicketParking extends JPanel {
 		panelButtonContainer.add(this.btnPaiement);
 		this.btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		this.btnPaiement.setForeground(Color.WHITE);
-		this.btnPaiement.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnPaiement.setFont(DefaultTheme.FONT_TITLE_XS);
 		this.btnPaiement.setBackground(new Color(0, 123, 255));
 		this.btnPaiement.setFocusPainted(false);
 		this.btnPaiement.setBorderPainted(false);
@@ -139,7 +139,7 @@ public class TicketParking extends JPanel {
 		lblKey.setForeground(new Color(100, 100, 100));
 
 		JLabel lblVal = new JLabel(valeur);
-		lblVal.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		lblVal.setFont(DefaultTheme.FONT_TITLE_XS);
 		lblVal.setForeground(new Color(50, 50, 50));
 		lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
 

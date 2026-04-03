@@ -47,7 +47,7 @@ public class ModifierParking extends JPanel {
 		this.setPreferredSize(new Dimension(500, 600));
 
 		JLabel title = new JLabel("Modification du parking");
-		title.setFont(DefaultTheme.FONT_TITLE_ALT);
+		title.setFont(DefaultTheme.FONT_TITLE_S);
 		this.add(title, BorderLayout.NORTH);
 
 		JPanel form = new JPanel();

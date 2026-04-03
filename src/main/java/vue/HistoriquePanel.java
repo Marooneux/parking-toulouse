@@ -37,7 +37,7 @@ public class HistoriquePanel extends JPanel {
 		// Configuration du JPanel
 		this.setLayout(new BorderLayout(15, 15));
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		this.initHeader();
 		this.initReservationsList();
@@ -48,18 +48,18 @@ public class HistoriquePanel extends JPanel {
 
 	private void initHeader() {
 		JPanel header = new JPanel(new BorderLayout());
-		header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel title = new JLabel("Historique des réservations");
-		title.setFont(DefaultTheme.FONT_HERO_TITLE);
-		title.setForeground(DefaultTheme.TEXT_COLOR);
+		title.setFont(DefaultTheme.FONT_TITLE);
+		title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		JLabel subtitle = new JLabel("Retrouvez vos stationnements passés et en cours");
 		subtitle.setFont(DefaultTheme.FONT_BODY);
 		subtitle.setForeground(Color.GRAY);
 
 		JPanel textPanel = new JPanel();
-		textPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		textPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		textPanel.add(title);
 		textPanel.add(Box.createVerticalStrut(5));
@@ -72,11 +72,11 @@ public class HistoriquePanel extends JPanel {
 	private void initReservationsList() {
 		this.reservationsPanel = new JPanel();
 		this.reservationsPanel.setLayout(new BoxLayout(this.reservationsPanel, BoxLayout.Y_AXIS));
-		this.reservationsPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.reservationsPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JScrollPane scrollPane = new JScrollPane(this.reservationsPanel);
 		scrollPane.setBorder(null);
-		scrollPane.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
+		scrollPane.getViewport().setBackground(DefaultTheme.COLOR_BG_PAGE);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -86,13 +86,13 @@ public class HistoriquePanel extends JPanel {
 		this.loadMoreButton = new JButton("Rafraîchir");
 		this.loadMoreButton.setBackground(Color.WHITE);
 		this.loadMoreButton.setFocusPainted(false);
-		this.loadMoreButton.setFont(DefaultTheme.FONT_HERO_HINT);
+		this.loadMoreButton.setFont(DefaultTheme.FONT_BODY_S);
 		this.loadMoreButton.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 		this.loadMoreButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.loadMoreButton.setPreferredSize(new Dimension(200, 35));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		panel.add(this.loadMoreButton);
 
 		this.add(panel, BorderLayout.SOUTH);
@@ -153,13 +153,13 @@ public class HistoriquePanel extends JPanel {
 		String adrStr = (r.getParking().getAdresse() != null) ? r.getParking().getAdresse().getRue()
 				: "Adresse inconnue";
 		JLabel address = new JLabel(adrStr);
-		address.setFont(DefaultTheme.FONT_HERO_HINT);
+		address.setFont(DefaultTheme.FONT_BODY_S);
 		address.setForeground(Color.GRAY);
 
 		// Dates
 		JLabel dates = new JLabel(
 				"Du " + r.getDateArrivee() + (r.getDateDepart() != null ? " au " + r.getDateDepart() : " (En cours)"));
-		dates.setFont(DefaultTheme.FONT_BODY_SMALL);
+		dates.setFont(DefaultTheme.FONT_BODY_XS);
 		dates.setForeground(new Color(100, 100, 150));
 
 		infoPanel.add(name);
@@ -216,7 +216,7 @@ public class HistoriquePanel extends JPanel {
 		name.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
 		JLabel dates = new JLabel("Début " + r.getDateDebut() + " | Durée " + r.getDureeMinutes() + " min");
-		dates.setFont(DefaultTheme.FONT_BODY_SMALL);
+		dates.setFont(DefaultTheme.FONT_BODY_XS);
 		dates.setForeground(new Color(100, 100, 150));
 
 		infoPanel.add(name);

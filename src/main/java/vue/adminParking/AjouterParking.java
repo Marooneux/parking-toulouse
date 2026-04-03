@@ -54,7 +54,7 @@ public class AjouterParking extends JPanel {
 
         // --- TITRE ---
         JLabel title = new JLabel("Ajout d'un nouveau parking");
-        title.setFont(DefaultTheme.FONT_TITLE_ALT);
+        title.setFont(DefaultTheme.FONT_TITLE_S);
         add(title, BorderLayout.NORTH);
 
         // --- FORMULAIRE ---
@@ -123,7 +123,7 @@ public class AjouterParking extends JPanel {
 
         // 6. Checkbox Moto
         chkMoto = new JCheckBox("Dispose de places Moto");
-        chkMoto.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        chkMoto.setFont(DefaultTheme.FONT_LABEL_S);
         chkMoto.setForeground(new Color(73, 80, 87));
         chkMoto.setOpaque(false);
         chkMoto.setAlignmentX(Component.LEFT_ALIGNMENT);

@@ -33,7 +33,7 @@ public class ConfirmationPaiementParking extends JPanel {
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1, true));
 		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
@@ -46,25 +46,25 @@ public class ConfirmationPaiementParking extends JPanel {
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_BIG);
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_XL);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
 		JLabel lblTitre = new JLabel("Paiement Validé !");
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_XL);
 		panelInnerContent.add(lblTitre);
 
 		JLabel lblMerci = new JLabel("Merci de votre visite");
 		lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMerci.setForeground(new Color(100, 100, 100));
-		lblMerci.setFont(DefaultTheme.FONT_LABEL_BIG);
+		lblMerci.setFont(DefaultTheme.FONT_LABEL);
 		panelInnerContent.add(lblMerci);
 
 		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", reservation.getPrixPaye()));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMontant.setForeground(DefaultTheme.TEXT_COLOR);
+		lblMontant.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
 		panelInnerContent.add(lblMontant);
 
@@ -77,7 +77,7 @@ public class ConfirmationPaiementParking extends JPanel {
 		this.btnTerminer = btnTerminerLocal;
 		btnTerminerLocal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTerminerLocal.setForeground(Color.WHITE);
-		btnTerminerLocal.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		btnTerminerLocal.setFont(DefaultTheme.FONT_TITLE_XS);
 		btnTerminerLocal.setBackground(new Color(0, 123, 255));
 		btnTerminerLocal.setFocusPainted(false);
 		btnTerminerLocal.setBorderPainted(false);

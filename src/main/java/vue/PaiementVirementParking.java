@@ -26,7 +26,6 @@ import ui.theme.DefaultTheme;
 public class PaiementVirementParking extends JPanel {
 
 	private static final long serialVersionUID = 3249422619928286426L;
-	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -42,14 +41,14 @@ public class PaiementVirementParking extends JPanel {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -57,8 +56,8 @@ public class PaiementVirementParking extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Virement bancaire");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
@@ -113,7 +112,7 @@ public class PaiementVirementParking extends JPanel {
 		this.btnPayer = new JButton(String.format("Payer - %.2f €", prix));
 		this.btnPayer.setBackground(PRIMARY_COLOR);
 		this.btnPayer.setForeground(Color.WHITE);
-		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnPayer.setFocusPainted(false);
 		this.btnPayer.setPreferredSize(new Dimension(180, 40));
 		panelBtn.add(this.btnPayer);
@@ -128,11 +127,11 @@ public class PaiementVirementParking extends JPanel {
 		row.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
 		JLabel lbl = new JLabel(label);
-		lbl.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		lbl.setFont(DefaultTheme.FONT_BUTTON);
 		lbl.setForeground(new Color(80, 80, 80));
 
 		JLabel val = new JLabel(value);
-		val.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		val.setFont(DefaultTheme.FONT_LABEL_S);
 		val.setForeground(new Color(40, 40, 40));
 		val.setHorizontalAlignment(JLabel.RIGHT);
 

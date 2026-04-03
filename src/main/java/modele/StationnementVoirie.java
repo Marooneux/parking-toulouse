@@ -18,7 +18,7 @@ public class StationnementVoirie {
 	public double calculerPrixTotal(int duree) {
 		LocalTime actuel = LocalTime.of(6, 0);
 		if ((actuel.isBefore(this.HorairePayantFin) && actuel.isAfter(this.HorairePayantDebut))
-				|| this.isDimanche()) {
+				|| LocalDateTime.now().getDayOfWeek() == DayOfWeek.SUNDAY) {
 			return 0;
 		}
 
