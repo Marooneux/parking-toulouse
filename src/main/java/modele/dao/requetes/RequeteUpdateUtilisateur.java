@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import modele.Utilisateur;
 
-public class RequeteUpdateUtilisateur extends Requete<Utilisateur> {
+public class RequeteUpdateUtilisateur extends RequeteUtilisateurBase {
 
 	@Override
 	public String requete() {
@@ -14,11 +14,7 @@ public class RequeteUpdateUtilisateur extends Requete<Utilisateur> {
 
 	@Override
 	public void parametres(PreparedStatement statement, Utilisateur donnee) throws SQLException {
-		statement.setString(1, donnee.getNom());
-		statement.setString(2, donnee.getPrenom());
-		statement.setString(3, donnee.getEmail());
-		statement.setString(4, donnee.getMdp());
-		statement.setString(5, donnee.getType().name().toLowerCase());
+		setCommonParam(statement, donnee);
 		statement.setInt(6, donnee.getId());
 	}
 }
