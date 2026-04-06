@@ -44,12 +44,6 @@ public class Paiement {
 	}
 
 	public boolean effectuerPaiement() {
-		if (estValide()) {
-			System.out.println("Paiement effectué avec succès : " + this.montant + " € via " + this.moyenPaiement);
-			return true;
-		} else {
-			System.out.println("Échec du paiement : le montant doit être superieur à 0 €.");
-			return false;
-		}
+		return estValide();
 	}
 }
