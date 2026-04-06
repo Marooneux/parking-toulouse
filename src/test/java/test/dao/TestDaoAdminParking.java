@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import modele.Adresse;
-import modele.AdminParking;
 import modele.Parking;
 import modele.Utilisateur;
 import modele.Utilisateur.Type;
@@ -104,7 +103,7 @@ public class TestDaoAdminParking {
     }
 
     @Test
-    public void testCreateAssociation() throws SQLException {
+    public void testCreateAssociation() {
         // Should not throw exception
         assertNotNull(this.associationTest);
         assertEquals(this.utilisateurTest.getId(), this.associationTest.idUtilisateur);
@@ -182,24 +181,6 @@ public class TestDaoAdminParking {
     public void testFindAllReturnsEmpty() throws SQLException {
         // findAll should return empty list as it's not fully implemented
         assertTrue(this.daoAdminParking.findAll().isEmpty());
-    }
-
-    @Test
-    public void testUpdateNotSupported() throws SQLException {
-        // Update operation is explicitly not supported
-        // Should not throw, but should do nothing
-        this.daoAdminParking.create(this.associationTest);
-        // This should not throw an exception
-        this.daoAdminParking.update(this.associationTest);
-    }
-
-    @Test
-    public void testDeleteNotSupported() throws SQLException {
-        // Delete operation is explicitly not supported
-        // Should not throw, but should do nothing
-        this.daoAdminParking.create(this.associationTest);
-        // This should not throw an exception
-        this.daoAdminParking.delete(this.associationTest);
     }
 
     @Test

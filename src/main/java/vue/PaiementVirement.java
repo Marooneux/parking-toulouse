@@ -12,35 +12,27 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
 
-public class PaiementVirementVoirie extends JPanel {
+public class PaiementVirement extends JPanel {
 
-	private static final long serialVersionUID = 6895815859853184568L;
+	private static final long serialVersionUID = 1L;
 	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
-	private final ZoneVoirie zone;
-	private final String immatriculation;
-	private final int duree;
 	private final double prix;
 	private JButton btnPayer;
 	private TemplateSaisie textFieldNom;
 	private TemplateSaisie textFieldIban;
 
-	public PaiementVirementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
-		this.zone = zone2;
-		this.immatriculation = immatriculation;
-		this.duree = duree;
+	public PaiementVirement(double prix, String[][] recapLignes) {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
@@ -83,11 +75,9 @@ public class PaiementVirementVoirie extends JPanel {
 				new EmptyBorder(16, 16, 16, 16)));
 		recap.setLayout(new GridLayout(0, 1, 8, 8));
 
-		recap.add(this.creerInfoRow("Zone", this.zone.getCouleur()));
-		recap.add(this.creerInfoRow("Immatriculation", immatriculation));
-		recap.add(this.creerInfoRow("Duree", duree + " min"));
-		recap.add(this.creerInfoRow("Montant", String.format("%.2f €", prix)));
-
+		for (String[] ligne : recapLignes) {
+			recap.add(this.creerInfoRow(ligne[0], ligne[1]));
+		}
 		center.add(recap);
 
 		JPanel card = new JPanel();
@@ -135,7 +125,7 @@ public class PaiementVirementVoirie extends JPanel {
 		JLabel val = new JLabel(value);
 		val.setFont(DefaultTheme.FONT_LABEL_SMALL);
 		val.setForeground(new Color(40, 40, 40));
-		val.setHorizontalAlignment(SwingConstants.RIGHT);
+		val.setHorizontalAlignment(JLabel.RIGHT);
 
 		row.add(lbl, BorderLayout.WEST);
 		row.add(val, BorderLayout.EAST);
@@ -163,8 +153,16 @@ public class PaiementVirementVoirie extends JPanel {
 		return bloc;
 	}
 
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -192,25 +190,5 @@ public class PaiementVirementVoirie extends JPanel {
 				super.replace(fb, offset, length, text, attrs);
 			}
 		}
-	}
-
-	public JButton getBtnPayer() {
-		return this.btnPayer;
-	}
-
-	public ZoneVoirie getZone() {
-		return this.zone;
-	}
-
-	public String getImmatriculation() {
-		return this.immatriculation;
-	}
-
-	public int getDuree() {
-		return this.duree;
-	}
-
-	public double getPrix() {
-		return this.prix;
 	}
 }

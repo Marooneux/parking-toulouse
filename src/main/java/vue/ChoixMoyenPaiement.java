@@ -24,25 +24,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
 
-public class ChoixMoyenPaiementVoirie extends JPanel {
+public class ChoixMoyenPaiement extends JPanel {
 
-	private static final long serialVersionUID = 3423101212327323950L;
+	private static final long serialVersionUID = 1L;
 	private JButton btnCarte;
 	private JButton btnVirement;
-	private ZoneVoirie zone;
-	private String immatriculation;
-	private int duree;
-	private double prix;
 
-	public ChoixMoyenPaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
-		this.zone = zone2;
-		this.immatriculation = immatriculation;
-		this.duree = duree;
-		this.prix = prix;
-
+	public ChoixMoyenPaiement() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
 
@@ -125,7 +115,7 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
 
 		JLabel lblSubtitle = new JLabel(subtitle);
-		lblSubtitle.setFont(DefaultTheme.FONT_FIELD);
+		lblSubtitle.setFont(DefaultTheme.FONT_BODY);
 		lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
 
 		card.add(lblIcon, gbc);
@@ -146,22 +136,6 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		this.btnVirement.addActionListener(listener);
 	}
 
-	public ZoneVoirie getZone() {
-		return this.zone;
-	}
-
-	public String getImmatriculation() {
-		return this.immatriculation;
-	}
-
-	public int getDuree() {
-		return this.duree;
-	}
-
-	public double getPrix() {
-		return this.prix;
-	}
-
 	private class IconCard implements Icon {
 		@Override
 		public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -175,14 +149,10 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
 
 	private class IconBank implements Icon {
@@ -202,14 +172,9 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
-
 }
