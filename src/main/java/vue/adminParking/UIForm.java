@@ -8,7 +8,7 @@ public class UIForm {
 
     public static JPanel row(String label, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
-        row.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        row.setBackground(DefaultTheme.COLOR_BG_PAGE);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         row.setBorder(new EmptyBorder(5, 0, 5, 0));
 

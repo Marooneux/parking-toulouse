@@ -10,13 +10,13 @@ public class UIDetailRow {
         row.setOpaque(false);
 
         JLabel lblIcon = new JLabel(icon);
-        lblIcon.setFont(DefaultTheme.FONT_ICON_SMALL);
+        lblIcon.setFont(DefaultTheme.FONT_ICON_S);
         lblIcon.setPreferredSize(new Dimension(25, 20));
         lblIcon.setForeground(Color.GRAY);
 
         JLabel lblText = new JLabel(text);
-        lblText.setFont(DefaultTheme.FONT_LABEL_SMALL);
-        lblText.setForeground(DefaultTheme.LABEL_COLOR);
+        lblText.setFont(DefaultTheme.FONT_LABEL_S);
+        lblText.setForeground(DefaultTheme.COLOR_TEXT_SECONDARY);
 
         row.add(lblIcon);
         row.add(lblText);
