@@ -1,7 +1,6 @@
 package controleur;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,17 +27,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class ControleurSaisirHeureArriveParking implements ActionListener {
+public class ControleurSaisirHeureArriveParking extends ControleurSaisirStationnementBase<SaisirHeureArriveParking> {
 	private static final Logger LOGGER = Logger.getLogger(ControleurSaisirHeureArriveParking.class.getName());
 
 
-    private final SaisirHeureArriveParking vue;
     private final Parking parking;
     private final DateTimeFormatter formatHeure = DateTimeFormatter.ofPattern("HH:mm");
 
     public ControleurSaisirHeureArriveParking(Parking parking) {
+        super(new SaisirHeureArriveParking(parking));
         this.parking = parking;
-        this.vue = new SaisirHeureArriveParking(parking);
         this.vue.reinitialiserChamps();
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
@@ -159,24 +157,6 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                     return panel;
                 },
                 "Mes véhicules");
-    }
-
-    private void prefillPlaque() {
-        try {
-            if (AuthManager.getCurrentUser() == null) {
-                return;
-            }
-            MySQLDataSource.creerAcces();
-            DaoVehicule daoVehicule = new DaoVehicule();
-            int userId = AuthManager.getCurrentUser().getId();
-            List<Vehicule> vehicules = daoVehicule.findByUserId(userId);
-            Vehicule vehicule = vehicules.isEmpty() ? null : vehicules.getFirst();
-            if (vehicule != null) {
-                vue.getPlaque().setText(vehicule.getImmatriculation());
-            }
-        } catch (Exception ignored) {
-            // Pré-remplissage non bloquant
-        }
     }
 
     // Calculate price based on quarter-hour increments
