@@ -1,7 +1,6 @@
 package controleur;
 
-import java.awt.event.ActionEvent; 
-import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,17 +29,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class ControleurSaisirHeureArriveParking implements ActionListener {
+public class ControleurSaisirHeureArriveParking extends ControleurSaisirStationnementBase<SaisirHeureArriveParking> {
 	private static final Logger LOGGER = Logger.getLogger(ControleurSaisirHeureArriveParking.class.getName());
 
 
-    private final SaisirHeureArriveParking vue;
     private final Parking parking;
     private final DateTimeFormatter formatHeure = DateTimeFormatter.ofPattern("HH:mm");
 
     public ControleurSaisirHeureArriveParking(Parking parking) {
+        super(new SaisirHeureArriveParking(parking));
         this.parking = parking;
-        this.vue = new SaisirHeureArriveParking(parking);
         this.vue.reinitialiserChamps();
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
@@ -155,7 +153,6 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                 },
                 "Mes véhicules");
     }
-
 
     // Calculate price based on quarter-hour increments
     public static double calculerPrixTotal(Parking parking, String strHeureArrivee) {
