@@ -97,55 +97,55 @@ public class TestZone {
 
     @Test
     public void testConvertirCouleurRouge() {
-        Color c = zone.convertirCouleur();
+        Color c = ZoneVoirie.convertirCouleur(zone.getCouleur());
         assertEquals(new Color(255, 59, 48), c);
     }
 
     @Test
     public void testConvertirCouleurJaune() {
         zone.setCouleur("jaune");
-        assertEquals(new Color(255, 204, 0), zone.convertirCouleur());
+        assertEquals(new Color(255, 204, 0), ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurOrange() {
         zone.setCouleur("orange");
-        assertEquals(new Color(255, 149, 0), zone.convertirCouleur());
+        assertEquals(new Color(255, 149, 0), ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurVerte() {
         zone.setCouleur("verte");
-        assertEquals(new Color(0, 128, 0), zone.convertirCouleur());
+        assertEquals(new Color(0, 128, 0), ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurBleue() {
         zone.setCouleur("bleue");
-        assertEquals(new Color(0, 122, 255), zone.convertirCouleur());
+        assertEquals(new Color(0, 122, 255), ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurHex() {
         zone.setCouleur("#FF0000");
-        assertEquals(Color.decode("#FF0000"), zone.convertirCouleur());
+        assertEquals(Color.decode("#FF0000"), ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurHexInvalide() {
         zone.setCouleur("#ZZZZZZ");
-        assertEquals(Color.GRAY, zone.convertirCouleur());
+        assertEquals(Color.GRAY, ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurNull() {
         zone.setCouleur(null);
-        assertEquals(Color.GRAY, zone.convertirCouleur());
+        assertEquals(Color.GRAY, ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 
     @Test
     public void testConvertirCouleurInconnue() {
         zone.setCouleur("violet");
-        assertEquals(Color.GRAY, zone.convertirCouleur());
+        assertEquals(Color.GRAY, ZoneVoirie.convertirCouleur(zone.getCouleur()));
     }
 }

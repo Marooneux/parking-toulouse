@@ -65,7 +65,7 @@ public class Profile extends JPanel {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout());
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		this.layeredPane = new JLayeredPane();
 		this.add(this.layeredPane, BorderLayout.CENTER);
@@ -74,7 +74,7 @@ public class Profile extends JPanel {
 		this.mainContentPanel = new JPanel();
 		this.cardLayout = new CardLayout();
 		this.mainContentPanel.setLayout(this.cardLayout);
-		this.mainContentPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.mainContentPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		// Ajout des "Cartes" (Vues)
 		this.mainContentPanel.add(this.createInfosView(), "INFOS");
@@ -139,14 +139,14 @@ public class Profile extends JPanel {
 	public void toggleSidebarState() {
 		boolean isVisible = this.sidebarPanel.isVisible();
 		this.sidebarPanel.setVisible(!isVisible);
-		this.btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.TEXT_COLOR);
+		this.btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.COLOR_TEXT_PRIMARY);
 		this.updateLayoutBounds();
 	}
 
 	private JPanel createSidebar() {
 		JPanel sidebar = new JPanel();
 		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-		sidebar.setBackground(DefaultTheme.TEXT_COLOR);
+		sidebar.setBackground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		sidebar.setBorder(new EmptyBorder(60, 10, 20, 10));
 
 		JLabel lblMenu = new JLabel("MON COMPTE");
@@ -189,18 +189,18 @@ public class Profile extends JPanel {
 	// --- VUE 1 : INFOS (Lecture Seule) ---
 	private JPanel createInfosView() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		// Header
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		header.setBorder(new EmptyBorder(40, 50, 20, 50));
 
 		JLabel icon = new JLabel("\uD83D\uDC64 "); // Icone User
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		JLabel title = new JLabel("Mes Informations");
-		title.setFont(DefaultTheme.FONT_TITLE);
-		title.setForeground(DefaultTheme.TEXT_COLOR);
+		title.setFont(DefaultTheme.FONT_TITLE_XL);
+		title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		header.add(icon);
 		header.add(title);
@@ -222,7 +222,7 @@ public class Profile extends JPanel {
 
 		// Wrapper pour centrer un peu le contenu
 		JPanel wrapper = new JPanel(new BorderLayout());
-		wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		wrapper.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		wrapper.setBorder(new EmptyBorder(0, 50, 50, 50));
 		wrapper.add(content, BorderLayout.NORTH);
 
@@ -236,7 +236,7 @@ public class Profile extends JPanel {
 		this.btnModifierInfos.setPreferredSize(new Dimension(220, 40));
 		this.btnModifierInfos.setFocusPainted(false);
 		JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		footer.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		footer.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		footer.setBorder(new EmptyBorder(10, 50, 30, 50));
 		footer.add(this.btnModifierInfos);
 		panel.add(footer, BorderLayout.SOUTH);
@@ -254,7 +254,7 @@ public class Profile extends JPanel {
 		l.setForeground(Color.GRAY);
 		l.setPreferredSize(new Dimension(100, 40));
 
-		valueLabel.setFont(DefaultTheme.FONT_LABEL_BIG);
+		valueLabel.setFont(DefaultTheme.FONT_LABEL);
 
 		row.add(l, BorderLayout.WEST);
 		row.add(valueLabel, BorderLayout.CENTER);
@@ -264,14 +264,14 @@ public class Profile extends JPanel {
 	// --- VUE 2 : EDITION (Formulaire) ---
 	private JPanel createEditionView() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		// Header
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		header.setBorder(new EmptyBorder(40, 50, 20, 50));
 		JLabel title = new JLabel("Modifier le profil");
-		title.setFont(DefaultTheme.FONT_HERO_TITLE);
+		title.setFont(DefaultTheme.FONT_TITLE);
 		header.add(title);
 		panel.add(header, BorderLayout.NORTH);
 
@@ -291,14 +291,14 @@ public class Profile extends JPanel {
 		this.addFormField(form, "Mot de passe :", this.txtEditMdp);
 
 		JPanel wrapper = new JPanel(new BorderLayout());
-		wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		wrapper.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		wrapper.setBorder(new EmptyBorder(0, 50, 0, 50));
 		wrapper.add(form, BorderLayout.NORTH);
 		panel.add(new JScrollPane(wrapper), BorderLayout.CENTER);
 
 		// Actions
 		this.btnAnnulerEdit = new JButton("Annuler");
-		this.btnAnnulerEdit.setBackground(DefaultTheme.SUBTEXT_COLOR);
+		this.btnAnnulerEdit.setBackground(DefaultTheme.COLOR_TEXT_MUTED);
 		this.btnAnnulerEdit.setForeground(Color.WHITE);
 
 		this.btnEnregistrer = new JButton("Enregistrer");
@@ -306,7 +306,7 @@ public class Profile extends JPanel {
 		this.btnEnregistrer.setForeground(Color.WHITE);
 
 		JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		footer.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		footer.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		footer.setBorder(new EmptyBorder(20, 50, 30, 50));
 		footer.add(this.btnAnnulerEdit);
 		footer.add(this.btnEnregistrer);
@@ -325,13 +325,13 @@ public class Profile extends JPanel {
 	// --- VUE 3 : HISTORIQUE ---
 	private JPanel createHistoriqueView() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		header.setBorder(new EmptyBorder(40, 50, 20, 50));
 		JLabel title = new JLabel("Historique des activités");
-		title.setFont(DefaultTheme.FONT_HERO_TITLE);
+		title.setFont(DefaultTheme.FONT_TITLE);
 		header.add(title);
 		panel.add(header, BorderLayout.NORTH);
 

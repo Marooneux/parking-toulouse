@@ -3,6 +3,7 @@ package modele.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 import modele.LigneMetro;
 import modele.Parking;
@@ -35,7 +36,9 @@ public class DaoProximite extends DaoModele<Proximite> {
 
 	@Override
 	public List<Proximite> findAll() throws SQLException {
-		return this.find(new RequeteSelectProximite());
+		List<Proximite> list = this.find(new RequeteSelectProximite());
+		list.removeIf(Objects::isNull);
+		return list;
 	}
 
 	public Proximite findById(int idParking, int idLigneMetro) throws SQLException {
@@ -50,9 +53,9 @@ public class DaoProximite extends DaoModele<Proximite> {
 		int distance = curseur.getInt("distance_metres");
 
 		Parking parking = this.daoParking.findById(idParking);
-		if (parking == null) throw new SQLException("Parking introuvable id=" + idParking);
+		if (parking == null) return null;
 		LigneMetro ligneMetro = this.daoLigneMetro.findById(idLigne);
-		if (ligneMetro == null) throw new SQLException("Ligne metro introuvable id=" + idLigne);
+		if (ligneMetro == null) return null;
 
 		return new Proximite(parking, ligneMetro, distance);
 	}

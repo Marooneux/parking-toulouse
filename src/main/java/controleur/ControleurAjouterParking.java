@@ -67,9 +67,10 @@ public class ControleurAjouterParking {
             parking.setAdresse(adresse);
             
             try {
-                parking.setTarif(Double.parseDouble(vue.getTarif()));
-                parking.setHauteurMax(Double.parseDouble(vue.getHauteur()));
-                parking.setCapacite(Integer.parseInt(vue.getPlacesMax()));
+                parking.setTarif(vue.getTarif());
+                parking.setHauteurMax(vue.getHauteur());
+                parking.setCapacite(vue.getPlacesMax());
+
                 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(vue, "Vérifiez les champs numériques (Tarif, Hauteur, Places).");

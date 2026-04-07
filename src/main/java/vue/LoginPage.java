@@ -28,7 +28,7 @@ public class LoginPage extends JPanel {
 		this.saisieMdp = new TemplateSaisie("Mot de passe", "", true);
 
 		this.setLayout(new BorderLayout());
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel wrapper = new JPanel(new BorderLayout());
 		wrapper.setOpaque(false);
@@ -38,18 +38,18 @@ public class LoginPage extends JPanel {
 		JPanel card = new JPanel(new BorderLayout());
 		card.setBackground(Color.WHITE);
 		card.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.BORDER_SOFT, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER_SUBTLE, 1),
 				new EmptyBorder(0, 0, 0, 0)));
 		wrapper.add(card, BorderLayout.CENTER);
 
 		JPanel heroPanel = new JPanel();
 		heroPanel.setPreferredSize(new Dimension(320, 0));
-		heroPanel.setBackground(DefaultTheme.TEXT_COLOR);
+		heroPanel.setBackground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		heroPanel.setLayout(new BoxLayout(heroPanel, BoxLayout.Y_AXIS));
 		heroPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
 
 		JLabel heroTitle = new JLabel("Smart Parking");
-		heroTitle.setFont(DefaultTheme.FONT_TITLE_LABEL);
+		heroTitle.setFont(DefaultTheme.FONT_TITLE_L);
 		heroTitle.setForeground(Color.WHITE);
 		heroPanel.add(heroTitle);
 
@@ -57,13 +57,13 @@ public class LoginPage extends JPanel {
 
 		JLabel heroSubtitle = new JLabel("Gérez vos stationnements avec fluidité.");
 		heroSubtitle.setFont(DefaultTheme.FONT_BODY);
-		heroSubtitle.setForeground(DefaultTheme.BORDER_BUTTON);
+		heroSubtitle.setForeground(DefaultTheme.COLOR_BORDER_BUTTON);
 		heroPanel.add(heroSubtitle);
 
 		heroPanel.add(Box.createVerticalGlue());
 
 		JLabel heroHint = new JLabel("Vos parkings, vos réservations, en un seul endroit.");
-		heroHint.setFont(DefaultTheme.FONT_HERO_HINT);
+		heroHint.setFont(DefaultTheme.FONT_BODY_S);
 		heroHint.setForeground(new Color(173, 181, 189));
 		heroPanel.add(heroHint);
 
@@ -76,8 +76,8 @@ public class LoginPage extends JPanel {
 		card.add(formPanel, BorderLayout.CENTER);
 
 		JLabel title = new JLabel("Connexion");
-		title.setFont(DefaultTheme.FONT_TITLE);
-		title.setForeground(DefaultTheme.TEXT_COLOR);
+		title.setFont(DefaultTheme.FONT_TITLE_XL);
+		title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		title.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(title);
 
@@ -85,7 +85,7 @@ public class LoginPage extends JPanel {
 
 		JLabel subtitle = new JLabel("Accédez à votre espace de gestion de stationnement.");
 		subtitle.setFont(DefaultTheme.FONT_BODY);
-		subtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		subtitle.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 		subtitle.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(subtitle);
 
@@ -110,10 +110,10 @@ public class LoginPage extends JPanel {
 		JButton btnInscription = new JButton("Creer un compte");
 		btnInscription.setBackground(Color.WHITE);
 		btnInscription.setForeground(new Color(52, 58, 64));
-		btnInscription.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		btnInscription.setFont(DefaultTheme.FONT_LABEL_S);
 		btnInscription.setFocusPainted(false);
 		btnInscription.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.BORDER_BUTTON, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1),
 				new EmptyBorder(10, 14, 10, 14)));
 		btnInscription.setAlignmentX(LEFT_ALIGNMENT);
 		btnInscription.addActionListener(

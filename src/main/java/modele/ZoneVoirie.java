@@ -37,7 +37,6 @@ public class ZoneVoirie implements Serializable {
 	}
 	
 	
-	
 	public String getHorairesAffiches() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH'h'mm");
         StringBuilder sb = new StringBuilder();
@@ -54,25 +53,33 @@ public class ZoneVoirie implements Serializable {
     }
 	
 	
-	
-	public Color convertirCouleur() {
-		if (couleur == null) return Color.GRAY;
+	public static Color convertirCouleur(String couleur) {
+		if (couleur == null) {
+			return Color.GRAY;
+		}
+		String couleurTrimmed = couleur.toLowerCase().trim();
 		
-		if (couleur.startsWith("#")) {
+		if (couleurTrimmed.startsWith("#")) {
 			try {
-				return Color.decode(couleur);
+				return Color.decode(couleurTrimmed);
 			} catch (NumberFormatException e) {
 				return Color.GRAY;
 			}
 		}
 		
-		switch (couleur.toLowerCase()) {
-			case "jaune": return new Color(255, 204, 0);
-			case "orange": return new Color(255, 149, 0);
-			case "rouge": return new Color(255, 59, 48);
-			case "verte": return new Color(0, 128, 0);
-			case "bleue": return new Color(0, 122, 255);
-			default: return Color.GRAY;
+		switch (couleurTrimmed) {
+		case "jaune":
+			return new Color(255, 204, 0);
+		case "orange":
+			return new Color(255, 149, 0);
+		case "rouge":
+			return new Color(255, 59, 48);
+		case "verte":
+			return new Color(0, 128, 0);
+		case "bleue":
+			return new Color(0, 122, 255);
+		default:
+			return Color.GRAY;
 		}
 	}
 	
@@ -81,29 +88,36 @@ public class ZoneVoirie implements Serializable {
 		return this.id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public String getCouleur() {
 		return this.couleur;
 	}
 
+
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
+
 
 	public double getTarifHoraire() {
 		return this.tarifHoraire;
 	}
 
+
 	public void setTarifHoraire(double tarifHoraire) {
 		this.tarifHoraire = tarifHoraire;
 	}
 
+
 	public int getDureeMax() {
 		return this.dureeMax;
 	}
+
 
 	public void setDureeMax(int dureeMax) {
 		this.dureeMax = dureeMax;

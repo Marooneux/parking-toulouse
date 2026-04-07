@@ -53,6 +53,6 @@ public class ControleurConfirmationPaiementVoirie implements ActionListener {
                 vue.getMoyenPaiement());
         new ControleurTicketVoirie(ticket);
         String key = "voirie-ticket-" + vue.getImmatriculation() + "-" + vue.getDuree();
-        NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie");
+        NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie", true);
     }
 }
