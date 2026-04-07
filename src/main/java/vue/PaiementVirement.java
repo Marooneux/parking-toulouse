@@ -12,7 +12,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -21,17 +20,19 @@ import javax.swing.text.DocumentFilter;
 
 import ui.theme.DefaultTheme;
 
-public abstract class PaiementVirement extends JPanel {
+public class PaiementVirement extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
+	private static final long serialVersionUID = 6895815859853184568L;
+	private static final Color BACKGROUND_COLOR = DefaultTheme.COLOR_BG_PAGE;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
-	private JButton btnPayer;
 	private final double prix;
+	private JButton btnPayer;
+	private TemplateSaisie textFieldNom;
+	private TemplateSaisie textFieldIban;
 
-	protected PaiementVirement(JPanel recap, double prix) {
+	public PaiementVirement(double prix, String[][] recapLignes) {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
@@ -42,7 +43,7 @@ public abstract class PaiementVirement extends JPanel {
 		header.setBackground(BACKGROUND_COLOR);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -50,8 +51,8 @@ public abstract class PaiementVirement extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Virement bancaire");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
@@ -67,6 +68,16 @@ public abstract class PaiementVirement extends JPanel {
 		center.setLayout(new GridLayout(1, 2, 20, 0));
 		this.add(center, BorderLayout.CENTER);
 
+		JPanel recap = new JPanel();
+		recap.setBackground(Color.WHITE);
+		recap.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(BORDER_COLOR),
+				new EmptyBorder(16, 16, 16, 16)));
+		recap.setLayout(new GridLayout(0, 1, 8, 8));
+
+		for (String[] ligne : recapLignes) {
+			recap.add(this.creerInfoRow(ligne[0], ligne[1]));
+		}
 		center.add(recap);
 
 		JPanel card = new JPanel();
@@ -76,24 +87,24 @@ public abstract class PaiementVirement extends JPanel {
 				new EmptyBorder(18, 18, 18, 18)));
 		card.setLayout(new GridLayout(0, 1, 12, 12));
 
-		TemplateSaisie textFieldNom = new TemplateSaisie("Nom et prenom", "Nom Prenom", false, false);
-		textFieldNom.getField().setFont(DefaultTheme.FONT_BODY);
-		((AbstractDocument) textFieldNom.getField().getDocument())
+		this.textFieldNom = new TemplateSaisie("Nom et prenom", "Nom Prenom", false, false);
+		this.textFieldNom.getField().setFont(DefaultTheme.FONT_BODY);
+		((AbstractDocument) this.textFieldNom.getField().getDocument())
 				.setDocumentFilter(new LimiteCaracteresFilter(60));
-		card.add(this.creerBlocChamps("Nom et prenom", textFieldNom));
+		card.add(this.creerBlocChamps("Nom et prenom", this.textFieldNom));
 
-		TemplateSaisie textFieldIban = new TemplateSaisie("IBAN", "FR76 3000 6000 0112 3456 7890 189", false, false);
-		textFieldIban.getField().setFont(DefaultTheme.FONT_BODY);
-		((AbstractDocument) textFieldIban.getField().getDocument())
+		this.textFieldIban = new TemplateSaisie("IBAN", "FR76 3000 6000 0112 3456 7890 189", false, false);
+		this.textFieldIban.getField().setFont(DefaultTheme.FONT_BODY);
+		((AbstractDocument) this.textFieldIban.getField().getDocument())
 				.setDocumentFilter(new LimiteCaracteresFilter(34));
-		card.add(this.creerBlocChamps("IBAN", textFieldIban));
+		card.add(this.creerBlocChamps("IBAN", this.textFieldIban));
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelBtn.setOpaque(false);
 		this.btnPayer = new JButton(String.format("Payer - %.2f €", prix));
 		this.btnPayer.setBackground(PRIMARY_COLOR);
 		this.btnPayer.setForeground(Color.WHITE);
-		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnPayer.setFocusPainted(false);
 		this.btnPayer.setPreferredSize(new Dimension(180, 40));
 		panelBtn.add(this.btnPayer);
@@ -102,29 +113,19 @@ public abstract class PaiementVirement extends JPanel {
 		center.add(card);
 	}
 
-	protected static JPanel creerPanelRecapBase() {
-		JPanel recap = new JPanel();
-		recap.setBackground(Color.WHITE);
-		recap.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(new Color(230, 230, 230)),
-				new EmptyBorder(16, 16, 16, 16)));
-		recap.setLayout(new GridLayout(0, 1, 8, 8));
-		return recap;
-	}
-
-	protected static JPanel creerInfoRow(String label, String value) {
+	private JPanel creerInfoRow(String label, String value) {
 		JPanel row = new JPanel(new BorderLayout());
 		row.setBackground(Color.WHITE);
 		row.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
 		JLabel lbl = new JLabel(label);
-		lbl.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		lbl.setFont(DefaultTheme.FONT_BUTTON);
 		lbl.setForeground(new Color(80, 80, 80));
 
 		JLabel val = new JLabel(value);
-		val.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		val.setFont(DefaultTheme.FONT_LABEL_S);
 		val.setForeground(new Color(40, 40, 40));
-		val.setHorizontalAlignment(SwingConstants.RIGHT);
+		val.setHorizontalAlignment(JLabel.RIGHT);
 
 		row.add(lbl, BorderLayout.WEST);
 		row.add(val, BorderLayout.EAST);
@@ -152,8 +153,16 @@ public abstract class PaiementVirement extends JPanel {
 		return bloc;
 	}
 
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -181,13 +190,5 @@ public abstract class PaiementVirement extends JPanel {
 				super.replace(fb, offset, length, text, attrs);
 			}
 		}
-	}
-
-	public JButton getBtnPayer() {
-		return this.btnPayer;
-	}
-
-	public double getPrix() {
-		return this.prix;
 	}
 }

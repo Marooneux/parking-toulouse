@@ -42,7 +42,7 @@ public class ChoixZone extends JPanel {
 		header.setBorder(new javax.swing.border.MatteBorder(0, 0, 1, 0, new Color(230, 230, 230)));
 
 		JLabel lblIcon = new JLabel("\uD83D\uDE97");
-		lblIcon.setFont(DefaultTheme.FONT_ICON_BIG);
+		lblIcon.setFont(DefaultTheme.FONT_ICON_XL);
 		header.add(lblIcon);
 
 		JPanel texte = new JPanel();
@@ -50,7 +50,7 @@ public class ChoixZone extends JPanel {
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 
@@ -81,7 +81,7 @@ public class ChoixZone extends JPanel {
 
 		int compteur = 0;
 		for (ZoneVoirie zone : zones) {
-			Color couleurCarte = zone.convertirCouleur();
+			Color couleurCarte = ZoneVoirie.convertirCouleur(zone.getCouleur());
 			JPanel carte = this.createCard(zone, couleurCarte);
 
 			if (compteur < 3) {
@@ -145,7 +145,7 @@ public class ChoixZone extends JPanel {
 		card.add(iconCircle);
 
 		JLabel lblTitre = new JLabel("Zone " + zone.getCouleur());
-		lblTitre.setFont(DefaultTheme.FONT_TITLE_ALT);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_S);
 		lblTitre.setForeground(new Color(33, 33, 33));
 		lblTitre.setBounds(25, 80, 250, 25);
 		card.add(lblTitre);
@@ -156,7 +156,7 @@ public class ChoixZone extends JPanel {
 		card.add(iconClock);
 
 		JLabel lblHorairesTitle = new JLabel("Horaires payants");
-		lblHorairesTitle.setFont(DefaultTheme.FONT_BOLD);
+		lblHorairesTitle.setFont(DefaultTheme.FONT_LABEL_S);
 		lblHorairesTitle.setForeground(Color.GRAY);
 		lblHorairesTitle.setBounds(50, 120, 120, 15);
 		card.add(lblHorairesTitle);
@@ -196,13 +196,13 @@ public class ChoixZone extends JPanel {
 		card.add(separator);
 
 		JLabel lblTarifTitle = new JLabel("Tarif");
-		lblTarifTitle.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		lblTarifTitle.setFont(DefaultTheme.FONT_BUTTON);
 		lblTarifTitle.setForeground(Color.GRAY);
 		lblTarifTitle.setBounds(25, 270, 100, 20);
 		card.add(lblTarifTitle);
 
 		JLabel lblPrix = new JLabel(String.valueOf(zone.getTarifHoraire()) + " €/h");
-		lblPrix.setFont(DefaultTheme.FONT_TITLE_ALT);
+		lblPrix.setFont(DefaultTheme.FONT_TITLE_S);
 		lblPrix.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrix.setBounds(175, 270, 100, 20);
 		card.add(lblPrix);

@@ -31,7 +31,7 @@ public class InscriptionPage extends JPanel {
 
 	public InscriptionPage() {
 		this.setLayout(new BorderLayout());
-		this.setBackground(DefaultTheme.TEXT_COLOR);
+		this.setBackground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		JPanel wrapper = new JPanel(new BorderLayout());
 		wrapper.setOpaque(false);
@@ -39,20 +39,20 @@ public class InscriptionPage extends JPanel {
 		this.add(wrapper, BorderLayout.CENTER);
 
 		JPanel card = new JPanel(new BorderLayout());
-		card.setBackground(DefaultTheme.BACKGROUND_CARD);
+		card.setBackground(DefaultTheme.COLOR_BG_SURFACE);
 		card.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.BORDER_SOFT, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER_SUBTLE, 1),
 				new EmptyBorder(0, 0, 0, 0)));
 		wrapper.add(card, BorderLayout.CENTER);
 
 		JPanel heroPanel = new JPanel();
 		heroPanel.setPreferredSize(new Dimension(320, 0));
-		heroPanel.setBackground(DefaultTheme.BACKGROUND_HERO);
+		heroPanel.setBackground(DefaultTheme.COLOR_BG_INVERSE);
 		heroPanel.setLayout(new BoxLayout(heroPanel, BoxLayout.Y_AXIS));
 		heroPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
 
 		JLabel heroTitle = new JLabel("Rejoignez Smart Parking");
-		heroTitle.setFont(DefaultTheme.FONT_HERO_TITLE);
+		heroTitle.setFont(DefaultTheme.FONT_TITLE);
 		heroTitle.setForeground(Color.WHITE);
 		heroPanel.add(heroTitle);
 
@@ -60,32 +60,32 @@ public class InscriptionPage extends JPanel {
 
 		JLabel heroSubtitle = new JLabel("Creez votre compte client pour reserver plus vite.");
 		heroSubtitle.setFont(DefaultTheme.FONT_BODY);
-		heroSubtitle.setForeground(DefaultTheme.FOREGROUND_HERO_SUBTITLE);
+		heroSubtitle.setForeground(DefaultTheme.COLOR_BORDER_SUBTLE);
 		heroPanel.add(heroSubtitle);
 
 		heroPanel.add(Box.createVerticalGlue());
 
 		JLabel heroHint = new JLabel("Gestion simple des parkings et tickets.");
-		heroHint.setFont(DefaultTheme.FONT_HERO_HINT);
-		heroHint.setForeground(DefaultTheme.FOREGROUND_HERO_HINT);
+		heroHint.setFont(DefaultTheme.FONT_BODY_S);
+		heroHint.setForeground(DefaultTheme.COLOR_TEXT_HINT);
 		heroPanel.add(heroHint);
 
 		card.add(heroPanel, BorderLayout.WEST);
 
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-		formPanel.setBackground(DefaultTheme.BACKGROUND_CARD);
+		formPanel.setBackground(DefaultTheme.COLOR_BG_SURFACE);
 		formPanel.setBorder(new EmptyBorder(40, 50, 40, 50));
 		card.add(formPanel, BorderLayout.CENTER);
 
-		JLabel title = this.createLabel("Creer un compte", DefaultTheme.FONT_TITLE, DefaultTheme.TEXT_COLOR);
+		JLabel title = this.createLabel("Creer un compte", DefaultTheme.FONT_TITLE_XL, DefaultTheme.COLOR_TEXT_PRIMARY);
 		title.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(title);
 
 		formPanel.add(Box.createVerticalStrut(6));
 
 		JLabel subtitle = this.createLabel("Renseignez vos informations pour commencer.", DefaultTheme.FONT_BODY,
-				DefaultTheme.SUBTEXT_COLOR);
+				DefaultTheme.COLOR_TEXT_MUTED);
 		subtitle.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(subtitle);
 
@@ -111,12 +111,12 @@ public class InscriptionPage extends JPanel {
 		formPanel.add(Box.createVerticalStrut(12));
 
 		this.btnRetourConnexion = new JButton("J'ai deja un compte");
-		this.btnRetourConnexion.setBackground(DefaultTheme.BACKGROUND_CARD);
+		this.btnRetourConnexion.setBackground(DefaultTheme.COLOR_BG_SURFACE);
 		this.btnRetourConnexion.setForeground(new Color(52, 58, 64));
-		this.btnRetourConnexion.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		this.btnRetourConnexion.setFont(DefaultTheme.FONT_LABEL_S);
 		this.btnRetourConnexion.setFocusPainted(false);
 		this.btnRetourConnexion.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.BORDER_BUTTON, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1),
 				new EmptyBorder(10, 14, 10, 14)));
 		this.btnRetourConnexion.setAlignmentX(LEFT_ALIGNMENT);
 		formPanel.add(this.btnRetourConnexion);
@@ -136,9 +136,9 @@ public class InscriptionPage extends JPanel {
 		field.setAlignmentX(LEFT_ALIGNMENT);
 		field.getField().setFont(DefaultTheme.FONT_BODY);
 		field.getField().setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.BORDER_INPUT, 1, true),
+				new LineBorder(DefaultTheme.COLOR_BORDER, 1, true),
 				new EmptyBorder(10, 12, 10, 12)));
-		field.getField().setBackground(DefaultTheme.BACKGROUND_INPUT);
+		field.getField().setBackground(DefaultTheme.COLOR_BG_INPUT);
 		field.getField().setMaximumSize(DefaultTheme.INPUT_MAX_SIZE);
 		container.add(field);
 		container.add(Box.createVerticalStrut(18));

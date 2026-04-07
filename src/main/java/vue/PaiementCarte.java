@@ -23,28 +23,31 @@ import javax.swing.text.DocumentFilter;
 
 import ui.theme.DefaultTheme;
 
-public abstract class PaiementCarte extends JPanel {
+public class PaiementCarte extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
+	private static final long serialVersionUID = -1573551118360617932L;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
 
+	private TemplateSaisie textFieldNom;
+	private TemplateSaisie textFieldNumCarte;
+	private TemplateSaisie textFieldExpiration;
+	private TemplateSaisie textFieldCVC;
 	private JButton btnPayer;
 	private final double prix;
 
-	protected PaiementCarte(double prix) {
+	public PaiementCarte(double prix) {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -52,8 +55,8 @@ public abstract class PaiementCarte extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Paiement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
@@ -90,7 +93,7 @@ public abstract class PaiementCarte extends JPanel {
 		JPanel montantRow = new JPanel(new BorderLayout(8, 0));
 		montantRow.setOpaque(false);
 		JLabel lblMontant = new JLabel("Montant");
-		lblMontant.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		lblMontant.setFont(DefaultTheme.FONT_LABEL_S);
 		lblMontant.setForeground(new Color(90, 90, 90));
 		JButton pillMontant = new JButton(String.format("%.2f €", this.prix));
 		pillMontant.setEnabled(false);
@@ -104,32 +107,32 @@ public abstract class PaiementCarte extends JPanel {
 		card.add(montantRow);
 		card.add(Box.createVerticalStrut(12));
 
-		TemplateSaisie textFieldNom = new TemplateSaisie("Nom sur la carte", "Nom Prenom", false, false);
-		((AbstractDocument) textFieldNom.getField().getDocument())
+		this.textFieldNom = new TemplateSaisie("Nom sur la carte", "Nom Prenom", false, false);
+		((AbstractDocument) this.textFieldNom.getField().getDocument())
 				.setDocumentFilter(new LimiteCaracteresFilter(40));
-		this.styleField(textFieldNom.getField());
-		card.add(this.creerBlocChamps("Nom sur la carte", textFieldNom));
+		this.styleField(this.textFieldNom.getField());
+		card.add(this.creerBlocChamps("Nom sur la carte", this.textFieldNom));
 
-		TemplateSaisie textFieldNumCarte = new TemplateSaisie("Numero de carte", "1234 5678 9012 3456", false, false);
-		((AbstractDocument) textFieldNumCarte.getField().getDocument())
+		this.textFieldNumCarte = new TemplateSaisie("Numero de carte", "1234 5678 9012 3456", false, false);
+		((AbstractDocument) this.textFieldNumCarte.getField().getDocument())
 				.setDocumentFilter(new FiltreUniquementChiffres(16));
-		this.styleField(textFieldNumCarte.getField());
-		card.add(this.creerBlocChamps("Numero de carte", textFieldNumCarte));
+		this.styleField(this.textFieldNumCarte.getField());
+		card.add(this.creerBlocChamps("Numero de carte", this.textFieldNumCarte));
 
 		JPanel row = new JPanel(new GridLayout(1, 2, 12, 0));
 		row.setOpaque(false);
 
-		TemplateSaisie textFieldExpiration = new TemplateSaisie("Expiration", "MM/YY", false, false);
-		((AbstractDocument) textFieldExpiration.getField().getDocument())
+		this.textFieldExpiration = new TemplateSaisie("Expiration", "MM/YY", false, false);
+		((AbstractDocument) this.textFieldExpiration.getField().getDocument())
 				.setDocumentFilter(new LimiteCaracteresFilter(5));
-		this.styleField(textFieldExpiration.getField(), 120);
-		row.add(this.creerBlocChamps("Expiration", textFieldExpiration));
+		this.styleField(this.textFieldExpiration.getField(), 120);
+		row.add(this.creerBlocChamps("Expiration", this.textFieldExpiration));
 
-		TemplateSaisie textFieldCVC = new TemplateSaisie("CVC", "123", false, false);
-		((AbstractDocument) textFieldCVC.getField().getDocument())
+		this.textFieldCVC = new TemplateSaisie("CVC", "123", false, false);
+		((AbstractDocument) this.textFieldCVC.getField().getDocument())
 				.setDocumentFilter(new FiltreUniquementChiffres(3));
-		this.styleField(textFieldCVC.getField(), 120);
-		row.add(this.creerBlocChamps("CVC", textFieldCVC));
+		this.styleField(this.textFieldCVC.getField(), 120);
+		row.add(this.creerBlocChamps("CVC", this.textFieldCVC));
 
 		row.setAlignmentX(Component.LEFT_ALIGNMENT);
 		card.add(row);
@@ -140,7 +143,7 @@ public abstract class PaiementCarte extends JPanel {
 		this.btnPayer = new JButton(String.format("Payer - %.2f €", this.prix));
 		this.btnPayer.setBackground(PRIMARY_COLOR);
 		this.btnPayer.setForeground(Color.WHITE);
-		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnPayer.setFocusPainted(false);
 		this.btnPayer.setPreferredSize(new Dimension(200, 44));
 		panelBtn.add(this.btnPayer);
@@ -173,10 +176,8 @@ public abstract class PaiementCarte extends JPanel {
 
 		JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		champPanel.setOpaque(false);
-
 		textField.getField().setFont(DefaultTheme.FONT_BODY);
 		textField.getField().setForeground(new Color(60, 60, 60));
-
 		champPanel.add(textField);
 
 		bloc.add(lbl);
@@ -197,8 +198,16 @@ public abstract class PaiementCarte extends JPanel {
 				new EmptyBorder(6, 10, 6, 10)));
 	}
 
-	class FiltreUniquementChiffres extends DocumentFilter {
-		private int maxCaracteres;
+	public JButton getBtnPayer() {
+		return this.btnPayer;
+	}
+
+	public double getPrix() {
+		return this.prix;
+	}
+
+	static class FiltreUniquementChiffres extends DocumentFilter {
+		private final int maxCaracteres;
 
 		public FiltreUniquementChiffres(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -232,7 +241,7 @@ public abstract class PaiementCarte extends JPanel {
 	}
 
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -258,13 +267,5 @@ public abstract class PaiementCarte extends JPanel {
 				Toolkit.getDefaultToolkit().beep();
 			}
 		}
-	}
-
-	public JButton getBtnPayer() {
-		return this.btnPayer;
-	}
-
-	public double getPrix() {
-		return this.prix;
 	}
 }

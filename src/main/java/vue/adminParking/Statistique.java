@@ -28,7 +28,7 @@ public class Statistique extends JPanel {
 
     public Statistique() {
         setLayout(new BorderLayout());
-        setBackground(DefaultTheme.BACKGROUND_COLOR);
+        setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         add(createHeader(), BorderLayout.NORTH);
         add(createContent(), BorderLayout.CENTER);
@@ -39,20 +39,20 @@ public class Statistique extends JPanel {
     // ---------------------------------------------------------
     private JComponent createHeader() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        header.setBackground(DefaultTheme.COLOR_BG_PAGE);
         header.setBorder(new EmptyBorder(20, 40, 10, 40));
 
         JLabel title = new JLabel("📊 Statistiques Parking");
-        title.setFont(DefaultTheme.FONT_TITLE);
-        title.setForeground(DefaultTheme.TEXT_COLOR);
+        title.setFont(DefaultTheme.FONT_TITLE_XL);
+        title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
         JLabel subtitle = new JLabel("Vue d’ensemble de l’activité des parkings");
         subtitle.setFont(DefaultTheme.FONT_BODY);
-        subtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
+        subtitle.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 
         JPanel left = new JPanel();
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-        left.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        left.setBackground(DefaultTheme.COLOR_BG_PAGE);
         left.add(title);
         left.add(Box.createVerticalStrut(4));
         left.add(subtitle);
@@ -61,17 +61,17 @@ public class Statistique extends JPanel {
                 "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
                 "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
         });
-        cbMois.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        cbMois.setFont(DefaultTheme.FONT_LABEL_S);
 
         btnRefresh = new JButton("⟳ Actualiser");
-        btnRefresh.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        btnRefresh.setFont(DefaultTheme.FONT_LABEL_S);
         btnRefresh.setBackground(new Color(0, 123, 255));
         btnRefresh.setForeground(Color.WHITE);
         btnRefresh.setFocusPainted(false);
         btnRefresh.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
 
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        right.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        right.setBackground(DefaultTheme.COLOR_BG_PAGE);
         right.add(cbMois);
         right.add(btnRefresh);
 
@@ -87,12 +87,12 @@ public class Statistique extends JPanel {
     private JComponent createContent() {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        content.setBackground(DefaultTheme.COLOR_BG_PAGE);
         content.setBorder(new EmptyBorder(0, 40, 40, 40));
 
         // KPI ROW
         JPanel kpiRow = new JPanel(new GridLayout(1, 3, 20, 0));
-        kpiRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        kpiRow.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         kpiRow.add(createKpiCard("Montant du mois", "€0.00", new Color(0, 123, 255), lbl -> lblMontant = lbl));
         kpiRow.add(createKpiCard("Total sessions", "0", new Color(40, 167, 69), lbl -> lblSessions = lbl));
@@ -124,18 +124,18 @@ public class Statistique extends JPanel {
         // RECENT ACTIVITY
         JLabel recentTitle = new JLabel("Activité récente");
         recentTitle.setFont(DefaultTheme.FONT_CARD_LABEL);
-        recentTitle.setForeground(DefaultTheme.TEXT_COLOR);
+        recentTitle.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
         recentTitle.setBorder(new EmptyBorder(0, 0, 8, 0));
         content.add(recentTitle);
 
         recentActivityPanel = new JPanel();
         recentActivityPanel.setLayout(new BoxLayout(recentActivityPanel, BoxLayout.Y_AXIS));
-        recentActivityPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        recentActivityPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
         content.add(recentActivityPanel);
 
         JScrollPane scroll = new JScrollPane(content);
         scroll.setBorder(null);
-        scroll.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
+        scroll.getViewport().setBackground(DefaultTheme.COLOR_BG_PAGE);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         return scroll;
@@ -154,12 +154,12 @@ public class Statistique extends JPanel {
         accentPanel.setBackground(accent);
 
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        lblTitle.setFont(DefaultTheme.FONT_LABEL_S);
         lblTitle.setForeground(new Color(110, 117, 125));
 
         JLabel lblValue = new JLabel(value);
-        lblValue.setFont(DefaultTheme.FONT_TITLE_LABEL);
-        lblValue.setForeground(DefaultTheme.TEXT_COLOR);
+        lblValue.setFont(DefaultTheme.FONT_TITLE_L);
+        lblValue.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
         ref.accept(lblValue);
 
@@ -183,7 +183,7 @@ public class Statistique extends JPanel {
 
         JLabel lbl = new JLabel(title);
         lbl.setFont(DefaultTheme.FONT_LABEL);
-        lbl.setForeground(DefaultTheme.TEXT_COLOR);
+        lbl.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
         lbl.setBorder(new EmptyBorder(0, 0, 8, 0));
 
         card.add(lbl, BorderLayout.NORTH);
@@ -191,7 +191,7 @@ public class Statistique extends JPanel {
 
 
         JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        wrapper.setBackground(DefaultTheme.COLOR_BG_PAGE);
         wrapper.add(card, BorderLayout.CENTER);
 
         return wrapper;
@@ -211,7 +211,7 @@ public class Statistique extends JPanel {
     	colorBox.setBorder(BorderFactory.createLineBorder(new Color(200,200,200)));
     	
     	JLabel lbl = new JLabel(label);
-    	lbl.setFont(DefaultTheme.FONT_LABEL_SMALL);
+    	lbl.setFont(DefaultTheme.FONT_LABEL_S);
     	lbl.setForeground(new Color(80,80,80));
     	
     	legend.add(colorBox);
@@ -320,7 +320,7 @@ public class Statistique extends JPanel {
             
             // Lun, Mar, Mer, Jeu, Ven, Sam, Dim sous chaque barre
             //label desous bar charte
-            g2.setFont(DefaultTheme.FONT_HERO_HINT);
+            g2.setFont(DefaultTheme.FONT_BODY_S);
             g2.setColor(new Color(80, 80, 80));
 
             for (int i = 0; i < values.size() && i < labels.length; i++) {
@@ -335,7 +335,7 @@ public class Statistique extends JPanel {
            
             //graduations verticales
             // Label de Y axis
-            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
+            g2.setFont(DefaultTheme.FONT_BODY_XS);
             g2.setColor(new Color(100, 100, 100));
             for(int i = 0; i<=5; i++) {
             	double value = max * (4-i) / 4.0;
@@ -385,7 +385,7 @@ public class Statistique extends JPanel {
 
             //graduations en euros
             // Y-axis labels (€)
-            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
+            g2.setFont(DefaultTheme.FONT_BODY_XS);
             g2.setColor(new Color(100, 100, 100));
             for (int i = 0; i <= 4; i++) {
                 double value = max * (4 - i) / 4.0;
@@ -428,7 +428,7 @@ public class Statistique extends JPanel {
             }
 
             // X-axis labels (filtered)
-            g2.setFont(DefaultTheme.FONT_BODY_SMALL);
+            g2.setFont(DefaultTheme.FONT_BODY_XS);
             g2.setColor(new Color(80, 80, 80));
 
             int skip = Math.max(1, n / 7); // environ 7 labels max

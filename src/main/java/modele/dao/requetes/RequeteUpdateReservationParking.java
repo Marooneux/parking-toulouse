@@ -7,7 +7,7 @@ import java.sql.Types;
 
 import modele.ReservationParking;
 
-public class RequeteUpdateReservationParking extends Requete<ReservationParking> {
+public class RequeteUpdateReservationParking extends RequeteReservationParkingBase {
 
     @Override
     public String requete() {
@@ -16,14 +16,7 @@ public class RequeteUpdateReservationParking extends Requete<ReservationParking>
 
     @Override
     public void parametres(PreparedStatement statement, ReservationParking donnee) throws SQLException {
-        statement.setTimestamp(1, Timestamp.valueOf(donnee.getDateArrivee()));
-        if (donnee.getDateDepart() != null) {
-            statement.setTimestamp(2, Timestamp.valueOf(donnee.getDateDepart()));
-        } else {
-            statement.setNull(2, Types.TIMESTAMP);
-        }
-        statement.setInt(3, donnee.getParking().getId());
-        statement.setInt(4, donnee.getUtilisateur().getId());
-        statement.setInt(5, donnee.getId());
+    	setCommonParams(statement, donnee);
+    	statement.setInt(5, donnee.getId());
     }
 }

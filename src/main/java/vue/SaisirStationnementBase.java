@@ -18,7 +18,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import ui.theme.DefaultTheme;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public abstract class SaisirStationnementBase extends JPanel {
 
@@ -37,17 +37,17 @@ public abstract class SaisirStationnementBase extends JPanel {
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		header.setBackground(new Color(250, 250, 250));
 		JLabel lblIcon = new JLabel("\uD83C\uDFE2");
-		lblIcon.setFont(DefaultTheme.FONT_ICON_ALT);
+		lblIcon.setFont(DefaultTheme.FONT_ICON);
 		header.add(lblIcon);
 		JPanel texte = new JPanel();
 		texte.setBackground(new Color(250, 250, 250));
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 		JLabel lblSousTitre = new JLabel(sousTitre);
-		lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		texte.add(lblSousTitre);
 		header.add(texte);
@@ -64,7 +64,7 @@ public abstract class SaisirStationnementBase extends JPanel {
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
-		this.btnConfirmer.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnConfirmer.setFont(DefaultTheme.FONT_TITLE_S);
 		this.btnConfirmer.setBackground(new Color(0, 122, 255));
 		this.btnConfirmer.setForeground(Color.WHITE);
 		this.btnConfirmer.setFocusPainted(false);
@@ -100,7 +100,7 @@ public abstract class SaisirStationnementBase extends JPanel {
 
 		JLabel lblAvertissement = new JLabel(
 				"Vous serez susceptible de recevoir une amende si la plaque indiquée n'est pas la bonne");
-		lblAvertissement.setFont(DefaultTheme.FONT_HERO_HINT);
+		lblAvertissement.setFont(DefaultTheme.FONT_BODY_S);
 		lblAvertissement.setForeground(new Color(120, 120, 120));
 		lblAvertissement.setBorder(new EmptyBorder(5, 0, 0, 0));
 		p.add(lblAvertissement);

@@ -84,8 +84,8 @@ public class AdminParkingPanel extends JPanel {
         topPanel.add(space);
 
         JLabel lblName = new JLabel("<html>" + this.parking.getNom() + "</html>");
-        lblName.setFont(DefaultTheme.FONT_TITLE_ALT);
-        lblName.setForeground(DefaultTheme.TEXT_COLOR);
+        lblName.setFont(DefaultTheme.FONT_TITLE_S);
+        lblName.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
         topPanel.add(lblName);
 
         add(topPanel, BorderLayout.NORTH);
@@ -95,19 +95,19 @@ public class AdminParkingPanel extends JPanel {
         centerPanel.setOpaque(false);
         centerPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-        centerPanel.add(createDetailRow("📍", this.parking.getAdresse() != null ? this.parking.getAdresse().getRue() : ""));
+        centerPanel.add(UIDetailRow.create("📍", this.parking.getAdresse() != null ? this.parking.getAdresse().getRue() : ""));
         centerPanel.add(Box.createVerticalStrut(8));
 
         String horaireText = (this.parking.getHeureOuverture().equals(this.parking.getHeureFermeture()))
                 ? "24h / 24"
                 : this.parking.getHeureOuverture() + " - " + this.parking.getHeureFermeture();
-        centerPanel.add(createDetailRow("🕒", horaireText));
+        centerPanel.add(UIDetailRow.create("🕒", horaireText));
 
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
+        centerPanel.add(UIDetailRow.create("🚗", (parking.getCapacite() - parking.getNbPlacesOccupees()) + "/" + parking.getCapacite() + " places"));
 
         centerPanel.add(Box.createVerticalStrut(8));
-        centerPanel.add(createDetailRow("📏", "Max " + (this.parking.getHauteur()) + "m"));
+        centerPanel.add(UIDetailRow.create("📏", "Max " + (this.parking.getHauteur()) + "m"));
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -129,24 +129,6 @@ public class AdminParkingPanel extends JPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel createDetailRow(String icon, String text) {
-        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        row.setOpaque(false);
-
-        JLabel lblIcon = new JLabel(icon);
-        lblIcon.setFont(DefaultTheme.FONT_ICON_SMALL);
-        lblIcon.setPreferredSize(new Dimension(25, 20));
-        lblIcon.setForeground(Color.GRAY);
-
-        JLabel lblText = new JLabel(text);
-        lblText.setFont(DefaultTheme.FONT_LABEL_SMALL);
-        lblText.setForeground(DefaultTheme.LABEL_COLOR);
-
-        row.add(lblIcon);
-        row.add(lblText);
-        return row;
-    }
-
     class CircleIcon extends JComponent {
         private static final long serialVersionUID = 1L;
         private final String text;
@@ -166,7 +148,7 @@ public class AdminParkingPanel extends JPanel {
             g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
 
             g2.setColor(Color.WHITE);
-            g2.setFont(DefaultTheme.FONT_HERO_TITLE);
+            g2.setFont(DefaultTheme.FONT_TITLE);
             FontMetrics fm = g2.getFontMetrics();
             int x = (getWidth() - fm.stringWidth(text)) / 2;
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();

@@ -21,7 +21,7 @@ import javax.swing.text.AbstractDocument;
 
 import modele.Parking;
 import ui.theme.DefaultTheme;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public class SaisirHeureArriveParking extends SaisirStationnementBase {
 
@@ -89,7 +89,7 @@ public class SaisirHeureArriveParking extends SaisirStationnementBase {
 		heurePanel.add(this.textFieldHeure);
 
 		this.btnMaintenant = new JButton("Maintenant");
-		this.btnMaintenant.setFont(DefaultTheme.FONT_HERO_HINT);
+		this.btnMaintenant.setFont(DefaultTheme.FONT_BODY_S);
 		this.btnMaintenant.setBackground(new Color(220, 220, 220));
 		this.btnMaintenant.setFocusPainted(false);
 		this.btnMaintenant.setCursor(new Cursor(Cursor.HAND_CURSOR));

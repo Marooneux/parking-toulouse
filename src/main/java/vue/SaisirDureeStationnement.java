@@ -12,7 +12,7 @@ import javax.swing.text.AbstractDocument;
 
 import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public class SaisirDureeStationnement extends SaisirStationnementBase {
 
