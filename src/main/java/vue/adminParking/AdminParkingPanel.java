@@ -84,8 +84,8 @@ public class AdminParkingPanel extends JPanel {
         topPanel.add(space);
 
         JLabel lblName = new JLabel("<html>" + this.parking.getNom() + "</html>");
-        lblName.setFont(DefaultTheme.FONT_TITLE_ALT);
-        lblName.setForeground(DefaultTheme.TEXT_COLOR);
+        lblName.setFont(DefaultTheme.FONT_TITLE_S);
+        lblName.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
         topPanel.add(lblName);
 
         add(topPanel, BorderLayout.NORTH);
@@ -148,7 +148,7 @@ public class AdminParkingPanel extends JPanel {
             g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
 
             g2.setColor(Color.WHITE);
-            g2.setFont(DefaultTheme.FONT_HERO_TITLE);
+            g2.setFont(DefaultTheme.FONT_TITLE);
             FontMetrics fm = g2.getFontMetrics();
             int x = (getWidth() - fm.stringWidth(text)) / 2;
             int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();

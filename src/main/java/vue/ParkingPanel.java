@@ -80,8 +80,8 @@ public class ParkingPanel extends JPanel {
 		topPanel.add(space);
 
 		JLabel lblName = new JLabel("<html>" + parking.getNom() + "</html>");
-		lblName.setFont(DefaultTheme.FONT_TITLE_ALT);
-		lblName.setForeground(DefaultTheme.TEXT_COLOR);
+		lblName.setFont(DefaultTheme.FONT_TITLE_S);
+		lblName.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		topPanel.add(lblName);
 
 		this.add(topPanel, BorderLayout.NORTH);
@@ -124,7 +124,7 @@ public class ParkingPanel extends JPanel {
 
 		JLabel lblPrice = new JLabel(String.format("%.2f€/h", parking.getTarif()));
 		lblPrice.setFont(DefaultTheme.FONT_CARD_LABEL);
-		lblPrice.setForeground(DefaultTheme.TEXT_COLOR);
+		lblPrice.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		lblPrice.setBorder(new EmptyBorder(5, 0, 0, 0));
 
 		bottomPanel.add(lblTarifLabel, BorderLayout.WEST);
@@ -142,12 +142,12 @@ public class ParkingPanel extends JPanel {
 		row.setOpaque(false);
 
 		JLabel lblIcon = new JLabel(icon);
-		lblIcon.setFont(DefaultTheme.FONT_ICON_SMALL);
+		lblIcon.setFont(DefaultTheme.FONT_ICON_S);
 		lblIcon.setPreferredSize(new Dimension(25, 20));
 		lblIcon.setForeground(Color.GRAY);
 
 		JLabel lblText = new JLabel(text);
-		lblText.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		lblText.setFont(DefaultTheme.FONT_LABEL_S);
 		lblText.setForeground(new Color(73, 80, 87));
 
 		row.add(lblIcon);
@@ -175,7 +175,7 @@ public class ParkingPanel extends JPanel {
 			g2.fill(new Ellipse2D.Double(0, 0, 45, 45));
 
 			g2.setColor(Color.WHITE);
-			g2.setFont(DefaultTheme.FONT_HERO_TITLE);
+			g2.setFont(DefaultTheme.FONT_TITLE);
 			FontMetrics fm = g2.getFontMetrics();
 			int x = (this.getWidth() - fm.stringWidth(this.text)) / 2;
 			int y = ((this.getHeight() - fm.getHeight()) / 2) + fm.getAscent();

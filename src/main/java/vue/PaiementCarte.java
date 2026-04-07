@@ -21,40 +21,33 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
 
-public class PaiementVoirie extends JPanel {
+public class PaiementCarte extends JPanel {
 
-	private static final long serialVersionUID = -754119077706639290L;
-	private static final Color BACKGROUND_COLOR = DefaultTheme.BACKGROUND_COLOR;
+	private static final long serialVersionUID = -1573551118360617932L;
 	private static final Color BORDER_COLOR = new Color(230, 230, 230);
 	private static final Color PRIMARY_COLOR = new Color(0, 122, 255);
+
 	private TemplateSaisie textFieldNom;
 	private TemplateSaisie textFieldNumCarte;
 	private TemplateSaisie textFieldExpiration;
 	private TemplateSaisie textFieldCVC;
 	private JButton btnPayer;
-	private ZoneVoirie zone;
-	private String immatriculation;
-	private int duree;
-	private double prix;
+	private final double prix;
 
-	public PaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
-		this.zone = zone2;
-		this.immatriculation = immatriculation;
-		this.duree = duree;
+	public PaiementCarte(double prix) {
 		this.prix = prix;
 
 		this.setLayout(new BorderLayout(20, 20));
-		this.setBackground(BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel icon = new JLabel("💳");
-		icon.setFont(DefaultTheme.FONT_ICON);
+		icon.setFont(DefaultTheme.FONT_ICON_L);
 		header.add(icon);
 
 		JPanel titreZone = new JPanel();
@@ -62,8 +55,8 @@ public class PaiementVoirie extends JPanel {
 		titreZone.setLayout(new BoxLayout(titreZone, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Paiement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titreZone.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Securisez votre reglement");
@@ -100,9 +93,9 @@ public class PaiementVoirie extends JPanel {
 		JPanel montantRow = new JPanel(new BorderLayout(8, 0));
 		montantRow.setOpaque(false);
 		JLabel lblMontant = new JLabel("Montant");
-		lblMontant.setFont(DefaultTheme.FONT_LABEL_SMALL);
+		lblMontant.setFont(DefaultTheme.FONT_LABEL_S);
 		lblMontant.setForeground(new Color(90, 90, 90));
-		JButton pillMontant = new JButton(String.format("%.2f €", prix));
+		JButton pillMontant = new JButton(String.format("%.2f €", this.prix));
 		pillMontant.setEnabled(false);
 		pillMontant.setBackground(new Color(243, 246, 249));
 		pillMontant.setForeground(new Color(40, 40, 40));
@@ -147,10 +140,10 @@ public class PaiementVoirie extends JPanel {
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelBtn.setOpaque(false);
-		this.btnPayer = new JButton(String.format("Payer - %.2f €", prix));
+		this.btnPayer = new JButton(String.format("Payer - %.2f €", this.prix));
 		this.btnPayer.setBackground(PRIMARY_COLOR);
 		this.btnPayer.setForeground(Color.WHITE);
-		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON_2);
+		this.btnPayer.setFont(DefaultTheme.FONT_BUTTON);
 		this.btnPayer.setFocusPainted(false);
 		this.btnPayer.setPreferredSize(new Dimension(200, 44));
 		panelBtn.add(this.btnPayer);
@@ -158,6 +151,18 @@ public class PaiementVoirie extends JPanel {
 		card.add(panelBtn);
 
 		center.add(card);
+	}
+
+	private JLabel createBadge(String text, Color fg, Color bg) {
+		JLabel tag = new JLabel(text);
+		tag.setOpaque(true);
+		tag.setBackground(bg);
+		tag.setForeground(fg);
+		tag.setFont(DefaultTheme.FONT_BOLD);
+		tag.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(new Color(220, 220, 220)),
+				new EmptyBorder(6, 10, 6, 10)));
+		return tag;
 	}
 
 	private JPanel creerBlocChamps(String labelText, TemplateSaisie textField) {
@@ -171,10 +176,8 @@ public class PaiementVoirie extends JPanel {
 
 		JPanel champPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		champPanel.setOpaque(false);
-
 		textField.getField().setFont(DefaultTheme.FONT_BODY);
 		textField.getField().setForeground(new Color(60, 60, 60));
-
 		champPanel.add(textField);
 
 		bloc.add(lbl);
@@ -195,40 +198,16 @@ public class PaiementVoirie extends JPanel {
 				new EmptyBorder(6, 10, 6, 10)));
 	}
 
-	private JLabel createBadge(String text, Color fg, Color bg) {
-		JLabel tag = new JLabel(text);
-		tag.setOpaque(true);
-		tag.setBackground(bg);
-		tag.setForeground(fg);
-		tag.setFont(DefaultTheme.FONT_BOLD);
-		tag.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(new Color(220, 220, 220)),
-				new EmptyBorder(6, 10, 6, 10)));
-		return tag;
-	}
-
 	public JButton getBtnPayer() {
 		return this.btnPayer;
-	}
-
-	public ZoneVoirie getZone() {
-		return this.zone;
-	}
-
-	public String getImmatriculation() {
-		return this.immatriculation;
-	}
-
-	public int getDuree() {
-		return this.duree;
 	}
 
 	public double getPrix() {
 		return this.prix;
 	}
 
-	class FiltreUniquementChiffres extends DocumentFilter {
-		private int maxCaracteres;
+	static class FiltreUniquementChiffres extends DocumentFilter {
+		private final int maxCaracteres;
 
 		public FiltreUniquementChiffres(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;
@@ -262,7 +241,7 @@ public class PaiementVoirie extends JPanel {
 	}
 
 	static class LimiteCaracteresFilter extends DocumentFilter {
-		private int maxCaracteres;
+		private final int maxCaracteres;
 
 		public LimiteCaracteresFilter(int maxCaracteres) {
 			this.maxCaracteres = maxCaracteres;

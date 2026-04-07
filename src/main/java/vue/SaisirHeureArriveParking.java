@@ -22,9 +22,7 @@ import javax.swing.text.JTextComponent;
 
 import modele.Parking;
 import ui.theme.DefaultTheme;
-import vue.PaiementVoirie.LimiteCaracteresFilter;
-import vue.adminParking.UIButtons;
-import vue.adminParking.UICard;
+import vue.PaiementCarte.LimiteCaracteresFilter;
 
 public class SaisirHeureArriveParking extends JPanel {
 
@@ -48,7 +46,7 @@ public class SaisirHeureArriveParking extends JPanel {
 		header.setBackground(new Color(250, 250, 250));
 
 		JLabel lblIcon = new JLabel("\uD83C\uDFE2");
-		lblIcon.setFont(DefaultTheme.FONT_ICON_ALT);
+		lblIcon.setFont(DefaultTheme.FONT_ICON);
 		header.add(lblIcon);
 
 		JPanel texte = new JPanel();
@@ -56,12 +54,12 @@ public class SaisirHeureArriveParking extends JPanel {
 		texte.setLayout(new BoxLayout(texte, BoxLayout.Y_AXIS));
 
 		JLabel lblTitre = new JLabel("Démarrer le Stationnement");
-		lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		lblTitre.setForeground(new Color(40, 40, 40));
 		texte.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Enregistrez votre arrivée au parking");
-		lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		lblSousTitre.setForeground(new Color(100, 100, 100));
 		texte.add(lblSousTitre);
 
@@ -84,8 +82,13 @@ public class SaisirHeureArriveParking extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
 
-		this.btnConfirmer = UIButtons.primary("Démarrer le stationnement");
-		this.btnConfirmer.setPreferredSize(new Dimension(250, 50));
+		this.btnConfirmer.setFont(DefaultTheme.FONT_TITLE_XS);
+		this.btnConfirmer.setBackground(new Color(0, 122, 255));
+		this.btnConfirmer.setForeground(Color.WHITE);
+		this.btnConfirmer.setFocusPainted(false);
+		this.btnConfirmer.setBorderPainted(false);
+		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
 
 		buttonPanel.add(this.btnConfirmer);
@@ -131,7 +134,7 @@ public class SaisirHeureArriveParking extends JPanel {
 
 		JLabel lblInfoImatricule = new JLabel(
 				"Vous serez susceptible de recevoir une amende si la plaque indiquée n'est pas la bonne");
-		lblInfoImatricule.setFont(DefaultTheme.FONT_HERO_HINT);
+		lblInfoImatricule.setFont(DefaultTheme.FONT_BODY_S);
 		lblInfoImatricule.setForeground(new Color(120, 120, 120));
 		lblInfoImatricule.setBorder(new EmptyBorder(5, 0, 0, 0));
 		p.add(lblInfoImatricule);
@@ -161,7 +164,11 @@ public class SaisirHeureArriveParking extends JPanel {
 		this.textFieldHeure.getField().setPreferredSize(new Dimension(200, 30));
 		heurePanel.add(this.textFieldHeure);
 
-		this.btnMaintenant = UIButtons.secondary("Maintenant");
+		this.btnMaintenant = new JButton("Maintenant");
+		this.btnMaintenant.setFont(DefaultTheme.FONT_BODY_S);
+		this.btnMaintenant.setBackground(new Color(220, 220, 220));
+		this.btnMaintenant.setFocusPainted(false);
+		this.btnMaintenant.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.btnMaintenant.setPreferredSize(new Dimension(100, 30));
 		heurePanel.add(this.btnMaintenant);
 

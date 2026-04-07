@@ -60,8 +60,8 @@ public class TemplateSaisie extends JPanel implements Cloneable {
 		this.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.setOpaque(false);
 
-		this.label.setFont(DefaultTheme.FONT_LABEL_SMALL);
-		this.label.setForeground(DefaultTheme.LABEL_COLOR);
+		this.label.setFont(DefaultTheme.FONT_LABEL_S);
+		this.label.setForeground(DefaultTheme.COLOR_TEXT_SECONDARY);
 		this.label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		this.label.setVisible(this.showLabel);
 
@@ -79,12 +79,12 @@ public class TemplateSaisie extends JPanel implements Cloneable {
 	}
 
 	private void styleField(JTextField field) {
-		field.setFont(DefaultTheme.FONT_FIELD);
-		field.setBackground(DefaultTheme.FIELD_BACKGROUND_COLOR);
+		field.setFont(DefaultTheme.FONT_BODY);
+		field.setBackground(DefaultTheme.COLOR_BG_INPUT);
 		field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
 		field.setAlignmentX(Component.LEFT_ALIGNMENT);
 		field.setBorder(new CompoundBorder(
-				new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1, true),
+				new LineBorder(DefaultTheme.COLOR_BORDER, 1, true),
 				new EmptyBorder(10, 12, 10, 12)));
 	}
 

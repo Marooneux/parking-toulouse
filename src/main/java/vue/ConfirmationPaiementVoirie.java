@@ -45,7 +45,7 @@ public class ConfirmationPaiementVoirie extends JPanel {
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1, true));
 		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
@@ -58,19 +58,19 @@ public class ConfirmationPaiementVoirie extends JPanel {
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_BIG);
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_XL);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
 		JLabel lblTitre = new JLabel("Paiement Validé !");
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(DefaultTheme.FONT_TITLE);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_XL);
 		panelInnerContent.add(lblTitre);
 
 		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMontant.setForeground(DefaultTheme.TEXT_COLOR);
+		lblMontant.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
 		panelInnerContent.add(lblMontant);
 
@@ -82,7 +82,7 @@ public class ConfirmationPaiementVoirie extends JPanel {
 		this.btnTerminer = new JButton("Voir le e-ticket");
 		this.btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		this.btnTerminer.setForeground(Color.WHITE);
-		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_XS);
 		this.btnTerminer.setBackground(new Color(0, 123, 255));
 		this.btnTerminer.setFocusPainted(false);
 		this.btnTerminer.setBorderPainted(false);

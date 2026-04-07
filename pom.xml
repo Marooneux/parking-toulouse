@@ -16,6 +16,9 @@
         <sonar.organization>saeparking</sonar.organization>
         <sonar.projectKey>saeparking_parking</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+        <sonar.coverage.inclusions>**/modele/**/*.java</sonar.coverage.inclusions>
+        <sonar.coverage.exclusions>**/controleur/**/*, **/vue/**/*, **/modele/dao/**/*, **/app/**/*, **/utils/**/*, **/ui/**/*</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>

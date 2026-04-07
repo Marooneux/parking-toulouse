@@ -24,33 +24,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.ZoneVoirie;
 import ui.theme.DefaultTheme;
 
-public class ChoixMoyenPaiementVoirie extends JPanel {
+public class ChoixMoyenPaiement extends JPanel {
 
-	private static final long serialVersionUID = 3423101212327323950L;
+	private static final long serialVersionUID = 1L;
 	private JButton btnCarte;
 	private JButton btnVirement;
-	private ZoneVoirie zone;
-	private String immatriculation;
-	private int duree;
-	private double prix;
 
-	public ChoixMoyenPaiementVoirie(ZoneVoirie zone2, String immatriculation, int duree, double prix) {
-		this.zone = zone2;
-		this.immatriculation = immatriculation;
-		this.duree = duree;
-		this.prix = prix;
-
+	public ChoixMoyenPaiement() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		mainPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30));
 		headerPanel.setOpaque(false);
 		JLabel titleLabel = new JLabel("Choisissez votre moyen de paiement");
-		titleLabel.setFont(DefaultTheme.FONT_TITLE);
-		titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
+		titleLabel.setFont(DefaultTheme.FONT_TITLE_XL);
+		titleLabel.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		headerPanel.add(titleLabel);
 
 		JPanel cardsContainer = new JPanel(new GridLayout(1, 2, 40, 0));
@@ -86,20 +76,20 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 	private JButton buildPaymentButton(String buttonText) {
 		JButton btn = new JButton(buttonText);
 		btn.setFont(DefaultTheme.FONT_BUTTON);
-		btn.setBackground(DefaultTheme.BUTTON_COLOR);
-		btn.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
+		btn.setBackground(DefaultTheme.COLOR_PRIMARY);
+		btn.setForeground(DefaultTheme.COLOR_ON_PRIMARY);
 		btn.setFocusPainted(false);
 		btn.setBorder(new EmptyBorder(12, 25, 12, 25));
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btn.setBackground(DefaultTheme.BUTTON_COLOR.darker());
+				btn.setBackground(DefaultTheme.COLOR_PRIMARY.darker());
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btn.setBackground(DefaultTheme.BUTTON_COLOR);
+				btn.setBackground(DefaultTheme.COLOR_PRIMARY);
 			}
 		});
 		return btn;
@@ -108,7 +98,7 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 	private JPanel createCard(String title, String subtitle, JButton btn, Icon icon) {
 		JPanel card = new JPanel();
 		card.setLayout(new GridBagLayout());
-		card.setBackground(DefaultTheme.BACKGROUND_CARD);
+		card.setBackground(DefaultTheme.COLOR_BG_SURFACE);
 		card.setBorder(BorderFactory.createCompoundBorder(
 				new LineBorder(new Color(220, 220, 220), 1),
 				new EmptyBorder(30, 30, 30, 30)));
@@ -122,11 +112,11 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 
 		JLabel lblTitle = new JLabel(title);
 		lblTitle.setFont(DefaultTheme.FONT_CARD_LABEL);
-		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitle.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		JLabel lblSubtitle = new JLabel(subtitle);
-		lblSubtitle.setFont(DefaultTheme.FONT_FIELD);
-		lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		lblSubtitle.setFont(DefaultTheme.FONT_BODY);
+		lblSubtitle.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 
 		card.add(lblIcon, gbc);
 		card.add(lblTitle, gbc);
@@ -146,28 +136,12 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		this.btnVirement.addActionListener(listener);
 	}
 
-	public ZoneVoirie getZone() {
-		return this.zone;
-	}
-
-	public String getImmatriculation() {
-		return this.immatriculation;
-	}
-
-	public int getDuree() {
-		return this.duree;
-	}
-
-	public double getPrix() {
-		return this.prix;
-	}
-
 	private class IconCard implements Icon {
 		@Override
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(DefaultTheme.TEXT_COLOR);
+			g2.setColor(DefaultTheme.COLOR_TEXT_PRIMARY);
 			g2.fillRoundRect(x, y + 10, 50, 35, 8, 8);
 			g2.setColor(Color.WHITE);
 			g2.fillRect(x, y + 18, 50, 6);
@@ -175,14 +149,10 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
 
 	private class IconBank implements Icon {
@@ -190,7 +160,7 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(DefaultTheme.TEXT_COLOR);
+			g2.setColor(DefaultTheme.COLOR_TEXT_PRIMARY);
 			int[] xPoints = { x + 25, x, x + 50 };
 			int[] yPoints = { y, y + 15, y + 15 };
 			g2.fillPolygon(xPoints, yPoints, 3);
@@ -202,14 +172,9 @@ public class ChoixMoyenPaiementVoirie extends JPanel {
 		}
 
 		@Override
-		public int getIconWidth() {
-			return 50;
-		}
+		public int getIconWidth() { return 50; }
 
 		@Override
-		public int getIconHeight() {
-			return 60;
-		}
+		public int getIconHeight() { return 60; }
 	}
-
 }

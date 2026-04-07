@@ -13,15 +13,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import modele.ReservationParking;
 import ui.theme.DefaultTheme;
 
-public class ConfirmationPaiementParking extends JPanel {
+public class ConfirmationPaiement extends JPanel {
 
-	private static final long serialVersionUID = -1104275223803452119L;
+	private static final long serialVersionUID = 1L;
 	private final JButton btnTerminer;
 
-	public ConfirmationPaiementParking(ReservationParking reservation) {
+	public ConfirmationPaiement(double prix, String labelBouton, String sousTitre) {
 		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		this.setLayout(new BorderLayout(0, 0));
@@ -42,27 +41,29 @@ public class ConfirmationPaiementParking extends JPanel {
 		panelInnerContent.setBackground(Color.WHITE);
 		panelInnerContent.setBorder(new EmptyBorder(30, 20, 30, 20));
 		panelCard.add(panelInnerContent, BorderLayout.CENTER);
-		panelInnerContent.setLayout(new GridLayout(5, 1, 0, 10));
+		panelInnerContent.setLayout(new GridLayout(0, 1, 0, 10));
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_XL);
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_L);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
 		JLabel lblTitre = new JLabel("Paiement Validé !");
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitre.setForeground(new Color(40, 167, 69));
-		lblTitre.setFont(DefaultTheme.FONT_TITLE_XL);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE);
 		panelInnerContent.add(lblTitre);
 
-		JLabel lblMerci = new JLabel("Merci de votre visite");
-		lblMerci.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMerci.setForeground(new Color(100, 100, 100));
-		lblMerci.setFont(DefaultTheme.FONT_LABEL);
-		panelInnerContent.add(lblMerci);
+		if (sousTitre != null) {
+			JLabel lblSousTitre = new JLabel(sousTitre);
+			lblSousTitre.setHorizontalAlignment(SwingConstants.CENTER);
+			lblSousTitre.setForeground(new Color(100, 100, 100));
+			lblSousTitre.setFont(DefaultTheme.FONT_LABEL);
+			panelInnerContent.add(lblSousTitre);
+		}
 
-		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", reservation.getPrixPaye()));
+		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMontant.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
@@ -73,17 +74,15 @@ public class ConfirmationPaiementParking extends JPanel {
 		panelFooter.setBorder(new EmptyBorder(10, 0, 20, 0));
 		this.add(panelFooter, BorderLayout.SOUTH);
 
-		JButton btnTerminerLocal = new JButton("Terminer et Quitter");
-		this.btnTerminer = btnTerminerLocal;
-		btnTerminerLocal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTerminerLocal.setForeground(Color.WHITE);
-		btnTerminerLocal.setFont(DefaultTheme.FONT_TITLE_XS);
-		btnTerminerLocal.setBackground(new Color(0, 123, 255));
-		btnTerminerLocal.setFocusPainted(false);
-		btnTerminerLocal.setBorderPainted(false);
-		btnTerminerLocal.setPreferredSize(new Dimension(250, 45));
-
-		panelFooter.add(btnTerminerLocal);
+		this.btnTerminer = new JButton(labelBouton);
+		this.btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.btnTerminer.setForeground(Color.WHITE);
+		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_S);
+		this.btnTerminer.setBackground(new Color(0, 123, 255));
+		this.btnTerminer.setFocusPainted(false);
+		this.btnTerminer.setBorderPainted(false);
+		this.btnTerminer.setPreferredSize(new Dimension(250, 45));
+		panelFooter.add(this.btnTerminer);
 	}
 
 	public JButton getBtnTerminer() {
