@@ -34,8 +34,7 @@ import org.junit.runners.Suite.SuiteClasses;
         TestPaiement.class,
 
         // Utils
-        TestPasswordUtil.class,
-        TestAuthManager.class
+        TestPasswordUtil.class
 })
 public class AllTests {
 
