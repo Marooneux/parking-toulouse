@@ -1,8 +1,7 @@
 package vue;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.time.LocalTime;
@@ -10,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,6 +23,8 @@ import javax.swing.text.JTextComponent;
 import modele.Parking;
 import ui.theme.DefaultTheme;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.adminParking.UIButtons;
+import vue.adminParking.UICard;
 
 public class SaisirHeureArriveParking extends JPanel {
 
@@ -74,20 +74,18 @@ public class SaisirHeureArriveParking extends JPanel {
 		body.setBorder(new EmptyBorder(10, 0, 10, 0));
 		this.add(body, BorderLayout.CENTER);
 
-		this.ajouterCarteDeDetails(body, "Parking selectionné", this.detailsZone());
-		this.ajouterCarteDeDetails(body, "Informations du véhicule", this.detailsVoiture());
-		this.ajouterCarteDeDetails(body, "Heure d'arrivée", this.detailsHeureArrivee());
-
+		body.add(UICard.create("Parking sélectionné", this.detailsZone()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+		body.add(UICard.create("Informations du véhicule", this.detailsVoiture()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+		body.add(UICard.create("Heure d'arrivée", this.detailsHeureArrivee()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
 
-		this.btnConfirmer.setFont(DefaultTheme.FONT_TITLE_SMALL);
-		this.btnConfirmer.setBackground(new Color(0, 122, 255));
-		this.btnConfirmer.setForeground(Color.WHITE);
-		this.btnConfirmer.setFocusPainted(false);
-		this.btnConfirmer.setBorderPainted(false);
-		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
+		this.btnConfirmer = UIButtons.primary("Démarrer le stationnement");
+		this.btnConfirmer.setPreferredSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
 
 		buttonPanel.add(this.btnConfirmer);
@@ -163,38 +161,12 @@ public class SaisirHeureArriveParking extends JPanel {
 		this.textFieldHeure.getField().setPreferredSize(new Dimension(200, 30));
 		heurePanel.add(this.textFieldHeure);
 
-		this.btnMaintenant = new JButton("Maintenant");
-		this.btnMaintenant.setFont(DefaultTheme.FONT_HERO_HINT);
-		this.btnMaintenant.setBackground(new Color(220, 220, 220));
-		this.btnMaintenant.setFocusPainted(false);
-		this.btnMaintenant.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.btnMaintenant = UIButtons.secondary("Maintenant");
 		this.btnMaintenant.setPreferredSize(new Dimension(100, 30));
 		heurePanel.add(this.btnMaintenant);
 
 		p.add(heurePanel);
 		return p;
-	}
-
-	private void ajouterCarteDeDetails(JPanel parent, String title, JPanel innerContent) {
-		JPanel card = new JPanel();
-		card.setLayout(new BorderLayout());
-		card.setBackground(Color.WHITE);
-		card.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0),
-				BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true)));
-
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(Color.WHITE);
-
-		JLabel lblTitle = new JLabel(title);
-		lblTitle.setFont(DefaultTheme.FONT_BUTTON);
-		lblTitle.setForeground(new Color(70, 70, 70));
-		header.add(lblTitle);
-
-		card.add(header, BorderLayout.NORTH);
-		card.add(innerContent, BorderLayout.CENTER);
-
-		parent.add(card);
-		parent.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
 
 	public JButton getBtnConfirmer() {

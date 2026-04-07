@@ -50,5 +50,17 @@ public class UIButtons {
         btn.setFont(DefaultTheme.FONT_BODY);
         return btn;
     }
+    
+    public static JButton secondary(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(220, 220, 220));   // light gray
+        btn.setForeground(Color.BLACK);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setFont(DefaultTheme.FONT_BODY);
+        return btn;
+    }
+
 
 }

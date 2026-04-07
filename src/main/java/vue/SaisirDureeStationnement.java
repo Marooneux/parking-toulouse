@@ -1,13 +1,11 @@
 package vue;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +17,8 @@ import javax.swing.text.JTextComponent;
 
 import modele.ZoneVoirie;
 import vue.PaiementVoirie.LimiteCaracteresFilter;
+import vue.adminParking.UIButtons;
+import vue.adminParking.UICard;
 
 public class SaisirDureeStationnement extends JPanel {
 
@@ -74,22 +74,20 @@ public class SaisirDureeStationnement extends JPanel {
 		this.add(body, BorderLayout.CENTER);
 
 		// Création des champs de details du stationnement
-		this.ajouterCarteDeDetails(body, "Zone Sélectionnée", this.detailsZone());
-		this.ajouterCarteDeDetails(body, "Informations du véhicule", this.detailsVoiture());
-		this.ajouterCarteDeDetails(body, "Durée du stationnement", this.detailsDureeStationnement());
-
+		body.add(UICard.create("Zone sélectionné", this.detailsZone()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+		body.add(UICard.create("Informations du véhicule", this.detailsVoiture()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+		body.add(UICard.create("Durée du stationnement", this.detailsDureeStationnement()));
+		body.add(Box.createRigidArea(new Dimension(0, 10)));
+	
 		// Button Payer
 		// ? Créer un prototype que peut être utilisé et changé partout dans l'appli ?
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(250, 250, 250));
 
-		this.btnConfirmer.setFont(new Font(this.defaultFont, Font.BOLD, 16));
-		this.btnConfirmer.setBackground(new Color(0, 122, 255));
-		this.btnConfirmer.setForeground(Color.WHITE);
-		this.btnConfirmer.setFocusPainted(false);
-		this.btnConfirmer.setBorderPainted(false);
-		this.btnConfirmer.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.btnConfirmer.setMinimumSize(new Dimension(250, 50));
+		this.btnConfirmer = UIButtons.primary("Démarrer le stationnement");
+		this.btnConfirmer.setPreferredSize(new Dimension(250, 50));
 		this.btnConfirmer.setOpaque(true);
 
 		buttonPanel.add(this.btnConfirmer);
@@ -169,27 +167,6 @@ public class SaisirDureeStationnement extends JPanel {
 		return p;
 	}
 
-	private void ajouterCarteDeDetails(JPanel parent, String title, JPanel innerContent) {
-		JPanel card = new JPanel();
-		card.setLayout(new BorderLayout());
-		card.setBackground(Color.WHITE);
-		card.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0),
-				BorderFactory.createLineBorder(new Color(230, 230, 230), 1, true)));
-
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(Color.WHITE);
-
-		JLabel lblTitle = new JLabel(title);
-		lblTitle.setFont(new Font(this.defaultFont, Font.BOLD, 14));
-		lblTitle.setForeground(new Color(70, 70, 70));
-		header.add(lblTitle);
-
-		card.add(header, BorderLayout.NORTH);
-		card.add(innerContent, BorderLayout.CENTER);
-
-		parent.add(card);
-		parent.add(Box.createRigidArea(new Dimension(0, 10)));
-	}
 
 	public String dureeMaxToString(int dureeMax) {
 		String duree = " heures";

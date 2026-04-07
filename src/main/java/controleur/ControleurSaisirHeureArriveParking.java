@@ -1,6 +1,6 @@
 package controleur;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,8 +13,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import modele.Parking;
+import modele.PlaquePrefill;
 import modele.ReservationParking;
 import modele.Utilisateur;
+import modele.Validation;
 import modele.Vehicule;
 import modele.dao.DaoReservationParking;
 import modele.dao.DaoVehicule;
@@ -42,7 +44,7 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         this.vue.reinitialiserChamps();
         this.vue.addConfirmerListener(this);
         this.vue.getBtnMaintenant().addActionListener(e -> remplirHeureActuelle());
-        this.prefillPlaque();
+        PlaquePrefill.prefill(vue.getPlaque());
 
         NavigationFrame.getInstance().showPage("parking-arrivee", () -> this.vue, "Démarrer le stationnement", true);
     }
@@ -63,15 +65,8 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
         String plaque = vue.getPlaque().getText().trim();
         String heure = vue.getTextFieldHeure().getText().trim();
 
-        if (plaque.isEmpty()) {
-            JOptionPane.showMessageDialog(vue, "La plaque est obligatoire.");
-            return;
-        }
-
-        if (!plaque.matches("(?i)[A-Z]{2}-\\d{3}-[A-Z]{2}")) {
-            JOptionPane.showMessageDialog(vue, "Format de plaque invalide. Exemple : AB-123-CD");
-            return;
-        }
+        if (!Validation.requireNotEmpty(plaque, "La plaque est obligatoire.", vue)) return;
+        if (!Validation.validatePlaque(plaque, vue)) return;
 
         if (heure.isEmpty()) {
             JOptionPane.showMessageDialog(vue, "L'heure d'arrivée est obligatoire.");
@@ -161,23 +156,6 @@ public class ControleurSaisirHeureArriveParking implements ActionListener {
                 "Mes véhicules");
     }
 
-    private void prefillPlaque() {
-        try {
-            if (AuthManager.getCurrentUser() == null) {
-                return;
-            }
-            MySQLDataSource.creerAcces();
-            DaoVehicule daoVehicule = new DaoVehicule();
-            int userId = AuthManager.getCurrentUser().getId();
-            List<Vehicule> vehicules = daoVehicule.findByUserId(userId);
-            Vehicule vehicule = vehicules.isEmpty() ? null : vehicules.getFirst();
-            if (vehicule != null) {
-                vue.getPlaque().setText(vehicule.getImmatriculation());
-            }
-        } catch (Exception ignored) {
-            // Pré-remplissage non bloquant
-        }
-    }
 
     // Calculate price based on quarter-hour increments
     public static double calculerPrixTotal(Parking parking, String strHeureArrivee) {
