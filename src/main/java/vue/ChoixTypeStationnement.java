@@ -45,23 +45,23 @@ public class ChoixTypeStationnement extends JPanel {
 
 	public ChoixTypeStationnement(int idUser) {
 		this.setLayout(new BorderLayout());
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		mainPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel headerPanel = new JPanel(new BorderLayout());
 		headerPanel.setOpaque(false);
 		headerPanel.setBorder(new EmptyBorder(25, 40, 5, 40));
 
 		JLabel titleLabel = new JLabel(" Choisissez votre type de stationnement");
-		titleLabel.setFont(DefaultTheme.FONT_TITLE_LABEL);
-		titleLabel.setForeground(DefaultTheme.TEXT_COLOR);
+		titleLabel.setFont(DefaultTheme.FONT_TITLE_L);
+		titleLabel.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		titleLabel.setIcon(new IconP());
 
 		this.profileButton = new JButton("Mon Profil");
 		this.profileButton.setFont(DefaultTheme.FONT_BUTTON);
-		this.profileButton.setForeground(DefaultTheme.TEXT_COLOR);
+		this.profileButton.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		this.profileButton.setBackground(Color.WHITE);
 		this.profileButton.setBorder(new LineBorder(new Color(220, 220, 220), 1));
 		this.profileButton.setFocusPainted(false);
@@ -114,7 +114,7 @@ public class ChoixTypeStationnement extends JPanel {
 	private JPanel createCard(String title, String subtitle, String buttonText, boolean isParking) {
 		JPanel card = new JPanel();
 		card.setLayout(new GridBagLayout());
-		card.setBackground(DefaultTheme.BACKGROUND_CARD);
+		card.setBackground(DefaultTheme.COLOR_BG_SURFACE);
 
 		card.setBorder(BorderFactory.createCompoundBorder(
 				new LineBorder(new Color(220, 220, 220), 1),
@@ -126,17 +126,17 @@ public class ChoixTypeStationnement extends JPanel {
 		gbc.insets = new Insets(5, 0, 5, 0);
 
 		JLabel lblTitle = new JLabel(title);
-		lblTitle.setFont(DefaultTheme.FONT_TITLE_ALT);
-		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitle.setFont(DefaultTheme.FONT_TITLE_S);
+		lblTitle.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		JLabel lblSubtitle = new JLabel(subtitle);
 		lblSubtitle.setFont(DefaultTheme.FONT_BODY);
-		lblSubtitle.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		lblSubtitle.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 
 		JButton btn = new JButton(buttonText);
 		btn.setFont(DefaultTheme.FONT_BUTTON);
-		btn.setBackground(DefaultTheme.BUTTON_COLOR);
-		btn.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
+		btn.setBackground(DefaultTheme.COLOR_PRIMARY);
+		btn.setForeground(DefaultTheme.COLOR_ON_PRIMARY);
 		btn.setFocusPainted(false);
 		btn.setBorder(new EmptyBorder(10, 20, 10, 20));
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -150,12 +150,12 @@ public class ChoixTypeStationnement extends JPanel {
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btn.setBackground(DefaultTheme.BUTTON_COLOR.darker());
+				btn.setBackground(DefaultTheme.COLOR_PRIMARY.darker());
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btn.setBackground(DefaultTheme.BUTTON_COLOR);
+				btn.setBackground(DefaultTheme.COLOR_PRIMARY);
 			}
 		});
 
@@ -213,21 +213,21 @@ public class ChoixTypeStationnement extends JPanel {
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 
 		JLabel title = new JLabel("Stationnement en cours");
-		title.setFont(DefaultTheme.FONT_TITLE_SMALL);
-		title.setForeground(DefaultTheme.TEXT_COLOR);
+		title.setFont(DefaultTheme.FONT_TITLE_XS);
+		title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		this.activeTicketDetails = new JLabel(" ");
-		this.activeTicketDetails.setFont(DefaultTheme.FONT_HERO_HINT);
-		this.activeTicketDetails.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		this.activeTicketDetails.setFont(DefaultTheme.FONT_BODY_S);
+		this.activeTicketDetails.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 
 		textPanel.add(title);
 		textPanel.add(Box.createVerticalStrut(5));
 		textPanel.add(this.activeTicketDetails);
 
 		this.btnVoirTicket = new JButton("Voir le ticket");
-		this.btnVoirTicket.setFont(DefaultTheme.FONT_BUTTON_ALT);
-		this.btnVoirTicket.setBackground(DefaultTheme.BUTTON_COLOR);
-		this.btnVoirTicket.setForeground(DefaultTheme.BUTTON_TEXT_COLOR);
+		this.btnVoirTicket.setFont(DefaultTheme.FONT_BUTTON);
+		this.btnVoirTicket.setBackground(DefaultTheme.COLOR_PRIMARY);
+		this.btnVoirTicket.setForeground(DefaultTheme.COLOR_ON_PRIMARY);
 		this.btnVoirTicket.setFocusPainted(false);
 		this.btnVoirTicket.setBorder(new EmptyBorder(8, 15, 8, 15));
 		this.btnVoirTicket.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -243,7 +243,7 @@ public class ChoixTypeStationnement extends JPanel {
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(DefaultTheme.TEXT_COLOR);
+			g2.setColor(DefaultTheme.COLOR_TEXT_PRIMARY);
 			g2.setStroke(new BasicStroke(2));
 			g2.drawRoundRect(x, y, 30, 30, 10, 10);
 			g2.setFont(DefaultTheme.FONT_CARD_LABEL);
@@ -266,7 +266,7 @@ public class ChoixTypeStationnement extends JPanel {
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(DefaultTheme.TEXT_COLOR);
+			g2.setColor(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 			g2.fillOval(x + 6, y + 2, 12, 12);
 			g2.fillArc(x + 2, y + 16, 20, 14, 0, 180);

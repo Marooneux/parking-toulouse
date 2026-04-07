@@ -41,35 +41,35 @@ public class ChoixParking extends JPanel {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout(0, 0));
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel headerPanel = new JPanel(new BorderLayout());
-		headerPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		headerPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		headerPanel.setBorder(new EmptyBorder(40, 50, 30, 50));
 
 		JPanel textContainer = new JPanel();
 		textContainer.setLayout(new BoxLayout(textContainer, BoxLayout.Y_AXIS));
-		textContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		textContainer.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JPanel titleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		titleRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		titleRow.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel iconCar = new JLabel("\uD83C\uDD7F\uFE0F");
-		iconCar.setFont(DefaultTheme.FONT_ICON);
+		iconCar.setFont(DefaultTheme.FONT_ICON_L);
 
 		JLabel lblTitle = new JLabel(" Démarrer le Stationnement");
-		lblTitle.setFont(DefaultTheme.FONT_TITLE);
-		lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
+		lblTitle.setFont(DefaultTheme.FONT_TITLE_XL);
+		lblTitle.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		titleRow.add(iconCar);
 		titleRow.add(lblTitle);
 
 		JPanel subtitleRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		subtitleRow.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		subtitleRow.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel lblSousTitre = new JLabel("Sélectionnez le parking souhaité.");
-		lblSousTitre.setFont(DefaultTheme.FONT_FIELD);
-		lblSousTitre.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
+		lblSousTitre.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 		lblSousTitre.setBorder(new EmptyBorder(5, 0, 0, 0));
 
 		subtitleRow.add(lblSousTitre);
@@ -80,13 +80,13 @@ public class ChoixParking extends JPanel {
 		headerPanel.add(textContainer, BorderLayout.WEST);
 
 		JPanel filterContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		filterContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		filterContainer.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		this.txtRecherche = new TemplateSaisie("Recherche", "Rechercher...", false, false);
 		this.txtRecherche.getField().setPreferredSize(new Dimension(200, 42));
 		this.txtRecherche.getField().setFont(DefaultTheme.FONT_BODY);
 		this.txtRecherche.getField().setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER, 1),
 				new EmptyBorder(5, 10, 5, 10)));
 
 		this.txtRecherche.getField().setToolTipText("Rechercher par nom ou adresse...");
@@ -104,15 +104,15 @@ public class ChoixParking extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		scrollPane.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
+		scrollPane.getViewport().setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		this.gridPanel = new JPanel();
-		this.gridPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.gridPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		this.gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
 		this.gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
 		JPanel wrapperPanel = new JPanel(new BorderLayout());
-		wrapperPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		wrapperPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 		wrapperPanel.add(this.gridPanel, BorderLayout.NORTH);
 
 		scrollPane.setViewportView(wrapperPanel);
@@ -125,16 +125,16 @@ public class ChoixParking extends JPanel {
 		btn.setFont(DefaultTheme.FONT_BUTTON);
 		btn.setPreferredSize(new Dimension(140, 42));
 		btn.setBackground(Color.WHITE);
-		btn.setForeground(DefaultTheme.TEXT_COLOR);
+		btn.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		btn.setFocusPainted(false);
 		btn.setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1),
+				new LineBorder(DefaultTheme.COLOR_BORDER, 1),
 				new EmptyBorder(10, 20, 10, 20)));
 		btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		this.popupMenu = new JPopupMenu();
 		this.popupMenu.setBackground(Color.WHITE);
-		this.popupMenu.setBorder(new LineBorder(DefaultTheme.FIELD_BORDER_COLOR, 1));
+		this.popupMenu.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER, 1));
 
 		this.itemAlpha = new JMenuItem("Nom (A-Z)");
 		this.styleMenuItem(this.itemAlpha);
@@ -155,7 +155,7 @@ public class ChoixParking extends JPanel {
 	private void styleMenuItem(JMenuItem item) {
 		item.setFont(DefaultTheme.FONT_BODY);
 		item.setBackground(Color.WHITE);
-		item.setForeground(DefaultTheme.TEXT_COLOR);
+		item.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		item.setBorder(new EmptyBorder(10, 15, 10, 15));
 	}
 

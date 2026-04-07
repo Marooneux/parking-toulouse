@@ -56,7 +56,7 @@ public class Accueil extends JPanel {
     private void initialize() {
     	
         this.setLayout(new BorderLayout());
-        this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        this.setBackground(DefaultTheme.COLOR_BG_PAGE);
         this.setPreferredSize(new Dimension(1500, 800));
         
         layeredPane = new JLayeredPane();
@@ -66,7 +66,7 @@ public class Accueil extends JPanel {
         mainContentPanel = new JPanel();
         cardLayout = new CardLayout();
         mainContentPanel.setLayout(cardLayout);
-        mainContentPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        mainContentPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         JPanel viewParkings = createParkingView();
         mainContentPanel.add(viewParkings, "PARKINGS");
@@ -126,14 +126,14 @@ public class Accueil extends JPanel {
     private void toggleSidebarState() {
         boolean isVisible = sidebarPanel.isVisible();
         sidebarPanel.setVisible(!isVisible);
-        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.BACKGROUND_HERO);
+        btnToggle.setForeground(!isVisible ? Color.LIGHT_GRAY : DefaultTheme.COLOR_BG_INVERSE);
         updateLayoutBounds();
     }
 
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBackground(DefaultTheme.BACKGROUND_HERO);
+        sidebar.setBackground(DefaultTheme.COLOR_BG_INVERSE);
         sidebar.setBorder(new EmptyBorder(60, 10, 20, 10));
 
         JLabel lblMenu = new JLabel("MENU");
@@ -157,22 +157,22 @@ public class Accueil extends JPanel {
 
     private JPanel createParkingView() {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        headerPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        headerPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
         headerPanel.setBorder(new EmptyBorder(25, 70, 30, 50));
 
         JPanel titleContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        titleContainer.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        titleContainer.setBackground(DefaultTheme.COLOR_BG_PAGE);
         
         JLabel iconCar = new JLabel("\uD83C\uDD7F\uFE0F "); 
-        iconCar.setFont(DefaultTheme.FONT_ICON);
+        iconCar.setFont(DefaultTheme.FONT_ICON_L);
         
         JLabel lblTitle = new JLabel("Gestion des Parkings");
-        lblTitle.setFont(DefaultTheme.FONT_TITLE);
-        lblTitle.setForeground(DefaultTheme.TEXT_COLOR);
+        lblTitle.setFont(DefaultTheme.FONT_TITLE_XL);
+        lblTitle.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
         titleContainer.add(iconCar);
         titleContainer.add(lblTitle);
@@ -189,10 +189,10 @@ public class Accueil extends JPanel {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.getViewport().setBackground(DefaultTheme.BACKGROUND_COLOR);
+        scrollPane.getViewport().setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         gridPanel = new JPanel();
-        gridPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        gridPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
         gridPanel.setLayout(new GridLayout(0, 3, 25, 25));
         gridPanel.setBorder(new EmptyBorder(0, 50, 50, 50));
 
@@ -204,7 +204,7 @@ public class Accueil extends JPanel {
         
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        actions.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        actions.setBackground(DefaultTheme.COLOR_BG_PAGE);
         actions.setBorder(new EmptyBorder(10, 50, 30, 50));
         actions.add(btnAjouter);
 
@@ -216,11 +216,11 @@ public class Accueil extends JPanel {
     private JPanel createEditionView() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        panel.setBackground(DefaultTheme.COLOR_BG_PAGE);
         panel.setBorder(new EmptyBorder(40, 60, 40, 60));
 
         JLabel lblTitre = new JLabel("Modifier le parking");
-        lblTitre.setFont(DefaultTheme.FONT_HERO_TITLE);
+        lblTitre.setFont(DefaultTheme.FONT_TITLE);
         lblTitre.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(lblTitre);
         panel.add(Box.createVerticalStrut(20));
@@ -234,7 +234,7 @@ public class Accueil extends JPanel {
         txtHeureOuverture = new TemplateSaisie("Heure ouverture", "", false, false);
         txtHeureFermeture = new TemplateSaisie("Heure fermeture", "", false, false);
         chkMoto = new JCheckBox("Accepte les motos");
-        chkMoto.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        chkMoto.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
         // Construction du formulaire
         panel.add(UIForm.row("Nom du parking :", txtNom));
@@ -247,7 +247,7 @@ public class Accueil extends JPanel {
 
         
         JPanel pnlMoto = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pnlMoto.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        pnlMoto.setBackground(DefaultTheme.COLOR_BG_PAGE);
         pnlMoto.add(chkMoto);
         pnlMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
         pnlMoto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -257,7 +257,7 @@ public class Accueil extends JPanel {
 
         // Boutons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnPanel.setBackground(DefaultTheme.BACKGROUND_COLOR);
+        btnPanel.setBackground(DefaultTheme.COLOR_BG_PAGE);
         btnPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 

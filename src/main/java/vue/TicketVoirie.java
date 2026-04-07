@@ -39,7 +39,7 @@ public class TicketVoirie extends JPanel {
 		this.duree = duree;
 		this.moyenPaiement = moyenPaiement;
 
-		this.couleur = this.convertirCouleur(this.zone.getCouleur());
+		this.couleur = ZoneVoirie.convertirCouleur(this.zone.getCouleur());
 
 		// 2. On applique la couleur au texte de la zone
 		this.nomZone = new JLabel(this.zone.getCouleur());
@@ -65,12 +65,12 @@ public class TicketVoirie extends JPanel {
 		panelTextHeader.setLayout(new GridLayout(2, 1, 0, 0));
 
 		JLabel lblTitre = new JLabel("Récapitulatif de stationnement");
-		lblTitre.setForeground(DefaultTheme.TEXT_COLOR);
-		lblTitre.setFont(DefaultTheme.FONT_TITLE_LABEL);
+		lblTitre.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
+		lblTitre.setFont(DefaultTheme.FONT_TITLE_L);
 		panelTextHeader.add(lblTitre);
 
 		JLabel lblSousTitre = new JLabel("Veuillez conserver ce récapitulatif jusqu'à votre départ");
-		lblSousTitre.setForeground(DefaultTheme.SUBTEXT_COLOR);
+		lblSousTitre.setForeground(DefaultTheme.COLOR_TEXT_MUTED);
 		lblSousTitre.setFont(DefaultTheme.FONT_BODY);
 		panelTextHeader.add(lblSousTitre);
 
@@ -81,7 +81,7 @@ public class TicketVoirie extends JPanel {
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1, true));
 		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
@@ -108,8 +108,8 @@ public class TicketVoirie extends JPanel {
 
 		JLabel lblWarning = new JLabel("Lorsque vous souhaitez partir, appuyer sur le bouton suivant");
 		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWarning.setForeground(DefaultTheme.TEXT_COLOR);
-		lblWarning.setFont(DefaultTheme.FONT_BUTTON_ALT);
+		lblWarning.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
+		lblWarning.setFont(DefaultTheme.FONT_BUTTON);
 		panelFooter.add(lblWarning);
 
 		JPanel panelButtonContainer = new JPanel();
@@ -120,46 +120,12 @@ public class TicketVoirie extends JPanel {
 		panelButtonContainer.add(this.btnPaiement);
 		this.btnPaiement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		this.btnPaiement.setForeground(Color.WHITE);
-		this.btnPaiement.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnPaiement.setFont(DefaultTheme.FONT_TITLE_XS);
 		this.btnPaiement.setBackground(new Color(0, 123, 255));
 		this.btnPaiement.setFocusPainted(false);
 		this.btnPaiement.setBorderPainted(false);
 		this.btnPaiement.setPreferredSize(new Dimension(200, 45));
 
-	}
-
-	// --- Méthode pour récupérer la couleur (identique à celle de ChoixZone) ---
-	private Color convertirCouleur(String nomCouleur) {
-		if (nomCouleur == null) {
-			return Color.GRAY;
-		}
-		String clef = nomCouleur.toLowerCase().trim();
-
-		if (clef.startsWith("#")) {
-			try {
-				return Color.decode(clef);
-			} catch (Exception e) {
-				return Color.GRAY;
-			}
-		}
-
-		switch (clef) {
-		case "jaune":
-			return new Color(255, 204, 0);
-		case "orange":
-			return new Color(255, 149, 0);
-		case "rouge":
-			return new Color(255, 59, 48);
-		case "vert":
-		case "verte":
-			return new Color(0, 128, 0);
-		case "bleu":
-		case "bleue":
-		case "blue":
-			return new Color(0, 122, 255);
-		default:
-			return Color.GRAY;
-		}
 	}
 
 	public JButton getBtnConfirmer() {
@@ -175,7 +141,7 @@ public class TicketVoirie extends JPanel {
 		lblKey.setFont(DefaultTheme.FONT_LABEL);
 		lblKey.setForeground(new Color(100, 100, 100));
 
-		lblVal.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		lblVal.setFont(DefaultTheme.FONT_TITLE_XS);
 		lblVal.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		row.add(lblKey, BorderLayout.WEST);
@@ -205,7 +171,7 @@ public class TicketVoirie extends JPanel {
 
 			g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 			g2.setColor(Color.WHITE);
-			g2.setFont(DefaultTheme.FONT_TITLE_2);
+			g2.setFont(DefaultTheme.FONT_TITLE_XL);
 			String texte = "P";
 			FontMetrics metrics = g2.getFontMetrics();
 

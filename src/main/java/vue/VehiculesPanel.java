@@ -56,7 +56,7 @@ public class VehiculesPanel extends JPanel {
 
 		this.setLayout(new BorderLayout(15, 15));
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
-		this.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		this.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		this.add(this.buildHeader(), BorderLayout.NORTH);
 		this.add(this.buildTablePanel(), BorderLayout.CENTER);
@@ -65,11 +65,11 @@ public class VehiculesPanel extends JPanel {
 
 	private JPanel buildHeader() {
 		JPanel header = new JPanel(new BorderLayout());
-		header.setBackground(DefaultTheme.BACKGROUND_COLOR);
+		header.setBackground(DefaultTheme.COLOR_BG_PAGE);
 
 		JLabel title = new JLabel("Mes véhicules");
-		title.setFont(DefaultTheme.FONT_HERO_TITLE);
-		title.setForeground(DefaultTheme.TEXT_COLOR);
+		title.setFont(DefaultTheme.FONT_TITLE);
+		title.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 
 		JLabel subtitle = new JLabel("Ajoutez vos plaques pour les réutiliser rapidement");
 		subtitle.setFont(DefaultTheme.FONT_BODY);

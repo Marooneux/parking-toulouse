@@ -32,7 +32,7 @@ public class ConfirmationPaiement extends JPanel {
 		panelCenterContainer.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCard = new JPanel();
-		panelCard.setBorder(new LineBorder(DefaultTheme.BORDER_BUTTON, 1, true));
+		panelCard.setBorder(new LineBorder(DefaultTheme.COLOR_BORDER_BUTTON, 1, true));
 		panelCard.setBackground(Color.WHITE);
 		panelCenterContainer.add(panelCard);
 		panelCard.setLayout(new BorderLayout(0, 0));
@@ -45,7 +45,7 @@ public class ConfirmationPaiement extends JPanel {
 
 		JLabel lblIconSuccess = new JLabel("✔");
 		lblIconSuccess.setForeground(new Color(40, 167, 69));
-		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_BIG);
+		lblIconSuccess.setFont(DefaultTheme.FONT_SYMBOL_L);
 		lblIconSuccess.setHorizontalAlignment(SwingConstants.CENTER);
 		panelInnerContent.add(lblIconSuccess);
 
@@ -59,13 +59,13 @@ public class ConfirmationPaiement extends JPanel {
 			JLabel lblSousTitre = new JLabel(sousTitre);
 			lblSousTitre.setHorizontalAlignment(SwingConstants.CENTER);
 			lblSousTitre.setForeground(new Color(100, 100, 100));
-			lblSousTitre.setFont(DefaultTheme.FONT_LABEL_BIG);
+			lblSousTitre.setFont(DefaultTheme.FONT_LABEL);
 			panelInnerContent.add(lblSousTitre);
 		}
 
 		JLabel lblMontant = new JLabel("Montant réglé : " + String.format("%.2f €", prix));
 		lblMontant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMontant.setForeground(DefaultTheme.TEXT_COLOR);
+		lblMontant.setForeground(DefaultTheme.COLOR_TEXT_PRIMARY);
 		lblMontant.setFont(DefaultTheme.FONT_CARD_LABEL);
 		panelInnerContent.add(lblMontant);
 
@@ -77,7 +77,7 @@ public class ConfirmationPaiement extends JPanel {
 		this.btnTerminer = new JButton(labelBouton);
 		this.btnTerminer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		this.btnTerminer.setForeground(Color.WHITE);
-		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_SMALL);
+		this.btnTerminer.setFont(DefaultTheme.FONT_TITLE_S);
 		this.btnTerminer.setBackground(new Color(0, 123, 255));
 		this.btnTerminer.setFocusPainted(false);
 		this.btnTerminer.setBorderPainted(false);

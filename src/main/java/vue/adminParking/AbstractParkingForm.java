@@ -33,7 +33,7 @@ public abstract class AbstractParkingForm extends JPanel {
 
         // --- TITRE ---
         JLabel title = new JLabel(titleText);
-        title.setFont(DefaultTheme.FONT_TITLE_ALT);
+        title.setFont(DefaultTheme.FONT_TITLE);
         add(title, BorderLayout.NORTH);
 
         // --- FORMULAIRE ---
@@ -98,7 +98,7 @@ public abstract class AbstractParkingForm extends JPanel {
 
         // 6. Checkbox Moto
         chkMoto = new JCheckBox("Dispose de places Moto");
-        chkMoto.setFont(DefaultTheme.FONT_LABEL_SMALL);
+        chkMoto.setFont(DefaultTheme.FONT_LABEL_S);
         chkMoto.setForeground(new Color(73, 80, 87));
         chkMoto.setOpaque(false);
         chkMoto.setAlignmentX(Component.LEFT_ALIGNMENT);
