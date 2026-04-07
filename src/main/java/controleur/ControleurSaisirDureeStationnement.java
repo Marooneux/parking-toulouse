@@ -36,7 +36,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		this.vue.getBtnConfirmer().addActionListener(this);
 		this.prefillPlaque();
 
-		NavigationFrame.getInstance().showPage("voirie-duree", () -> this.vue, "Démarrer le stationnement");
+		NavigationFrame.getInstance().showPage("voirie-duree", () -> this.vue, "Démarrer le stationnement", true);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 				intDuree, prix);
 		new ControleurChoixMoyenPaiementVoirie(choix, zone, immatriculation, intDuree, prix);
 		String key = "voirie-choix-paiement-" + immatriculation + "-" + intDuree;
-		NavigationFrame.getInstance().showPage(key, () -> choix, "Choisir le paiement");
+		NavigationFrame.getInstance().showPage(key, () -> choix, "Choisir le paiement", true);
 	}
 
 	public static void ouvrirTicket(ZoneVoirie zone, String immatriculation, int intDuree) {
@@ -146,6 +146,6 @@ public class ControleurSaisirDureeStationnement implements ActionListener {
 		TicketVoirie ticket = new TicketVoirie(zone, immatriculation, intDuree, "Gratuit");
 		new ControleurTicketVoirie(ticket);
 		String key = "voirie-ticket-" + immatriculation + "-" + intDuree;
-		NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie");
+		NavigationFrame.getInstance().showPage(key, () -> ticket, "Ticket voirie", true);
 	}
 }
